@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "ApesterKit"
-  s.version      = "1.0.3"
+  s.version      = "1.0.4"
   s.summary      = "ApesterKit provides a light-weight framework that loads Apester Unit in a webView"
 
   s.description  = "SDK enables video autoplay in the app
@@ -29,7 +29,7 @@ Pod::Spec.new do |s|
 
   s.platform     = :ios, "10.0"
 
-  s.source       = { git: "https://github.com/Qmerce/ios-sdk.git", tag: "v#{s.version}" }
+  s.source       = { git: "http://github.com/Qmerce/ios-sdk.git", tag: "v#{s.version}" }
 
   s.source_files = "ApesterKit", "ApesterKit/**/*.{h,m,swift}"
 
