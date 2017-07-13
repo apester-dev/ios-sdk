@@ -16,7 +16,7 @@ ApesterKit provides a light-weight framework that loads Apester Unit in a webVie
 
 ## Requirements
 
-- iOS 8.0+ 
+- iOS 8.0+
 - Xcode .0+
 
 ## Installation
@@ -62,6 +62,12 @@ To integrate ApesterKit into your Xcode project using Carthage, specify it in yo
 
 ```ogdl
 github "Qmerce/ios-sdk" ~> 1.1
+```
+
+Then, run the following command:
+
+```bash
+$ carthage update --platform iOS --use-submodules
 ```
 
 
@@ -118,4 +124,3 @@ ApesterKit [API Documentation](http://htmlpreview.github.io/?https://github.com/
 ## License
 
 ApesterKit is released under the MIT license. See [LICENSE](https://github.com/Qmerce/ios-sdk/blob/master/LICENSE) for details.
-
