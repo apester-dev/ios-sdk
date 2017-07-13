@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>ApesterKit  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a title="ApesterKit  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">ApesterKit Docs</a> (100% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html">ApesterKit Reference</a>
+        <img id="carat" src="img/carat.png" />
+        ApesterKit  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/APEWebViewService.html">APEWebViewService</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Enums.html">Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Enums/APEResult.html">APEResult</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols.html">APEWebViewProtocol</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            
+            <h2 id='apesterkit' class='heading'>ApesterKit</h2>
+
+<p><a href="https://cocoapods.org/pods/ApesterKit"><img src="https://img.shields.io/cocoapods/p/ApesterKit.svg" alt="Platforms"></a>
+<a href="https://raw.githubusercontent.com/Apester/ApesterKit/master/LICENSE"><img src="https://img.shields.io/cocoapods/l/ApesterKit.svg" alt="License"></a></p>
+
+<p><a href="https://github.com/apple/swift-package-manager"><img src="https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg" alt="Swift Package Manager"></a>
+<a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible"></a>
+<a href="https://cocoapods.org/pods/ApesterKit"><img src="https://img.shields.io/cocoapods/v/ApesterKit.svg" alt="CocoaPods compatible"></a></p>
+
+<p>ApesterKit provides a light-weight framework that loads Apester Unit in a webView</p>
+
+<ul>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#documentation">Documentation</a></li>
+<li><a href="#license">License</a></li>
+</ul>
+<h2 id='requirements' class='heading'>Requirements</h2>
+
+<ul>
+<li>iOS 8.0+</li>
+<li>Xcode .0+</li>
+</ul>
+<h2 id='installation' class='heading'>Installation</h2>
+<h3 id='cocoapods' class='heading'>CocoaPods</h3>
+
+<p><a href="http://cocoapods.org">CocoaPods</a> is a dependency manager for Cocoa projects. You can install it with the following command:</p>
+<pre class="highlight shell"><code><span class="gp">$ </span>gem install cocoapods
+</code></pre>
+
+<blockquote>
+<p>CocoaPods 1.1.0+ is required to build ApesterKit 1.1+.</p>
+</blockquote>
+
+<p>To integrate ApesterKit into your Xcode project using CocoaPods, specify it in your <code>Podfile</code>:</p>
+<pre class="highlight ruby"><code><span class="n">source</span> <span class="s1">'https://github.com/CocoaPods/Specs.git'</span>
+
+<span class="n">use_frameworks!</span>
+
+<span class="n">pod</span> <span class="s1">'ApesterKit'</span><span class="p">,</span> <span class="s1">'~&gt; 1.1'</span>
+</code></pre>
+
+<p>Then, run the following command:</p>
+<pre class="highlight shell"><code><span class="gp">$ </span>pod install
+</code></pre>
+<h3 id='carthage' class='heading'>Carthage</h3>
+
+<p><a href="https://github.com/Carthage/Carthage">Carthage</a> is a decentralized dependency manager that automates the process of adding frameworks to your Cocoa application.</p>
+
+<p>You can install Carthage with <a href="http://brew.sh/">Homebrew</a> using the following command:</p>
+<pre class="highlight shell"><code><span class="gp">$ </span>brew update
+<span class="gp">$ </span>brew install carthage
+</code></pre>
+
+<p>To integrate ApesterKit into your Xcode project using Carthage, specify it in your <code>Cartfile</code>:</p>
+<pre class="highlight plaintext"><code>github "Qmerce/ios-sdk" ~&gt; 1.1
+</code></pre>
+<h3 id='manually' class='heading'>Manually</h3>
+
+<p>If you prefer not to use either of the aforementioned dependency managers, you can integrate ApesterKit into your project manually.</p>
+<h4 id='git-submodules' class='heading'>Git Submodules</h4>
+
+<ul>
+<li>Open up Terminal, <code>cd</code> into your top-level project directory, and run the following command <q>if</q> your project is not initialized as a git repository:</li>
+</ul>
+<pre class="highlight shell"><code><span class="gp">$ </span>git init
+</code></pre>
+
+<ul>
+<li>Add ApesterKit as a git <a href="http://git-scm.com/docs/git-submodule">submodule</a> by running the following command:</li>
+</ul>
+<pre class="highlight shell"><code><span class="gp">$ </span>git submodule add https://github.com/Qmerce/ios-sdk.git
+<span class="gp">$ </span>git submodule update --init --recursive
+</code></pre>
+
+<ul>
+<li><p>Open the new <code>ApesterKit</code> folder, and drag the <code>ApesterKit.xcodeproj</code> into the Project Navigator of your application&rsquo;s Xcode project.</p>
+
+<blockquote>
+<p>It should appear nested underneath your application&rsquo;s blue project icon. Whether it is above or below all the other Xcode groups does not matter.</p>
+</blockquote></li>
+<li><p>Select the <code>ApesterKit.xcodeproj</code> in the Project Navigator and verify the deployment target matches that of your application target.</p></li>
+<li><p>Next, select your application project in the Project Navigator (blue project icon) to navigate to the target configuration window and select the application target under the <q>Targets</q> heading in the sidebar.</p></li>
+<li><p>In the tab bar at the top of that window, open the <q>General</q> panel.</p></li>
+<li><p>Click on the <code>+</code> button under the <q>Embedded Binaries</q> section.</p></li>
+<li><p>You will see two different <code>ApesterKit.xcodeproj</code> folders each with two different versions of the <code>ApesterKit.framework</code> nested inside a <code>Products</code> folder.</p>
+
+<blockquote>
+<p>It does not matter which <code>Products</code> folder you choose from.</p>
+</blockquote></li>
+<li><p>Select the <code>ApesterKit.framework</code>.</p></li>
+<li><p>And that&rsquo;s it!</p></li>
+</ul>
+
+<blockquote>
+<p>The <code>ApesterKit.framework</code> is automagically added as a target dependency, linked framework and embedded framework in a copy files build phase which is all you need to build on the simulator and a device.</p>
+</blockquote>
+<h4 id='embeded-binaries' class='heading'>Embeded Binaries</h4>
+
+<ul>
+<li>Download the latest release from <a href="https://github.com/Qmerce/ios-sdk/releases">https://github.com/Qmerce/ios-sdk/releases</a></li>
+<li>Next, select your application project in the Project Navigator (blue project icon) to navigate to the target configuration window and select the application target under the <q>Targets</q> heading in the sidebar.</li>
+<li>In the tab bar at the top of that window, open the <q>General</q> panel.</li>
+<li>Click on the <code>+</code> button under the <q>Embedded Binaries</q> section.</li>
+<li>Add the downloaded <code>ApesterKit.framework</code>.</li>
+<li>And that&rsquo;s it!</li>
+</ul>
+<h2 id='documentation' class='heading'>Documentation</h2>
+
+<p>ApesterKit <a href="http://htmlpreview.github.io/?https://github.com/Qmerce/ios-sdk/blob/master/docs/index.html">API Documentation</a></p>
+<h2 id='license' class='heading'>License</h2>
+
+<p>ApesterKit is released under the MIT license. See <a href="https://github.com/Qmerce/ios-sdk/blob/master/LICENSE">LICENSE</a> for details.</p>
+
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2017 <a class="link" href="https://github.com/Qmerce/ios-sdk.git" target="_blank" rel="external">Apester</a>. All rights reserved. (Last updated: 2017-07-13)</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
