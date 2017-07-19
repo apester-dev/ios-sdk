@@ -1,0 +1,18 @@
+function initAdvertisingParams(advertisingInfo) {
+  
+  if (window.apesterLoadCallback) { return; }
+    
+  var advertisingData = JSON.parse(advertisingInfo);
+  
+  var advertisingId = advertisingData['advertisingId'];
+  var bundleId = advertisingData['bundleId'];
+  
+  var result = { advertisingId, bundleId };
+  
+  window.apesterLoadCallback = function() {
+    window.APESTER.Init(result);
+  }
+  
+}
+
+
