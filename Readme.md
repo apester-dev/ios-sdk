@@ -108,15 +108,6 @@ $ git submodule update --init --recursive
 
 > The `ApesterKit.framework` is automagically added as a target dependency, linked framework and embedded framework in a copy files build phase which is all you need to build on the simulator and a device.
 
-#### Embeded Binaries
-
-- Download the latest release from https://github.com/Qmerce/ios-sdk/releases
-- Next, select your application project in the Project Navigator (blue project icon) to navigate to the target configuration window and select the application target under the "Targets" heading in the sidebar.
-- In the tab bar at the top of that window, open the "General" panel.
-- Click on the `+` button under the "Embedded Binaries" section.
-- Add the downloaded `ApesterKit.framework`.
-- And that's it!
-
 ## Documentation
 
 ApesterKit [API Documentation](http://htmlpreview.github.io/?https://github.com/Qmerce/ios-sdk/blob/master/docs/index.html)

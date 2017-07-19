@@ -74,7 +74,7 @@ public class APEWebViewService: NSObject {
   // MARK: - API
   
   /**
-   webview can be either UIWebView or WKWebView only
+   webview can be either UIWebView or WKWebView only - call this function from viewDidLoad
    
    - Parameters:
    - webView: either UIWebview or WKWebView instance
@@ -84,18 +84,10 @@ public class APEWebViewService: NSObject {
    *  self is an instance of UIViewController
    
    ````
-   APEWebViewService.shared.register(with: self.webView)
-   ````
-   * or
-   
-   ````
-   APEWebViewService.shared.register(with: self.webView) { result in
-   switch result {
-   case .success(let success):
-   // do something
-   case .failure(let failure):
-   // do something
-   }
+   override func viewDidLoad() {
+      super.viewDidLoad()
+      APEWebViewService.shared.register(with: webView)
+      // your stuff here
    }
    ````
    */
@@ -116,22 +108,26 @@ public class APEWebViewService: NSObject {
    *  self is an instance of UIViewController
    
    ````
-   APEWebViewService.shared.webView(didStartLoad: self.classForCoder)
+   // UIWebViewDelegate -
+   func webViewDidStartLoad(_ webView: UIWebView) {
+      APEWebViewService.shared.webView(didStartLoad: self.classForCoder)
+   }
    ````
    * or
    
    ````
-   APEWebViewService.shared.webView(didStartLoad: self.classForCoder) { result in
-   switch result {
-   case .success(let success):
-   // do something
-   case .failure(let failure):
-   // do something
-   }
+   // WKNavigationDelegate -
+   func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+      APEWebViewService.shared.webView(didStartLoad: self.classForCoder)
    }
    ````
    */
   public func webView(didStartLoad sender: AnyClass, completionHandler: ((APEResult<Bool>) -> Void)? = nil) {
+    
+    guard self.webView != nil else {
+      completionHandler?(APEResult.failure("must register webView"))
+      return
+    }
     
     guard extractBundle(from: sender) else {
       completionHandler?(APEResult.failure("invalid bundle identifier"))
@@ -140,81 +136,6 @@ public class APEWebViewService: NSObject {
 //    var res = self.evaluateJavaScript(self.initialJStString)
      let res = self.evaluateJavaScript(self.runJSString)
     completionHandler?(APEResult.success(res))
-  }
-  
-  /**
-   call this function once the webview did finish load - the UIWebView delegate trigger event
-   
-   - Parameters:
-   - sender: must be a ViewController class
-   - completionHandler: an optional callback with APEResult response
-   ### Usage Example: ###
-   *  self is an instance of UIViewController
-   ````
-   APEWebViewService.shared.webView(didFinishLoad: self.classForCoder)
-   ````
-   
-   * or
-   ````
-   APEWebViewService.shared.webView(didFinishLoad: self.classForCoder) { result in
-   switch result {
-   case .success(let success):
-   // do something
-   case .failure(let failure):
-   // do something
-   }
-   }
-   ````
-   */
-  public func webView(didFinishLoad sender: AnyClass, completionHandler: ((APEResult<Bool>) -> Void)? = nil) {
-    
-    guard self.webView != nil else {
-      completionHandler?(APEResult.failure("must register webView"))
-      return
-    }
-    guard extractBundle(from: sender) else {
-      completionHandler?(APEResult.failure("invalid bundle identifier"))
-      return
-    }
-//    var res = self.evaluateJavaScript(self.initialJStString)
-    let res = self.evaluateJavaScript(self.runJSString)
-    completionHandler?(APEResult.success(res))
-  }
-  
-  /**
-   call this function once the webview did fail load - the UIWebView delegate trigger event
-   
-   - Parameters:
-   - sender: must be a ViewController class
-   - failuer: failuer the webview load failuer error occred
-   - completionHandler: an optional callback with APEResult response
-   ### Usage Example: ###
-   *  self is an instance of UIViewController
-   
-   ````
-   APEWebViewService.shared.webView(didFailLoad: self.classForCoder, failuer: error)
-   ````
-   
-   * or
-   
-   ````
-   APEWebViewService.shared.webView(didFailLoad: self.classForCoder, failuer: error) { result in
-   switch result {
-   case .success(let success):
-   // do something
-   case .failure(let failure):
-   // do something
-   }
-   }
-   ````
-   */
-  public func webView(didFailLoad sender: AnyClass, failuer: Error?, completionHandler: ((APEResult<Bool>) -> Void)? = nil) {
-    
-    guard self.webView != nil else {
-      completionHandler?(APEResult.failure("must register webView"))
-      return
-    }
-    completionHandler?(APEResult.success(true))
   }
   
 }

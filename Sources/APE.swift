@@ -1,5 +1,5 @@
 //
-//  APEConfig.swift
+//  APE.swift
 //  ApesterKit
 //
 //  Created by Hasan Sa on 13/07/2017.
