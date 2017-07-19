@@ -52,7 +52,8 @@ public class APEWebViewService: NSObject {
     var inputPayload: [String: Any] = [:]
     
     // get the device advertisingIdentifier
-    if let identifierManager = ASIdentifierManager.shared(), let idfa = identifierManager.advertisingIdentifier {
+    if let identifierManager = ASIdentifierManager.shared(),
+      let idfa = identifierManager.advertisingIdentifier {
       inputPayload[APEConfig.Payload.advertisingId.rawValue] = idfa.uuidString
       inputPayload[APEConfig.Payload.trackingEnabled.rawValue] = identifierManager.isAdvertisingTrackingEnabled
     }

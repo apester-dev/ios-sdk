@@ -76,38 +76,6 @@ class ApesterKitSpec: QuickSpec {
           }
         }
       }
-      // 3
-      context("webView did finish load") {
-        it("webViewService bundle id must has a valid value && webViewService webview must be an instance of UIWebView") {
-          waitUntil { done in
-            APEWebViewService.shared.webView(didFinishLoad: viewController.classForCoder) { result in
-              switch result {
-              case .success(let res):
-                expect(res).to(beTrue())
-              case .failure(let err):
-                expect(err).to(beTruthy() as! Predicate<String>)
-              }
-              done()
-            }
-          }
-        }
-      }
-      // 4
-      context("webView did fail load") {
-        it("webViewService bundle id must has a valid value && webViewService webview must be an instance of UIWebView") {
-          waitUntil { done in
-            APEWebViewService.shared.webView(didFailLoad: viewController.classForCoder, failuer: nil, completionHandler: { result in
-              switch result {
-              case .success(let res):
-                expect(res).to(beTrue())
-              case .failure(let err):
-                expect(err).to(beTruthy() as! Predicate<String>)
-              }
-              done()
-            })
-          }
-        }
-      }
     }
   }
   
