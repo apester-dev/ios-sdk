@@ -7,7 +7,7 @@
     <meta charset='utf-8'>
     <script src="../js/jquery.min.js" defer></script>
     <script src="../js/jazzy.js" defer></script>
-    
+
   </head>
   <body>
     <a name="//apple_ref/swift/Class/APEWebViewService" class="dashAnchor"></a>
@@ -120,25 +120,21 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>webview can be either UIWebView or WKWebView only</p>
+                        <p>webview can be either UIWebView or WKWebView only - call this function from viewDidLoad</p>
+
+<ul>
+<li>webView: either UIWebview or WKWebView instance</li>
+<li>completionHandler: an optional callback with APEResult response</li>
+</ul>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 
 <ul>
 <li>self is an instance of UIViewController</li>
 </ul>
-<pre class="highlight plaintext"><code>APEWebViewService.shared.register(with: self.webView)
-</code></pre>
-
-<ul>
-<li>or</li>
-</ul>
-<pre class="highlight plaintext"><code>APEWebViewService.shared.register(with: self.webView) { result in
-  switch result {
-    case .success(let success):
-    // do something
-    case .failure(let failure):
-    // do something
-  }
+<pre class="highlight plaintext"><code>override func viewDidLoad() {
+   super.viewDidLoad()
+   APEWebViewService.shared.register(with: webView)
+   // your stuff here
 }
 </code></pre>
 
@@ -150,37 +146,6 @@
                           <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">register</span><span class="p">(</span><span class="n">with</span> <span class="nv">webView</span><span class="p">:</span> <span class="kt"><a href="../Protocols.html#/s:P10ApesterKit18APEWebViewProtocol">APEWebViewProtocol</a></span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Enums/APEResult.html">APEResult</a></span><span class="o">&lt;</span><span class="kt">Bool</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="k">default</span><span class="p">)</span></code></pre>
 
                         </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>webView</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>either UIWebview or WKWebView instance</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>completionHandler</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>an optional callback with APEResult response</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
                       </div>
                     </section>
                   </div>
@@ -201,21 +166,23 @@
                         <p>call this function once the webview did start load - the UIWebView delegate trigger event</p>
 
 <ul>
+<li>sender: must be a ViewController class</li>
+<li>completionHandler: an optional callback with APEResult response
+### Usage Example: ###</li>
 <li>self is an instance of UIViewController</li>
 </ul>
-<pre class="highlight plaintext"><code>APEWebViewService.shared.webView(didStartLoad: self.classForCoder)
+<pre class="highlight plaintext"><code>// UIWebViewDelegate -
+func webViewDidStartLoad(_ webView: UIWebView) {
+   APEWebViewService.shared.webView(didStartLoad: self.classForCoder)
+}
 </code></pre>
 
 <ul>
 <li>or</li>
 </ul>
-<pre class="highlight plaintext"><code>APEWebViewService.shared.webView(didStartLoad: self.classForCoder) { result in 
- switch result {
-   case .success(let success):
-     // do something
-   case .failure(let failure):
-     // do something
- }
+<pre class="highlight plaintext"><code>// WKNavigationDelegate -
+func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+   APEWebViewService.shared.webView(didStartLoad: self.classForCoder)
 }
 </code></pre>
 
@@ -228,203 +195,6 @@
 
                         </div>
                       </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>sender</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>must be a ViewController class</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>completionHandler</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>an optional callback with APEResult response
-### Usage Example: ###</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FC10ApesterKit17APEWebViewService7webViewFT13didFinishLoadPMPs9AnyObject_17completionHandlerGSqFGOS_9APEResultSb_T___T_"></a>
-                    <a name="//apple_ref/swift/Method/webView(didFinishLoad:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC10ApesterKit17APEWebViewService7webViewFT13didFinishLoadPMPs9AnyObject_17completionHandlerGSqFGOS_9APEResultSb_T___T_">webView(didFinishLoad:completionHandler:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>call this function once the webview did finish load - the UIWebView delegate trigger event</p>
-
-<ul>
-<li><p>self is an instance of UIViewController</p>
-<pre class="highlight plaintext"><code>APEWebViewService.shared.webView(didFinishLoad: self.classForCoder)
-</code></pre></li>
-<li><p>or</p>
-<pre class="highlight plaintext"><code>APEWebViewService.shared.webView(didFinishLoad: self.classForCoder) { result in
-switch result {
-case .success(let success):
-// do something
-case .failure(let failure):
-// do something
-}
-}
-</code></pre></li>
-</ul>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">webView</span><span class="p">(</span><span class="n">didFinishLoad</span> <span class="nv">sender</span><span class="p">:</span> <span class="kt">AnyClass</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Enums/APEResult.html">APEResult</a></span><span class="o">&lt;</span><span class="kt">Bool</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="k">default</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>sender</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>must be a ViewController class</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>completionHandler</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>an optional callback with APEResult response
-### Usage Example: ###</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:FC10ApesterKit17APEWebViewService7webViewFT11didFailLoadPMPs9AnyObject_7failuerGSqPs5Error__17completionHandlerGSqFGOS_9APEResultSb_T___T_"></a>
-                    <a name="//apple_ref/swift/Method/webView(didFailLoad:failuer:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:FC10ApesterKit17APEWebViewService7webViewFT11didFailLoadPMPs9AnyObject_7failuerGSqPs5Error__17completionHandlerGSqFGOS_9APEResultSb_T___T_">webView(didFailLoad:failuer:completionHandler:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>call this function once the webview did fail load - the UIWebView delegate trigger event</p>
-
-<ul>
-<li>self is an instance of UIViewController</li>
-</ul>
-<pre class="highlight plaintext"><code>APEWebViewService.shared.webView(didFailLoad: self.classForCoder, failuer: error)
-</code></pre>
-
-<ul>
-<li>or</li>
-</ul>
-<pre class="highlight plaintext"><code>APEWebViewService.shared.webView(didFailLoad: self.classForCoder, failuer: error) { result in
-  switch result {
-    case .success(let success):
-    // do something
-    case .failure(let failure):
-    // do something
-  }
-}
-</code></pre>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">webView</span><span class="p">(</span><span class="n">didFailLoad</span> <span class="nv">sender</span><span class="p">:</span> <span class="kt">AnyClass</span><span class="p">,</span> <span class="nv">failuer</span><span class="p">:</span> <span class="kt">Error</span><span class="p">?,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="p">((</span><span class="kt"><a href="../Enums/APEResult.html">APEResult</a></span><span class="o">&lt;</span><span class="kt">Bool</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="k">default</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>sender</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>must be a ViewController class</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>failuer</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>failuer the webview load failuer error occred</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>completionHandler</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>an optional callback with APEResult response
-### Usage Example: ###</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
                     </section>
                   </div>
                 </li>
@@ -433,8 +203,8 @@ case .failure(let failure):
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="https://github.com/Qmerce/ios-sdk.git" target="_blank" rel="external">Hasan Sa</a>. All rights reserved. (Last updated: 2017-07-13)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2017 <a class="link" href="https://github.com/Qmerce/ios-sdk.git" target="_blank" rel="external">Apester</a>. All rights reserved. (Last updated: 2017-07-19)</p>
+          <p style="display: none;">Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>
