@@ -34,14 +34,13 @@ class ApesterKitSpec: QuickSpec {
   override func spec() {
     let viewController = WKWebViewViewController()
 
-    beforeEach {
-      viewController.viewDidLoad()
-      APEWebViewService.shared.register(with: viewController.webView!)
-    }
-
+    
     describe("ApesterKitSpec") {
       // 1
       context("webView registered successfully") {
+        beforeEach {
+          viewController.viewDidLoad()
+        }
         it("webview must be an instance of UIWebView") {
 
           waitUntil { done in
@@ -59,6 +58,10 @@ class ApesterKitSpec: QuickSpec {
       }
       // 2
       context("webView did start load") {
+        beforeEach {
+          viewController.viewDidLoad()
+          APEWebViewService.shared.register(with: viewController.webView!)
+        }
         it("webViewService bundle id must has a valid value") {
           waitUntil { done in
             APEWebViewService.shared.webView(didStartLoad: viewController.classForCoder) { result in
