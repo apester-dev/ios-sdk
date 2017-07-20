@@ -554,6 +554,7 @@
 				3549BB1D1DA389CD00C63030 /* Frameworks */,
 				3549BB1E1DA389CD00C63030 /* Headers */,
 				3549BB1F1DA389CD00C63030 /* Resources */,
+				BB5DAC5B1F20AD1E00C015E2 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -850,6 +851,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		BB5DAC5B1F20AD1E00C015E2 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# if which swiftlint >/dev/null; then\n# swiftlint\n# else\n#    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n# fi";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3549BB1C1DA389CD00C63030 /* Sources */ = {
@@ -1234,6 +1251,7 @@
 				BB14A6CC1F1F58F6003E393D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BB14A6E11F1F58F6003E393D /* Build configuration list for PBXNativeTarget "ApisterKitDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -1242,6 +1260,7 @@
 				BB14A6CE1F1F58F6003E393D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

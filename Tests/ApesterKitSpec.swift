@@ -11,49 +11,46 @@ import Quick
 import Nimble
 @testable import ApesterKit
 
-
 class ApesterKitSpec: QuickSpec {
-  
   
   class WebViewViewController: UIViewController {
     var webView: UIWebView?
-    
+
     override func viewDidLoad() {
       super.viewDidLoad()
       self.webView = UIWebView(frame: self.view.frame)
     }
   }
-  
+
   class WKWebViewViewController: UIViewController {
     var webView: WKWebView?
-    
+
     override func viewDidLoad() {
       super.viewDidLoad()
       self.webView = WKWebView(frame: self.view.frame)
     }
   }
-  
+
   override func spec() {
-    
     let viewController = WKWebViewViewController()
-    
+
     beforeEach {
       viewController.viewDidLoad()
       APEWebViewService.shared.register(with: viewController.webView!)
     }
-    
+
     describe("ApesterKitSpec") {
       // 1
       context("webView registered successfully") {
         it("webview must be an instance of UIWebView") {
-          
+
           waitUntil { done in
             APEWebViewService.shared.register(with: viewController.webView!) { result in
               switch result {
               case .success(let res):
                 expect(res).to(beTrue())
               case .failure(let err):
-                expect(err).to(beTruthy() as! Predicate<String>)
+                expect(err).notTo(beNil())
               }
               done()
             }
@@ -69,7 +66,7 @@ class ApesterKitSpec: QuickSpec {
               case .success(let res):
                 expect(res).to(beTrue())
               case .failure(let err):
-                expect(err).to(beTruthy() as! Predicate<String>)
+                expect(err).notTo(beNil())
               }
               done()
             }
@@ -78,5 +75,4 @@ class ApesterKitSpec: QuickSpec {
       }
     }
   }
-  
 }

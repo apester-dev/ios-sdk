@@ -15,7 +15,7 @@ class ViewController: UIViewController {
       webView.delegate = self
     }
   }
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
 //    webView.loadHTMLString(self.htmlStringFromFile(with: "sampleHTMLCode"), baseURL: nil)
@@ -29,13 +29,14 @@ class ViewController: UIViewController {
     }
     return ""
   }
-  
+
   @IBAction func sendDataToJavaScriptButtonPressed(_ sender: Any) {
     _ = canLoadRequest(with: "http://qmerce.github.io/static-testing-site/articles/injected2/")
   }
 }
 
-//MARK:-
+// MARK: - ViewController extension
+
 extension ViewController {
   
   func canLoadRequest(with string: String?) -> Bool {
@@ -45,7 +46,7 @@ extension ViewController {
     }
     return false
   }
-  
+
   func loadRequest(for urlString: String) {
     let url = URL(string: urlString)
     let request = URLRequest(url: url! as URL)
@@ -53,20 +54,19 @@ extension ViewController {
   }
 }
 
-//MARK:- UIWebViewDelegate
+// MARK: - UIWebViewDelegate
+
 extension ViewController: UIWebViewDelegate {
-  
-  
+
   func webViewDidStartLoad(_ webView: UIWebView) {
      APEWebViewService.shared.webView(didStartLoad: self.classForCoder)
   }
-  
+
   func webViewDidFinishLoad(_ webView: UIWebView) {
 //    APEWebViewService.shared.webView(didFinishLoad: self.classForCoder)
   }
-  
+
   func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
-    
+
   }
 }
-
