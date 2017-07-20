@@ -7,66 +7,85 @@
 //
 
 import UIKit
+import WebKit
 import ApesterKit
 
-class ViewController: UIViewController {
+let apesterUnitURL = "http://qmerce.github.io/static-testing-site/articles/injected2/"
+let apesterUnitURLRequest = URLRequest(url: URL(string: apesterUnitURL)!)
 
-  @IBOutlet weak var webView: UIWebView! {didSet {
-      webView.delegate = self
+#if USE_UIWEBVIEW
+  
+  class ViewController: UIViewController {
+    
+    @IBOutlet weak var webViewContainer: UIView!
+    @IBOutlet var webView: UIWebView? {
+      didSet {
+        webView?.delegate = self
+      }
+    }
+    
+    override func viewDidLoad() {
+      super.viewDidLoad()
+      webView = UIWebView(frame: webViewContainer.bounds)
+      guard let webView = webView else {
+        return
+      }
+      webViewContainer.addSubview(webView)
+      APEWebViewService.shared.register(with: webView)
+    }
+
+    func loadWebView() {
+      webView?.loadRequest(apesterUnitURLRequest)
     }
   }
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
-//    webView.loadHTMLString(self.htmlStringFromFile(with: "sampleHTMLCode"), baseURL: nil)
-    APEWebViewService.shared.register(with: webView)
-  }
-
-  private func htmlStringFromFile(with name: String) -> String {
-    let path = Bundle.main.path(forResource: name, ofType: "html")
-    if let result = try? String(contentsOfFile: path!, encoding: String.Encoding.utf8) {
-      return result
+  // MARK: - UIWebViewDelegate
+  extension ViewController: UIWebViewDelegate {
+    func webViewDidStartLoad(_ webView: UIWebView) {
+      APEWebViewService.shared.webView(didStartLoad: self.classForCoder)
     }
-    return ""
+  }
+  
+#else // USE_UIWEBVIEW - USE_WKWEBVIEW
+  
+  class ViewController: UIViewController {
+
+    @IBOutlet var webViewContainer: UIView!
+    var webView : WKWebView? {
+      didSet {
+        webView?.navigationDelegate = self
+      }
+    }
+
+    override func viewDidLoad() {
+      super.viewDidLoad()
+      webView = WKWebView(frame: webViewContainer.bounds)
+      guard let webView = webView else {
+        return
+      }
+      webViewContainer.addSubview(webView)
+      APEWebViewService.shared.register(with: webView)
+    }
+
+    func loadWebView() {
+      webView?.load(apesterUnitURLRequest)
+    }
   }
 
-  @IBAction func sendDataToJavaScriptButtonPressed(_ sender: Any) {
-    _ = canLoadRequest(with: "http://qmerce.github.io/static-testing-site/articles/injected2/")
+  // MARK: - UIWebViewDelegate
+  extension ViewController: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+      APEWebViewService.shared.webView(didStartLoad: self.classForCoder)
+    }
   }
-}
+
+#endif // USE_UIWEBVIEW
 
 // MARK: - ViewController extension
 
 extension ViewController {
-  
-  func canLoadRequest(with string: String?) -> Bool {
-    if let urlString = string {
-      loadRequest(for: urlString)
-      return true
-    }
-    return false
-  }
 
-  func loadRequest(for urlString: String) {
-    let url = URL(string: urlString)
-    let request = URLRequest(url: url! as URL)
-    webView.loadRequest(request)
-  }
-}
-
-// MARK: - UIWebViewDelegate
-
-extension ViewController: UIWebViewDelegate {
-
-  func webViewDidStartLoad(_ webView: UIWebView) {
-     APEWebViewService.shared.webView(didStartLoad: self.classForCoder)
-  }
-
-  func webViewDidFinishLoad(_ webView: UIWebView) {
-//    APEWebViewService.shared.webView(didFinishLoad: self.classForCoder)
-  }
-
-  func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
-
+  @IBAction func sendDataToJavaScriptButtonPressed(_ sender: Any) {
+    loadWebView()
   }
 }

@@ -17,7 +17,6 @@ public protocol APEWebViewProtocol {}
 extension UIWebView: APEWebViewProtocol {}
 extension WKWebView: APEWebViewProtocol {}
 
-
 /**
  APEWebViewServiceResult enum
  * success

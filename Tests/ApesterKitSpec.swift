@@ -12,7 +12,7 @@ import Nimble
 @testable import ApesterKit
 
 class ApesterKitSpec: QuickSpec {
-  
+
   class WebViewViewController: UIViewController {
     var webView: UIWebView?
 
