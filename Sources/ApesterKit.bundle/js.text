@@ -1,13 +1,11 @@
 function initAdvertisingParams(advertisingInfo) {
-  
-  if (window.apesterLoadCallback) { return; }
-    
-  var advertisingData = JSON.parse(advertisingInfo);
-  
-  window.apesterLoadCallback = function() {
-    window.APESTER.Init({iosDeviceInfo: advertisingData});
+  // generate advertisingData
+  var advertisingData = {iosDeviceInfo: JSON.parse(advertisingInfo)};
+  // add apesterLoadCallback on window - this function will be called form the Apester Unit
+  if (!window.apesterLoadCallback) {
+    window.apesterLoadCallback = function() {
+      window.APESTER.Init(advertisingData);
+    }
   }
-  
 }
-
 

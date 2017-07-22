@@ -14,7 +14,7 @@ import AdSupport
 private struct APEConfig {
 
   enum Payload: String {
-    case advertisingId, trackingEnabled, bundleId
+    case advertisingId, trackingEnabled, bundleId, appName, appStoreUrl
   }
 
   static let setupFunctionName = "initAdvertisingParams"
@@ -25,11 +25,10 @@ private struct APEConfig {
 /// APEWebViewService provides a light-weight framework that loads Apester Unit in a webView
 public class APEWebViewService: NSObject {
 
-  fileprivate var bundleIdentifier: String?
-  fileprivate var webView: APEWebViewProtocol?
-  fileprivate var didRunScript = false
+  fileprivate var bundle: Bundle?
 
-  fileprivate var initialJStString: String? {
+  fileprivate lazy var initialJStString: String = {
+    // load js bundle file
     let klass: AnyClass = object_getClass(self)!
     if let bundleResourcePath = Bundle(for: klass).resourcePath {
       let path = "\(bundleResourcePath)/\(APEConfig.bundleName)/\(APEConfig.fileName)"
@@ -40,29 +39,38 @@ public class APEWebViewService: NSObject {
         }
       }
     }
-    return nil
-  }
+    return ""
+  }()
 
-  fileprivate var runJSString: String? {
-
-    // input payload
+  fileprivate lazy var inputPayload: [String: Any] = {
     var inputPayload: [String: Any] = [:]
-
     // get the device advertisingIdentifier
     if let identifierManager = ASIdentifierManager.shared(),
       let idfa = identifierManager.advertisingIdentifier {
       inputPayload[APEConfig.Payload.advertisingId.rawValue] = idfa.uuidString
       inputPayload[APEConfig.Payload.trackingEnabled.rawValue] = identifierManager.isAdvertisingTrackingEnabled
     }
-    // get the app bundleIdentifier
-    if let bundleIdentifier = self.bundleIdentifier {
-      inputPayload[APEConfig.Payload.bundleId.rawValue] = bundleIdentifier
+    if let bundle = self.bundle {
+      // get the app bundleIdentifier
+      if let bundleIdentifier = bundle.bundleIdentifier {
+        inputPayload[APEConfig.Payload.bundleId.rawValue] = bundleIdentifier
+      }
+      // get the app name and
+      if let infoDictionary = bundle.infoDictionary,
+        let appName = infoDictionary[kCFBundleNameKey as String] as? String {
+        inputPayload[APEConfig.Payload.appName.rawValue] = appName
+        inputPayload[APEConfig.Payload.appStoreUrl.rawValue] = "https://appstore.com/\(appName.trimmingCharacters(in: .whitespaces))"
+      }
     }
+    return inputPayload
+  }()
+
+  fileprivate var runJSString: String? {
     // Serialize the Swift object into Data
-    if let serializedData = try? JSONSerialization.data(withJSONObject: inputPayload, options: []) {
+    if let serializedData = try? JSONSerialization.data(withJSONObject: inputPayload, options: []) ,
       // Encode the data into JSON string
-      let encodedData = String(data: serializedData, encoding: String.Encoding.utf8)
-      return "\(APEConfig.setupFunctionName)('\(encodedData!)')"
+      let encodedData = String(data: serializedData, encoding: String.Encoding.utf8) {
+      return "\(APEConfig.setupFunctionName)('\(encodedData)')"
     }
     return nil
   }
@@ -73,42 +81,41 @@ public class APEWebViewService: NSObject {
   // MARK: - API
 
   /**
-   webview can be either UIWebView or WKWebView only - call this function from viewDidLoad
+   call register(bundle:) function from viewDidLoad
    
-   - Parameters:
-   - webView: either UIWebview or WKWebView instance
-   - completionHandler: an optional callback with APEResult response
+    Parameters:
+    - bundle: the app main bundle
+    - completionHandler: an optional callback with APEResult response
    
    ### Usage Example: ###
-   *  self is an instance of UIViewController
    
    ````
    override func viewDidLoad() {
       super.viewDidLoad()
-      APEWebViewService.shared.register(with: webView)
+      APEWebViewService.shared.register(bundle: Bundle.main)
       // your stuff here
    }
    ````
    */
-  public func register(with webView: APEWebViewProtocol, completionHandler: ((APEResult<Bool>) -> Void)? = nil) {
-    self.webView = webView
-    let res = self.evaluateJavaScript(self.initialJStString)
-    completionHandler?(APEResult.success(res))
+  public func register(bundle: Bundle, completionHandler: ((APEResult<Bool>) -> Void)? = nil) {
+    self.bundle = bundle
+    completionHandler?(APEResult.success(self.bundle != nil))
   }
 
   /**
-   call this function once the webview did start load - the UIWebView delegate trigger event
+   call webViewDidStartLoad function once the webview delegate did start load get called, 
+   then APEWebViewService will evaluateJavaScript on the webview by extracting params from the app bundle.
    
-   - Parameters:
-   - sender: must be a ViewController class
+   Parameters:
+   - webView: must be an instance of UIWebView Or WKWebview
    - completionHandler: an optional callback with APEResult response
+   
    ### Usage Example: ###
-   *  self is an instance of UIViewController
    
    ````
    // UIWebViewDelegate -
    func webViewDidStartLoad(_ webView: UIWebView) {
-      APEWebViewService.shared.webView(didStartLoad: self.classForCoder)
+      APEWebViewService.shared.webViewDidStartLoad(webView: webView)
    }
    ````
    * or
@@ -116,22 +123,13 @@ public class APEWebViewService: NSObject {
    ````
    // WKNavigationDelegate -
    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-      APEWebViewService.shared.webView(didStartLoad: self.classForCoder)
+      APEWebViewService.shared.webViewDidStartLoad(webView: webView)
    }
    ````
    */
-  public func webView(didStartLoad sender: AnyClass, completionHandler: ((APEResult<Bool>) -> Void)? = nil) {
-    guard self.webView != nil else {
-      completionHandler?(APEResult.failure("must register webView"))
-      return
-    }
-
-    guard extractBundle(from: sender) else {
-      completionHandler?(APEResult.failure("invalid bundle identifier"))
-      return
-    }
-//    var res = self.evaluateJavaScript(self.initialJStString)
-     let res = self.evaluateJavaScript(self.runJSString)
+  public func webViewDidStartLoad(webView: APEWebViewProtocol, completionHandler: ((APEResult<Bool>) -> Void)? = nil) {
+    var res = self.evaluateJavaScript(self.initialJStString, on: webView)
+    res = self.evaluateJavaScript(self.runJSString, on: webView)
     completionHandler?(APEResult.success(res))
   }
 
@@ -140,18 +138,7 @@ public class APEWebViewService: NSObject {
 // MARK: - PRIVATE
 fileprivate extension APEWebViewService {
 
-  fileprivate func extractBundle(from sender: AnyClass) -> Bool {
-    guard self.bundleIdentifier == nil else {
-      return true
-    }
-    guard let bundleIdentifier = Bundle(for: sender.self).bundleIdentifier else {
-      return false
-    }
-    self.bundleIdentifier = bundleIdentifier
-    return true
-  }
-
-  fileprivate func evaluateJavaScript(_ javaScriptString: String? = nil) -> Bool {
+  fileprivate func evaluateJavaScript(_ javaScriptString: String? = nil, on webView: APEWebViewProtocol) -> Bool {
     guard let javaScriptString = javaScriptString else {
       return false
     }
