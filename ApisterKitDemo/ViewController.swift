@@ -31,18 +31,23 @@ let apesterUnitURLRequest = URLRequest(url: URL(string: apesterUnitURL)!)
         return
       }
       webViewContainer.addSubview(webView)
-      APEWebViewService.shared.register(with: webView)
+      APEWebViewService.shared.register(bundle: Bundle.main)
+      loadWebView()
     }
 
     func loadWebView() {
       webView?.loadRequest(apesterUnitURLRequest)
+    }
+    func reloadWebView() {
+      webView?.loadRequest( URLRequest(url: URL(string: "about:blank")!))
+      loadWebView()
     }
   }
 
   // MARK: - UIWebViewDelegate
   extension ViewController: UIWebViewDelegate {
     func webViewDidStartLoad(_ webView: UIWebView) {
-      APEWebViewService.shared.webView(didStartLoad: self.classForCoder)
+      APEWebViewService.shared.webViewDidStartLoad(webView: webView)
     }
   }
   
@@ -64,7 +69,7 @@ let apesterUnitURLRequest = URLRequest(url: URL(string: apesterUnitURL)!)
         return
       }
       webViewContainer.addSubview(webView)
-      APEWebViewService.shared.register(with: webView)
+      APEWebViewService.shared.register(bundle: Bundle.main)
     }
 
     func loadWebView() {
@@ -72,10 +77,10 @@ let apesterUnitURLRequest = URLRequest(url: URL(string: apesterUnitURL)!)
     }
   }
 
-  // MARK: - UIWebViewDelegate
+  // MARK: - WKWebViewDelegate
   extension ViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-      APEWebViewService.shared.webView(didStartLoad: self.classForCoder)
+      APEWebViewService.shared.webViewDidStartLoad(webView: webView)
     }
   }
 
