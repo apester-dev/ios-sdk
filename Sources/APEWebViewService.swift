@@ -106,11 +106,11 @@ public class APEWebViewService: NSObject {
    call webViewDidStartLoad function once the webview delegate did start load get called, 
    then APEWebViewService will evaluateJavaScript on the webview by extracting params from the app bundle.
    
-   - Parameters:
+   Parameters:
    - webView: must be an instance of UIWebView Or WKWebview
    - completionHandler: an optional callback with APEResult response
+   
    ### Usage Example: ###
-   *  self is an instance of UIViewController
    
    ````
    // UIWebViewDelegate -
