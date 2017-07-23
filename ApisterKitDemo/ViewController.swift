@@ -48,7 +48,7 @@ let apesterUnitURLRequest = URLRequest(url: URL(string: apesterUnitURL)!)
   // MARK: - UIWebViewDelegate
   extension ViewController: UIWebViewDelegate {
     func webViewDidStartLoad(_ webView: UIWebView) {
-      APEWebViewService.shared.webViewDidStartLoad(webView: webView)
+      APEWebViewService.shared.didStartLoad(webView: webView)
     }
   }
   
@@ -81,7 +81,7 @@ let apesterUnitURLRequest = URLRequest(url: URL(string: apesterUnitURL)!)
   // MARK: - WKWebViewDelegate
   extension ViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-      APEWebViewService.shared.webViewDidStartLoad(webView: webView)
+      APEWebViewService.shared.didStartLoad(webView: webView)
     }
   }
 

@@ -37,11 +37,11 @@ class ApesterKitSpec: QuickSpec {
     
     describe("ApesterKitSpec") {
       // 1
-      context("webView registered successfully") {
+      context("Bundle registered successfully") {
         beforeEach {
           viewController.viewDidLoad()
         }
-        it("webview must be an instance of UIWebView") {
+        it("Bundle must be an instance Bundle.main") {
 
           waitUntil { done in
             APEWebViewService.shared.register(bundle: Bundle.main) { result in
