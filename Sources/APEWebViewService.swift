@@ -24,9 +24,13 @@ private struct APEConfig {
 
 /// APEWebViewService provides a light-weight framework that loads Apester Unit in a webView
 public class APEWebViewService: NSObject {
+  /// APEWebViewService shared instance
+  public static let shared = APEWebViewService()
 
+  /// the app main bundle
   fileprivate var bundle: Bundle?
 
+  // the converted js file string
   fileprivate lazy var initialJStString: String = {
     // load js bundle file
     let klass: AnyClass = object_getClass(self)!
@@ -42,6 +46,7 @@ public class APEWebViewService: NSObject {
     return ""
   }()
 
+  // the payload settings data
   fileprivate lazy var inputPayload: [String: Any] = {
     var inputPayload: [String: Any] = [:]
     // get the device advertisingIdentifier
@@ -65,6 +70,7 @@ public class APEWebViewService: NSObject {
     return inputPayload
   }()
 
+  // the function with payload params string
   fileprivate var runJSString: String? {
     // Serialize the Swift object into Data
     if let serializedData = try? JSONSerialization.data(withJSONObject: inputPayload, options: []) ,
@@ -75,79 +81,17 @@ public class APEWebViewService: NSObject {
     return nil
   }
 
-  /// APEWebViewService shared instance
-  public static let shared = APEWebViewService()
-
-  // MARK: - API
-
-  /**
-   call register(bundle:) function from viewDidLoad
-   
-    Parameters:
-    - bundle: the app main bundle
-    - completionHandler: an optional callback with APEResult response
-   
-   ### Usage Example: ###
-   
-   ````
-   override func viewDidLoad() {
-      super.viewDidLoad()
-      APEWebViewService.shared.register(bundle: Bundle.main)
-      // your stuff here
-   }
-   ````
-   */
-  public func register(bundle: Bundle, completionHandler: ((APEResult<Bool>) -> Void)? = nil) {
-    self.bundle = bundle
-    completionHandler?(APEResult.success(self.bundle != nil))
-  }
-
-  /**
-   call webViewDidStartLoad function once the webview delegate did start load get called, 
-   then APEWebViewService will evaluateJavaScript on the webview by extracting params from the app bundle.
-   
-   Parameters:
-   - webView: must be an instance of UIWebView Or WKWebview
-   - completionHandler: an optional callback with APEResult response
-   
-   ### Usage Example: ###
-   
-   ````
-   // UIWebViewDelegate -
-   func webViewDidStartLoad(_ webView: UIWebView) {
-      APEWebViewService.shared.webViewDidStartLoad(webView: webView)
-   }
-   ````
-   * or
-   
-   ````
-   // WKNavigationDelegate -
-   func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-      APEWebViewService.shared.webViewDidStartLoad(webView: webView)
-   }
-   ````
-   */
-  public func webViewDidStartLoad(webView: APEWebViewProtocol, completionHandler: ((APEResult<Bool>) -> Void)? = nil) {
-    var res = self.evaluateJavaScript(self.initialJStString, on: webView)
-    res = self.evaluateJavaScript(self.runJSString, on: webView)
-    completionHandler?(APEResult.success(res))
-  }
-
-}
-
-// MARK: - PRIVATE
-fileprivate extension APEWebViewService {
-
+  // evaluateJavaScript on UIWebView or WKWebView
   fileprivate func evaluateJavaScript(_ javaScriptString: String? = nil, on webView: APEWebViewProtocol) -> Bool {
     guard let javaScriptString = javaScriptString else {
       return false
     }
-
+    
     if let webView = webView as? UIWebView {
       // invoke stringByEvaluatingJavaScript in case of you are using UIWebView
       _ = webView.stringByEvaluatingJavaScript(from: javaScriptString)
       return true
-
+      
     } else if let webView = webView as? WKWebView {
       // invoke stringByEvaluatingJavaScript(_: completionHandler) in case of you are using WKWebView
       webView.evaluateJavaScript(javaScriptString) { (_, _) in }
@@ -155,4 +99,63 @@ fileprivate extension APEWebViewService {
     }
     return false
   }
+}
+
+
+// MARK: - Interface
+public extension APEWebViewService {
+
+  /**
+   call register(bundle:) function from viewDidLoad
+   
+   - Parameters:
+      - bundle: the app main bundle
+      - completionHandler: an optional callback with APEResult response
+   
+   ### Usage Example: ###
+   
+   ````
+   override func viewDidLoad() {
+   super.viewDidLoad()
+   APEWebViewService.shared.register(bundle: Bundle.main)
+   // your stuff here
+   }
+   ````
+   */
+  public func register(bundle: Bundle, completionHandler: ((APEResult<Bool>) -> Void)? = nil) {
+    self.bundle = bundle
+    completionHandler?(APEResult.success(self.bundle != nil))
+  }
+  
+  /**
+   call didStartLoad(webView:) function once the webview delegate didStartLoad triggered,
+   then APEWebViewService will evaluateJavaScript on the webview with extracting params from the app bundle.
+   
+   - Parameters:
+      - webView: must be an instance of UIWebView Or WKWebview
+      - completionHandler: an optional callback with APEResult response
+   
+   ### Usage Example: ###
+   
+   ````
+   // UIWebViewDelegate -
+   func webViewDidStartLoad(_ webView: UIWebView) {
+   APEWebViewService.shared.didStartLoad(webView: webView)
+   }
+   ````
+   * or
+   
+   ````
+   // WKNavigationDelegate -
+   func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+   APEWebViewService.shared.didStartLoad(webView: webView)
+   }
+   ````
+   */
+  public func didStartLoad(webView: APEWebViewProtocol, completionHandler: ((APEResult<Bool>) -> Void)? = nil) {
+    var res = self.evaluateJavaScript(self.initialJStString, on: webView)
+    res = self.evaluateJavaScript(self.runJSString, on: webView)
+    completionHandler?(APEResult.success(res))
+  }
+  
 }

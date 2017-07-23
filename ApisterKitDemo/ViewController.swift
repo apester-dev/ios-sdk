@@ -10,7 +10,8 @@ import UIKit
 import WebKit
 import ApesterKit
 
-let apesterUnitURL = "http://qmerce.github.io/static-testing-site/articles/injected2/"
+let apesterUnitURL = "https://qmerce.github.io/static-testing-site/articles/injected2/"
+//let apesterUnitURL = "http://localhost:3000"
 let apesterUnitURLRequest = URLRequest(url: URL(string: apesterUnitURL)!)
 
 #if USE_UIWEBVIEW

@@ -64,7 +64,7 @@ class ApesterKitSpec: QuickSpec {
         }
         it("webViewService bundle id must has a valid value") {
           waitUntil { done in
-            APEWebViewService.shared.webViewDidStartLoad(webView: viewController.webView!) { result in
+            APEWebViewService.shared.didStartLoad(webView: viewController.webView!) { result in
               switch result {
               case .success(let res):
                 expect(res).to(beTrue())
