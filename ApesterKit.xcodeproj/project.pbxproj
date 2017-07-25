@@ -15,7 +15,7 @@
 		BB14A5291F166852003E393D /* APEWebViewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB14A5281F166852003E393D /* APEWebViewService.swift */; };
 		BB14A5441F1754DB003E393D /* APE.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB14A5431F1754DB003E393D /* APE.swift */; };
 		BB14A6B41F1F58F6003E393D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB14A6B31F1F58F6003E393D /* AppDelegate.swift */; };
-		BB14A6B61F1F58F6003E393D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB14A6B51F1F58F6003E393D /* ViewController.swift */; };
+		BB14A6B61F1F58F6003E393D /* APEViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB14A6B51F1F58F6003E393D /* APEViewController.swift */; };
 		BB14A6B91F1F58F6003E393D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB14A6B71F1F58F6003E393D /* Main.storyboard */; };
 		BB14A6BB1F1F58F6003E393D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB14A6BA1F1F58F6003E393D /* Assets.xcassets */; };
 		BB14A6BE1F1F58F6003E393D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB14A6BC1F1F58F6003E393D /* LaunchScreen.storyboard */; };
@@ -23,6 +23,8 @@
 		BB14A6E51F1F5BB5003E393D /* ApesterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3549BB211DA389CD00C63030 /* ApesterKit.framework */; };
 		BB14A6E61F1F5BB5003E393D /* ApesterKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3549BB211DA389CD00C63030 /* ApesterKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BB14A6F01F1F6BE5003E393D /* ApesterKit.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BB14A6EC1F1F6619003E393D /* ApesterKit.bundle */; };
+		BB3D25201F273D1500363E75 /* APEUIWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3D251F1F273D1500363E75 /* APEUIWebViewController.swift */; };
+		BB3D25221F273D2300363E75 /* APEWKWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3D25211F273D2300363E75 /* APEWKWebViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -241,7 +243,7 @@
 		BB14A5431F1754DB003E393D /* APE.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APE.swift; sourceTree = "<group>"; };
 		BB14A6B11F1F58F6003E393D /* ApisterKitDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApisterKitDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB14A6B31F1F58F6003E393D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		BB14A6B51F1F58F6003E393D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		BB14A6B51F1F58F6003E393D /* APEViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEViewController.swift; sourceTree = "<group>"; };
 		BB14A6B81F1F58F6003E393D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BB14A6BA1F1F58F6003E393D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BB14A6BD1F1F58F6003E393D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -250,6 +252,8 @@
 		BB14A6C81F1F58F6003E393D /* ApisterKitDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApisterKitDemoTests.swift; sourceTree = "<group>"; };
 		BB14A6CA1F1F58F6003E393D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB14A6EC1F1F6619003E393D /* ApesterKit.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ApesterKit.bundle; sourceTree = "<group>"; };
+		BB3D251F1F273D1500363E75 /* APEUIWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APEUIWebViewController.swift; sourceTree = "<group>"; };
+		BB3D25211F273D2300363E75 /* APEWKWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APEWKWebViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -499,7 +503,9 @@
 			isa = PBXGroup;
 			children = (
 				BB14A6B31F1F58F6003E393D /* AppDelegate.swift */,
-				BB14A6B51F1F58F6003E393D /* ViewController.swift */,
+				BB14A6B51F1F58F6003E393D /* APEViewController.swift */,
+				BB3D251F1F273D1500363E75 /* APEUIWebViewController.swift */,
+				BB3D25211F273D2300363E75 /* APEWKWebViewController.swift */,
 				BB14A6B71F1F58F6003E393D /* Main.storyboard */,
 				BB14A6BA1F1F58F6003E393D /* Assets.xcassets */,
 				BB14A6BC1F1F58F6003E393D /* LaunchScreen.storyboard */,
@@ -874,7 +880,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BB14A6B61F1F58F6003E393D /* ViewController.swift in Sources */,
+				BB3D25221F273D2300363E75 /* APEWKWebViewController.swift in Sources */,
+				BB3D25201F273D1500363E75 /* APEUIWebViewController.swift in Sources */,
+				BB14A6B61F1F58F6003E393D /* APEViewController.swift in Sources */,
 				BB14A6B41F1F58F6003E393D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
