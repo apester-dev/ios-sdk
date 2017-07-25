@@ -8,6 +8,7 @@
 
 import UIKit
 import WebKit
+import ApesterKit
 
 class APEWKWebViewController: APEViewController {
 
