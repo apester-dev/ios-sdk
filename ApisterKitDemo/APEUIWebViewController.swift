@@ -20,10 +20,7 @@ class APEUIWebViewController: APEViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     webView = UIWebView(frame: webViewContainer.bounds)
-    guard let webView = webView else {
-      return
-    }
-    webViewContainer.addSubview(webView)
+    addWebView(webView)
     APEWebViewService.shared.register(bundle: Bundle.main)
   }
   
