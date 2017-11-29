@@ -626,7 +626,7 @@
 					3549BB201DA389CD00C63030 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = A3JC2SBNCR;
-						LastSwiftMigration = 0830;
+						LastSwiftMigration = 0910;
 						ProvisioningStyle = Automatic;
 					};
 					3549BB601DA38ADB00C63030 = {
@@ -637,11 +637,13 @@
 					BB14A6B01F1F58F6003E393D = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = A3JC2SBNCR;
+						LastSwiftMigration = 0910;
 						ProvisioningStyle = Automatic;
 					};
 					BB14A6C31F1F58F6003E393D = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = A3JC2SBNCR;
+						LastSwiftMigration = 0910;
 						ProvisioningStyle = Automatic;
 						TestTargetID = BB14A6B01F1F58F6003E393D;
 					};
@@ -1073,7 +1075,8 @@
 				PRODUCT_NAME = ApesterKit;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -1100,7 +1103,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.apester.ApesterKit;
 				PRODUCT_NAME = ApesterKit;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -1149,12 +1153,13 @@
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				DEVELOPMENT_TEAM = A3JC2SBNCR;
 				INFOPLIST_FILE = ApisterKitDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "-D DEBUG -D USE_UIWEBVIEW";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Apester.ApisterKitDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -1166,11 +1171,12 @@
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				DEVELOPMENT_TEAM = A3JC2SBNCR;
 				INFOPLIST_FILE = ApisterKitDemo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Apester.ApisterKitDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -1186,7 +1192,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Apester.ApisterKitDemoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ApisterKitDemo.app/ApisterKitDemo";
 			};
 			name = Debug;
@@ -1203,7 +1210,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Apester.ApisterKitDemoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ApisterKitDemo.app/ApisterKitDemo";
 			};
 			name = Release;

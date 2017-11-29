@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="tYg-bc-IMf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13189.4" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="tYg-bc-IMf">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13165.3"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -96,7 +96,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jw8-MK-Lkr" userLabel="TopView">
                                 <rect key="frame" x="0.0" y="20" width="375" height="66.5"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5D3-Xn-1BY">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="http://qmerce.github.io/static-testing-site/articles/streamrail_stage/" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5D3-Xn-1BY">
                                         <rect key="frame" x="9.5" y="18" width="300" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -122,6 +122,7 @@
                                     <constraint firstItem="eMU-cD-euW" firstAttribute="centerY" secondItem="Jw8-MK-Lkr" secondAttribute="centerY" id="jT7-8a-lB4"/>
                                     <constraint firstItem="5D3-Xn-1BY" firstAttribute="centerX" secondItem="Jw8-MK-Lkr" secondAttribute="centerX" multiplier="0.85" id="lQ3-1w-LyI"/>
                                     <constraint firstItem="eMU-cD-euW" firstAttribute="leading" secondItem="5D3-Xn-1BY" secondAttribute="trailing" multiplier="1.03" id="xo2-5m-TMe"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="eMU-cD-euW" secondAttribute="trailing" constant="11" id="yFV-Mz-DeS"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="shr-cX-BqJ" userLabel="WebViewContainer">
@@ -158,6 +159,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="tYg-bc-IMf" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="5eH-0v-hhL">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
