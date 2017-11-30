@@ -50,10 +50,20 @@ public class APEWebViewService: NSObject {
   fileprivate lazy var inputPayload: [String: Any] = {
     var inputPayload: [String: Any] = [:]
     // get the device advertisingIdentifier
-    let identifierManager = ASIdentifierManager.shared()
-    let idfa = identifierManager.advertisingIdentifier
-    inputPayload[APEConfig.Payload.advertisingId.rawValue] = idfa.uuidString
-    inputPayload[APEConfig.Payload.trackingEnabled.rawValue] = identifierManager.isAdvertisingTrackingEnabled
+    
+    #if swift(>=4.0)
+      let identifierManager = ASIdentifierManager.shared()
+      let idfa = identifierManager.advertisingIdentifier
+      inputPayload[APEConfig.Payload.advertisingId.rawValue] = idfa.uuidString
+      inputPayload[APEConfig.Payload.trackingEnabled.rawValue] = identifierManager.isAdvertisingTrackingEnabled
+    #else
+      if let identifierManager = ASIdentifierManager.shared(),
+        let idfa = identifierManager.advertisingIdentifier {
+        inputPayload[APEConfig.Payload.advertisingId.rawValue] = idfa.uuidString
+        inputPayload[APEConfig.Payload.trackingEnabled.rawValue] = identifierManager.isAdvertisingTrackingEnabled
+      }
+    #endif
+    
 
     if let bundle = self.bundle {
       // get the app bundleIdentifier
