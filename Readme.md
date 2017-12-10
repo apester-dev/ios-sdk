@@ -108,6 +108,30 @@ $ git submodule update --init --recursive
 
 > The `ApesterKit.framework` is automagically added as a target dependency, linked framework and embedded framework in a copy files build phase which is all you need to build on the simulator and a device.
 
+## Apester Embedding Script 
+
+Inside the WebView, where 59d54344f64720010063394c is  your  channel  token you should add the this embedding script - 
+```javascript
+<interaction   data-token=“ 59d54344f64720010063394c ”   data-context=“true”   data-tags=“” data-fallback=“true”></interaction>
+<script   async   src="//static.apester.com/js/sdk/v2.0/apester-javascript-sdk.min.js"></script> <script>
+        window.apesterLoadCallback  =  ()  =>  {
+            const  params  =  {
+                ifa:  window.APESTER.getGaid(),                 dnt:  window.apesterData.getIsLat(),
+                bundle_id:  window.APESTER.getPackageName(),             }
+                  window.APESTER.Init(params);
+        };
+      </script>
+```
+In   addition   you   should   register   to   the   following   events   that   will   be   sent   once   a   resize   event   is
+happening   in   our   unit,   and   the   WebView   should   get   a   new   size.
+
+```javascript
+window.APESTER.register(‘apester_resize_unit’,   (event)   =>   {         console.log(‘resize:’,  event.height);
+    })
+ 
+window.APESTER.register(‘scraper’,   (event)   =>   {         console.log(‘resize:’,  event.interaction.data.size.height);       })
+```
+
 ## Documentation
 
 ApesterKit [API Documentation](http://htmlpreview.github.io/?https://github.com/Qmerce/ios-sdk/blob/master/docs/index.html)
