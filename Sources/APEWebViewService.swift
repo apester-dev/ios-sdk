@@ -145,19 +145,27 @@ public extension APEWebViewService {
   typealias APEUnitHeightHandler = ((APEResult<CGFloat>) -> Void)
 
   /**
-   call register(bundle:webview:) function from viewDidLoad
+   call register(bundle:webview:unitHeightHandler:completionHandler:) function from viewDidLoad
    
    - Parameters:
       - bundle: the app main bundle
       - webview: the viewcontroller webview subview
-      - completionHandler: an optional callback with APEResult response
+      - unitHeightHandler: an optional callback with APEResult response of the apester unit height
+      - completionHandler: an optional callback with APEResult response of the api success or failure
    
    ### Usage Example: ###
    
    ````
    override func viewDidLoad() {
    super.viewDidLoad()
-   APEWebViewService.shared.register(bundle: Bundle.main, webView: self.webView)
+   APEWebViewService.shared.register(bundle: Bundle.main, webView: webView, unitHeightHandler: { [weak self] result in
+    switch result {
+    case .success(let height):
+      print(height)
+    case .failure(let err):
+      print(err)
+    }
+   })
    // your stuff here
    }
    ````
