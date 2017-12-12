@@ -112,7 +112,8 @@ $ git submodule update --init --recursive
 
 1 - register the app main bundle and the webView, In your viewController  viewDidLoad function:
 
-```APEWebViewService.shared.register(bundle: Bundle.main, webView: webView, unitHeightHandler: { [weak self] result in
+```
+APEWebViewService.shared.register(bundle: Bundle.main, webView: webView, unitHeightHandler: { [weak self] result in
 switch result {
 case .success(let height):
 print(height)
@@ -125,7 +126,8 @@ print(err)
 
 • UIWebView Case:
 
-```extension ViewController: UIWebViewDelegate {
+```
+extension ViewController: UIWebViewDelegate {
 func webViewDidStartLoad(_ webView: UIWebView) {
 APEWebViewService.shared.didStartLoad(webView: webView)
 }
@@ -138,7 +140,8 @@ APEWebViewService.shared.didFinishLoad(webView: webView)
 
 • WKWebView Case:
 
-```extension ViewController: WKNavigationDelegate {
+```
+extension ViewController: WKNavigationDelegate {
 func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
 APEWebViewService.shared.didStartLoad(webView: webView)
 }
