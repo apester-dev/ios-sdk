@@ -15,16 +15,18 @@
 		BB14A5291F166852003E393D /* APEWebViewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB14A5281F166852003E393D /* APEWebViewService.swift */; };
 		BB14A5441F1754DB003E393D /* APE.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB14A5431F1754DB003E393D /* APE.swift */; };
 		BB14A6B41F1F58F6003E393D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB14A6B31F1F58F6003E393D /* AppDelegate.swift */; };
-		BB14A6B91F1F58F6003E393D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB14A6B71F1F58F6003E393D /* Main.storyboard */; };
 		BB14A6BB1F1F58F6003E393D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB14A6BA1F1F58F6003E393D /* Assets.xcassets */; };
 		BB14A6BE1F1F58F6003E393D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB14A6BC1F1F58F6003E393D /* LaunchScreen.storyboard */; };
 		BB14A6C91F1F58F6003E393D /* ApisterKitDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB14A6C81F1F58F6003E393D /* ApisterKitDemoTests.swift */; };
 		BB14A6E51F1F5BB5003E393D /* ApesterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3549BB211DA389CD00C63030 /* ApesterKit.framework */; };
 		BB14A6E61F1F5BB5003E393D /* ApesterKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3549BB211DA389CD00C63030 /* ApesterKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BB14A6F01F1F6BE5003E393D /* ApesterKit.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BB14A6EC1F1F6619003E393D /* ApesterKit.bundle */; };
-		BB3D25201F273D1500363E75 /* APEUIWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3D251F1F273D1500363E75 /* APEUIWebViewController.swift */; };
-		BB3D25221F273D2300363E75 /* APEWKWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3D25211F273D2300363E75 /* APEWKWebViewController.swift */; };
-		BB3D25241F27449100363E75 /* APEViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3D25231F27449100363E75 /* APEViewController.swift */; };
+		BB3DD3761FDF47C80094A773 /* APEMustacheExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3DD3741FDF47C80094A773 /* APEMustacheExtension.swift */; };
+		BB3DD3771FDF47C80094A773 /* APEViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3DD3751FDF47C80094A773 /* APEViewController.swift */; };
+		BB3DD3791FDF47E70094A773 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB3DD3781FDF47E70094A773 /* Main.storyboard */; };
+		BBBDFA8D1FDF547000C2F791 /* Mustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBBDFA8B1FDF4D5300C2F791 /* Mustache.framework */; };
+		BBBDFA8E1FDF547000C2F791 /* Mustache.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BBBDFA8B1FDF4D5300C2F791 /* Mustache.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BBBDFA901FDF550800C2F791 /* Apester.mustache in Resources */ = {isa = PBXBuildFile; fileRef = BBBDFA8F1FDF550800C2F791 /* Apester.mustache */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -198,6 +200,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				BBBDFA8E1FDF547000C2F791 /* Mustache.framework in Embed Frameworks */,
 				BB14A6E61F1F5BB5003E393D /* ApesterKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -243,7 +246,6 @@
 		BB14A5431F1754DB003E393D /* APE.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APE.swift; sourceTree = "<group>"; };
 		BB14A6B11F1F58F6003E393D /* ApisterKitDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApisterKitDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB14A6B31F1F58F6003E393D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		BB14A6B81F1F58F6003E393D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BB14A6BA1F1F58F6003E393D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BB14A6BD1F1F58F6003E393D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BB14A6BF1F1F58F6003E393D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -251,9 +253,11 @@
 		BB14A6C81F1F58F6003E393D /* ApisterKitDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApisterKitDemoTests.swift; sourceTree = "<group>"; };
 		BB14A6CA1F1F58F6003E393D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB14A6EC1F1F6619003E393D /* ApesterKit.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ApesterKit.bundle; sourceTree = "<group>"; };
-		BB3D251F1F273D1500363E75 /* APEUIWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APEUIWebViewController.swift; sourceTree = "<group>"; };
-		BB3D25211F273D2300363E75 /* APEWKWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APEWKWebViewController.swift; sourceTree = "<group>"; };
-		BB3D25231F27449100363E75 /* APEViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APEViewController.swift; sourceTree = "<group>"; };
+		BB3DD3741FDF47C80094A773 /* APEMustacheExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APEMustacheExtension.swift; sourceTree = "<group>"; };
+		BB3DD3751FDF47C80094A773 /* APEViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APEViewController.swift; sourceTree = "<group>"; };
+		BB3DD3781FDF47E70094A773 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		BBBDFA8B1FDF4D5300C2F791 /* Mustache.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mustache.framework; path = Carthage/Build/iOS/Mustache.framework; sourceTree = "<group>"; };
+		BBBDFA8F1FDF550800C2F791 /* Apester.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Apester.mustache; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -278,6 +282,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBBDFA8D1FDF547000C2F791 /* Mustache.framework in Frameworks */,
 				BB14A6E51F1F5BB5003E393D /* ApesterKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -364,6 +369,7 @@
 		357D954B1DA3F2B400AEC55F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BBBDFA8B1FDF4D5300C2F791 /* Mustache.framework */,
 				35CA2A861E12920400147290 /* Quick.xcodeproj */,
 				35CA2A891E12920400147290 /* Nimble.xcodeproj */,
 			);
@@ -502,11 +508,10 @@
 		BB14A6B21F1F58F6003E393D /* ApisterKitDemo */ = {
 			isa = PBXGroup;
 			children = (
+				BBBDFA911FDF551600C2F791 /* Mustache */,
+				BB3DD3751FDF47C80094A773 /* APEViewController.swift */,
 				BB14A6B31F1F58F6003E393D /* AppDelegate.swift */,
-				BB3D25231F27449100363E75 /* APEViewController.swift */,
-				BB3D251F1F273D1500363E75 /* APEUIWebViewController.swift */,
-				BB3D25211F273D2300363E75 /* APEWKWebViewController.swift */,
-				BB14A6B71F1F58F6003E393D /* Main.storyboard */,
+				BB3DD3781FDF47E70094A773 /* Main.storyboard */,
 				BB14A6BA1F1F58F6003E393D /* Assets.xcassets */,
 				BB14A6BC1F1F58F6003E393D /* LaunchScreen.storyboard */,
 				BB14A6BF1F1F58F6003E393D /* Info.plist */,
@@ -521,6 +526,15 @@
 				BB14A6CA1F1F58F6003E393D /* Info.plist */,
 			);
 			path = ApisterKitDemoTests;
+			sourceTree = "<group>";
+		};
+		BBBDFA911FDF551600C2F791 /* Mustache */ = {
+			isa = PBXGroup;
+			children = (
+				BBBDFA8F1FDF550800C2F791 /* Apester.mustache */,
+				BB3DD3741FDF47C80094A773 /* APEMustacheExtension.swift */,
+			);
+			path = Mustache;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -827,9 +841,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBBDFA901FDF550800C2F791 /* Apester.mustache in Resources */,
 				BB14A6BE1F1F58F6003E393D /* LaunchScreen.storyboard in Resources */,
 				BB14A6BB1F1F58F6003E393D /* Assets.xcassets in Resources */,
-				BB14A6B91F1F58F6003E393D /* Main.storyboard in Resources */,
+				BB3DD3791FDF47E70094A773 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -880,10 +895,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BB3D25221F273D2300363E75 /* APEWKWebViewController.swift in Sources */,
-				BB3D25201F273D1500363E75 /* APEUIWebViewController.swift in Sources */,
+				BB3DD3771FDF47C80094A773 /* APEViewController.swift in Sources */,
 				BB14A6B41F1F58F6003E393D /* AppDelegate.swift in Sources */,
-				BB3D25241F27449100363E75 /* APEViewController.swift in Sources */,
+				BB3DD3761FDF47C80094A773 /* APEMustacheExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -926,14 +940,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		BB14A6B71F1F58F6003E393D /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BB14A6B81F1F58F6003E393D /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		BB14A6BC1F1F58F6003E393D /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1152,6 +1158,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				DEVELOPMENT_TEAM = A3JC2SBNCR;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = ApisterKitDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1169,6 +1179,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				DEVELOPMENT_TEAM = A3JC2SBNCR;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = ApisterKitDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

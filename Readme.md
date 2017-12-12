@@ -29,16 +29,16 @@ ApesterKit provides a light-weight framework that loads Apester Unit in a webVie
 $ gem install cocoapods
 ```
 
-> CocoaPods 1.1.0+ is required to build ApesterKit 1.1+.
+> CocoaPods 1.1.0+ is required to build ApesterKit 1.2+.
 
 To integrate ApesterKit into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
-source 'https://github.com/CocoaPods/Specs.git'
+source 'https://github.com/CocoaPods/Specs.git'```
 
 use_frameworks!
 
-pod 'ApesterKit', '~> 1.1'
+```pod 'ApesterKit', '~> 1.2'
 ```
 
 Then, run the following command:
@@ -61,7 +61,7 @@ $ brew install carthage
 To integrate ApesterKit into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "Qmerce/ios-sdk" ~> 1.1
+github "Qmerce/ios-sdk" ~> 1.2
 ```
 
 Then, run the following command:
@@ -92,7 +92,7 @@ $ git submodule update --init --recursive
 
 - Open the new `ApesterKit` folder, and drag the `ApesterKit.xcodeproj` into the Project Navigator of your application's Xcode project.
 
-    > It should appear nested underneath your application's blue project icon. Whether it is above or below all the other Xcode groups does not matter.
+> It should appear nested underneath your application's blue project icon. Whether it is above or below all the other Xcode groups does not matter.
 
 - Select the `ApesterKit.xcodeproj` in the Project Navigator and verify the deployment target matches that of your application target.
 - Next, select your application project in the Project Navigator (blue project icon) to navigate to the target configuration window and select the application target under the "Targets" heading in the sidebar.
@@ -100,7 +100,7 @@ $ git submodule update --init --recursive
 - Click on the `+` button under the "Embedded Binaries" section.
 - You will see two different `ApesterKit.xcodeproj` folders each with two different versions of the `ApesterKit.framework` nested inside a `Products` folder.
 
-    > It does not matter which `Products` folder you choose from.
+> It does not matter which `Products` folder you choose from.
 
 - Select the `ApesterKit.framework`.
 
@@ -108,10 +108,48 @@ $ git submodule update --init --recursive
 
 > The `ApesterKit.framework` is automagically added as a target dependency, linked framework and embedded framework in a copy files build phase which is all you need to build on the simulator and a device.
 
-## Documentation
+## Implementaion
 
-ApesterKit [API Documentation](http://htmlpreview.github.io/?https://github.com/Qmerce/ios-sdk/blob/master/docs/index.html)
+1 - register the app main bundle and the webView, In your viewController  viewDidLoad function:
+
+APEWebViewService.shared.register(bundle: Bundle.main, webView: webView, unitHeightHandler: { [weak self] result in
+switch result {
+case .success(let height):
+print(height)
+case .failure(let err):
+print(err)
+}})
+
+2 - pass the device advertising params and get the apester unit height update by calling didStartLoad and didFinishLoad:
+
+• UIWebView Case:
+
+extension ViewController: UIWebViewDelegate {
+func webViewDidStartLoad(_ webView: UIWebView) {
+APEWebViewService.shared.didStartLoad(webView: webView)
+}
+
+func webViewDidFinishLoad(_ webView: UIWebView) {
+APEWebViewService.shared.didFinishLoad(webView: webView)
+}
+}
+
+• WKWebView Case:
+
+extension ViewController: WKNavigationDelegate {
+func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+APEWebViewService.shared.didStartLoad(webView: webView)
+}
+
+func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+APEWebViewService.shared.didFinishLoad(webView: webView)
+}
+}
+
+
+[Read More... ](http://htmlpreview.github.io/?https://github.com/Qmerce/ios-sdk/blob/master/docs/index.html)
 
 ## License
 
 ApesterKit is released under the MIT license. See [LICENSE](https://github.com/Qmerce/ios-sdk/blob/master/LICENSE) for details.
+
