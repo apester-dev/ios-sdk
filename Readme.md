@@ -38,7 +38,7 @@ source 'https://github.com/CocoaPods/Specs.git'```
 
 use_frameworks!
 
-```pod 'ApesterKit', '~> 1.2'
+pod 'ApesterKit', '~> 1.2'
 ```
 
 Then, run the following command:
@@ -112,19 +112,20 @@ $ git submodule update --init --recursive
 
 1 - register the app main bundle and the webView, In your viewController  viewDidLoad function:
 
-APEWebViewService.shared.register(bundle: Bundle.main, webView: webView, unitHeightHandler: { [weak self] result in
+```APEWebViewService.shared.register(bundle: Bundle.main, webView: webView, unitHeightHandler: { [weak self] result in
 switch result {
 case .success(let height):
 print(height)
 case .failure(let err):
 print(err)
 }})
+```
 
 2 - pass the device advertising params and get the apester unit height update by calling didStartLoad and didFinishLoad:
 
 • UIWebView Case:
 
-extension ViewController: UIWebViewDelegate {
+```extension ViewController: UIWebViewDelegate {
 func webViewDidStartLoad(_ webView: UIWebView) {
 APEWebViewService.shared.didStartLoad(webView: webView)
 }
@@ -133,10 +134,11 @@ func webViewDidFinishLoad(_ webView: UIWebView) {
 APEWebViewService.shared.didFinishLoad(webView: webView)
 }
 }
+```
 
 • WKWebView Case:
 
-extension ViewController: WKNavigationDelegate {
+```extension ViewController: WKNavigationDelegate {
 func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
 APEWebViewService.shared.didStartLoad(webView: webView)
 }
@@ -145,7 +147,7 @@ func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
 APEWebViewService.shared.didFinishLoad(webView: webView)
 }
 }
-
+```
 
 [Read More... ](http://htmlpreview.github.io/?https://github.com/Qmerce/ios-sdk/blob/master/docs/index.html)
 
