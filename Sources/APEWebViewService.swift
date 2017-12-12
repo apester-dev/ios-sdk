@@ -38,7 +38,7 @@ public class APEWebViewService: NSObject {
   /// the app main bundle
   fileprivate var bundle: Bundle?
   fileprivate weak var webView: APEWebViewProtocol?
-  fileprivate var unitHeightHandler: APEUnitHeightHandler?
+  fileprivate var unitHeightHandlers: [Int: APEUnitHeightHandler] = [:]
 
   // the converted apesterLoadCallback js file to  string
   fileprivate lazy var loadCallbackJSString: String = {
@@ -133,7 +133,9 @@ extension APEWebViewService: WKScriptMessageHandler {
   public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
     // This takes a while, but eventually we'll the proper height here.
     guard let number = message.body as? NSNumber else { return }
-    unitHeightHandler?(APEResult.success(CGFloat(truncating: number) + 15))
+    unitHeightHandlers.forEach { (hash, handler) in
+      handler(APEResult.success(CGFloat(truncating: number) + 15))
+    }
   }
 }
 
@@ -175,7 +177,6 @@ public extension APEWebViewService {
                        completionHandler: APEResultHandler? = nil) {
     self.bundle = bundle
     self.webView = webView
-    self.unitHeightHandler = unitHeightHandler
 
     if let webview = webView as? WKWebView {
       // Load the script to be inserted into the template
@@ -185,6 +186,14 @@ public extension APEWebViewService {
       let config = webview.configuration
       config.userContentController.add(self, name: APEConfig.apesterCallbackFunction)
       config.userContentController.addUserScript(validationScript)
+
+      if let unitHeightHandler = unitHeightHandler {
+        self.unitHeightHandlers[webview.hashValue] = unitHeightHandler
+      }
+    }
+
+    if let webview = webView as? UIWebView, let unitHeightHandler = unitHeightHandler {
+        self.unitHeightHandlers[webview.hashValue] = unitHeightHandler
     }
 
     completionHandler?(APEResult.success(self.bundle != nil))
@@ -257,12 +266,14 @@ public extension APEWebViewService {
   public func didFinishLoad(webView: APEWebViewProtocol, completionHandler: APEResultHandler? = nil) {
     if webView is UIWebView {
       _ = self.evaluateJavaScript(self.registerJSString)
-
       if let value = self.evaluateJavaScript("window.\(APEConfig.apesterKitCallback)"),
         let number = NumberFormatter().number(from: value) {
-        unitHeightHandler?(APEResult.success(CGFloat(truncating: number) + 15))
+        unitHeightHandlers.forEach { (hash, handler) in
+          handler(APEResult.success(CGFloat(truncating: number) + 15))
+        }
       }
     }
+    completionHandler?(APEResult.success(true))
   }
 
 
