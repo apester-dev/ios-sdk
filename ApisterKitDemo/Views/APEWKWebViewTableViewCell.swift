@@ -21,11 +21,6 @@ class APEWKWebViewTableViewCell: APEWebViewTableViewCell {
     return webView
   }()
 
-  // The templated with the `mediaId` already injected.
-  private var sourceHTMLString: String? {
-    return Mustache.render("Apester", data: ["mediaId": "5a2ebfc283629700019469e7" as AnyObject])
-  }
-
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     setupWebContentView(webView: webView)

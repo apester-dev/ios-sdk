@@ -13,7 +13,7 @@ class APETableViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     tableView.rowHeight = UITableViewAutomaticDimension
-    tableView.estimatedRowHeight = 400
+    tableView.estimatedRowHeight = 200
     tableView.register(APEUIWebViewTableViewCell.self, forCellReuseIdentifier: "APEUIWebViewTableViewCell")
     tableView.register(APEWKWebViewTableViewCell.self, forCellReuseIdentifier: "APEWKWebViewTableViewCell")
   }
@@ -25,17 +25,17 @@ class APETableViewController: UITableViewController {
   }
 
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 1
+    return 2
   }
 
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    if (indexPath.section == 0) {
+    if (indexPath.row == 0) {
       let cell = tableView.dequeueReusableCell(withIdentifier: "APEUIWebViewTableViewCell", for: indexPath) as! APEUIWebViewTableViewCell
-      cell.configure(with: self)
+       cell.configure(mediaId: "5a302c281fcfe6000198cfd8", delegate: self)
       return cell
     } else {
       let cell = tableView.dequeueReusableCell(withIdentifier: "APEWKWebViewTableViewCell", for: indexPath) as! APEWKWebViewTableViewCell
-      cell.configure(with: self)
+      cell.configure(mediaId: "5a2ebfc283629700019469e7", delegate: self)
       return cell
     }
   }

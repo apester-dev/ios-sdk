@@ -21,6 +21,7 @@
 		BB14A6E51F1F5BB5003E393D /* ApesterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3549BB211DA389CD00C63030 /* ApesterKit.framework */; };
 		BB14A6E61F1F5BB5003E393D /* ApesterKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3549BB211DA389CD00C63030 /* ApesterKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BB14A6F01F1F6BE5003E393D /* ApesterKit.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BB14A6EC1F1F6619003E393D /* ApesterKit.bundle */; };
+		BB29529C1FE07E9C000C78B5 /* APEViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB29529B1FE07E9C000C78B5 /* APEViewController.swift */; };
 		BB328DDB1FDFF3D900A0A159 /* APETableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB328DDA1FDFF3D900A0A159 /* APETableViewController.swift */; };
 		BB328DF31FDFF46500A0A159 /* APEWKWebViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB328DF21FDFF46500A0A159 /* APEWKWebViewTableViewCell.swift */; };
 		BB328DF61FE014D200A0A159 /* APEUIWebViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB328DF01FDFF44500A0A159 /* APEUIWebViewTableViewCell.swift */; };
@@ -256,6 +257,7 @@
 		BB14A6C81F1F58F6003E393D /* ApisterKitDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApisterKitDemoTests.swift; sourceTree = "<group>"; };
 		BB14A6CA1F1F58F6003E393D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB14A6EC1F1F6619003E393D /* ApesterKit.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ApesterKit.bundle; sourceTree = "<group>"; };
+		BB29529B1FE07E9C000C78B5 /* APEViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEViewController.swift; sourceTree = "<group>"; };
 		BB328DDA1FDFF3D900A0A159 /* APETableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APETableViewController.swift; sourceTree = "<group>"; };
 		BB328DF01FDFF44500A0A159 /* APEUIWebViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUIWebViewTableViewCell.swift; sourceTree = "<group>"; };
 		BB328DF21FDFF46500A0A159 /* APEWKWebViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEWKWebViewTableViewCell.swift; sourceTree = "<group>"; };
@@ -539,6 +541,7 @@
 			isa = PBXGroup;
 			children = (
 				BB328DDA1FDFF3D900A0A159 /* APETableViewController.swift */,
+				BB29529B1FE07E9C000C78B5 /* APEViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -923,6 +926,7 @@
 				BB328DDB1FDFF3D900A0A159 /* APETableViewController.swift in Sources */,
 				BB328DF31FDFF46500A0A159 /* APEWKWebViewTableViewCell.swift in Sources */,
 				BB328DF71FE014DA00A0A159 /* APEWebViewTableViewCell.swift in Sources */,
+				BB29529C1FE07E9C000C78B5 /* APEViewController.swift in Sources */,
 				BB14A6B41F1F58F6003E393D /* AppDelegate.swift in Sources */,
 				BB328DF61FE014D200A0A159 /* APEUIWebViewTableViewCell.swift in Sources */,
 				BB3DD3761FDF47C80094A773 /* APEMustacheExtension.swift in Sources */,

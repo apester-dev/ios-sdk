@@ -21,11 +21,6 @@ class APEWebViewTableViewCell: UITableViewCell {
   private var heightConstraint: NSLayoutConstraint?
   var webContentView : APEWebViewProtocol?
 
-  // The templated with the `mediaId` already injected.
-  private var sourceHTMLString: String? {
-    return Mustache.render("Apester", data: ["mediaId": "5a2ebfc283629700019469e7" as AnyObject])
-  }
-
   fileprivate var didLoadContent = false
 
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -67,9 +62,12 @@ class APEWebViewTableViewCell: UITableViewCell {
     fatalError("init(coder:) has not been implemented")
   }
 
-
   /// Starts loading the Mustache template and inserts the `mediaId`.
-  private func loadContent() {
+  private func loadContent(with mediaId: String) {
+    // The templated with the `mediaId` already injected.
+    var sourceHTMLString: String? {
+      return Mustache.render("Apester", data: ["mediaId": mediaId as AnyObject])
+    }
     guard let sourceString = sourceHTMLString else { return }
     if let webview = webContentView as? UIWebView {
       webview.loadHTMLString(sourceString, baseURL: URL(string: "file://"))
@@ -79,10 +77,10 @@ class APEWebViewTableViewCell: UITableViewCell {
     }
   }
 
-  func configure(with delegate: APEWebViewTableViewCellDelegate?) {
+  func configure(mediaId: String, delegate: APEWebViewTableViewCellDelegate?) {
     guard !didLoadContent else { return }
     self.delegate = delegate
-    self.loadContent()
+    self.loadContent(with: mediaId)
     didLoadContent = true
   }
 }

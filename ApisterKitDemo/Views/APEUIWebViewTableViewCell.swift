@@ -10,7 +10,7 @@ import UIKit
 import ApesterKit
 
 class APEUIWebViewTableViewCell: APEWebViewTableViewCell {
-
+  
   private lazy var webView: UIWebView = {
     // Create the web view
     let webView = UIWebView(frame: .zero)
@@ -19,11 +19,6 @@ class APEUIWebViewTableViewCell: APEWebViewTableViewCell {
     webView.delegate = self
     return webView
   }()
-
-  // The templated with the `mediaId` already injected.
-  private var sourceHTMLString: String? {
-    return Mustache.render("Apester", data: ["mediaId": "5a2ebfc283629700019469e7" as AnyObject])
-  }
 
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
