@@ -153,11 +153,12 @@ APEWebViewService.shared.didFinishLoad(webView: webView)
 ```
 
 Clone the project and Run the ApesterKitDemo App:
-
-• clone it `git clone git@github.com:Qmerce/ios-sdk.git`
-•  run `carthage update`
-• select ApesterKitDemo Target
-• run the App and enjoy
+```
+1 - clone it `git clone git@github.com:Qmerce/ios-sdk.git`.
+2 -  run `carthage update`.
+3 - select ApesterKitDemo Target.
+4 - run the App and enjoy.
+```
 
 [Read More About ApesterKit... ](http://htmlpreview.github.io/?https://github.com/Qmerce/ios-sdk/blob/master/docs/index.html)
 
