@@ -12,7 +12,7 @@ import WebKit
 /**
  APEWebViewProtocol where UIWebView && WKWebView confirms to it
  */
-public protocol APEWebViewProtocol: class {}
+public protocol APEWebViewProtocol: NSObjectProtocol {}
 
 extension UIWebView: APEWebViewProtocol {}
 extension WKWebView: APEWebViewProtocol {}

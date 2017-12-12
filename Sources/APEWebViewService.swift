@@ -26,8 +26,6 @@ private struct APEConfig {
   //
   static let apesterCallbackFunction = "apesterCallback"
   static let apesterKitCallback = "apesterKitCallback"
-
-  
 }
 
 /// APEWebViewService provides a light-weight framework that loads Apester Unit in a webView
@@ -37,8 +35,9 @@ public class APEWebViewService: NSObject {
 
   /// the app main bundle
   fileprivate var bundle: Bundle?
-  fileprivate weak var webView: APEWebViewProtocol?
   fileprivate var unitHeightHandlers: [Int: APEUnitHeightHandler] = [:]
+  fileprivate var unitsLoadedSet = Set<Int>()
+  fileprivate var unitsHeightUpdatedSet = Set<Int>()
 
   // the converted apesterLoadCallback js file to  string
   fileprivate lazy var loadCallbackJSString: String = {
@@ -109,22 +108,37 @@ public class APEWebViewService: NSObject {
     return nil
   }
 
+  // Load the script to be inserted into the template
+  fileprivate lazy var script = WKUserScript(source: registerJSString, injectionTime: .atDocumentStart, forMainFrameOnly: true)
+
   // evaluateJavaScript on UIWebView or WKWebView
-  fileprivate func evaluateJavaScript(_ javaScriptString: String? = nil) -> String? {
+  fileprivate func evaluateJavaScript(_ javaScriptString: String? = nil, webView: APEWebViewProtocol) -> String? {
     guard let javaScriptString = javaScriptString else {
       return nil
     }
-    
-    if let webView = self.webView as? UIWebView {
+
+    if let webView = webView as? UIWebView {
       // invoke stringByEvaluatingJavaScript in case of you are using UIWebView
       return webView.stringByEvaluatingJavaScript(from: javaScriptString)
-      
-    } else if let webView = self.webView as? WKWebView {
+
+    } else if let webView = webView as? WKWebView {
       // invoke stringByEvaluatingJavaScript(_: completionHandler) in case of you are using WKWebView
       webView.evaluateJavaScript(javaScriptString) { (_, _) in }
-      return ""
     }
-    return nil
+
+    return ""
+  }
+
+  fileprivate func updateUIWebViewUnitHeight(for webView: APEWebViewProtocol) {
+    _ = self.evaluateJavaScript(self.registerJSString, webView: webView)
+    if let value = self.evaluateJavaScript("window.\(APEConfig.apesterKitCallback)", webView: webView),
+      let number = NumberFormatter().number(from: value) {
+      if let webview = webView as? UIWebView {
+        unitsHeightUpdatedSet.insert(webview.hashValue)
+        self.unitHeightHandlers[webview.hashValue]?(APEResult.success(CGFloat(truncating: number) + 15))
+        self.unitHeightHandlers[webview.hashValue] = nil
+      }
+    }
   }
 }
 
@@ -133,9 +147,8 @@ extension APEWebViewService: WKScriptMessageHandler {
   public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
     // This takes a while, but eventually we'll the proper height here.
     guard let number = message.body as? NSNumber else { return }
-    unitHeightHandlers.forEach { (hash, handler) in
-      handler(APEResult.success(CGFloat(truncating: number) + 15))
-    }
+    self.unitHeightHandlers[userContentController.hashValue]?(APEResult.success(CGFloat(truncating: number) + 15))
+    self.unitHeightHandlers[userContentController.hashValue] = nil
   }
 }
 
@@ -173,30 +186,27 @@ public extension APEWebViewService {
    ````
    */
   public func register(bundle: Bundle, webView: APEWebViewProtocol,
-                       unitHeightHandler: APEUnitHeightHandler? = nil,
-                       completionHandler: APEResultHandler? = nil) {
+                       unitHeightHandler: APEUnitHeightHandler? = nil, completionHandler: APEResultHandler? = nil) {
     self.bundle = bundle
-    self.webView = webView
 
     if let webview = webView as? WKWebView {
-      // Load the script to be inserted into the template
-      let validationScript = WKUserScript(source: registerJSString, injectionTime: .atDocumentStart, forMainFrameOnly: true)
-      
+
       // Create a config and add the listener and the custom script
       let config = webview.configuration
-      config.userContentController.add(self, name: APEConfig.apesterCallbackFunction)
-      config.userContentController.addUserScript(validationScript)
+      if !config.userContentController.userScripts.contains(script) {
+        config.userContentController.add(self, name: APEConfig.apesterCallbackFunction)
+        config.userContentController.addUserScript(script)
 
-      if let unitHeightHandler = unitHeightHandler {
-        self.unitHeightHandlers[webview.hashValue] = unitHeightHandler
+        if let unitHeightHandler = unitHeightHandler {
+          self.unitHeightHandlers[config.userContentController.hashValue] = unitHeightHandler
+        }
       }
-    }
-
-    if let webview = webView as? UIWebView, let unitHeightHandler = unitHeightHandler {
+    } else if let webview = webView as? UIWebView,
+      let unitHeightHandler = unitHeightHandler {
         self.unitHeightHandlers[webview.hashValue] = unitHeightHandler
     }
 
-    completionHandler?(APEResult.success(self.bundle != nil))
+    completionHandler?(APEResult.success(self.bundle != nil && !self.unitHeightHandlers.isEmpty))
   }
   
   /**
@@ -225,15 +235,24 @@ public extension APEWebViewService {
    ````
    */
   public func didStartLoad(webView: APEWebViewProtocol, completionHandler: APEResultHandler? = nil) {
-
+    if let webview = webView as? WKWebView {
+      guard !unitsLoadedSet.contains(webview.configuration.userContentController.hashValue) else {
+        return
+      }
+      unitsLoadedSet.insert(webview.configuration.userContentController.hashValue)
+    } else if let webview = webView as? UIWebView {
+      guard !unitsLoadedSet.contains(webview.hashValue) else {
+        return
+      }
+      unitsLoadedSet.insert(webview.hashValue)
+    }
     // declaration of loadCallbackJS (initAdevrtisingParams function)
-    var res = self.evaluateJavaScript(self.loadCallbackJSString)
+    var res = self.evaluateJavaScript(self.loadCallbackJSString, webView: webView)
     
     // call initAdevrtisingParams function with the device params info
-    res = self.evaluateJavaScript(self.adevrtisingParamsJSFunctionString)
+    res = self.evaluateJavaScript(self.adevrtisingParamsJSFunctionString, webView: webView)
     completionHandler?(APEResult.success(res != nil))
   }
-
 
   /**
    call didFinishLoad(webView:) function once the webview delegate didFinishLoad triggered,
@@ -263,15 +282,13 @@ public extension APEWebViewService {
    }
    ````
    */
+
   public func didFinishLoad(webView: APEWebViewProtocol, completionHandler: APEResultHandler? = nil) {
-    if webView is UIWebView {
-      _ = self.evaluateJavaScript(self.registerJSString)
-      if let value = self.evaluateJavaScript("window.\(APEConfig.apesterKitCallback)"),
-        let number = NumberFormatter().number(from: value) {
-        unitHeightHandlers.forEach { (hash, handler) in
-          handler(APEResult.success(CGFloat(truncating: number) + 15))
-        }
+    if let webview = webView as? UIWebView {
+      guard !unitsHeightUpdatedSet.contains(webview.hashValue) else {
+        return
       }
+      updateUIWebViewUnitHeight(for: webview)
     }
     completionHandler?(APEResult.success(true))
   }
