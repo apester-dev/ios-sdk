@@ -44,7 +44,7 @@ class ApesterKitSpec: QuickSpec {
         it("Bundle must be an instance Bundle.main") {
 
           waitUntil { done in
-            APEWebViewService.shared.register(bundle: Bundle.main) { result in
+            APEWebViewService.shared.register(bundle: Bundle.main, webView: viewController.webView!) { result in
               switch result {
               case .success(let res):
                 expect(res).to(beTrue())
@@ -60,11 +60,31 @@ class ApesterKitSpec: QuickSpec {
       context("webView did start load") {
         beforeEach {
           viewController.viewDidLoad()
-          APEWebViewService.shared.register(bundle: Bundle.main)
+          APEWebViewService.shared.register(bundle: Bundle.main, webView: viewController.webView!)
         }
         it("webViewService bundle id must has a valid value") {
           waitUntil { done in
             APEWebViewService.shared.didStartLoad(webView: viewController.webView!) { result in
+              switch result {
+              case .success(let res):
+                expect(res).to(beTrue())
+              case .failure(let err):
+                expect(err).notTo(beNil())
+              }
+              done()
+            }
+          }
+        }
+      }
+      // 3
+      context("webView did finish load") {
+        beforeEach {
+          viewController.viewDidLoad()
+          APEWebViewService.shared.register(bundle: Bundle.main, webView: viewController.webView!)
+        }
+        it("webViewService bundle id must has a valid value") {
+          waitUntil { done in
+            APEWebViewService.shared.didFinishLoad(webView: viewController.webView!) { result in
               switch result {
               case .success(let res):
                 expect(res).to(beTrue())

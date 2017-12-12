@@ -1,0 +1,16 @@
+function init() {
+  if (!window.APESTER) {
+      window.setTimeout(init, 20);
+  } else {
+      window.APESTER.register('scraper', function (result) {
+        if (!window.apesterKitCallback) {
+            console.log('apester register scraper result');
+            if (window.webkit && window.webkit.messageHandlers) { // WKWebView case
+              window.webkit.messageHandlers.apesterCallback.postMessage(result.interaction.data.size.height);
+            }  // UIWebView case
+            window.apesterKitCallback = result.interaction.data.size.height;
+        }
+      });
+  }
+}
+init();
