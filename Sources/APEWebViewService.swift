@@ -208,7 +208,7 @@ public extension APEWebViewService {
         self.unitHeightHandlers[webview.hashValue] = unitHeightHandler
     }
 
-    completionHandler?(APEResult.success(self.bundle != nil && !self.unitHeightHandlers.isEmpty))
+    completionHandler?(APEResult.success(self.bundle != nil))
   }
   
   /**
