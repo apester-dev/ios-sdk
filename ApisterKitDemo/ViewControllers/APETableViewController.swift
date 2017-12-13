@@ -10,6 +10,9 @@ import UIKit
 
 class APETableViewController: UITableViewController {
 
+  let mediaIds: [Int: [String]] = [0: ["5a302c281fcfe6000198cfd8", "5a2ebfc283629700019469e7"],
+                                   1: ["5a302c281fcfe6000198cfd8", "5a2ebfc283629700019469e7"]]
+
   override func viewDidLoad() {
     super.viewDidLoad()
     tableView.rowHeight = UITableViewAutomaticDimension
@@ -21,21 +24,23 @@ class APETableViewController: UITableViewController {
   // MARK: - Table view data source
 
   override func numberOfSections(in tableView: UITableView) -> Int {
-    return 2
+    return mediaIds.count
   }
 
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 2
+    return mediaIds[section]?.count ?? 0
   }
 
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    if (indexPath.row == 0) {
-      let cell = tableView.dequeueReusableCell(withIdentifier: "APEUIWebViewTableViewCell", for: indexPath) as! APEUIWebViewTableViewCell
-       cell.configure(mediaId: "5a302c281fcfe6000198cfd8", delegate: self)
+    let mediaId = mediaIds[indexPath.section]?[indexPath.row] ?? ""
+
+    if (indexPath.section == 0) {
+      let cell = tableView.dequeueReusableCell(withIdentifier: "APEUIWebViewTableViewCell", for: indexPath) as? APEUIWebViewTableViewCell ?? APEUIWebViewTableViewCell()
+       cell.configure(mediaId: mediaId, delegate: self)
       return cell
     } else {
-      let cell = tableView.dequeueReusableCell(withIdentifier: "APEWKWebViewTableViewCell", for: indexPath) as! APEWKWebViewTableViewCell
-      cell.configure(mediaId: "5a2ebfc283629700019469e7", delegate: self)
+      let cell: APEWKWebViewTableViewCell = tableView.dequeueReusableCell(withIdentifier: "APEWKWebViewTableViewCell", for: indexPath)  as? APEWKWebViewTableViewCell ?? APEWKWebViewTableViewCell()
+      cell.configure(mediaId: mediaId, delegate: self)
       return cell
     }
   }
