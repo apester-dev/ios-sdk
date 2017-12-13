@@ -29,6 +29,11 @@ class APEWKWebViewTableViewCell: APEWebViewTableViewCell {
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+
+  override func loadContent(with mediaId: String) {
+    print("loadContent \(mediaId)")
+    super.loadContent(with: mediaId)
+  }
 }
 
 extension APEWKWebViewTableViewCell: WKNavigationDelegate {

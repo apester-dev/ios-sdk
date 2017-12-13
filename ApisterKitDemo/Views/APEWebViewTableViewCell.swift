@@ -62,8 +62,12 @@ class APEWebViewTableViewCell: UITableViewCell {
     fatalError("init(coder:) has not been implemented")
   }
 
+  deinit {
+
+  }
+
   /// Starts loading the Mustache template and inserts the `mediaId`.
-  private func loadContent(with mediaId: String) {
+  func loadContent(with mediaId: String) {
     // The templated with the `mediaId` already injected.
     var sourceHTMLString: String? {
       return Mustache.render("Apester", data: ["mediaId": mediaId as AnyObject])
