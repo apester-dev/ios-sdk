@@ -108,11 +108,6 @@ public class APEWebViewService: NSObject {
     return nil
   }
 
-  // Load the script to be inserted into the template
-  fileprivate func script() -> WKUserScript {
-    return WKUserScript(source: registerJSString, injectionTime: .atDocumentStart, forMainFrameOnly: true)
-  }
-
   // evaluateJavaScript on UIWebView or WKWebView
   fileprivate func evaluateJavaScript(_ javaScriptString: String? = nil, webView: APEWebViewProtocol) -> String? {
     guard let javaScriptString = javaScriptString else {
@@ -195,14 +190,17 @@ public extension APEWebViewService {
 
       // Create a config and add the listener and the custom script
       let config = webview.configuration
-      if !config.userContentController.userScripts.contains(self.script()) {
-        config.userContentController.add(self, name: APEConfig.apesterCallbackFunction)
-        config.userContentController.addUserScript(self.script())
+
+      // Load the script to be inserted into the template
+      let script = WKUserScript(source: registerJSString, injectionTime: .atDocumentStart, forMainFrameOnly: true)
+
+      config.userContentController.removeScriptMessageHandler(forName: APEConfig.apesterCallbackFunction)
+      config.userContentController.add(self, name: APEConfig.apesterCallbackFunction)
+      config.userContentController.addUserScript(script)
 
         if let unitHeightHandler = unitHeightHandler {
           self.unitHeightHandlers[config.userContentController.hashValue] = unitHeightHandler
         }
-      }
     } else if let webview = webView as? UIWebView,
       let unitHeightHandler = unitHeightHandler {
         self.unitHeightHandlers[webview.hashValue] = unitHeightHandler
