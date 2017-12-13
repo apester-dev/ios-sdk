@@ -16,12 +16,11 @@ protocol APEWebViewTableViewCellDelegate: NSObjectProtocol {
 
 
 class APEWebViewTableViewCell: UITableViewCell {
+  var webContentView : APEWebViewProtocol?
   weak var delegate: APEWebViewTableViewCellDelegate?
+
   private let initialHeight: CGFloat = 400
   private var heightConstraint: NSLayoutConstraint?
-  var webContentView : APEWebViewProtocol?
-
-  fileprivate var didLoadContent = false
 
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -37,7 +36,7 @@ class APEWebViewTableViewCell: UITableViewCell {
 
     // Auto Layout
     let heightConstraint = webview.heightAnchor.constraint(equalToConstant: initialHeight)
-    heightConstraint.priority = 999
+    heightConstraint.priority = UILayoutPriority(rawValue: 999)
 
     NSLayoutConstraint.activate([
       contentView.topAnchor.constraint(equalTo: webview.topAnchor),
@@ -78,10 +77,8 @@ class APEWebViewTableViewCell: UITableViewCell {
   }
 
   func configure(mediaId: String, delegate: APEWebViewTableViewCellDelegate?) {
-    guard !didLoadContent else { return }
     self.delegate = delegate
     self.loadContent(with: mediaId)
-    didLoadContent = true
   }
 }
 

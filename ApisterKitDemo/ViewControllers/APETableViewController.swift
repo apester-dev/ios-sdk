@@ -10,8 +10,8 @@ import UIKit
 
 class APETableViewController: UITableViewController {
 
-  let mediaIds: [Int: [String]] = [0: ["5a302c281fcfe6000198cfd8", "5a2ebfc283629700019469e7"],
-                                   1: ["5a302c281fcfe6000198cfd8", "5a2ebfc283629700019469e7"]]
+  let mediaIds: [Int: [String]] = [0: ["5a302c281fcfe6000198cfd8", "5a31346691af9500014e28bb", "5a2ebfc283629700019469e7"],
+                                   1: ["5a31346691af9500014e28bb", "5a2ebfc283629700019469e7", "5a302c281fcfe6000198cfd8"]]
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -41,12 +41,13 @@ class APETableViewController: UITableViewController {
     } else {
       let cell: APEWKWebViewTableViewCell = tableView.dequeueReusableCell(withIdentifier: "APEWKWebViewTableViewCell", for: indexPath)  as? APEWKWebViewTableViewCell ?? APEWKWebViewTableViewCell()
       cell.configure(mediaId: mediaId, delegate: self)
+      print("indexPath - \(indexPath)")
       return cell
     }
   }
 
   override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return section == 0 ? "UI WebView" : "WK WebView"
+    return "\(section)" // " == 0 ? "UI WebView" : "WK WebView"
   }
 }
 

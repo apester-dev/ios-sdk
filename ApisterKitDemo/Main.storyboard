@@ -58,7 +58,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="HxZ-9m-hf0" kind="push" id="KCr-Mz-ZMu"/>
+                                            <segue destination="HxZ-9m-hf0" kind="show" id="KCr-Mz-ZMu"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -82,7 +82,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="qWs-3Z-apY" kind="push" id="VUL-Op-KVb"/>
+                                            <segue destination="qWs-3Z-apY" kind="show" id="VUL-Op-KVb"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
