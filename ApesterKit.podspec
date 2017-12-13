@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
  s.name = 'ApesterKit'
- s.version = '1.2.3'
+ s.version = '1.2.4'
  s.license = { :type => "MIT", :file => "LICENSE" }
  s.summary = 'ApesterKit provides a light-weight framework that loads Apester Unit in a webView'
  s.homepage = 'https://github.com/Qmerce/ios-sdk.git'
