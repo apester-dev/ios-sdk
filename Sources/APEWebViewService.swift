@@ -37,7 +37,6 @@ public class APEWebViewService: NSObject {
   fileprivate var bundle: Bundle?
   fileprivate var unitHeightHandlers: [Int: APEUnitHeightHandler] = [:]
   fileprivate var unitsLoadedSet = Set<Int>()
-  fileprivate var unitsHeightUpdatedSet = Set<Int>()
 
   // the converted apesterLoadCallback js file to  string
   fileprivate lazy var loadCallbackJSString: String = {
@@ -126,15 +125,15 @@ public class APEWebViewService: NSObject {
     return ""
   }
 
-  fileprivate func updateUIWebViewUnitHeight(for webView: APEWebViewProtocol) {
+  fileprivate func updateUIWebViewUnitHeight(for webView: UIWebView) {
+    guard let handler = self.unitHeightHandlers[webView.hashValue] else {
+      return 
+    }
     _ = self.evaluateJavaScript(self.registerJSString, webView: webView)
     if let value = self.evaluateJavaScript("window.\(APEConfig.apesterKitCallback)", webView: webView),
       let number = NumberFormatter().number(from: value) {
-      if let webview = webView as? UIWebView {
-        unitsHeightUpdatedSet.insert(webview.hashValue)
-        self.unitHeightHandlers[webview.hashValue]?(APEResult.success(CGFloat(truncating: number) + 15))
-        self.unitHeightHandlers[webview.hashValue] = nil
-      }
+        handler(APEResult.success(CGFloat(truncating: number) + 15))
+        self.unitHeightHandlers[webView.hashValue] = nil
     }
   }
 }
@@ -142,9 +141,12 @@ public class APEWebViewService: NSObject {
 // MARK: - WKScriptMessageHandler
 extension APEWebViewService: WKScriptMessageHandler {
   public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+    guard let handler = self.unitHeightHandlers[userContentController.hashValue] else {
+      return
+    }
     // This takes a while, but eventually we'll the proper height here.
     guard let number = message.body as? NSNumber else { return }
-    self.unitHeightHandlers[userContentController.hashValue]?(APEResult.success(CGFloat(truncating: number) + 15))
+    handler(APEResult.success(CGFloat(truncating: number) + 15))
     self.unitHeightHandlers[userContentController.hashValue] = nil
   }
 }
@@ -285,9 +287,6 @@ public extension APEWebViewService {
 
   public func didFinishLoad(webView: APEWebViewProtocol, completionHandler: APEResultHandler? = nil) {
     if let webview = webView as? UIWebView {
-      guard !unitsHeightUpdatedSet.contains(webview.hashValue) else {
-        return
-      }
       updateUIWebViewUnitHeight(for: webview)
     }
     completionHandler?(APEResult.success(true))
