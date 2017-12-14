@@ -11,7 +11,7 @@ import WebKit
 import ApesterKit
 
 class APEWKWebViewTableViewCell: APEWebViewTableViewCell {
-
+  var didStartLoad = false
   private lazy var webView: WKWebView = {
     // Create the web view
     let webView = WKWebView(frame: .zero, configuration: WKWebViewConfiguration())
@@ -33,7 +33,10 @@ class APEWKWebViewTableViewCell: APEWebViewTableViewCell {
 
 extension APEWKWebViewTableViewCell: WKNavigationDelegate {
   func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-    APEWebViewService.shared.didStartLoad(webView: webView)
+    if !didStartLoad {
+      didStartLoad = true
+      APEWebViewService.shared.didStartLoad(webView: webView)
+    }
   }
 
   func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {

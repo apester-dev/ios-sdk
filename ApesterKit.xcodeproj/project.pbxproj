@@ -679,11 +679,13 @@
 					BB14A6B01F1F58F6003E393D = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = A3JC2SBNCR;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
 					BB14A6C31F1F58F6003E393D = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = A3JC2SBNCR;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 						TestTargetID = BB14A6B01F1F58F6003E393D;
 					};
@@ -1200,7 +1202,8 @@
 				OTHER_SWIFT_FLAGS = "-D DEBUG -D USE_UIWEBVIEW";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Apester.ApisterKitDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -1220,7 +1223,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Apester.ApisterKitDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -1236,7 +1240,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Apester.ApisterKitDemoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ApisterKitDemo.app/ApisterKitDemo";
 			};
 			name = Debug;
@@ -1253,7 +1258,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Apester.ApisterKitDemoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ApisterKitDemo.app/ApisterKitDemo";
 			};
 			name = Release;
