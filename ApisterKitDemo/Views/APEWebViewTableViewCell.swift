@@ -30,7 +30,7 @@ class APEWebViewTableViewCell: UITableViewCell {
     guard let webview = webView as? UIView else {
       return
     }
-    
+
     self.webContentView = webView
     contentView.addSubview(webview)
 
@@ -50,13 +50,15 @@ class APEWebViewTableViewCell: UITableViewCell {
       switch result {
       case .success(let height):
         self?.heightConstraint?.constant = height
+        self?.heightAnchor.constraint(equalToConstant: height).isActive = true
+        self?.layoutIfNeeded()
         self?.delegate?.didUpdateApesterUnitHeight()
       case .failure(let err):
         print(err)
       }
     })
   }
-  
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
