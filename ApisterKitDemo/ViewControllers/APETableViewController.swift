@@ -41,7 +41,6 @@ class APETableViewController: UITableViewController {
     } else {
       let cell: APEWKWebViewTableViewCell = tableView.dequeueReusableCell(withIdentifier: "APEWKWebViewTableViewCell", for: indexPath)  as? APEWKWebViewTableViewCell ?? APEWKWebViewTableViewCell()
       cell.configure(mediaId: mediaId, delegate: self)
-      print("indexPath - \(indexPath)")
       return cell
     }
   }
