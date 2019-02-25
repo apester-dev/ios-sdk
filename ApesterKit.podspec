@@ -10,5 +10,8 @@ Pod::Spec.new do |s|
  s.platforms     = { :ios => "8.0"}
  s.requires_arc = true
  s.source_files = "ApesterKit", "Sources/*.{h,m,swift}"
+ s.resource_bundles = {
+   'ApesterKit' => ['Sources/ApesterKit.bundle/*']
+  }
 
 end
