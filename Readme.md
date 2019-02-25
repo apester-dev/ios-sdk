@@ -112,7 +112,7 @@ $ git submodule update --init --recursive
 ### `APEStripService` Implementaion
 1 - register the app main bundle, token and Domain from your `StripViewController`  `viewDidLoad` function:
 ```
-APEStripService.shared.register(bundle: Bundle.main, token: myToken, domain: myDomain)
+APEStripService.shared.register(bundle: Bundle.main, token: "5890a541a9133e0e000e31aa")
 ```
 
 2 - set `APEStripServiceStoryDatasource`, so you can handle story unit presentation. 
@@ -129,15 +129,18 @@ self.view.addSubview(stripWebView)
 
 4 - implement the `APEStripServiceStoryDatasource`
 ```
-extension StripViewController: APEStripServiceStoryDatasource {
+extension StripViewController: APEStripServiceDatasource {
   var showStoryFunction: String { 
-    self.stripStoryViewController = APEStripStoryViewController()
-    self.navigationController?.pushViewController(self.stripStoryViewController, animated: false)
+    // prepare the story unit presentation
+    self.stripStoryViewController = StripStoryViewController()
+    // display
+    self.navigationController?.pushViewController(self.stripStoryViewController, animated: true)
     return "console.log('presenting story');"
   }
 
   var hideStoryFunction: String {
-    self.stripStoryViewController?.navigationController?.popViewController(animated: false)
+    // hide
+    self.stripStoryViewController?.navigationController?.popViewController(animated: true)
     return "console.log('hiding story');"
   }
 }

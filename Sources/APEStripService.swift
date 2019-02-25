@@ -9,7 +9,11 @@
 import Foundation
 import WebKit
 
-public protocol APEStripServiceStoryDatasource: AnyObject {
+public protocol APEStripServiceDelegate: AnyObject {
+  func stripDidLoad()
+}
+
+public protocol APEStripServiceDatasource: AnyObject {
   var showStoryFunction: String { get }
   var hideStoryFunction: String { get }
 }
@@ -18,12 +22,16 @@ open class APEStripService: NSObject {
 
   public static let shared = APEStripService()
 
-  public weak var datasource: APEStripServiceStoryDatasource?
+  public weak var datasource: APEStripServiceDatasource?
+  public weak var delegate: APEStripServiceDelegate?
 
   public lazy var stripWebView: WKWebView = {
     let webView = WKWebView()
     webView.navigationDelegate = self
-    let stripHtmlString = APEBundle.contentsOfFile(APEConfig.Strip.stripFileName)
+    var stripHtmlString = APEBundle.contentsOfFile(APEConfig.Strip.stripFileName)
+    let channelToken = APEConfig.Strip.dataChannelTokens
+    stripHtmlString = stripHtmlString
+      .replacingOccurrences(of: channelToken, with: "\(channelToken)=\"\(self.token)\"")
     webView.configuration.userContentController.add(self, name: APEConfig.Strip.proxy)
     webView.loadHTMLString(stripHtmlString, baseURL: APEBundle.bundle.bundleURL)
     return webView
@@ -39,25 +47,24 @@ open class APEStripService: NSObject {
     return webView
   }()
 
-  private var token: String?
-  private var domain: String?
+  private var token: String = ""
 
   private override init() {
     super.init()
-    self.config()
   }
 
-  public func register(bundle: Bundle, token: String, domain: String) {
+  public func register(bundle: Bundle, token: String) {
     self.token = token
-    self.domain = domain
+    // TODO: extract bundle info
+    self.config()
   }
 }
 
 private extension APEStripService {
 
   func config() {
-    _ = self.storyWebView
     _ = self.stripWebView
+    _ = self.storyWebView
   }
 
   func storySendApesterEvent(message: String, completion: ((Bool) -> Void)? = nil) {
@@ -88,6 +95,10 @@ extension APEStripService: WKScriptMessageHandler {
 
       } else if bodyString.contains(APEConfig.Strip.next), let hideStoryFunction = self.datasource?.hideStoryFunction {
         self.storyEvaluateJavaScript(message: hideStoryFunction)
+
+      } else if bodyString.contains(APEConfig.Strip.loaded) {
+        // TODO: delegate strip loaded event
+        self.delegate?.stripDidLoad()
       }
     }
   }

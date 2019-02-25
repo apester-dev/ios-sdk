@@ -33,13 +33,19 @@ struct APEConfig {
     static let proxy = "apesterStripProxy"
     static let stripFileName = "apester-strip.html"
     static let initial = "apester_strip_units"
+    static let loaded = "strip_loaded"
     static let open = "strip_open_unit"
     static let next = "strip_next_unit"
     static let stripStoryFileName = "apester-strip-story.html"
     static let showStripStory = "showApesterStory"
     static let hideStripStory = "hideApesterStory"
+
+    // local HTML token parameter - to be removed
+    static let dataChannelTokens = "data-channel-tokens"
   }
 }
+
+// strip loaded
 
 /// Kit Bundle
 class APEBundle {

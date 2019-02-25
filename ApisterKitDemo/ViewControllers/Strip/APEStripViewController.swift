@@ -16,7 +16,7 @@ class APEStripViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    APEStripService.shared.register(bundle:  Bundle.main, token: "", domain: "")
+    APEStripService.shared.register(bundle:  Bundle.main, token: "5890a541a9133e0e000e31aa")
     APEStripService.shared.datasource = self
     let stripWebView = APEStripService.shared.stripWebView
     stripWebView.frame = self.view.bounds
@@ -24,15 +24,15 @@ class APEStripViewController: UIViewController {
   }
 }
 
-extension APEStripViewController: APEStripServiceStoryDatasource {
+extension APEStripViewController: APEStripServiceDatasource {
   var showStoryFunction: String {
     vc = APEStripStoryViewController()
-    self.navigationController?.pushViewController(vc, animated: false)
+    self.navigationController?.pushViewController(vc, animated: true)
     return "console.log('show story');"
   }
 
   var hideStoryFunction: String {
-    vc?.navigationController?.popViewController(animated: false)
+    vc?.navigationController?.popViewController(animated: true)
     return "console.log('hdie story');"
   }
 }
