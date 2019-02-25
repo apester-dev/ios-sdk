@@ -29,16 +29,16 @@ ApesterKit provides a light-weight framework that loads Apester Unit in a webVie
 $ gem install cocoapods
 ```
 
-> CocoaPods 1.1.0+ is required to build ApesterKit 1.2+.
+> CocoaPods 1.1.0+ is required to build ApesterKit 1.3+.
 
 To integrate ApesterKit into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
-source 'https://github.com/CocoaPods/Specs.git'```
+source 'https://github.com/CocoaPods/Specs.git'
 
 use_frameworks!
 
-pod 'ApesterKit', '~> 1.2'
+pod 'ApesterKit', '~> 1.3'
 ```
 
 Then, run the following command:
@@ -61,7 +61,7 @@ $ brew install carthage
 To integrate ApesterKit into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "Qmerce/ios-sdk" ~> 1.2
+github "Qmerce/ios-sdk" ~> 1.3
 ```
 
 Then, run the following command:
@@ -108,18 +108,68 @@ $ git submodule update --init --recursive
 
 > The `ApesterKit.framework` is automagically added as a target dependency, linked framework and embedded framework in a copy files build phase which is all you need to build on the simulator and a device.
 
-## Implementaion
+## Handle Strip Units
+### `APEStripService` Implementaion
+1 - register the app main bundle, token and Domain from your `StripViewController`  `viewDidLoad` function:
+```
+APEStripService.shared.register(bundle: Bundle.main, token: myToken, domain: myDomain)
+```
+
+2 - set `APEStripServiceStoryDatasource`, so you can handle story unit presentation. 
+```
+APEStripService.shared.datasource = self
+```
+
+3 - setup the StripWebView in your `StripViewController` .
+```
+let stripWebView = APEStripService.shared.stripWebView
+stripWebView.frame = self.view.bounds
+self.view.addSubview(stripWebView)
+```
+
+4 - implement the `APEStripServiceStoryDatasource`
+```
+extension StripViewController: APEStripServiceStoryDatasource {
+  var showStoryFunction: String { 
+    self.stripStoryViewController = APEStripStoryViewController()
+    self.navigationController?.pushViewController(self.stripStoryViewController, animated: false)
+    return "console.log('presenting story');"
+  }
+
+  var hideStoryFunction: String {
+    self.stripStoryViewController?.navigationController?.popViewController(animated: false)
+    return "console.log('hiding story');"
+  }
+}
+```
+
+5 - setup the StoryWebView in your `StripStoryViewController`.
+```
+class StripStoryViewController: UIViewController {
+  var webView: WKWebView = APEStripService.shared.storyWebView
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    self.webView.frame = self.view.bounds
+    self.view.addSubview(self.webView)
+  }
+}
+```
+
+## Handle Unit Heights Updates
+### `APEWebViewService` Implementaion
 
 1 - register the app main bundle and the webView, In your viewController  viewDidLoad function:
 
 ```
 APEWebViewService.shared.register(bundle: Bundle.main, webView: webView, unitHeightHandler: { [weak self] result in
-switch result {
-case .success(let height):
-print(height)
-case .failure(let err):
-print(err)
-}})
+  switch result {
+    case .success(let height):
+      print(height)
+    case .failure(let err):
+      print(err)
+  }
+})
 ```
 
 2 - pass the device advertising params and get the apester unit height update by calling didStartLoad and didFinishLoad:
@@ -128,13 +178,13 @@ print(err)
 
 ```
 extension ViewController: UIWebViewDelegate {
-func webViewDidStartLoad(_ webView: UIWebView) {
-APEWebViewService.shared.didStartLoad(webView: webView)
-}
+  func webViewDidStartLoad(_ webView: UIWebView) {
+    APEWebViewService.shared.didStartLoad(webView: webView)
+  }
 
-func webViewDidFinishLoad(_ webView: UIWebView) {
-APEWebViewService.shared.didFinishLoad(webView: webView)
-}
+  func webViewDidFinishLoad(_ webView: UIWebView) {
+    APEWebViewService.shared.didFinishLoad(webView: webView)
+  }
 }
 ```
 
@@ -142,13 +192,13 @@ APEWebViewService.shared.didFinishLoad(webView: webView)
 
 ```
 extension ViewController: WKNavigationDelegate {
-func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-APEWebViewService.shared.didStartLoad(webView: webView)
-}
+  func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+    APEWebViewService.shared.didStartLoad(webView: webView)
+  }
 
-func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-APEWebViewService.shared.didFinishLoad(webView: webView)
-}
+  func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    APEWebViewService.shared.didFinishLoad(webView: webView)
+  }
 }
 ```
 
@@ -159,8 +209,6 @@ Clone the project and Run the ApesterKitDemo App:
 3 - select ApesterKitDemo Target.
 4 - run the App and enjoy.
 ```
-
-[Read More About ApesterKit... ](http://htmlpreview.github.io/?https://github.com/Qmerce/ios-sdk/blob/master/docs/index.html)
 
 ## License
 
