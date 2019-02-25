@@ -12,6 +12,7 @@
 		3549BB8B1DA38C0A00C63030 /* ApesterKitSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3549BB8A1DA38C0A00C63030 /* ApesterKitSpec.swift */; };
 		35CA2AC61E12925700147290 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35CA2A971E12920400147290 /* Nimble.framework */; };
 		35CA2AC71E12925700147290 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35CA2AB31E12920400147290 /* Quick.framework */; };
+		BB0BE33E2223169400542E3C /* APEStripService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0BE33D2223169400542E3C /* APEStripService.swift */; };
 		BB14A5291F166852003E393D /* APEWebViewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB14A5281F166852003E393D /* APEWebViewService.swift */; };
 		BB14A5441F1754DB003E393D /* APE.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB14A5431F1754DB003E393D /* APE.swift */; };
 		BB14A6B41F1F58F6003E393D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB14A6B31F1F58F6003E393D /* AppDelegate.swift */; };
@@ -21,13 +22,17 @@
 		BB14A6E51F1F5BB5003E393D /* ApesterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3549BB211DA389CD00C63030 /* ApesterKit.framework */; };
 		BB14A6E61F1F5BB5003E393D /* ApesterKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3549BB211DA389CD00C63030 /* ApesterKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BB14A6F01F1F6BE5003E393D /* ApesterKit.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BB14A6EC1F1F6619003E393D /* ApesterKit.bundle */; };
-		BB29529C1FE07E9C000C78B5 /* APEViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB29529B1FE07E9C000C78B5 /* APEViewController.swift */; };
+		BB29529C1FE07E9C000C78B5 /* APEWebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB29529B1FE07E9C000C78B5 /* APEWebViewViewController.swift */; };
 		BB328DDB1FDFF3D900A0A159 /* APETableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB328DDA1FDFF3D900A0A159 /* APETableViewController.swift */; };
 		BB328DF31FDFF46500A0A159 /* APEWKWebViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB328DF21FDFF46500A0A159 /* APEWKWebViewTableViewCell.swift */; };
 		BB328DF61FE014D200A0A159 /* APEUIWebViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB328DF01FDFF44500A0A159 /* APEUIWebViewTableViewCell.swift */; };
 		BB328DF71FE014DA00A0A159 /* APEWebViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB328DF41FDFF94C00A0A159 /* APEWebViewTableViewCell.swift */; };
 		BB3DD3761FDF47C80094A773 /* APEMustacheExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3DD3741FDF47C80094A773 /* APEMustacheExtension.swift */; };
 		BB3DD3791FDF47E70094A773 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB3DD3781FDF47E70094A773 /* Main.storyboard */; };
+		BB9700E02223EF270072E1F8 /* Readme.md in Resources */ = {isa = PBXBuildFile; fileRef = BB9700CD2223EF270072E1F8 /* Readme.md */; };
+		BB9709AB222322E000E1076B /* APEConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9709AA222322E000E1076B /* APEConfig.swift */; };
+		BB9709BF22232BED00E1076B /* APEStripViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9709BE22232BED00E1076B /* APEStripViewController.swift */; };
+		BB9709C122232F4100E1076B /* APEStripStoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9709C022232F4100E1076B /* APEStripStoryViewController.swift */; };
 		BBBDFA8D1FDF547000C2F791 /* Mustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBBDFA8B1FDF4D5300C2F791 /* Mustache.framework */; };
 		BBBDFA8E1FDF547000C2F791 /* Mustache.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BBBDFA8B1FDF4D5300C2F791 /* Mustache.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BBBDFA901FDF550800C2F791 /* Apester.mustache in Resources */ = {isa = PBXBuildFile; fileRef = BBBDFA8F1FDF550800C2F791 /* Apester.mustache */; };
@@ -213,7 +218,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3549BB171DA3890B00C63030 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3549BB181DA3890B00C63030 /* ApesterKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApesterKit.h; sourceTree = "<group>"; };
 		3549BB211DA389CD00C63030 /* ApesterKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ApesterKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3549BB581DA38A8800C63030 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -246,6 +250,7 @@
 		35CD65161E60192300AF060B /* watchOS-Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "watchOS-Base.xcconfig"; sourceTree = "<group>"; };
 		35CD65171E60192300AF060B /* watchOS-Framework.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "watchOS-Framework.xcconfig"; sourceTree = "<group>"; };
 		35CD65181E60192300AF060B /* watchOS-StaticLibrary.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "watchOS-StaticLibrary.xcconfig"; sourceTree = "<group>"; };
+		BB0BE33D2223169400542E3C /* APEStripService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripService.swift; sourceTree = "<group>"; };
 		BB14A5281F166852003E393D /* APEWebViewService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APEWebViewService.swift; sourceTree = "<group>"; };
 		BB14A5431F1754DB003E393D /* APE.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APE.swift; sourceTree = "<group>"; };
 		BB14A6B11F1F58F6003E393D /* ApisterKitDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApisterKitDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -257,13 +262,18 @@
 		BB14A6C81F1F58F6003E393D /* ApisterKitDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApisterKitDemoTests.swift; sourceTree = "<group>"; };
 		BB14A6CA1F1F58F6003E393D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB14A6EC1F1F6619003E393D /* ApesterKit.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ApesterKit.bundle; sourceTree = "<group>"; };
-		BB29529B1FE07E9C000C78B5 /* APEViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEViewController.swift; sourceTree = "<group>"; };
+		BB29529B1FE07E9C000C78B5 /* APEWebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEWebViewViewController.swift; sourceTree = "<group>"; };
 		BB328DDA1FDFF3D900A0A159 /* APETableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APETableViewController.swift; sourceTree = "<group>"; };
 		BB328DF01FDFF44500A0A159 /* APEUIWebViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUIWebViewTableViewCell.swift; sourceTree = "<group>"; };
 		BB328DF21FDFF46500A0A159 /* APEWKWebViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEWKWebViewTableViewCell.swift; sourceTree = "<group>"; };
 		BB328DF41FDFF94C00A0A159 /* APEWebViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEWebViewTableViewCell.swift; sourceTree = "<group>"; };
 		BB3DD3741FDF47C80094A773 /* APEMustacheExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APEMustacheExtension.swift; sourceTree = "<group>"; };
 		BB3DD3781FDF47E70094A773 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		BB9700CD2223EF270072E1F8 /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = Readme.md; path = ../Readme.md; sourceTree = "<group>"; };
+		BB9700E12223EFEA0072E1F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BB9709AA222322E000E1076B /* APEConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEConfig.swift; sourceTree = "<group>"; };
+		BB9709BE22232BED00E1076B /* APEStripViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripViewController.swift; sourceTree = "<group>"; };
+		BB9709C022232F4100E1076B /* APEStripStoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripStoryViewController.swift; sourceTree = "<group>"; };
 		BBBDFA8B1FDF4D5300C2F791 /* Mustache.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mustache.framework; path = Carthage/Build/iOS/Mustache.framework; sourceTree = "<group>"; };
 		BBBDFA8F1FDF550800C2F791 /* Apester.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Apester.mustache; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -351,8 +361,9 @@
 			isa = PBXGroup;
 			children = (
 				3549BB181DA3890B00C63030 /* ApesterKit.h */,
-				3549BB171DA3890B00C63030 /* Info.plist */,
 				BB14A6EC1F1F6619003E393D /* ApesterKit.bundle */,
+				BB9700E12223EFEA0072E1F8 /* Info.plist */,
+				BB9700CD2223EF270072E1F8 /* Readme.md */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -369,7 +380,9 @@
 			isa = PBXGroup;
 			children = (
 				BB14A5431F1754DB003E393D /* APE.swift */,
+				BB9709AA222322E000E1076B /* APEConfig.swift */,
 				BB14A5281F166852003E393D /* APEWebViewService.swift */,
+				BB0BE33D2223169400542E3C /* APEStripService.swift */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -540,8 +553,8 @@
 		BB328DEE1FDFF3EB00A0A159 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				BB328DDA1FDFF3D900A0A159 /* APETableViewController.swift */,
-				BB29529B1FE07E9C000C78B5 /* APEViewController.swift */,
+				BB9709C3222332DB00E1076B /* Unit */,
+				BB9709C2222332AE00E1076B /* Strip */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -554,6 +567,24 @@
 				BB328DF21FDFF46500A0A159 /* APEWKWebViewTableViewCell.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		BB9709C2222332AE00E1076B /* Strip */ = {
+			isa = PBXGroup;
+			children = (
+				BB9709BE22232BED00E1076B /* APEStripViewController.swift */,
+				BB9709C022232F4100E1076B /* APEStripStoryViewController.swift */,
+			);
+			path = Strip;
+			sourceTree = "<group>";
+		};
+		BB9709C3222332DB00E1076B /* Unit */ = {
+			isa = PBXGroup;
+			children = (
+				BB29529B1FE07E9C000C78B5 /* APEWebViewViewController.swift */,
+				BB328DDA1FDFF3D900A0A159 /* APETableViewController.swift */,
+			);
+			path = Unit;
 			sourceTree = "<group>";
 		};
 		BBBDFA911FDF551600C2F791 /* Mustache */ = {
@@ -856,6 +887,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB9700E02223EF270072E1F8 /* Readme.md in Resources */,
 				BB14A6F01F1F6BE5003E393D /* ApesterKit.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -910,6 +942,8 @@
 			files = (
 				BB14A5441F1754DB003E393D /* APE.swift in Sources */,
 				BB14A5291F166852003E393D /* APEWebViewService.swift in Sources */,
+				BB9709AB222322E000E1076B /* APEConfig.swift in Sources */,
+				BB0BE33E2223169400542E3C /* APEStripService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -926,11 +960,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB328DDB1FDFF3D900A0A159 /* APETableViewController.swift in Sources */,
+				BB9709C122232F4100E1076B /* APEStripStoryViewController.swift in Sources */,
 				BB328DF31FDFF46500A0A159 /* APEWKWebViewTableViewCell.swift in Sources */,
 				BB328DF71FE014DA00A0A159 /* APEWebViewTableViewCell.swift in Sources */,
-				BB29529C1FE07E9C000C78B5 /* APEViewController.swift in Sources */,
+				BB29529C1FE07E9C000C78B5 /* APEWebViewViewController.swift in Sources */,
 				BB14A6B41F1F58F6003E393D /* AppDelegate.swift in Sources */,
 				BB328DF61FE014D200A0A159 /* APEUIWebViewTableViewCell.swift in Sources */,
+				BB9709BF22232BED00E1076B /* APEStripViewController.swift in Sources */,
 				BB3DD3761FDF47C80094A773 /* APEMustacheExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

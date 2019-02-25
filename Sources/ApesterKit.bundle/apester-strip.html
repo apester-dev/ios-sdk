@@ -1,0 +1,34 @@
+<html>
+  <head>
+    <script>
+      const blackListEvents = {
+        STRIP_NEXT_UNIT: 'strip_next_unit',
+        CLOSE_RENDERER: 'fullscreen_off',
+      };
+
+      window.__apester_no_player_strip = true;
+      window.addEventListener('message', event => {
+        const eventData = event.data;
+
+        if (eventData.type !== blackListEvents.STRIP_NEXT_UNIT && eventData.type !== blackListEvents.CLOSE_RENDERER) {
+          console.log(`Send ${eventData.type} to proxy`);
+          (window.Android && window.Android.apesterStripProxy(JSON.stringify(eventData))) ||
+            (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.apesterStripProxy.postMessage(JSON.stringify(eventData)));
+        }
+      });
+
+      window.__sendApesterEvent = event => {
+        try {
+          console.log(event);
+          window.postMessage(JSON.parse(event), '*');
+        } catch (e) {
+          console.log('error parsing json');
+        }
+      };
+    </script>
+    <script src="https://static.apester.com/js/sdk/v2.0/apester-javascript-sdk.min.js"></script>
+  </head>
+  <body>
+    <div class="apester-strip apester-element" data-channel-tokens="5890a541a9133e0e000e31aa" style="height: 220px;"></div>
+  </body>
+</html>

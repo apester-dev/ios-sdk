@@ -11,23 +11,6 @@ import UIKit
 import WebKit
 import AdSupport
 
-private struct APEConfig {
-
-  enum Payload: String {
-    case advertisingId, trackingEnabled, bundleId, appName, appStoreUrl
-  }
-
-  static let bundleName = "ApesterKit.bundle"
-  //
-  static let apesterLoadCallbackFileName = "loadCallbackJS.text"
-  static let initAdevrtisingParamsFunctionName = "initAdvertisingParams"
-  //
-  static let apesterRegisterJSFileName = "registerJS.text"
-  //
-  static let apesterCallbackFunction = "apesterCallback"
-  static let apesterKitCallback = "apesterKitCallback"
-}
-
 /// APEWebViewService provides a light-weight framework that loads Apester Unit in a webView
 public class APEWebViewService: NSObject {
   /// APEWebViewService shared instance
@@ -40,12 +23,12 @@ public class APEWebViewService: NSObject {
 
   // the converted apesterLoadCallback js file to  string
   fileprivate lazy var loadCallbackJSString: String = {
-    return self.convertJavaScriptFileToString(file: APEConfig.apesterLoadCallbackFileName)
+    return APEBundle.contentsOfFile(APEConfig.WebView.loadCallbackFileName)
   }()
   
   // the converted apesterLoadCallback js file to  string
   fileprivate lazy var registerJSString: String = {
-    return self.convertJavaScriptFileToString(file: APEConfig.apesterRegisterJSFileName)
+    return APEBundle.contentsOfFile(APEConfig.WebView.registerJSFileName)
   }()
 
   // the deviceInfoParamsDictionary settings data
@@ -53,48 +36,25 @@ public class APEWebViewService: NSObject {
     var deviceInfoPayload: [String: Any] = [:]
     
     // get the device advertisingIdentifier
-    #if swift(>=4.0)
-      let identifierManager = ASIdentifierManager.shared()
-      let idfa = identifierManager.advertisingIdentifier
-      deviceInfoPayload[APEConfig.Payload.advertisingId.rawValue] = idfa.uuidString
-      deviceInfoPayload[APEConfig.Payload.trackingEnabled.rawValue] = identifierManager.isAdvertisingTrackingEnabled
-    #else
-      if let identifierManager = ASIdentifierManager.shared(),
-        let idfa = identifierManager.advertisingIdentifier {
-        deviceInfoPayload[APEConfig.Payload.advertisingId.rawValue] = idfa.uuidString
-        deviceInfoPayload[APEConfig.Payload.trackingEnabled.rawValue] = identifierManager.isAdvertisingTrackingEnabled
-      }
-    #endif
+    let identifierManager = ASIdentifierManager.shared()
+    let idfa = identifierManager.advertisingIdentifier
+    deviceInfoPayload[APEConfig.Payload.advertisingId] = idfa.uuidString
+    deviceInfoPayload[APEConfig.Payload.trackingEnabled] = identifierManager.isAdvertisingTrackingEnabled
     
     if let bundle = self.bundle {
       // get the app bundleIdentifier
       if let bundleIdentifier = bundle.bundleIdentifier {
-        deviceInfoPayload[APEConfig.Payload.bundleId.rawValue] = bundleIdentifier
+        deviceInfoPayload[APEConfig.Payload.bundleId] = bundleIdentifier
       }
       // get the app name and
       if let infoDictionary = bundle.infoDictionary,
         let appName = infoDictionary[kCFBundleNameKey as String] as? String {
-        deviceInfoPayload[APEConfig.Payload.appName.rawValue] = appName
-        deviceInfoPayload[APEConfig.Payload.appStoreUrl.rawValue] = "https://appstore.com/\(appName.trimmingCharacters(in: .whitespaces))"
+        deviceInfoPayload[APEConfig.Payload.appName] = appName
+        deviceInfoPayload[APEConfig.Payload.appStoreUrl] = "https://appstore.com/\(appName.trimmingCharacters(in: .whitespaces))"
       }
     }
     return deviceInfoPayload
   }()
-
-  fileprivate func convertJavaScriptFileToString(file: String) -> String {
-    // load js bundle file
-    let klass: AnyClass = object_getClass(self)!
-    if let bundleResourcePath = Bundle(for: klass).resourcePath {
-      let path = "\(bundleResourcePath)/\(APEConfig.bundleName)/\(file)"
-      let data = NSData(contentsOfFile: path)
-      if let fileData = data as Data? {
-        if let result = String(data: fileData, encoding: String.Encoding.utf8) {
-          return result
-        }
-      }
-    }
-    return ""
-  }
   
   // the function with payload params string
   fileprivate var adevrtisingParamsJSFunctionString: String? {
@@ -102,7 +62,7 @@ public class APEWebViewService: NSObject {
     if let serializedData = try? JSONSerialization.data(withJSONObject: deviceInfoParamsPayload, options: []) ,
       // Encode the data into JSON string
       let encodedData = String(data: serializedData, encoding: String.Encoding.utf8) {
-      return "\(APEConfig.initAdevrtisingParamsFunctionName)('\(encodedData)')"
+      return "\(APEConfig.WebView.initAdevrtisingParamsFunctionName)('\(encodedData)')"
     }
     return nil
   }
@@ -130,7 +90,7 @@ public class APEWebViewService: NSObject {
       return 
     }
     _ = self.evaluateJavaScript(self.registerJSString, webView: webView)
-    if let value = self.evaluateJavaScript("window.\(APEConfig.apesterKitCallback)", webView: webView),
+    if let value = self.evaluateJavaScript("window.\(APEConfig.WebView.callback)", webView: webView),
       let number = NumberFormatter().number(from: value) {
         handler(APEResult.success(CGFloat(truncating: number) + 15))
         self.unitHeightHandlers[webView.hashValue] = nil
@@ -196,8 +156,8 @@ public extension APEWebViewService {
       // Load the script to be inserted into the template
       let script = WKUserScript(source: registerJSString, injectionTime: .atDocumentStart, forMainFrameOnly: true)
 
-      config.userContentController.removeScriptMessageHandler(forName: APEConfig.apesterCallbackFunction)
-      config.userContentController.add(self, name: APEConfig.apesterCallbackFunction)
+      config.userContentController.removeScriptMessageHandler(forName: APEConfig.WebView.callbackFunction)
+      config.userContentController.add(self, name: APEConfig.WebView.callbackFunction)
       config.userContentController.addUserScript(script)
 
         if let unitHeightHandler = unitHeightHandler {

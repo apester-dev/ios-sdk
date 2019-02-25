@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <script>
+      window.__sendApesterEvent = event => {
+        try {
+          window.postMessage(event, '*');
+        } catch (e) {
+          console.log('error parsing json');
+        }
+      };
+
+    const stripEventsNames = {
+      STRIP_OPEN_UNIT: 'strip_open_unit',
+      STRIP_NEXT_UNIT: 'strip_next_unit',
+      CLOSE_RENDERER: 'fullscreen_off',
+      INITIAL_LOAD: 'apester_strip_units',
+    };
+    const rendererState = {};
+
+    // Helper functions.
+    const registerEvent = (eventName, callback) => {
+      window.addEventListener('message', event => {
+        if (event.data.type === eventName) {
+          callback(event.data);
+        }
+      });
+    };
+
+    const loadInteraction = data => {
+      const { rendererElement } = rendererState;
+      if (!rendererElement) return;
+      rendererElement.querySelector('iframe').contentWindow.postMessage(data, '*');
+    };
+
+    const hideRenderer = () => {
+      (window.Android && window.Android.hideApesterStory()) || (window && window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.hideApesterStory.postMessage(''));
+      const { rendererElement } = rendererState;
+      
+      if (!rendererElement) return;
+
+      rendererState.rendererDisplays_ = false;
+      rendererElement.style.display = 'none';
+      rendererElement.children[0].classList.remove('fullscreen');
+    };
+
+    const initalRendering = () => {
+      const { rendererElement, rendererDisplays_ } = rendererState;
+
+      if (!rendererElement || rendererDisplays_) return;
+
+      rendererElement.style.visibility = 'hidden';
+      rendererElement.style.display = 'block';
+    };
+
+    const showRenderer = () => {
+      (window.Android && window.Android.showApesterStory()) || (window && window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.showApesterStory.postMessage(''))
+
+      const { rendererElement } = rendererState;
+
+      if (!rendererElement) return;
+      rendererState.rendererDisplays_ = true;
+
+      rendererElement.style.visibility = 'unset';
+      rendererElement.style.display = 'block';
+
+      rendererElement.children[0].classList.add('fullscreen');
+    };
+
+    const constructRenderer = data => {
+      const { stripItems, firstInteraction, instanceId } = data;
+      const rendererElement = document.createElement('div');
+      rendererElement.setAttribute('class', 'apester-media');
+      rendererElement.setAttribute('data-media-id', firstInteraction);
+      rendererElement.setAttribute('data-instance-id', instanceId);
+
+      rendererElement.setAttribute('data-auto-fullscreen', true);
+      rendererElement.stripItems = stripItems;
+      rendererElement.style.display = 'none';
+      window.document.body.appendChild(rendererElement);
+
+      rendererState.rendererElement = rendererElement;
+      // make the SDK go over the page again to create the renderer iframe
+      window.APESTER.reload();
+    };
+
+    registerEvent(stripEventsNames.INITIAL_LOAD, constructRenderer);
+
+    registerEvent(stripEventsNames.STRIP_OPEN_UNIT, data => {
+      // From Strip
+      loadInteraction(data);
+    });
+
+    registerEvent(stripEventsNames.CLOSE_RENDERER, data => {
+      // From unit
+      (window.Android && window.Android.apesterStripProxy(JSON.stringify(data))) || (window && window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.apesterStripProxy.postMessage(JSON.stringify(data)));
+      hideRenderer();
+    });
+
+    registerEvent(stripEventsNames.STRIP_NEXT_UNIT, data => {
+      // From unit
+      (window.Android && window.Android.apesterStripProxy(JSON.stringify(data))) || (window && window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.apesterStripProxy.postMessage(JSON.stringify(data)));
+      showRenderer();
+    });
+  </script>
+  <script src="https://static.apester.com/js/sdk/v2.0/apester-javascript-sdk.min.js"></script>
+
+  <body></body>
+</html>
