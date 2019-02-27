@@ -36,6 +36,7 @@ struct APEConfig {
     static let proxy = "apesterStripProxy"
     static let initial = "apester_strip_units"
     static let loaded = "strip_loaded"
+    static let isReady = "apester_interaction_loaded"
     static let open = "strip_open_unit"
     static let next = "strip_next_unit"
     static let off = "fullscreen_off"

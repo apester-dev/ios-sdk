@@ -54,7 +54,22 @@ open class APEStripService: NSObject {
   }()
 
   private var stripUrlPath: String?
-  private var message: String?
+  private var initialMessage: String?
+  private var openUnitMessage: String?
+
+  private var isLoaded: Bool = false
+  private var isReady: Bool = false {
+    didSet {
+      guard isReady else { return }
+      self.delegate?.stripComponentIsReady()
+      if let openUnitMessage = self.openUnitMessage {
+        self.storySendApesterEvent(message: openUnitMessage) { _ in
+          self.openUnitMessage = nil
+          self.delegate?.displayStroyComponent()
+        }
+      }
+    }
+  }
 
   private override init() {
     super.init()
@@ -99,26 +114,24 @@ extension APEStripService: WKScriptMessageHandler {
           if let superView = self.stripWebView.superview, self.storyWebView.superview == nil {
             superView.addSubview(self.storyWebView)
           }
-          self.delegate?.stripComponentIsReady()
+          self.isLoaded = true
+        } else if bodyString.contains(APEConfig.Strip.isReady) {
+          self.isReady = self.isLoaded
 
         } else if bodyString.contains(APEConfig.Strip.initial) {
-          self.message = bodyString
+          self.initialMessage = bodyString
 
         } else if bodyString.contains(APEConfig.Strip.open) {
-//          if self.message != nil {
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-//              self.storySendApesterEvent(message: bodyString) { _ in
-//                self.delegate?.displayStroyComponent()
-//              }
-//            }
-//          } else {
-            self.storySendApesterEvent(message: bodyString) { _ in
-              self.delegate?.displayStroyComponent()
-            }
-//          }
+          guard self.isReady else {
+            self.openUnitMessage = bodyString
+            return
+          }
+          self.storySendApesterEvent(message: bodyString) { _ in
+            self.delegate?.displayStroyComponent()
+          }
         } else if bodyString.contains(APEConfig.Strip.next) {
-          if self.message != nil {
-            self.message = nil
+          if self.initialMessage != nil {
+            self.initialMessage = nil
           }
         } else if bodyString.contains(APEConfig.Strip.off) {
           self.delegate?.hideStroyComponent()
@@ -130,8 +143,10 @@ extension APEStripService: WKScriptMessageHandler {
 
 extension APEStripService: WKNavigationDelegate {
   public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-    if let initialMessage = self.message {
-      self.storySendApesterEvent(message: initialMessage)
+    if let initialMessage = self.initialMessage {
+      self.storySendApesterEvent(message: initialMessage) { _ in
+        self.initialMessage = nil
+      }
     }
   }
 
