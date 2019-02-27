@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 import WebKit
-import AdSupport
 
 /// APEWebViewService provides a light-weight framework that loads Apester Unit in a webView
 public class APEWebViewService: NSObject {
@@ -30,36 +29,11 @@ public class APEWebViewService: NSObject {
   fileprivate lazy var registerJSString: String = {
     return APEBundle.contentsOfFile(APEConfig.WebView.registerJSFileName)
   }()
-
-  // the deviceInfoParamsDictionary settings data
-  fileprivate lazy var deviceInfoParamsPayload: [String: Any] = {
-    var deviceInfoPayload: [String: Any] = [:]
-    
-    // get the device advertisingIdentifier
-    let identifierManager = ASIdentifierManager.shared()
-    let idfa = identifierManager.advertisingIdentifier
-    deviceInfoPayload[APEConfig.Payload.advertisingId] = idfa.uuidString
-    deviceInfoPayload[APEConfig.Payload.trackingEnabled] = identifierManager.isAdvertisingTrackingEnabled
-    
-    if let bundle = self.bundle {
-      // get the app bundleIdentifier
-      if let bundleIdentifier = bundle.bundleIdentifier {
-        deviceInfoPayload[APEConfig.Payload.bundleId] = bundleIdentifier
-      }
-      // get the app name and
-      if let infoDictionary = bundle.infoDictionary,
-        let appName = infoDictionary[kCFBundleNameKey as String] as? String {
-        deviceInfoPayload[APEConfig.Payload.appName] = appName
-        deviceInfoPayload[APEConfig.Payload.appStoreUrl] = "https://appstore.com/\(appName.trimmingCharacters(in: .whitespaces))"
-      }
-    }
-    return deviceInfoPayload
-  }()
   
   // the function with payload params string
   fileprivate var adevrtisingParamsJSFunctionString: String? {
     // Serialize the Swift object into Data
-    if let serializedData = try? JSONSerialization.data(withJSONObject: deviceInfoParamsPayload, options: []) ,
+    if let serializedData = try? JSONSerialization.data(withJSONObject: APEBundle.bundleInfoPayload(with: self.bundle), options: []) ,
       // Encode the data into JSON string
       let encodedData = String(data: serializedData, encoding: String.Encoding.utf8) {
       return "\(APEConfig.WebView.initAdevrtisingParamsFunctionName)('\(encodedData)')"

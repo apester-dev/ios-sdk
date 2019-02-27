@@ -7,9 +7,9 @@
 //
 
 import Foundation
+import AdSupport
 
 struct APEConfig {
-
   /// Payload Keys
   struct Payload {
     static let advertisingId = "advertisingId"
@@ -30,18 +30,17 @@ struct APEConfig {
 
   /// Strip Keys
   struct Strip {
+    static let stripUrlPath = "https://static.apester.com/strip/apester-detatched-strip.html"
+    static let stripStoryUrlPath = "https://static.apester.com/strip/apester-detatched-story.html"
+    // events
     static let proxy = "apesterStripProxy"
-    static let stripFileName = "apester-strip.html"
     static let initial = "apester_strip_units"
     static let loaded = "strip_loaded"
     static let open = "strip_open_unit"
     static let next = "strip_next_unit"
-    static let stripStoryFileName = "apester-strip-story.html"
+    static let off = "fullscreen_off"
     static let showStripStory = "showApesterStory"
     static let hideStripStory = "hideApesterStory"
-
-    // local HTML token parameter - to be removed
-    static let dataChannelTokens = "data-channel-tokens"
   }
 }
 
@@ -68,5 +67,30 @@ class APEBundle {
       }
     }
     return ""
+  }
+
+  // the deviceInfoParamsDictionary settings data
+  static func bundleInfoPayload(with bundle: Bundle?) -> [String: String] {
+    var deviceInfoPayload: [String: String] = [:]
+
+    // get the device advertisingIdentifier
+    let identifierManager = ASIdentifierManager.shared()
+    let idfa = identifierManager.advertisingIdentifier
+    deviceInfoPayload[APEConfig.Payload.advertisingId] = idfa.uuidString
+    deviceInfoPayload[APEConfig.Payload.trackingEnabled] = "\(identifierManager.isAdvertisingTrackingEnabled)"
+
+    if let bundle = bundle {
+      // get the app bundleIdentifier
+      if let bundleIdentifier = bundle.bundleIdentifier {
+        deviceInfoPayload[APEConfig.Payload.bundleId] = bundleIdentifier
+      }
+      // get the app name and
+      if let infoDictionary = bundle.infoDictionary,
+        let appName = infoDictionary[kCFBundleNameKey as String] as? String {
+        deviceInfoPayload[APEConfig.Payload.appName] = appName
+        deviceInfoPayload[APEConfig.Payload.appStoreUrl] = "https://appstore.com/\(appName.trimmingCharacters(in: .whitespaces))"
+      }
+    }
+    return deviceInfoPayload
   }
 }

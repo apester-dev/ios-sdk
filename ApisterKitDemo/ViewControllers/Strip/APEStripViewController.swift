@@ -12,12 +12,15 @@ import ApesterKit
 
 class APEStripViewController: UIViewController {
 
-  private var vc: APEStripStoryViewController!
+  private var storyViewController: APEStripStoryViewController?
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    APEStripService.shared.register(bundle:  Bundle.main, token: "5890a541a9133e0e000e31aa")
+    APEStripService.shared.register(bundle:  Bundle.main, channelToken: "5890a541a9133e0e000e31aa")
     APEStripService.shared.datasource = self
+    let storyWebView = APEStripService.shared.storyWebView
+    storyWebView.frame = self.view.bounds
+    self.view.addSubview(storyWebView)
     let stripWebView = APEStripService.shared.stripWebView
     stripWebView.frame = self.view.bounds
     self.view.addSubview(stripWebView)
@@ -26,13 +29,13 @@ class APEStripViewController: UIViewController {
 
 extension APEStripViewController: APEStripServiceDatasource {
   var showStoryFunction: String {
-    vc = APEStripStoryViewController()
-    self.navigationController?.pushViewController(vc, animated: true)
+    self.storyViewController = APEStripStoryViewController()
+    self.navigationController?.pushViewController(self.storyViewController!, animated: true)
     return "console.log('show story');"
   }
 
   var hideStoryFunction: String {
-    vc?.navigationController?.popViewController(animated: true)
+    self.storyViewController?.navigationController?.popViewController(animated: true)
     return "console.log('hdie story');"
   }
 }
