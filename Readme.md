@@ -110,27 +110,31 @@ $ git submodule update --init --recursive
 
 ## Handle Strip Units
 ### `APEStripService` Implementaion
-The APEStripService is a  `StripWebView` and `StoryWebView` handle, so there will be a specific html src and some sort of messaging proxy between them. Follow our step by step guide and setup: 
+The APEStripService is a proxy messaging handler between The Apester Units Carousel component (The `StripWebView`) and the selected Apester Unit (The `StoryWebView`), . Follow our step by step guide and setup: 
 
-1 - register the app main bundle, token and Domain from your `StripViewController`  `viewDidLoad` function:
+1 - create a new instance for APEStripService:
 ```
-APEStripService.shared.register(bundle: Bundle.main, token: "5890a541a9133e0e000e31aa")
+let stripServiceInstance = APEStripService()
 ```
-
-2 - set `APEStripServiceStoryDatasource`, so you can handle story unit presentation. 
+2 - setup the strip channel token and app main bundle from your `StripViewController`  `viewDidLoad` function:
 ```
-APEStripService.shared.dataSource = self
-APEStripService.shared.delegate = self
+self.stripServiceInstance.setup(channelToken: "5890a541a9133e0e000e31aa", bundle:  Bundle.main)
 ```
 
-3 - setup the StripWebView in your `StripViewController` .
+3 - set `APEStripServiceStoryDatasource`, so you can handle story unit presentation. 
 ```
-let stripWebView = APEStripService.shared.stripWebView
+self.stripServiceInstance.dataSource = self
+self.stripServiceInstance.delegate = self
+```
+
+4 - setup the StripWebView in your `StripViewController` .
+```
+let stripWebView = self.stripServiceInstance.stripWebView
 stripWebView.frame = self.view.bounds
 self.view.addSubview(stripWebView)
 ```
 
-4 - implement the `APEStripServiceStoryDatasource` so you can handle story unit events.
+5 - Implement the `APEStripServiceDataSource` so you can observe the Apester Story Unit show / hide events.
 ```
 extension APEStripViewController: APEStripServiceDataSource {
   var showStoryFunction: String {
@@ -143,17 +147,19 @@ extension APEStripViewController: APEStripServiceDataSource {
 }
 ```
 
-5 - set `APEStripServiceStoryDelegate`, so you can handle story unit presentation.
+6 - Implement the `APEStripServiceDelegate`, so you can handle Apester Story Unit presentation.
 
 ```
 extension APEStripViewController: APEStripServiceDelegate {
   func stripComponentIsReady() {
     /// hide loading
-    }
+  }
 
   func displayStroyComponent() {
     if self.storyViewController == nil {
       self.storyViewController = APEStripStoryViewController()
+      // set the `StoryWebView`
+      self.storyViewController!.webView = self.stripServiceInstance.storyWebView
     }
     self.navigationController?.pushViewController(self.storyViewController!, animated: true)
   }
@@ -164,10 +170,10 @@ extension APEStripViewController: APEStripServiceDelegate {
 }
 ```
 
-6 - setup the `StoryWebView` in your  `StripStoryViewController`.
+6 - Create a  `StripStoryViewController` class, so the Apester selected Unit can be displayed.
 ```
 class StripStoryViewController: UIViewController {
-  var webView: WKWebView = APEStripService.shared.storyWebView
+  var webView: WKWebView!
   
   override func viewDidLoad() {
     super.viewDidLoad()

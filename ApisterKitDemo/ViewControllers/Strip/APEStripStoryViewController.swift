@@ -11,7 +11,7 @@ import WebKit
 import ApesterKit
 
 class APEStripStoryViewController: UIViewController {
-  var webView: WKWebView = APEStripService.shared.storyWebView
+  var webView: WKWebView!
 
   override func viewDidLoad() {
     super.viewDidLoad()

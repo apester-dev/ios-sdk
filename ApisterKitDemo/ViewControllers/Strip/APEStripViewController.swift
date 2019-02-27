@@ -13,12 +13,12 @@ import ApesterKit
 class APEStripViewController: UIViewController {
 
   private var storyViewController: APEStripStoryViewController?
+  private let stripServiceInstance = APEStripService(channelToken: "5890a541a9133e0e000e31aa", bundle:  Bundle.main)
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    APEStripService.shared.register(bundle:  Bundle.main, channelToken: "5890a541a9133e0e000e31aa")
-    APEStripService.shared.dataSource = self
-    APEStripService.shared.delegate = self
+    self.stripServiceInstance.dataSource = self
+    self.stripServiceInstance.delegate = self
     setupStripComponent()
     // display loading view
   }
@@ -26,7 +26,7 @@ class APEStripViewController: UIViewController {
 
 private extension APEStripViewController {
   func setupStripComponent() {
-    let stripWebView = APEStripService.shared.stripWebView
+    let stripWebView = self.stripServiceInstance.stripWebView
     stripWebView.frame = self.view.bounds
     self.view.addSubview(stripWebView)
   }
@@ -51,6 +51,7 @@ extension APEStripViewController: APEStripServiceDelegate {
   func displayStroyComponent() {
     if self.storyViewController == nil {
       self.storyViewController = APEStripStoryViewController()
+      self.storyViewController?.webView = self.stripServiceInstance.storyWebView
     }
     self.navigationController?.pushViewController(self.storyViewController!, animated: true)
   }
