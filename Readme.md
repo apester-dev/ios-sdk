@@ -110,6 +110,8 @@ $ git submodule update --init --recursive
 
 ## Handle Strip Units
 ### `APEStripService` Implementaion
+The APEStripService is a  `StripWebView` and `StoryWebView` handle, so there will be a specific html src and some sort of messaging proxy between them. Follow our step by step guide and setup: 
+
 1 - register the app main bundle, token and Domain from your `StripViewController`  `viewDidLoad` function:
 ```
 APEStripService.shared.register(bundle: Bundle.main, token: "5890a541a9133e0e000e31aa")
@@ -117,7 +119,8 @@ APEStripService.shared.register(bundle: Bundle.main, token: "5890a541a9133e0e000
 
 2 - set `APEStripServiceStoryDatasource`, so you can handle story unit presentation. 
 ```
-APEStripService.shared.datasource = self
+APEStripService.shared.dataSource = self
+APEStripService.shared.delegate = self
 ```
 
 3 - setup the StripWebView in your `StripViewController` .
@@ -127,26 +130,41 @@ stripWebView.frame = self.view.bounds
 self.view.addSubview(stripWebView)
 ```
 
-4 - implement the `APEStripServiceStoryDatasource`
+4 - implement the `APEStripServiceStoryDatasource` so you can handle story unit events.
 ```
-extension StripViewController: APEStripServiceDatasource {
-  var showStoryFunction: String { 
-    // prepare the story unit presentation
-    self.stripStoryViewController = StripStoryViewController()
-    // display
-    self.navigationController?.pushViewController(self.stripStoryViewController, animated: true)
-    return "console.log('presenting story');"
+extension APEStripViewController: APEStripServiceDataSource {
+  var showStoryFunction: String {
+    return "console.log('show story');"
   }
 
   var hideStoryFunction: String {
-    // hide
-    self.stripStoryViewController?.navigationController?.popViewController(animated: true)
-    return "console.log('hiding story');"
+    return "console.log('hdie story');"
   }
 }
 ```
 
-5 - setup the StoryWebView in your `StripStoryViewController`.
+5 - set `APEStripServiceStoryDelegate`, so you can handle story unit presentation.
+
+```
+extension APEStripViewController: APEStripServiceDelegate {
+  func stripComponentIsReady() {
+    /// hide loading
+    }
+
+  func displayStroyComponent() {
+    if self.storyViewController == nil {
+      self.storyViewController = APEStripStoryViewController()
+    }
+    self.navigationController?.pushViewController(self.storyViewController!, animated: true)
+  }
+
+  func hideStroyComponent() {
+    self.storyViewController?.navigationController?.popViewController(animated: true)
+  }
+}
+```
+
+6 - setup the `StoryWebView` in your  `StripStoryViewController`.
 ```
 class StripStoryViewController: UIViewController {
   var webView: WKWebView = APEStripService.shared.storyWebView

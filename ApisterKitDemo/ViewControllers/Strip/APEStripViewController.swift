@@ -32,7 +32,7 @@ private extension APEStripViewController {
   }
 }
 
-extension APEStripViewController: APEStripServiceDatasource {
+extension APEStripViewController: APEStripServiceDataSource {
   var showStoryFunction: String {
     return "console.log('show story');"
   }

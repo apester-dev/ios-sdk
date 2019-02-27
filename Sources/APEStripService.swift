@@ -15,7 +15,7 @@ public protocol APEStripServiceDelegate: AnyObject {
   func hideStroyComponent()
 }
 
-public protocol APEStripServiceDatasource: AnyObject {
+public protocol APEStripServiceDataSource: AnyObject {
   var showStoryFunction: String { get }
   var hideStoryFunction: String { get }
 }
@@ -24,7 +24,7 @@ open class APEStripService: NSObject {
 
   public static let shared = APEStripService()
 
-  public weak var dataSource: APEStripServiceDatasource?
+  public weak var dataSource: APEStripServiceDataSource?
   public weak var delegate: APEStripServiceDelegate?
 
   public lazy var stripWebView: WKWebView = {
