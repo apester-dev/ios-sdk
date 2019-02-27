@@ -29,6 +29,8 @@ open class APEStripService: NSObject {
 
   public lazy var stripWebView: WKWebView = {
     let webView = WKWebView()
+    webView.navigationDelegate = self
+    webView.configuration.websiteDataStore = WKWebsiteDataStore.default()
     webView.configuration.userContentController.add(self, name: APEConfig.Strip.proxy)
     if let urlPath = self.stripUrlPath, let stripUrl = URL(string: urlPath) {
       DispatchQueue.main.async {
@@ -41,6 +43,7 @@ open class APEStripService: NSObject {
   public lazy var storyWebView: WKWebView  = {
     let webView = WKWebView()
     webView.navigationDelegate = self
+    webView.configuration.websiteDataStore = WKWebsiteDataStore.default()
     webView.configuration.userContentController.add(self, name: APEConfig.Strip.proxy)
     webView.configuration.userContentController.add(self, name: APEConfig.Strip.showStripStory)
     webView.configuration.userContentController.add(self, name: APEConfig.Strip.hideStripStory)
@@ -82,6 +85,12 @@ open class APEStripService: NSObject {
 }
 
 private extension APEStripService {
+
+  func stripSendApesterEvent(message: String, completion: ((Bool) -> Void)? = nil) {
+    self.stripWebView.evaluateJavaScript("window.__sendApesterEvent(\(message))") { (response, error) in
+      completion?(error == nil)
+    }
+  }
 
   func storySendApesterEvent(message: String, completion: ((Bool) -> Void)? = nil) {
     self.storyWebView.evaluateJavaScript("window.__sendApesterEvent(\(message))") { (response, error) in
@@ -136,6 +145,13 @@ extension APEStripService: WKScriptMessageHandler {
         } else if bodyString.contains(APEConfig.Strip.off) {
           self.delegate?.hideStroyComponent()
         }
+        // proxy updates
+        if message.webView == self.stripWebView {
+          self.storySendApesterEvent(message: bodyString)
+
+        } else if message.webView == self.storyWebView {
+          self.stripSendApesterEvent(message: bodyString)
+        }
       }
     }
   }
@@ -151,6 +167,24 @@ extension APEStripService: WKNavigationDelegate {
   }
 
   public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+    decisionHandler(.allow)
+  }
+
+  public func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+    guard let response = navigationResponse.response as? HTTPURLResponse,
+      let url = navigationResponse.response.url else {
+        decisionHandler(.cancel)
+        return
+    }
+
+    if let headerFields = response.allHeaderFields as? [String: String] {
+      if #available(iOSApplicationExtension 11.0, *) {
+        let cookies = HTTPCookie.cookies(withResponseHeaderFields: headerFields, for: url)
+        cookies.forEach { cookie in
+          webView.configuration.websiteDataStore.httpCookieStore.setCookie(cookie)
+        }
+      }
+    }
     decisionHandler(.allow)
   }
 }
