@@ -11,7 +11,8 @@ import WebKit
 
 public protocol APEStripServiceDelegate: AnyObject {
   func stripComponentIsReady()
-  func stroyComponentIsReady()
+  func displayStroyComponent()
+  func hideStroyComponent()
 }
 
 public protocol APEStripServiceDatasource: AnyObject {
@@ -21,18 +22,13 @@ public protocol APEStripServiceDatasource: AnyObject {
 
 open class APEStripService: NSObject {
 
-  private enum State {
-    case initial, open, next, off
-  }
-
   public static let shared = APEStripService()
 
-  public weak var datasource: APEStripServiceDatasource?
+  public weak var dataSource: APEStripServiceDatasource?
   public weak var delegate: APEStripServiceDelegate?
 
   public lazy var stripWebView: WKWebView = {
     let webView = WKWebView()
-    webView.navigationDelegate = self
     webView.configuration.userContentController.add(self, name: APEConfig.Strip.proxy)
     if let urlPath = self.stripUrlPath, let stripUrl = URL(string: urlPath) {
       DispatchQueue.main.async {
@@ -41,12 +37,14 @@ open class APEStripService: NSObject {
     }
     return webView
   }()
-
+  
   public lazy var storyWebView: WKWebView  = {
     let webView = WKWebView()
+    webView.navigationDelegate = self
     webView.configuration.userContentController.add(self, name: APEConfig.Strip.proxy)
     webView.configuration.userContentController.add(self, name: APEConfig.Strip.showStripStory)
     webView.configuration.userContentController.add(self, name: APEConfig.Strip.hideStripStory)
+    webView.contentMode = .scaleToFill
     if let storyUrl = URL(string: APEConfig.Strip.stripStoryUrlPath) {
       DispatchQueue.main.async {
         webView.load(URLRequest(url: storyUrl))
@@ -56,20 +54,15 @@ open class APEStripService: NSObject {
   }()
 
   private var stripUrlPath: String?
-  private var bodyMessage: String?
-  private var state: State = .initial
-  private var isFresh = true
-  private var forceUpdate = false
+  private var message: String?
 
   private override init() {
     super.init()
-    _ = self.storyWebView
   }
 
   public func register(bundle: Bundle, channelToken: String) {
     let parameters = ["token": channelToken] + APEBundle.bundleInfoPayload(with: bundle)
     self.stripUrlPath = parameters.urlComponents(APEConfig.Strip.stripUrlPath)
-    _ = self.stripWebView
   }
 }
 
@@ -77,7 +70,7 @@ private extension APEStripService {
 
   func storySendApesterEvent(message: String, completion: ((Bool) -> Void)? = nil) {
     self.storyWebView.evaluateJavaScript("window.__sendApesterEvent(\(message))") { (response, error) in
-        completion?(error == nil)
+      completion?(error == nil)
     }
   }
 
@@ -92,55 +85,43 @@ extension APEStripService: WKScriptMessageHandler {
   public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
     DispatchQueue.main.async {
       if message.name == APEConfig.Strip.showStripStory {
-        if (self.state == .open || self.isFresh), let showStoryFunction = self.datasource?.showStoryFunction {
-          self.isFresh = false
-          self.forceUpdate = false
-          print("showStoryFunction")
+        if let showStoryFunction = self.dataSource?.showStoryFunction {
           self.storyEvaluateJavaScript(message: showStoryFunction)
         }
+
       } else if message.name == APEConfig.Strip.hideStripStory {
-        if let hideStoryFunction = self.datasource?.hideStoryFunction {
-          print("hideStripStory hideStoryFunction")
+        if let hideStoryFunction = self.dataSource?.hideStoryFunction {
           self.storyEvaluateJavaScript(message: hideStoryFunction)
         }
+
       } else if let bodyString = message.body as? String {
-        if bodyString.contains(APEConfig.Strip.off) {
-          self.state = .off
+        if bodyString.contains(APEConfig.Strip.loaded) {
+          if let superView = self.stripWebView.superview, self.storyWebView.superview == nil {
+            superView.addSubview(self.storyWebView)
+          }
+          self.delegate?.stripComponentIsReady()
+
         } else if bodyString.contains(APEConfig.Strip.initial) {
-          print("initial __sendApesterEvent")
-          self.state = .initial
-          self.storySendApesterEvent(message: bodyString)
+          self.message = bodyString
 
         } else if bodyString.contains(APEConfig.Strip.open) {
-          if self.state == .initial {
-            self.state = .open
-            print(bodyString)
-            self.storySendApesterEvent(message: bodyString)
-
-          } else if self.state != .open {
-            self.state = .initial
-            let next = bodyString.replacingOccurrences(of: APEConfig.Strip.open, with: APEConfig.Strip.next)
-            self.forceUpdate = true
-            self.storySendApesterEvent(message: next)
-          }
-
+//          if self.message != nil {
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+//              self.storySendApesterEvent(message: bodyString) { _ in
+//                self.delegate?.displayStroyComponent()
+//              }
+//            }
+//          } else {
+            self.storySendApesterEvent(message: bodyString) { _ in
+              self.delegate?.displayStroyComponent()
+            }
+//          }
         } else if bodyString.contains(APEConfig.Strip.next) {
-          if self.state == .initial {
-            self.state = .open
-            let next = bodyString.replacingOccurrences(of: APEConfig.Strip.next, with: APEConfig.Strip.open)
-            self.forceUpdate = true
-            self.storySendApesterEvent(message: next)
-
-          } else if self.state != .open, self.forceUpdate {
-            self.state = .initial
-            self.storySendApesterEvent(message: bodyString)
-
-          } else {
-            self.state = .next
+          if self.message != nil {
+            self.message = nil
           }
-        } else if bodyString.contains(APEConfig.Strip.loaded) {
-          print("stripComponentIsReady")
-          self.delegate?.stripComponentIsReady()
+        } else if bodyString.contains(APEConfig.Strip.off) {
+          self.delegate?.hideStroyComponent()
         }
       }
     }
@@ -148,13 +129,15 @@ extension APEStripService: WKScriptMessageHandler {
 }
 
 extension APEStripService: WKNavigationDelegate {
-  private func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-    decisionHandler(.allow)
+  public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    if let initialMessage = self.message {
+      self.storySendApesterEvent(message: initialMessage)
+    }
   }
 
-  private func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {}
-
-  private func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {}
+  public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+    decisionHandler(.allow)
+  }
 }
 
 private extension Dictionary {

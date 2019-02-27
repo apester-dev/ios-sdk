@@ -17,10 +17,15 @@ class APEStripViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     APEStripService.shared.register(bundle:  Bundle.main, channelToken: "5890a541a9133e0e000e31aa")
-    APEStripService.shared.datasource = self
-    let storyWebView = APEStripService.shared.storyWebView
-    storyWebView.frame = self.view.bounds
-    self.view.addSubview(storyWebView)
+    APEStripService.shared.dataSource = self
+    APEStripService.shared.delegate = self
+    setupStripComponent()
+    // display loading view
+  }
+}
+
+private extension APEStripViewController {
+  func setupStripComponent() {
     let stripWebView = APEStripService.shared.stripWebView
     stripWebView.frame = self.view.bounds
     self.view.addSubview(stripWebView)
@@ -29,13 +34,28 @@ class APEStripViewController: UIViewController {
 
 extension APEStripViewController: APEStripServiceDatasource {
   var showStoryFunction: String {
-    self.storyViewController = APEStripStoryViewController()
-    self.navigationController?.pushViewController(self.storyViewController!, animated: true)
     return "console.log('show story');"
   }
 
   var hideStoryFunction: String {
-    self.storyViewController?.navigationController?.popViewController(animated: true)
     return "console.log('hdie story');"
+  }
+}
+
+extension APEStripViewController: APEStripServiceDelegate {
+  func stripComponentIsReady() {
+    /// hide loading
+    print(#function)
+  }
+
+  func displayStroyComponent() {
+    if self.storyViewController == nil {
+      self.storyViewController = APEStripStoryViewController()
+    }
+    self.navigationController?.pushViewController(self.storyViewController!, animated: true)
+  }
+
+  func hideStroyComponent() {
+    self.storyViewController?.navigationController?.popViewController(animated: true)
   }
 }
