@@ -20,6 +20,7 @@ public protocol APEStripServiceDataSource: AnyObject {
   var hideStoryFunction: String { get }
 }
 
+@available(iOS 10, *)
 open class APEStripService: NSObject {
 
   public static let shared = APEStripService()
@@ -39,7 +40,7 @@ open class APEStripService: NSObject {
     }
     return webView
   }()
-  
+
   public lazy var storyWebView: WKWebView  = {
     let webView = WKWebView()
     webView.navigationDelegate = self
@@ -84,6 +85,7 @@ open class APEStripService: NSObject {
   }
 }
 
+@available(iOS 10, *)
 private extension APEStripService {
 
   func stripSendApesterEvent(message: String, completion: ((Bool) -> Void)? = nil) {
@@ -105,6 +107,7 @@ private extension APEStripService {
   }
 }
 
+@available(iOS 10, *)
 extension APEStripService: WKScriptMessageHandler {
   public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
     DispatchQueue.main.async {
@@ -157,6 +160,7 @@ extension APEStripService: WKScriptMessageHandler {
   }
 }
 
+@available(iOS 10, *)
 extension APEStripService: WKNavigationDelegate {
   public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
     if let initialMessage = self.initialMessage {
@@ -178,7 +182,7 @@ extension APEStripService: WKNavigationDelegate {
     }
 
     if let headerFields = response.allHeaderFields as? [String: String] {
-      if #available(iOSApplicationExtension 11.0, *) {
+      if #available(iOS 11.0, *) {
         let cookies = HTTPCookie.cookies(withResponseHeaderFields: headerFields, for: url)
         cookies.forEach { cookie in
           webView.configuration.websiteDataStore.httpCookieStore.setCookie(cookie)
