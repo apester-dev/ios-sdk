@@ -47,7 +47,6 @@ open class APEStripService: NSObject {
     webView.configuration.userContentController.add(self, name: APEConfig.Strip.proxy)
     webView.configuration.userContentController.add(self, name: APEConfig.Strip.showStripStory)
     webView.configuration.userContentController.add(self, name: APEConfig.Strip.hideStripStory)
-    let storyHtmlString = APEBundle.contentsOfFile(APEConfig.Strip.stripStoryFileName)
     if let storyUrl = URL(string: APEConfig.Strip.stripStoryUrlPath) {
       DispatchQueue.main.async {
         webView.load(URLRequest(url: storyUrl))
