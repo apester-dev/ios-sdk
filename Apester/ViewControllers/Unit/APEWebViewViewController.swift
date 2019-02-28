@@ -1,5 +1,5 @@
 //
-//  APEViewController.swift
+//  APEWebViewViewController.swift
 //  ApisterKitDemo
 //
 //  Created by Hasan Sa on 12/12/2017.
@@ -10,7 +10,7 @@ import UIKit
 import WebKit
 import ApesterKit
 
-class APEViewController: UIViewController {
+class APEWebViewViewController: UIViewController {
 
   lazy var urlRequest: URLRequest? = {
     let urlString = "http://qmerce.github.io/static-testing-site/articles/streamrail_stage/"
@@ -85,7 +85,7 @@ class APEViewController: UIViewController {
 
 }
 
-extension APEViewController: UIWebViewDelegate {
+extension APEWebViewViewController: UIWebViewDelegate {
   func webViewDidStartLoad(_ webView: UIWebView) {
     APEWebViewService.shared.didStartLoad(webView: webView)
   }
@@ -95,7 +95,7 @@ extension APEViewController: UIWebViewDelegate {
   }
 }
 
-extension APEViewController: WKNavigationDelegate {
+extension APEWebViewViewController: WKNavigationDelegate {
   func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
     APEWebViewService.shared.didStartLoad(webView: webView)
   }

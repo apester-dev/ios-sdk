@@ -15,7 +15,7 @@ class APETableViewController: UITableViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    tableView.rowHeight = UITableViewAutomaticDimension
+    tableView.rowHeight = UITableView.automaticDimension
     tableView.estimatedRowHeight = 200
     tableView.register(APEUIWebViewTableViewCell.self, forCellReuseIdentifier: "APEUIWebViewTableViewCell")
     tableView.register(APEWKWebViewTableViewCell.self, forCellReuseIdentifier: "APEWKWebViewTableViewCell")
