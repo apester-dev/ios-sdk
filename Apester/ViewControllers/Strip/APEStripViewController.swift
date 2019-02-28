@@ -14,6 +14,7 @@ class APEStripViewController: UIViewController {
 
   private var storyViewController: APEStripStoryViewController?
   private let stripServiceInstance = APEStripService(channelToken: "5890a541a9133e0e000e31aa", bundle:  Bundle.main)
+  private var stripWebView: WKWebView?
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -26,9 +27,9 @@ class APEStripViewController: UIViewController {
 
 private extension APEStripViewController {
   func setupStripComponent() {
-    let stripWebView = self.stripServiceInstance.stripWebView
-    stripWebView.frame = self.view.bounds
-    self.view.addSubview(stripWebView)
+    self.stripWebView = self.stripServiceInstance.stripWebView
+    stripWebView!.frame = self.view.bounds
+    self.view.addSubview(stripWebView!)
   }
 }
 
@@ -43,20 +44,22 @@ extension APEStripViewController: APEStripServiceDataSource {
 }
 
 extension APEStripViewController: APEStripServiceDelegate {
-  func stripComponentIsReady() {
+  func stripComponentIsReady(unitHeight height: CGFloat) {
+    self.stripWebView?.frame.size.height = height
     /// hide loading
     print(#function)
   }
 
-  func displayStroyComponent() {
+  func displayStoryComponent() {
     if self.storyViewController == nil {
       self.storyViewController = APEStripStoryViewController()
       self.storyViewController?.webView = self.stripServiceInstance.storyWebView
     }
+
     self.navigationController?.pushViewController(self.storyViewController!, animated: true)
   }
 
-  func hideStroyComponent() {
+  func hideStoryComponent() {
     self.storyViewController?.navigationController?.popViewController(animated: true)
   }
 }

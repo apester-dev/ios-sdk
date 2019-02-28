@@ -42,6 +42,7 @@ struct APEConfig {
     static let off = "fullscreen_off"
     static let showStripStory = "showApesterStory"
     static let hideStripStory = "hideApesterStory"
+    static let stripHeight = "mobileStripHeight"
   }
 }
 

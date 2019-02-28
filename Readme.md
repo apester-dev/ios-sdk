@@ -118,10 +118,10 @@ let stripServiceInstance = APEStripService(channelToken: "5890a541a9133e0e000e31
                                            bundle:  Bundle.main)
 ```
 
-2 - set `APEStripServiceStoryDatasource`, so you can handle story unit presentation. 
+2 - set `APEStripServiceDelegate`, `APEStripServiceDataSource` (optional), so you can handle story unit presentation, show / hide events. 
 ```
-self.stripServiceInstance.dataSource = self
 self.stripServiceInstance.delegate = self
+self.stripServiceInstance.dataSource = self
 ```
 
 3 - setup the StripWebView in your `StripViewController` .
@@ -130,29 +130,16 @@ let stripWebView = self.stripServiceInstance.stripWebView
 stripWebView.frame = self.view.bounds
 self.view.addSubview(stripWebView)
 ```
-
-4 - Implement the `APEStripServiceDataSource` so you can observe the Apester Story Unit show / hide events.
-```
-extension APEStripViewController: APEStripServiceDataSource {
-  var showStoryFunction: String {
-    return "console.log('show story');"
-  }
-
-  var hideStoryFunction: String {
-    return "console.log('hdie story');"
-  }
-}
-```
-
-5 - Implement the `APEStripServiceDelegate`, so you can handle Apester Story Unit presentation.
+4 - Implement the `APEStripServiceDelegate`, so you can handle Apester Story Unit presentation.
 
 ```
 extension APEStripViewController: APEStripServiceDelegate {
-  func stripComponentIsReady() {
-    /// hide loading
+  func stripComponentIsReady(unitHeight height: CGFloat) {
+    // update stripWebView height (optional) 
+    // hide loading
   }
 
-  func displayStroyComponent() {
+  func displayStoryComponent() {
     if self.storyViewController == nil {
       self.storyViewController = APEStripStoryViewController()
       // set the `StoryWebView`
@@ -161,8 +148,21 @@ extension APEStripViewController: APEStripServiceDelegate {
     self.navigationController?.pushViewController(self.storyViewController!, animated: true)
   }
 
-  func hideStroyComponent() {
+  func hideStoryComponent() {
     self.storyViewController?.navigationController?.popViewController(animated: true)
+  }
+}
+```
+
+5- Implement the `APEStripServiceDataSource` so you can observe the Apester Story Unit show / hide events.
+```
+extension APEStripViewController: APEStripServiceDataSource {
+  var showStoryFunction: String {
+    return "console.log('show story');"
+  }
+
+  var hideStoryFunction: String {
+    return "console.log('hdie story');"
   }
 }
 ```

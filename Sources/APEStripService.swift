@@ -11,9 +11,9 @@ import WebKit
 
 /// Handling The Apester Story Unit presentation
 public protocol APEStripServiceDelegate: AnyObject {
-  func stripComponentIsReady()
-  func displayStroyComponent()
-  func hideStroyComponent()
+  func stripComponentIsReady(unitHeight height: CGFloat)
+  func displayStoryComponent()
+  func hideStoryComponent()
 }
 
 /// Observing The Apester Story Unit show / hide events.
@@ -26,7 +26,7 @@ public protocol APEStripServiceDataSource: AnyObject {
 ///
 /// Between The Apester Units Carousel component (The `StripWebView`)
 /// And the selected Apester Unit (The `StoryWebView`)
-@available(iOS 10.0, *)
+@available(iOS 11.0, *)
 open class APEStripService: NSObject {
 
   // MARK:- Private Properties
@@ -37,15 +37,18 @@ open class APEStripService: NSObject {
 
   private var messagesTracker = APEStripServiceEventsTracker()
 
-  private var stripIsLoaded: Bool = false
+  private var stripLoaded = (isLoaded: false, height: CGFloat(0))
+
   private var storyisReady: Bool = false {
     didSet {
       guard storyisReady else { return }
-      self.delegate?.stripComponentIsReady()
+      // update delegate
+      self.delegate?.stripComponentIsReady(unitHeight: self.stripLoaded.height)
+      // send openUnitMessage if needed
       if let openUnitMessage = self.openUnitMessage {
         self.messagesTracker.sendApesterEvent(message: openUnitMessage, to: storyWebView) { _ in
           self.openUnitMessage = nil
-          self.delegate?.displayStroyComponent()
+          self.delegate?.displayStoryComponent()
         }
       }
     }
@@ -102,19 +105,21 @@ open class APEStripService: NSObject {
   }
 }
 
-@available(iOS 10.0, *)
+@available(iOS 11.0, *)
 // MARK:- UserContentController Script Messages Handle
 private extension APEStripService {
 
   func handleUserContentController(message: WKScriptMessage) {
     if message.name == APEConfig.Strip.showStripStory {
       if let showStoryFunction = self.dataSource?.showStoryFunction {
-        self.messagesTracker.evaluateJavaScript(message: showStoryFunction, to: self.storyWebView)
+        self.messagesTracker.evaluateJavaScript(message: showStoryFunction,
+                                                to: self.storyWebView)
       }
 
     } else if message.name == APEConfig.Strip.hideStripStory {
       if let hideStoryFunction = self.dataSource?.hideStoryFunction {
-        self.messagesTracker.evaluateJavaScript(message: hideStoryFunction, to: self.storyWebView)
+        self.messagesTracker.evaluateJavaScript(message: hideStoryFunction,
+                                                to: self.storyWebView)
       }
 
     } else if let bodyString = message.body as? String {
@@ -124,7 +129,15 @@ private extension APEStripService {
           if let superView = stripWebView.superview, storyWebView.superview == nil {
             superView.addSubview(storyWebView)
           }
-          self.stripIsLoaded = true
+          var stripIsLoaded = (isLoaded: true, height: CGFloat(0))
+          // get unit height
+          if let dictioanry = bodyString.dictionary,
+            let heightString = dictioanry[APEConfig.Strip.stripHeight] as? String,
+            let height = CGFloat(string: heightString) {
+            let adjustedContentInsets = self._stripWebView.scrollView.adjustedContentInset.bottom + self._stripWebView.scrollView.adjustedContentInset.top
+            stripIsLoaded.height += height + adjustedContentInsets
+          }
+          self.stripLoaded = stripIsLoaded
 
         } else if bodyString.contains(APEConfig.Strip.initial) {
           self.initialMessage = bodyString
@@ -135,7 +148,7 @@ private extension APEStripService {
             return
           }
           self.messagesTracker.sendApesterEvent(message: bodyString, to: storyWebView) { _ in
-            self.delegate?.displayStroyComponent()
+            self.delegate?.displayStoryComponent()
           }
         }
         // proxy updates
@@ -146,7 +159,7 @@ private extension APEStripService {
         // handle storyWebView events
       } else if message.webView == storyWebView {
         if bodyString.contains(APEConfig.Strip.isReady) {
-          self.storyisReady = self.stripIsLoaded
+          self.storyisReady = self.stripLoaded.0
 
         } else if bodyString.contains(APEConfig.Strip.next) {
           if self.initialMessage != nil {
@@ -154,7 +167,7 @@ private extension APEStripService {
           }
 
         } else if bodyString.contains(APEConfig.Strip.off) {
-          self.delegate?.hideStroyComponent()
+          self.delegate?.hideStoryComponent()
         }
         // proxy updates
         if self.messagesTracker.canSendApesterEvent(message: bodyString, to: stripWebView) {
@@ -165,7 +178,7 @@ private extension APEStripService {
   }
 }
 
-@available(iOS 10.0, *)
+@available(iOS 11.0, *)
 // MARK:- WKScriptMessageHandler
 extension APEStripService: WKScriptMessageHandler {
 
@@ -176,7 +189,7 @@ extension APEStripService: WKScriptMessageHandler {
   }
 }
 
-@available(iOS 10.0, *)
+@available(iOS 11.0, *)
 // MARK:- WKNavigationDelegate
 extension APEStripService: WKNavigationDelegate {
 
@@ -200,11 +213,9 @@ extension APEStripService: WKNavigationDelegate {
     }
 
     if let headerFields = response.allHeaderFields as? [String: String] {
-      if #available(iOS 11.0, *) {
-        let cookies = HTTPCookie.cookies(withResponseHeaderFields: headerFields, for: url)
-        cookies.forEach { cookie in
-          webView.configuration.websiteDataStore.httpCookieStore.setCookie(cookie)
-        }
+      let cookies = HTTPCookie.cookies(withResponseHeaderFields: headerFields, for: url)
+      cookies.forEach { cookie in
+        webView.configuration.websiteDataStore.httpCookieStore.setCookie(cookie)
       }
     }
     decisionHandler(.allow)
@@ -284,5 +295,30 @@ private extension Dictionary {
     var result = lhs
     rhs.forEach { result[$0] = $1 }
     return result
+  }
+}
+
+// MARK:- Private String
+private  extension String {
+  var dictionary: [String: Any]? {
+    if let data = self.data(using: .utf8) {
+      do {
+        return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+      } catch {
+        print(error.localizedDescription)
+      }
+    }
+    return nil
+  }
+}
+
+// MARK: Private CGloat
+private extension CGFloat {
+
+  init?(string: String) {
+    guard let number = NumberFormatter().number(from: string) else {
+      return nil
+    }
+    self.init(number.floatValue)
   }
 }
