@@ -9,7 +9,7 @@
 import WebKit
 import Quick
 import Nimble
-@testable import ApesterKit
+//@testable import ApesterKit
 
 class ApesterKitSpec: QuickSpec {
 

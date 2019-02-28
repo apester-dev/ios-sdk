@@ -12,7 +12,7 @@
         <!--Multiple Apester Units-->
         <scene sceneID="huX-kZ-FKY">
             <objects>
-                <tableViewController id="qWs-3Z-apY" customClass="APETableViewController" customModule="ApisterKitDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="qWs-3Z-apY" customClass="APETableViewController" customModule="Apester55" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ZoH-49-ak5">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -32,7 +32,7 @@
         <!--ApesterKit Demo-->
         <scene sceneID="QTM-lg-cc7">
             <objects>
-                <tableViewController id="LMb-PD-XyA" customClass="APEHomeTableViewController" customModule="ApisterKitDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="LMb-PD-XyA" customClass="APEHomeTableViewController" customModule="Apester55" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Ckd-Cj-vZS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -125,7 +125,7 @@
         <!--Embeded ApesterUnit-->
         <scene sceneID="Lrc-WI-8EY">
             <objects>
-                <viewController id="HxZ-9m-hf0" customClass="APEWebViewViewController" customModule="ApisterKitDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="HxZ-9m-hf0" customClass="APEWebViewViewController" customModule="Apester55" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xyV-7I-Fa9"/>
                         <viewControllerLayoutGuide type="bottom" id="y9H-oR-luJ"/>
@@ -177,11 +177,11 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="oXn-ea-6sv" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="y7p-kr-UjG">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="blackTranslucent" largeTitles="YES" id="y7p-kr-UjG">
                         <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="barTintColor" red="0.92941176469999998" green="0.23921568630000001" blue="0.23921568630000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.81856339988369631" green="0.15073937389783923" blue="0.19675992194679123" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
@@ -201,7 +201,7 @@
         <!--Strip-->
         <scene sceneID="eiQ-mw-1h6">
             <objects>
-                <viewController title="Strip" id="fOt-2H-GaU" customClass="APEStripViewController" customModule="ApisterKitDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Strip" id="fOt-2H-GaU" customClass="APEStripViewController" customModule="Apester55" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZL4-IJ-CHq"/>
                         <viewControllerLayoutGuide type="bottom" id="dkN-SG-8z9"/>
