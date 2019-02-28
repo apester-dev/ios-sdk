@@ -22,7 +22,6 @@ public protocol APEStripServiceDataSource: AnyObject {
   var hideStoryFunction: String { get }
 }
 
-
 /// A Proxy Messaging Handler
 ///
 /// Between The Apester Units Carousel component (The `StripWebView`)
@@ -36,15 +35,15 @@ open class APEStripService: NSObject {
   private var initialMessage: String?
   private var openUnitMessage: String?
 
-  private var messages: [Int: String] = [:]
+  private var messagesTracker = APEStripServiceEventsTracker()
 
-  private var isLoaded: Bool = false
-  private var isReady: Bool = false {
+  private var stripIsLoaded: Bool = false
+  private var storyisReady: Bool = false {
     didSet {
-      guard isReady else { return }
+      guard storyisReady else { return }
       self.delegate?.stripComponentIsReady()
       if let openUnitMessage = self.openUnitMessage {
-        self.storySendApesterEvent(message: openUnitMessage) { _ in
+        self.messagesTracker.sendApesterEvent(message: openUnitMessage, to: storyWebView) { _ in
           self.openUnitMessage = nil
           self.delegate?.displayStroyComponent()
         }
@@ -56,11 +55,10 @@ open class APEStripService: NSObject {
     let webView = WKWebView()
     webView.navigationDelegate = self
     webView.configuration.websiteDataStore = WKWebsiteDataStore.default()
-    webView.configuration.userContentController.add(self, name: APEConfig.Strip.proxy)
+    webView.configuration.userContentController.register(to: [APEConfig.Strip.proxy], delegate: self)
     if let urlPath = self.stripUrlPath, let stripUrl = URL(string: urlPath) {
       webView.load(URLRequest(url: stripUrl))
     }
-    self.messages[webView.hash] = ""
     return webView
   }()
 
@@ -68,13 +66,14 @@ open class APEStripService: NSObject {
     let webView = WKWebView()
     webView.navigationDelegate = self
     webView.configuration.websiteDataStore = WKWebsiteDataStore.default()
-    webView.configuration.userContentController.add(self, name: APEConfig.Strip.proxy)
-    webView.configuration.userContentController.add(self, name: APEConfig.Strip.showStripStory)
-    webView.configuration.userContentController.add(self, name: APEConfig.Strip.hideStripStory)
+    webView.configuration.userContentController
+      .register(to: [APEConfig.Strip.proxy,
+                     APEConfig.Strip.showStripStory,
+                     APEConfig.Strip.hideStripStory],
+                delegate: self)
     if let storyUrl = URL(string: APEConfig.Strip.stripStoryUrlPath) {
       webView.load(URLRequest(url: storyUrl))
     }
-    self.messages[webView.hash] = ""
     return webView
   }()
 
@@ -87,9 +86,19 @@ open class APEStripService: NSObject {
 
   // MARK:- Initializer
   public init(channelToken: String, bundle: Bundle) {
+    super.init()
     let parameters = ["token": channelToken] + APEBundle.bundleInfoPayload(with: bundle)
     self.stripUrlPath = parameters.urlComponents(APEConfig.Strip.stripUrlPath)
-    super.init()
+  }
+
+  deinit {
+    self.stripWebView.configuration.userContentController
+      .unregister(from: [APEConfig.Strip.proxy])
+
+    self.storyWebView.configuration.userContentController
+      .unregister(from: [APEConfig.Strip.proxy,
+                         APEConfig.Strip.showStripStory,
+                         APEConfig.Strip.hideStripStory])
   }
 }
 
@@ -98,74 +107,60 @@ open class APEStripService: NSObject {
 private extension APEStripService {
 
   func handleUserContentController(message: WKScriptMessage) {
-    if message.name == APEConfig.Strip.showStripStory, message.webView == self.storyWebView {
+    if message.name == APEConfig.Strip.showStripStory {
       if let showStoryFunction = self.dataSource?.showStoryFunction {
-        self.storyEvaluateJavaScript(message: showStoryFunction)
+        self.messagesTracker.evaluateJavaScript(message: showStoryFunction, to: self.storyWebView)
       }
 
     } else if message.name == APEConfig.Strip.hideStripStory {
       if let hideStoryFunction = self.dataSource?.hideStoryFunction {
-        self.storyEvaluateJavaScript(message: hideStoryFunction)
+        self.messagesTracker.evaluateJavaScript(message: hideStoryFunction, to: self.storyWebView)
       }
 
     } else if let bodyString = message.body as? String {
-      if bodyString.contains(APEConfig.Strip.loaded) {
-        if let superView = self.stripWebView.superview, self.storyWebView.superview == nil {
-          superView.addSubview(self.storyWebView)
-        }
-        self.isLoaded = true
-      } else if bodyString.contains(APEConfig.Strip.isReady) {
-        self.isReady = self.isLoaded
+      // handle stripWebView events
+      if message.webView == stripWebView {
+        if bodyString.contains(APEConfig.Strip.loaded) {
+          if let superView = stripWebView.superview, storyWebView.superview == nil {
+            superView.addSubview(storyWebView)
+          }
+          self.stripIsLoaded = true
 
-      } else if bodyString.contains(APEConfig.Strip.initial) {
-        self.initialMessage = bodyString
+        } else if bodyString.contains(APEConfig.Strip.initial) {
+          self.initialMessage = bodyString
 
-      } else if bodyString.contains(APEConfig.Strip.open) {
-        guard self.isReady else {
-          self.openUnitMessage = bodyString
-          return
+        } else if bodyString.contains(APEConfig.Strip.open) {
+          guard self.storyisReady else {
+            self.openUnitMessage = bodyString
+            return
+          }
+          self.messagesTracker.sendApesterEvent(message: bodyString, to: storyWebView) { _ in
+            self.delegate?.displayStroyComponent()
+          }
         }
-        self.storySendApesterEvent(message: bodyString) { _ in
-          self.delegate?.displayStroyComponent()
+        // proxy updates
+        if self.messagesTracker.canSendApesterEvent(message: bodyString, to: storyWebView) {
+          self.messagesTracker.sendApesterEvent(message: bodyString, to: storyWebView)
         }
-      } else if bodyString.contains(APEConfig.Strip.next) {
-        if self.initialMessage != nil {
-          self.initialMessage = nil
+
+        // handle storyWebView events
+      } else if message.webView == storyWebView {
+        if bodyString.contains(APEConfig.Strip.isReady) {
+          self.storyisReady = self.stripIsLoaded
+
+        } else if bodyString.contains(APEConfig.Strip.next) {
+          if self.initialMessage != nil {
+            self.initialMessage = nil
+          }
+
+        } else if bodyString.contains(APEConfig.Strip.off) {
+          self.delegate?.hideStroyComponent()
         }
-      } else if bodyString.contains(APEConfig.Strip.off) {
-        self.delegate?.hideStroyComponent()
+        // proxy updates
+        if self.messagesTracker.canSendApesterEvent(message: bodyString, to: stripWebView) {
+          self.messagesTracker.sendApesterEvent(message: bodyString, to: stripWebView)
+        }
       }
-      // proxy updates
-      if message.webView == self.stripWebView {
-        if self.messages[self.storyWebView.hash] != bodyString {
-          self.storySendApesterEvent(message: bodyString)
-        }
-
-      } else if message.webView == self.storyWebView {
-        if self.messages[self.stripWebView.hash] != bodyString {
-          self.stripSendApesterEvent(message: bodyString)
-        }
-      }
-    }
-  }
-
-  func stripSendApesterEvent(message: String, completion: ((Bool) -> Void)? = nil) {
-    self.messages[self.stripWebView.hash] = message
-    self.stripWebView.evaluateJavaScript("window.__sendApesterEvent(\(message))") { (response, error) in
-      completion?(error == nil)
-    }
-  }
-
-  func storySendApesterEvent(message: String, completion: ((Bool) -> Void)? = nil) {
-    self.messages[self.storyWebView.hash] = message
-    self.storyWebView.evaluateJavaScript("window.__sendApesterEvent(\(message))") { (response, error) in
-      completion?(error == nil)
-    }
-  }
-
-  func storyEvaluateJavaScript(message: String, completion: ((Bool) -> Void)? = nil) {
-    self.storyWebView.evaluateJavaScript(message) { (response, error) in
-      completion?(error == nil)
     }
   }
 }
@@ -187,7 +182,7 @@ extension APEStripService: WKNavigationDelegate {
 
   public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
     if let initialMessage = self.initialMessage {
-      self.storySendApesterEvent(message: initialMessage) { _ in
+      self.messagesTracker.sendApesterEvent(message: initialMessage, to: self.storyWebView) { _ in
         self.initialMessage = nil
       }
     }
@@ -214,6 +209,61 @@ extension APEStripService: WKNavigationDelegate {
     }
     decisionHandler(.allow)
   }
+}
+
+// MARK:- APEScriptMessageHandler Wrapper
+private class APEScriptMessageHandler : NSObject, WKScriptMessageHandler {
+
+  weak var delegate : WKScriptMessageHandler?
+
+  init(delegate: WKScriptMessageHandler) {
+    self.delegate = delegate
+    super.init()
+  }
+
+  func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+    self.delegate?.userContentController(userContentController, didReceive: message)
+  }
+}
+
+// MARK:- APEStripServiceEventsTracker
+private class APEStripServiceEventsTracker {
+
+  private var messages: [Int: String] = [:]
+
+  func canSendApesterEvent(message: String, to webView: WKWebView) -> Bool {
+    return self.messages[webView.hash] != message
+  }
+
+  func sendApesterEvent(message: String, to webView: WKWebView, completion: ((Bool) -> Void)? = nil) {
+    self.messages[webView.hash] = message
+    webView.evaluateJavaScript("window.__sendApesterEvent(\(message))") { (response, error) in
+      completion?(error == nil)
+    }
+  }
+
+  func evaluateJavaScript(message: String, to webView: WKWebView, completion: ((Bool) -> Void)? = nil) {
+    webView.evaluateJavaScript(message) { (response, error) in
+      completion?(error == nil)
+    }
+  }
+}
+
+// MARK:- Private WKUserContentController Extension
+private extension WKUserContentController {
+
+  func register(to scriptMessages: [String], delegate: WKScriptMessageHandler) {
+    scriptMessages.forEach({
+      self.add(APEScriptMessageHandler(delegate: delegate), name: $0)
+    })
+  }
+
+  func unregister(from scriptMessages: [String]) {
+    scriptMessages.forEach({
+      self.removeScriptMessageHandler(forName: $0)
+    })
+  }
+
 }
 
 // MARK:- Private Dictionary Extension
