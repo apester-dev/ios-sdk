@@ -112,29 +112,26 @@ $ git submodule update --init --recursive
 ### `APEStripService` Implementaion
 The APEStripService is a proxy messaging handler between The Apester Units Carousel component (The `StripWebView`) and the selected Apester Unit (The `StoryWebView`), . Follow our step by step guide and setup: 
 
-1 - create a new instance for APEStripService:
+1 - create a new instance for APEStripService with a channel token and app main bundle:
 ```
-let stripServiceInstance = APEStripService()
-```
-2 - setup the strip channel token and app main bundle from your `StripViewController`  `viewDidLoad` function:
-```
-self.stripServiceInstance.setup(channelToken: "5890a541a9133e0e000e31aa", bundle:  Bundle.main)
+let stripServiceInstance = APEStripService(channelToken: "5890a541a9133e0e000e31aa",
+                                           bundle:  Bundle.main)
 ```
 
-3 - set `APEStripServiceStoryDatasource`, so you can handle story unit presentation. 
+2 - set `APEStripServiceStoryDatasource`, so you can handle story unit presentation. 
 ```
 self.stripServiceInstance.dataSource = self
 self.stripServiceInstance.delegate = self
 ```
 
-4 - setup the StripWebView in your `StripViewController` .
+3 - setup the StripWebView in your `StripViewController` .
 ```
 let stripWebView = self.stripServiceInstance.stripWebView
 stripWebView.frame = self.view.bounds
 self.view.addSubview(stripWebView)
 ```
 
-5 - Implement the `APEStripServiceDataSource` so you can observe the Apester Story Unit show / hide events.
+4 - Implement the `APEStripServiceDataSource` so you can observe the Apester Story Unit show / hide events.
 ```
 extension APEStripViewController: APEStripServiceDataSource {
   var showStoryFunction: String {
@@ -147,7 +144,7 @@ extension APEStripViewController: APEStripServiceDataSource {
 }
 ```
 
-6 - Implement the `APEStripServiceDelegate`, so you can handle Apester Story Unit presentation.
+5 - Implement the `APEStripServiceDelegate`, so you can handle Apester Story Unit presentation.
 
 ```
 extension APEStripViewController: APEStripServiceDelegate {
@@ -183,7 +180,7 @@ class StripStoryViewController: UIViewController {
 }
 ```
 
-## Handle Unit Heights Updates
+## Handle Unit Height Updates
 ### `APEWebViewService` Implementaion
 
 1 - register the app main bundle and the webView, In your viewController  viewDidLoad function:
