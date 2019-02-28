@@ -159,7 +159,7 @@ private extension APEStripService {
         // handle storyWebView events
       } else if message.webView == storyWebView {
         if bodyString.contains(APEConfig.Strip.isReady) {
-          self.storyisReady = self.stripLoaded.0
+          self.storyisReady = self.stripLoaded.isLoaded
 
         } else if bodyString.contains(APEConfig.Strip.next) {
           if self.initialMessage != nil {
