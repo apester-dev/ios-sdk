@@ -29,38 +29,22 @@ public protocol APEStripServiceDataSource: AnyObject {
 @available(iOS 11.0, *)
 open class APEStripService: NSObject {
 
+  private typealias StripConfig = APEConfig.Strip
+
   // MARK:- Private Properties
-  private var stripUrlPath: String?
-  
-  private var initialMessage: String?
-  private var openUnitMessage: String?
+  private var stripURL: URL?
 
   private var messagesTracker = APEStripServiceEventsTracker()
 
-  private var stripLoaded = (isLoaded: false, height: CGFloat(0))
-
-  private var storyisReady: Bool = false {
-    didSet {
-      guard storyisReady else { return }
-      // update delegate
-      self.delegate?.stripComponentIsReady(unitHeight: self.stripLoaded.height)
-      // send openUnitMessage if needed
-      if let openUnitMessage = self.openUnitMessage {
-        self.messagesTracker.sendApesterEvent(message: openUnitMessage, to: storyWebView) { _ in
-          self.openUnitMessage = nil
-          self.delegate?.displayStoryComponent()
-        }
-      }
-    }
-  }
+  private var loadingState = APEStripLoadingState()
 
   private lazy var _stripWebView: WKWebView = {
     let webView = WKWebView()
     webView.navigationDelegate = self
     webView.configuration.websiteDataStore = WKWebsiteDataStore.default()
-    webView.configuration.userContentController.register(to: [APEConfig.Strip.proxy], delegate: self)
-    if let urlPath = self.stripUrlPath, let stripUrl = URL(string: urlPath) {
-      webView.load(URLRequest(url: stripUrl))
+    webView.configuration.userContentController.register(to: [StripConfig.proxy], delegate: self)
+    if let url = self.stripURL {
+      webView.load(URLRequest(url: url))
     }
     return webView
   }()
@@ -70,11 +54,11 @@ open class APEStripService: NSObject {
     webView.navigationDelegate = self
     webView.configuration.websiteDataStore = WKWebsiteDataStore.default()
     webView.configuration.userContentController
-      .register(to: [APEConfig.Strip.proxy,
-                     APEConfig.Strip.showStripStory,
-                     APEConfig.Strip.hideStripStory],
+      .register(to: [StripConfig.proxy,
+                     StripConfig.showStripStory,
+                     StripConfig.hideStripStory],
                 delegate: self)
-    if let storyUrl = URL(string: APEConfig.Strip.stripStoryUrlPath) {
+    if let storyUrl = URL(string: StripConfig.stripStoryUrlPath) {
       webView.load(URLRequest(url: storyUrl))
     }
     return webView
@@ -91,17 +75,17 @@ open class APEStripService: NSObject {
   public init(channelToken: String, bundle: Bundle) {
     super.init()
     let parameters = ["token": channelToken] + APEBundle.bundleInfoPayload(with: bundle)
-    self.stripUrlPath = parameters.urlComponents(APEConfig.Strip.stripUrlPath)
+    self.stripURL = parameters.componentsURL(baseURL: StripConfig.stripUrlPath)
   }
 
   deinit {
     self.stripWebView.configuration.userContentController
-      .unregister(from: [APEConfig.Strip.proxy])
+      .unregister(from: [StripConfig.proxy])
 
     self.storyWebView.configuration.userContentController
-      .unregister(from: [APEConfig.Strip.proxy,
-                         APEConfig.Strip.showStripStory,
-                         APEConfig.Strip.hideStripStory])
+      .unregister(from: [StripConfig.proxy,
+                         StripConfig.showStripStory,
+                         StripConfig.hideStripStory])
   }
 }
 
@@ -110,13 +94,13 @@ open class APEStripService: NSObject {
 private extension APEStripService {
 
   func handleUserContentController(message: WKScriptMessage) {
-    if message.name == APEConfig.Strip.showStripStory {
+    if message.name == StripConfig.showStripStory {
       if let showStoryFunction = self.dataSource?.showStoryFunction {
         self.messagesTracker.evaluateJavaScript(message: showStoryFunction,
                                                 to: self.storyWebView)
       }
 
-    } else if message.name == APEConfig.Strip.hideStripStory {
+    } else if message.name == StripConfig.hideStripStory {
       if let hideStoryFunction = self.dataSource?.hideStoryFunction {
         self.messagesTracker.evaluateJavaScript(message: hideStoryFunction,
                                                 to: self.storyWebView)
@@ -125,26 +109,26 @@ private extension APEStripService {
     } else if let bodyString = message.body as? String {
       // handle stripWebView events
       if message.webView == stripWebView {
-        if bodyString.contains(APEConfig.Strip.loaded) {
+        if bodyString.contains(StripConfig.loaded) {
           if let superView = stripWebView.superview, storyWebView.superview == nil {
             superView.addSubview(storyWebView)
           }
-          var stripIsLoaded = (isLoaded: true, height: CGFloat(0))
+          self.loadingState.isLoaded = true
+
           // get unit height
           if let dictioanry = bodyString.dictionary,
-            let heightString = dictioanry[APEConfig.Strip.stripHeight] as? String,
+            let heightString = dictioanry[StripConfig.stripHeight] as? String,
             let height = CGFloat(string: heightString) {
             let adjustedContentInsets = self._stripWebView.scrollView.adjustedContentInset.bottom + self._stripWebView.scrollView.adjustedContentInset.top
-            stripIsLoaded.height += height + adjustedContentInsets
+            self.loadingState.height = height + adjustedContentInsets
           }
-          self.stripLoaded = stripIsLoaded
 
-        } else if bodyString.contains(APEConfig.Strip.initial) {
-          self.initialMessage = bodyString
+        } else if bodyString.contains(StripConfig.initial) {
+          self.loadingState.initialMessage = bodyString
 
-        } else if bodyString.contains(APEConfig.Strip.open) {
-          guard self.storyisReady else {
-            self.openUnitMessage = bodyString
+        } else if bodyString.contains(StripConfig.open) {
+          guard self.loadingState.isReady else {
+            self.loadingState.openUnitMessage = bodyString
             return
           }
           self.messagesTracker.sendApesterEvent(message: bodyString, to: storyWebView) { _ in
@@ -158,15 +142,24 @@ private extension APEStripService {
 
         // handle storyWebView events
       } else if message.webView == storyWebView {
-        if bodyString.contains(APEConfig.Strip.isReady) {
-          self.storyisReady = self.stripLoaded.isLoaded
-
-        } else if bodyString.contains(APEConfig.Strip.next) {
-          if self.initialMessage != nil {
-            self.initialMessage = nil
+        if bodyString.contains(StripConfig.isReady) {
+          self.loadingState.isReady = true
+          // update delegate
+          self.delegate?.stripComponentIsReady(unitHeight: self.loadingState.height)
+          // send openUnitMessage if needed
+          if let openUnitMessage = self.loadingState.openUnitMessage {
+            self.messagesTracker.sendApesterEvent(message: openUnitMessage, to: storyWebView) { _ in
+              self.loadingState.openUnitMessage = nil
+              self.delegate?.displayStoryComponent()
+            }
           }
 
-        } else if bodyString.contains(APEConfig.Strip.off) {
+        } else if bodyString.contains(StripConfig.next) {
+          if self.loadingState.initialMessage != nil {
+            self.loadingState.initialMessage = nil
+          }
+
+        } else if bodyString.contains(StripConfig.off) {
           self.delegate?.hideStoryComponent()
         }
         // proxy updates
@@ -194,9 +187,9 @@ extension APEStripService: WKScriptMessageHandler {
 extension APEStripService: WKNavigationDelegate {
 
   public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-    if let initialMessage = self.initialMessage {
+    if let initialMessage = self.loadingState.initialMessage {
       self.messagesTracker.sendApesterEvent(message: initialMessage, to: self.storyWebView) { _ in
-        self.initialMessage = nil
+        self.loadingState.initialMessage = nil
       }
     }
   }
@@ -235,6 +228,15 @@ private class APEScriptMessageHandler : NSObject, WKScriptMessageHandler {
   func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
     self.delegate?.userContentController(userContentController, didReceive: message)
   }
+}
+
+// MARK:- APEStripLoadingState
+private struct APEStripLoadingState {
+  var isLoaded = false
+  var height: CGFloat = 0
+  var isReady = false
+  var initialMessage: String?
+  var openUnitMessage: String?
 }
 
 // MARK:- APEStripServiceEventsTracker
@@ -280,15 +282,15 @@ private extension WKUserContentController {
 // MARK:- Private Dictionary Extension
 private extension Dictionary {
 
-  func urlComponents(_ urlPath: String) -> String? {
-    var components = URLComponents(string: urlPath)
+  func componentsURL(baseURL urlString: String) -> URL? {
+    var components = URLComponents(string: urlString)
     components?.queryItems = self.compactMap { (arg) in
       guard let key = arg.key as? String, let value = arg.value as? String else {
         return nil
       }
       return URLQueryItem(name: key, value: value)
     }
-    return components?.url?.absoluteString
+    return components?.url
   }
 
   static func + (lhs: [Key: Value], rhs: [Key: Value]) -> [Key: Value] {
