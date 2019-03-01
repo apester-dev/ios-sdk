@@ -18,6 +18,7 @@
 		BB14A6F01F1F6BE5003E393D /* ApesterKit.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BB14A6EC1F1F6619003E393D /* ApesterKit.bundle */; };
 		BB9700E02223EF270072E1F8 /* Readme.md in Resources */ = {isa = PBXBuildFile; fileRef = BB9700CD2223EF270072E1F8 /* Readme.md */; };
 		BB9709AB222322E000E1076B /* APEConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9709AA222322E000E1076B /* APEConfig.swift */; };
+		BB97263A2229BA54008C7440 /* ApesterKit.podspec in Resources */ = {isa = PBXBuildFile; fileRef = BB9726272229BA54008C7440 /* ApesterKit.podspec */; };
 		BBC96DA8222781F400EA7E6B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC96DA7222781F400EA7E6B /* AppDelegate.swift */; };
 		BBC96DB2222781F500EA7E6B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBC96DB0222781F500EA7E6B /* LaunchScreen.storyboard */; };
 		BBC96DCB2227843100EA7E6B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB3DD3781FDF47E70094A773 /* Main.storyboard */; };
@@ -269,6 +270,7 @@
 		BB9709AA222322E000E1076B /* APEConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEConfig.swift; sourceTree = "<group>"; };
 		BB9709BE22232BED00E1076B /* APEStripViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripViewController.swift; sourceTree = "<group>"; };
 		BB9709C022232F4100E1076B /* APEStripStoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripStoryViewController.swift; sourceTree = "<group>"; };
+		BB9726272229BA54008C7440 /* ApesterKit.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ApesterKit.podspec; sourceTree = SOURCE_ROOT; };
 		BBBDFA8B1FDF4D5300C2F791 /* Mustache.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mustache.framework; path = Carthage/Build/iOS/Mustache.framework; sourceTree = "<group>"; };
 		BBBDFA8F1FDF550800C2F791 /* Apester.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Apester.mustache; sourceTree = "<group>"; };
 		BBC96DA5222781F400EA7E6B /* Apester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Apester.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -310,6 +312,7 @@
 		3549BAFB1DA387DB00C63030 = {
 			isa = PBXGroup;
 			children = (
+				BB9726272229BA54008C7440 /* ApesterKit.podspec */,
 				3549BB161DA3890B00C63030 /* Sources */,
 				3549BB191DA3890B00C63030 /* Tests */,
 				BBC96DA6222781F400EA7E6B /* Apester */,
@@ -843,6 +846,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB97263A2229BA54008C7440 /* ApesterKit.podspec in Resources */,
 				BB9700E02223EF270072E1F8 /* Readme.md in Resources */,
 				BB14A6F01F1F6BE5003E393D /* ApesterKit.bundle in Resources */,
 			);

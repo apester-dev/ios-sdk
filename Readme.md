@@ -110,7 +110,7 @@ $ git submodule update --init --recursive
 
 ## Handle Strip Units
 ### `APEStripService` Implementaion
-The APEStripService is a proxy messaging handler between The Apester Units Carousel component (The `StripWebView`) and the selected Apester Unit (The `StoryWebView`), . Follow our step by step guide and setup: 
+The `APEStripService` is a proxy messaging handler between The Apester Units Carousel component (The `StripWebView`) and the selected Apester Unit (The `StoryWebView`), . Follow our guide step by step and setup: 
 
 1 - create a new instance for APEStripService with a channel token and app main bundle:
 ```
@@ -133,7 +133,7 @@ self.view.addSubview(stripWebView)
 4 - Implement the `APEStripServiceDelegate`, so you can handle Apester Story Unit presentation.
 
 ```
-extension APEStripViewController: APEStripServiceDelegate {
+extension StripViewController: APEStripServiceDelegate {
   func stripComponentIsReady(unitHeight height: CGFloat) {
     // update stripWebView height (optional) 
     // hide loading
@@ -156,7 +156,7 @@ extension APEStripViewController: APEStripServiceDelegate {
 
 5- Implement the `APEStripServiceDataSource` so you can observe the Apester Story Unit show / hide events.
 ```
-extension APEStripViewController: APEStripServiceDataSource {
+extension StripViewController: APEStripServiceDataSource {
   var showStoryFunction: String {
     return "console.log('show story');"
   }
