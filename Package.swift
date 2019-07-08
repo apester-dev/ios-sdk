@@ -15,7 +15,7 @@ let package = Package(
         .target(
             name: "ApesterKit",
             dependencies: [],
-            path: "Sources"),),
+            path: "Sources"),
         .testTarget(
             name: "ApesterKitTests",
             dependencies: ["ApesterKit"]),
