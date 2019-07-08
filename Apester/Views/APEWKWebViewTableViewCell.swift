@@ -38,8 +38,4 @@ extension APEWKWebViewTableViewCell: WKNavigationDelegate {
       APEWebViewService.shared.didStartLoad(webView: webView)
     }
   }
-
-  func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-    APEWebViewService.shared.didFinishLoad(webView: webView)
-  }
 }

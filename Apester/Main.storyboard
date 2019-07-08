@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oXn-ea-6sv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oXn-ea-6sv">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Multiple Apester Units-->
         <scene sceneID="huX-kZ-FKY">
             <objects>
-                <tableViewController id="qWs-3Z-apY" customClass="APETableViewController" customModule="Apester55" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="qWs-3Z-apY" customClass="APETableViewController" customModule="Apester" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ZoH-49-ak5">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -32,7 +32,7 @@
         <!--ApesterKit Demo-->
         <scene sceneID="QTM-lg-cc7">
             <objects>
-                <tableViewController id="LMb-PD-XyA" customClass="APEHomeTableViewController" customModule="Apester55" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="LMb-PD-XyA" customClass="APEHomeTableViewController" customModule="Apester" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Ckd-Cj-vZS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -125,7 +125,7 @@
         <!--Embeded ApesterUnit-->
         <scene sceneID="Lrc-WI-8EY">
             <objects>
-                <viewController id="HxZ-9m-hf0" customClass="APEWebViewViewController" customModule="Apester55" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="HxZ-9m-hf0" customClass="APEWebViewViewController" customModule="Apester" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xyV-7I-Fa9"/>
                         <viewControllerLayoutGuide type="bottom" id="y9H-oR-luJ"/>
@@ -134,38 +134,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="BiK-Pv-Izb">
-                                <rect key="frame" x="56.5" y="74" width="262.5" height="29"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="28" id="TwC-Au-wmj"/>
-                                </constraints>
-                                <segments>
-                                    <segment title="UI WebView"/>
-                                    <segment title="WK WebView"/>
-                                </segments>
-                                <connections>
-                                    <action selector="onSegmentControlChange:" destination="HxZ-9m-hf0" eventType="valueChanged" id="Adb-VZ-U8F"/>
-                                </connections>
-                            </segmentedControl>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LOH-W7-6fm">
-                                <rect key="frame" x="0.0" y="112" width="375" height="555"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                             </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="LOH-W7-6fm" firstAttribute="top" secondItem="BiK-Pv-Izb" secondAttribute="bottom" constant="10" id="9uS-tW-RXx"/>
                             <constraint firstItem="y9H-oR-luJ" firstAttribute="top" secondItem="LOH-W7-6fm" secondAttribute="bottom" id="B6A-IN-bs0"/>
                             <constraint firstAttribute="trailing" secondItem="LOH-W7-6fm" secondAttribute="trailing" id="LmZ-om-lI2"/>
-                            <constraint firstItem="BiK-Pv-Izb" firstAttribute="width" secondItem="7BG-4d-2iX" secondAttribute="width" multiplier="0.7" id="VYR-O9-Fub"/>
-                            <constraint firstItem="BiK-Pv-Izb" firstAttribute="top" secondItem="xyV-7I-Fa9" secondAttribute="bottom" constant="10" id="W0R-vV-FZb"/>
-                            <constraint firstItem="BiK-Pv-Izb" firstAttribute="centerX" secondItem="7BG-4d-2iX" secondAttribute="centerX" id="WO4-37-6cY"/>
+                            <constraint firstItem="LOH-W7-6fm" firstAttribute="top" secondItem="xyV-7I-Fa9" secondAttribute="bottom" id="NaN-DG-jvM"/>
                             <constraint firstItem="LOH-W7-6fm" firstAttribute="leading" secondItem="7BG-4d-2iX" secondAttribute="leading" id="hde-Rc-Wfc"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Embeded ApesterUnit" largeTitleDisplayMode="never" id="xXl-kV-DTc"/>
                     <connections>
                         <outlet property="contentView" destination="LOH-W7-6fm" id="ii8-RU-0tT"/>
-                        <outlet property="segmentControl" destination="BiK-Pv-Izb" id="Xmb-ZV-YeK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kv7-7D-b9R" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -201,7 +184,7 @@
         <!--Strip-->
         <scene sceneID="eiQ-mw-1h6">
             <objects>
-                <viewController title="Strip" id="fOt-2H-GaU" customClass="APEStripViewController" customModule="Apester55" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Strip" id="fOt-2H-GaU" customClass="APEStripViewController" customModule="Apester" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZL4-IJ-CHq"/>
                         <viewControllerLayoutGuide type="bottom" id="dkN-SG-8z9"/>

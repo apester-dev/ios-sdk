@@ -16,7 +16,7 @@ protocol APEWebViewTableViewCellDelegate: NSObjectProtocol {
 
 
 class APEWebViewTableViewCell: UITableViewCell {
-  var webContentView : APEWebViewProtocol?
+  var webContentView : WKWebView?
   weak var delegate: APEWebViewTableViewCellDelegate?
 
   private let initialHeight: CGFloat = 400
@@ -26,22 +26,18 @@ class APEWebViewTableViewCell: UITableViewCell {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
   }
 
-  func setupWebContentView(webView: APEWebViewProtocol) {
-    guard let webview = webView as? UIView else {
-      return
-    }
-
+  func setupWebContentView(webView: WKWebView) {
     self.webContentView = webView
-    contentView.addSubview(webview)
+    contentView.addSubview(webView)
 
     // Auto Layout
-    let heightConstraint = webview.heightAnchor.constraint(equalToConstant: initialHeight)
+    let heightConstraint = webView.heightAnchor.constraint(equalToConstant: initialHeight)
     heightConstraint.priority = UILayoutPriority(rawValue: 999)
 
     NSLayoutConstraint.activate([
-      contentView.topAnchor.constraint(equalTo: webview.topAnchor),
-      contentView.bottomAnchor.constraint(equalTo: webview.bottomAnchor),
-      webview.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+      contentView.topAnchor.constraint(equalTo: webView.topAnchor),
+      contentView.bottomAnchor.constraint(equalTo: webView.bottomAnchor),
+      webView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
       heightConstraint
       ])
 
@@ -70,10 +66,7 @@ class APEWebViewTableViewCell: UITableViewCell {
       return Mustache.render("Apester", data: ["mediaId": mediaId as AnyObject])
     }
     guard let sourceString = sourceHTMLString else { return }
-    if let webview = webContentView as? UIWebView {
-      webview.loadHTMLString(sourceString, baseURL: URL(string: "file://"))
-    }
-    if let webview = webContentView as? WKWebView {
+    if let webview = webContentView {
       webview.loadHTMLString(sourceString, baseURL: URL(string: "file://"))
     }
   }
