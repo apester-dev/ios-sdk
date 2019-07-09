@@ -40,7 +40,7 @@ public class APEWebViewService: NSObject {
         return nil
     }
 
-    // evaluateJavaScript on UIWebView or WKWebView
+    // evaluateJavaScript on WKWebView
     fileprivate func evaluateJavaScript(_ javaScriptString: String? = nil, webView: WKWebView) -> String? {
         guard let javaScriptString = javaScriptString else {
             return nil
@@ -125,18 +125,10 @@ public extension APEWebViewService {
      then APEWebViewService will evaluateJavaScript on the webview with extracting params from the app bundle.
 
      - Parameters:
-         - webView: must be an instance of UIWebView Or WKWebview
+         - webView: must be an instance of WKWebview
          - completionHandler: an optional callback with APEResult response
 
      ### Usage Example: ###
-
-     ````
-     // UIWebViewDelegate -
-     func webViewDidStartLoad(_ webView: UIWebView) {
-     APEWebViewService.shared.didStartLoad(webView: webView)
-     }
-     ````
-     * or
 
      ````
      // WKNavigationDelegate -

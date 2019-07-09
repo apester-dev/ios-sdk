@@ -13,15 +13,6 @@ import Nimble
 
 class ApesterKitSpec: QuickSpec {
 
-  class WebViewViewController: UIViewController {
-    var webView: UIWebView?
-
-    override func viewDidLoad() {
-      super.viewDidLoad()
-      self.webView = UIWebView(frame: self.view.frame)
-    }
-  }
-
   class WKWebViewViewController: UIViewController {
     var webView: WKWebView?
 
