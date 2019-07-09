@@ -119,8 +119,10 @@ private extension APEStripService {
                     if let dictioanry = bodyString.dictionary,
                         let heightString = dictioanry[StripConfig.stripHeight] as? String,
                         let height = CGFloat(string: heightString) {
+                        #if os(iOS)
                         let adjustedContentInsets = self._stripWebView.scrollView.adjustedContentInset.bottom + self._stripWebView.scrollView.adjustedContentInset.top
                         self.loadingState.height = height + adjustedContentInsets
+                        #endif
                     }
 
                 } else if bodyString.contains(StripConfig.initial) {
