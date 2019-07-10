@@ -12,18 +12,28 @@ import ApesterKit
 
 class APEStripViewController: UIViewController {
 
-    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var containerView1: UIView!
+    @IBOutlet weak var containerView2: UIView!
 
-    let params = APEStripParams(channelToken: "5890a541a9133e0e000e31aa", shape: .roundSquare, size: .medium, shadow: false, bundle: Bundle.main)
-    private var fastStripServiceInstance: APEStripService!
+    private var fastStripServiceInstance1: APEStripService!
+    private var fastStripServiceInstance2: APEStripService!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         // set strip params
+        let params = APEStripParams(channelToken: "5890a541a9133e0e000e31aa", shape: .roundSquare, size: .medium, shadow: false, bundle: Bundle.main)
+
         // create the StripService Instance
-        fastStripServiceInstance = APEStripService(params: params)
+        fastStripServiceInstance1 = APEStripService(params: params)
         // display the Strip Component
-        fastStripServiceInstance.displayStripComponent(in: containerView, rootViewController: self)
+        fastStripServiceInstance1.displayStripComponent(in: containerView1, rootViewController: self)
+
+
+//        // create the StripService Instance
+//        fastStripServiceInstance2 = APEStripService(params: params)
+//        // display the Strip Component
+//        fastStripServiceInstance2.displayStripComponent(in: containerView2, rootViewController: self)
 
     }
 }

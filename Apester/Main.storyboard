@@ -164,7 +164,7 @@
                         <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="barTintColor" red="0.81856339988369631" green="0.15073937389783923" blue="0.19675992194679123" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.0" green="0.32852089410000002" blue="0.57488495110000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
@@ -195,21 +195,18 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ihB-7R-J5W">
                                 <rect key="frame" x="0.0" y="116" width="375" height="128"/>
-                                <color key="backgroundColor" red="0.0079845162109999993" green="0.6331610084" blue="0.59802192450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="128" id="UZ6-RF-rlv"/>
-                                </constraints>
+                                <color key="backgroundColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ZA-2m-qga">
                                 <rect key="frame" x="0.0" y="244" width="375" height="128"/>
-                                <color key="backgroundColor" red="0.43366765979999999" green="0.92003166680000004" blue="0.86029219629999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="Knk-Bu-VLM"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nDV-BG-nJx">
                                 <rect key="frame" x="0.0" y="372" width="375" height="128"/>
-                                <color key="backgroundColor" red="0.0079845162109999993" green="0.6331610084" blue="0.59802192450000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.46202266219999999" green="0.83828371759999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="foD-l9-Hd8"/>
                                 </constraints>
@@ -217,6 +214,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="dkN-SG-8z9" firstAttribute="top" secondItem="nDV-BG-nJx" secondAttribute="bottom" priority="999" constant="167" id="8Qp-XN-XLX"/>
                             <constraint firstItem="ihB-7R-J5W" firstAttribute="leading" secondItem="ben-VV-yfm" secondAttribute="leading" id="BxH-XC-Cf0"/>
                             <constraint firstItem="nDV-BG-nJx" firstAttribute="leading" secondItem="ben-VV-yfm" secondAttribute="leading" id="D0W-fs-F5D"/>
                             <constraint firstItem="3ZA-2m-qga" firstAttribute="centerX" secondItem="ben-VV-yfm" secondAttribute="centerX" id="D76-IH-IZY"/>
@@ -229,7 +227,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="containerView" destination="3ZA-2m-qga" id="emQ-D5-bDy"/>
+                        <outlet property="containerView1" destination="ihB-7R-J5W" id="pyM-Oo-Xcr"/>
+                        <outlet property="containerView2" destination="nDV-BG-nJx" id="ytn-vn-4Zr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NJ9-nH-Dfx" userLabel="First Responder" sceneMemberID="firstResponder"/>

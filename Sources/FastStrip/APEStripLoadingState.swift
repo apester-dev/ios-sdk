@@ -7,12 +7,11 @@
 //
 
 import Foundation
-import CoreGraphics
 
 // MARK:- APEStripLoadingState
 struct APEStripLoadingState {
     var isLoaded = false
-    var height: CGFloat = 0
+    var height: Float = 0
     var isReady = false
     var initialMessage: String?
     var openUnitMessage: String?

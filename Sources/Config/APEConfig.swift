@@ -41,6 +41,7 @@ struct APEConfig {
     static let open = "strip_open_unit"
     static let next = "strip_next_unit"
     static let off = "fullscreen_off"
+    static let destroy = "apester_strip_removed"
     static let showStripStory = "showApesterStory"
     static let hideStripStory = "hideApesterStory"
     static let stripHeight = "mobileStripHeight"

@@ -7,11 +7,10 @@
 //
 
 import Foundation
-import CoreGraphics
 
 /// Handling The Apester Story Unit presentation
 public protocol APEStripServiceDelegate: AnyObject {
-    func stripComponentIsReady(unitHeight height: CGFloat)
+    func stripComponentIsReady(unitHeight height: Float)
     func displayStoryComponent()
     func hideStoryComponent()
 }

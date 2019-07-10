@@ -23,8 +23,8 @@ import Foundation
     }
 }
 
-// MARK:- CGFloat
-extension CGFloat {
+// MARK:- Float
+extension Float {
     init?(string: String) {
         guard let number = NumberFormatter().number(from: string) else {
             return nil
