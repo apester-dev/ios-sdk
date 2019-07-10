@@ -30,8 +30,9 @@ struct APEConfig {
 
   /// Strip Keys
   struct Strip {
-    static let stripUrlPath = "https://static.apester.com/strip/apester-detatched-strip.html"
-    static let stripStoryUrlPath = "https://static.apester.com/strip/apester-detatched-story.html"
+    // urls
+    static let stripUrlPath = "https://faststrip.apester.com/apester-detatched-strip.html"
+    static let stripStoryUrlPath = "https://faststrip.apester.com/apester-detatched-story.html"
     // events
     static let proxy = "apesterStripProxy"
     static let initial = "apester_strip_units"

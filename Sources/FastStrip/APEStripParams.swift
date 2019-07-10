@@ -17,24 +17,29 @@ public struct APEStripParams {
         case small, medium, large
     }
 
-    public var channelToken: String
-    public var shape: Shape = .roundSquare
-    public var size: Size = .medium
-    public var shadow: Bool = false
-    public var textColor: String?
-    public var background: String?
+    private var channelToken: String
+    private var bundleInfo: [String : String]
+    private var shape: Shape = .roundSquare
+    private var size: Size = .medium
+    private var shadow: Bool = false
+    private var textColor: String?
+    private var background: String?
 
-
-    public init(channelToken: String, shape: Shape, size: Size, shadow: Bool, textColor: String? = nil, background: String? = nil) {
+    public init(channelToken: String,
+                shape: Shape,
+                size: Size,
+                shadow: Bool,
+                bundle: Bundle, textColor: String? = nil, background: String? = nil) {
         self.channelToken = channelToken
         self.shape = shape
         self.size = size
         self.shadow = shadow
+        self.bundleInfo = APEBundle.bundleInfoPayload(with: bundle)
         self.textColor = textColor
         self.background  = background
     }
 
-    var dictionary: [String: String] {
+    private var parameters: [String: String] {
         var value = [String: String]()
         value["token"] = channelToken
         value["itemShape"] = shape.rawValue
@@ -42,6 +47,30 @@ public struct APEStripParams {
         value["itemHasShadow"] = "\(shadow)"
         value["itemTextColor"] = textColor ?? ""
         value["stripBackground"] = background ?? ""
-        return value
+        return value + self.bundleInfo
+    }
+
+    var url: URL? {
+        return self.parameters.componentsURL(baseURL: APEConfig.Strip.stripUrlPath)
+    }
+}
+
+// MARK:- Dictionary Extension
+extension Dictionary {
+    func componentsURL(baseURL urlString: String) -> URL? {
+        var components = URLComponents(string: urlString)
+        components?.queryItems = self.compactMap { (arg) in
+            guard let key = arg.key as? String, let value = arg.value as? String else {
+                return nil
+            }
+            return URLQueryItem(name: key, value: value)
+        }
+        return components?.url
+    }
+
+    static func + (lhs: [Key: Value], rhs: [Key: Value]) -> [Key: Value] {
+        var result = lhs
+        rhs.forEach { result[$0] = $1 }
+        return result
     }
 }

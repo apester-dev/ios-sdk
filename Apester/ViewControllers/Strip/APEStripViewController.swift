@@ -12,19 +12,19 @@ import ApesterKit
 
 class APEStripViewController: UIViewController {
 
-    private var storyViewController: APEStripStoryViewController?
-    private let fastStripServiceInstance = APEStripService(params: APEStripParams(channelToken: "5890a541a9133e0e000e31aa",
-                                                                                  shape: .roundSquare, size: .medium, shadow: false),
-                                                           bundle: Bundle.main)
-
     @IBOutlet weak var containerView: UIView!
 
-    //    private var stripWebView: WKWebView?
+    let params = APEStripParams(channelToken: "5890a541a9133e0e000e31aa", shape: .roundSquare, size: .medium, shadow: false, bundle: Bundle.main)
+    private var fastStripServiceInstance: APEStripService!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.fastStripServiceInstance.displayStripComponent(in: containerView, rootViewController: self)
-        // display loading view
+        // set strip params
+        // create the StripService Instance
+        fastStripServiceInstance = APEStripService(params: params)
+        // display the Strip Component
+        fastStripServiceInstance.displayStripComponent(in: containerView, rootViewController: self)
+
     }
 }
 

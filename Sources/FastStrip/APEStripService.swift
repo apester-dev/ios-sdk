@@ -73,14 +73,13 @@ open class APEStripService: NSObject {
 
     // MARK:- Initializer
     convenience public init(channelToken: String, bundle: Bundle) {
-        let params = APEStripParams(channelToken: channelToken, shape: .roundSquare, size: .medium, shadow: false)
-        self.init(params: params, bundle: bundle)
+        let params = APEStripParams(channelToken: channelToken, shape: .roundSquare, size: .medium, shadow: false, bundle: bundle)
+        self.init(params: params)
     }
 
-    public init(params: APEStripParams, bundle: Bundle) {
+    public init(params: APEStripParams) {
         super.init()
-        let parameters = params.dictionary + APEBundle.bundleInfoPayload(with: bundle)
-        self.stripURL = parameters.componentsURL(baseURL: StripConfig.stripUrlPath)
+        self.stripURL = params.url
     }
 
     public func displayStripComponent(in containerView: UIView, rootViewController: UIViewController) {
