@@ -83,7 +83,7 @@ open class APEStripService: NSObject {
         self.stripURL = parameters.componentsURL(baseURL: StripConfig.stripUrlPath)
     }
 
-    public func loadStrip(containerView: UIView, rootViewController: UIViewController) {
+    public func displayStripComponent(in containerView: UIView, rootViewController: UIViewController) {
         self.stripWebView.isUserInteractionEnabled = false
         self.stripWebView.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(self.stripWebView)
