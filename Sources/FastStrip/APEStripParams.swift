@@ -25,20 +25,6 @@ public struct APEStripParams {
     private var textColor: String?
     private var background: String?
 
-    public init(channelToken: String,
-                shape: Shape,
-                size: Size,
-                shadow: Bool,
-                bundle: Bundle, textColor: String? = nil, background: String? = nil) {
-        self.channelToken = channelToken
-        self.shape = shape
-        self.size = size
-        self.shadow = shadow
-        self.bundleInfo = APEBundle.bundleInfoPayload(with: bundle)
-        self.textColor = textColor
-        self.background  = background
-    }
-
     private var parameters: [String: String] {
         var value = [String: String]()
         value["token"] = channelToken
@@ -53,10 +39,20 @@ public struct APEStripParams {
     var url: URL? {
         return self.parameters.componentsURL(baseURL: APEConfig.Strip.stripUrlPath)
     }
+
+    public init(channelToken: String, shape: Shape, size: Size, shadow: Bool, bundle: Bundle, textColor: String? = nil, background: String? = nil) {
+        self.channelToken = channelToken
+        self.shape = shape
+        self.size = size
+        self.shadow = shadow
+        self.bundleInfo = APEBundle.bundleInfoPayload(with: bundle)
+        self.textColor = textColor
+        self.background  = background
+    }
 }
 
 // MARK:- Dictionary Extension
-extension Dictionary {
+private extension Dictionary {
     func componentsURL(baseURL urlString: String) -> URL? {
         var components = URLComponents(string: urlString)
         components?.queryItems = self.compactMap { (arg) in
