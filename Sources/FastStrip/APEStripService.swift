@@ -180,7 +180,6 @@ private extension APEStripService {
             if let openUnitMessage = self.loadingState.openUnitMessage {
                 self.messagesTracker.sendApesterEvent(message: openUnitMessage, to: storyWebView) { _ in
                     self.loadingState.openUnitMessage = nil
-                    self.displayStoryComponent()
                 }
             }
 
