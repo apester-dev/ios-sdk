@@ -21,12 +21,19 @@ open class APEStripService: NSObject {
 
 
     class FastStripStoryViewController: UIViewController {
-        var webView: WKWebView!
+        var webView: WKWebView?
 
         override func viewDidLoad() {
             super.viewDidLoad()
-            self.webView.frame = self.view.bounds
-            self.view.addSubview(self.webView)
+            self.webView!.frame = self.view.bounds
+            self.view.addSubview(self.webView!)
+        }
+
+        deinit {
+            self.webView?.configuration.userContentController
+                .unregister(from: [StripConfig.proxy,
+                                   StripConfig.showStripStory,
+                                   StripConfig.hideStripStory])
         }
     }
 
@@ -114,10 +121,6 @@ open class APEStripService: NSObject {
     deinit {
         self.stripWebView.configuration.userContentController
             .unregister(from: [StripConfig.proxy])
-        self.storyWebView.configuration.userContentController
-            .unregister(from: [StripConfig.proxy,
-                               StripConfig.showStripStory,
-                               StripConfig.hideStripStory])
         self.stripWebView.removeFromSuperview()
         self.storyWebView.removeFromSuperview()
     }
@@ -216,9 +219,8 @@ private extension APEStripService {
                 self.loadingState.initialMessage = nil
             }
 
-        } else if bodyString.contains(StripConfig.off) {
+        } else if (bodyString.contains(StripConfig.off) || bodyString.contains(StripConfig.destroy)) {
             self.hideStoryComponent()
-
         }
         
         // proxy updates
@@ -262,7 +264,7 @@ extension APEStripService: WKNavigationDelegate {
         switch navigationAction.navigationType {
         case .other, .reload, .backForward:
             policy = .allow
-        case .linkActivated:
+        case .linkActivated, .formSubmitted, .formResubmitted:
             guard let url = navigationAction.request.url else {
                 return
             }
