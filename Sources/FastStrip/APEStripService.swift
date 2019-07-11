@@ -92,21 +92,18 @@ open class APEStripService: NSObject {
     }
 
     public func displayStripComponent(in containerView: UIView, rootViewController: UIViewController) {
+
+        containerView.layoutIfNeeded()
+        self.stripWebView.frame = containerView.bounds
         containerView.addSubview(self.stripWebView)
+
         self.containerView = containerView
         self.stripRootViewController = rootViewController
 
-        // Auto Layout
-        stripWebView.translatesAutoresizingMaskIntoConstraints = false
-        stripWebView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
-        stripWebView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
-        stripWebView.widthAnchor.constraint(equalTo: containerView.widthAnchor).isActive = true
-        stripWebView.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true
-
         stripWebView.isUserInteractionEnabled = false
         stripWebView.alpha = 0.5
-        stripWebView.addSubview(spinner)
 
+        containerView.addSubview(spinner)
         spinner.startAnimating()
         spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.centerXAnchor.constraint(equalTo: stripWebView.centerXAnchor).isActive = true
@@ -190,14 +187,13 @@ private extension APEStripService {
     }
 
     func updateStripComponentHeight() {
-        self.containerView.flatMap({ containerView in
+        self.containerView.flatMap { containerView in
             UIView.animate(withDuration: 0.33) {
                 // Auto Layout
-                containerView.constraints.first(where: { $0.firstAttribute == .height })?.isActive = false
-                containerView.heightAnchor.constraint(equalToConstant: CGFloat(self.loadingState.height)).isActive = true
-                containerView.layoutIfNeeded()
+                containerView.frame.size.height = CGFloat(self.loadingState.height)
+                self.stripWebView.frame = containerView.bounds
             }
-        })
+        }
         self.delegate?.stripComponentIsReady(unitHeight: self.loadingState.height)
     }
 
