@@ -264,7 +264,7 @@ extension APEStripService: WKNavigationDelegate {
         switch navigationAction.navigationType {
         case .other, .reload, .backForward:
             policy = .allow
-        case .linkActivated, .formSubmitted, .formResubmitted:
+        case .linkActivated:
             guard let url = navigationAction.request.url else {
                 return
             }
