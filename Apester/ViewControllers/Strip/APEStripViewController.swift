@@ -25,7 +25,7 @@ class APEStripViewController: UIViewController {
         // create the StripService Instance
         stripService = APEStripService(params: params)
         // display the Strip Component
-        stripService.displayStripComponent(in: self.containerView1, rootViewController: self)
+        stripService.displayStripComponent(in: self.containerView1, containerViewConroller: self)
     }
 }
 

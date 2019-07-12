@@ -17,6 +17,15 @@ public struct APEStripParams {
         case small, medium, large
     }
 
+    private enum Keys: String {
+        case channelToken = "token"
+        case shape = "itemShape"
+        case size = "itemSize"
+        case shadow = "itemHasShadow"
+        case textColor = "itemTextColor"
+        case background = "stripBackground"
+    }
+
     private var channelToken: String
     private var bundleInfo: [String : String]
     private var shape: Shape = .roundSquare
@@ -26,14 +35,14 @@ public struct APEStripParams {
     private var background: String?
 
     private var parameters: [String: String] {
-        var value = [String: String]()
-        value["token"] = channelToken
-        value["itemShape"] = shape.rawValue
-        value["itemSize"] = size.rawValue
-        value["itemHasShadow"] = "\(shadow)"
-        value["itemTextColor"] = textColor ?? ""
-        value["stripBackground"] = background ?? ""
-        return value + self.bundleInfo
+        var value = self.bundleInfo
+        value[Keys.channelToken.rawValue] = channelToken
+        value[Keys.shape.rawValue] = shape.rawValue
+        value[Keys.size.rawValue] = size.rawValue
+        value[Keys.shadow.rawValue] = "\(shadow)"
+        value[Keys.textColor.rawValue] = textColor
+        value[Keys.background.rawValue] = background
+        return value
     }
 
     var url: URL? {
@@ -62,11 +71,5 @@ private extension Dictionary {
             return URLQueryItem(name: key, value: value)
         }
         return components?.url
-    }
-
-    static func + (lhs: [Key: Value], rhs: [Key: Value]) -> [Key: Value] {
-        var result = lhs
-        rhs.forEach { result[$0] = $1 }
-        return result
     }
 }

@@ -38,7 +38,7 @@ open class APEStripService: NSObject {
     }
 
     private var spinner = UIActivityIndicatorView(style: .whiteLarge)
-    private weak var stripRootViewController: UIViewController?
+    private weak var stripContainerViewConroller: UIViewController?
     private var containerView: UIView?
 
     private lazy var stripStoryViewController: FastStripStoryViewController = {
@@ -98,14 +98,13 @@ open class APEStripService: NSObject {
         self.stripURL = params.url
     }
 
-    public func displayStripComponent(in containerView: UIView, rootViewController: UIViewController) {
-
+    public func displayStripComponent(in containerView: UIView, containerViewConroller: UIViewController) {
         containerView.layoutIfNeeded()
         self.stripWebView.frame = containerView.bounds
         containerView.addSubview(self.stripWebView)
 
         self.containerView = containerView
-        self.stripRootViewController = rootViewController
+        self.stripContainerViewConroller = containerViewConroller
 
         stripWebView.isUserInteractionEnabled = false
         stripWebView.alpha = 0.5
@@ -115,7 +114,6 @@ open class APEStripService: NSObject {
         spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.centerXAnchor.constraint(equalTo: stripWebView.centerXAnchor).isActive = true
         spinner.centerYAnchor.constraint(equalTo: stripWebView.centerYAnchor).isActive = true
-
     }
 
     deinit {
@@ -230,7 +228,7 @@ private extension APEStripService {
     }
 
     func displayStoryComponent() {
-            self.stripRootViewController?.present(self.stripStoryViewController, animated: true, completion: nil)
+            self.stripContainerViewConroller?.present(self.stripStoryViewController, animated: true, completion: nil)
         self.delegate?.displayStoryComponent()
     }
 
@@ -265,10 +263,9 @@ extension APEStripService: WKNavigationDelegate {
         case .other, .reload, .backForward:
             policy = .allow
         case .linkActivated:
-            guard let url = navigationAction.request.url else {
-                return
-            }
-            self.stripStoryViewController.present(SFSafariViewController(url: url), animated: true, completion: nil)
+            guard let url = navigationAction.request.url else { return }
+            let presntedVC = self.stripContainerViewConroller?.presentedViewController ?? self.stripContainerViewConroller
+            presntedVC?.present(SFSafariViewController(url: url), animated: true, completion: nil)
         default: break
         }
         decisionHandler(policy)
