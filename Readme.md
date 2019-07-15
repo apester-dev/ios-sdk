@@ -16,10 +16,52 @@ ApesterKit provides a light-weight framework that loads Apester Unit in a webVie
 
 ## Requirements
 
-- iOS 8.0+
+- iOS 11.0+
 - Xcode .0+
+ 
+
+## Channel Strip WebView
+An Apester Unit is a Carousel component for a Channel units with a configurable designs. Follow our guide step by step and setup. Follow our guide step by step and setup:
+
+### `APEStripService` Implementaion:
+
+1 - declare variable of type `APEStripService`:
+```
+private var stripService: APEStripService!
+```
+
+2 - initiate a strip parameter `APEStripParams`. with channel token, shape, size shadow....  
+```
+// set the strip params
+let params = APEStripParams(channelToken: "5890a541a9133e0e000e31aa", shape: .square, size: .medium, shadow: false, bundle: Bundle.main)
+```
+
+3 - initiate the strip service  instance with the parameter value.
+```
+// create the StripService Instance
+self.stripService = APEStripService(params: params)
+```
+4 - display the strip webview in a container view with a container view controller for navigation porposes.
+
+```
+// display the Strip Component
+self.stripService.displayStripComponent(in: self.containerView, containerViewConroller: self)
+```
+
 
 ## Installation
+
+## Swift Package Manager
+
+The [Swift Package Manager](https://swift.org/package-manager/) automates the distribution of Swift code. To use ApesterKit with SPM, add a dependency to your `Package.swift` file:
+
+```swift
+let package = Package(
+                      dependencies: [
+                        .package(url: "https://github.com/Qmerce/ios-sdk.git", from: "2.0.0")
+                      ]
+)
+```
 
 ### CocoaPods
 
@@ -107,105 +149,6 @@ $ git submodule update --init --recursive
 - And that's it!
 
 > The `ApesterKit.framework` is automagically added as a target dependency, linked framework and embedded framework in a copy files build phase which is all you need to build on the simulator and a device.
-
-## Handle Strip Units
-### `APEStripService` Implementaion
-The `APEStripService` is a proxy messaging handler between The Apester Units Carousel component (The `StripWebView`) and the selected Apester Unit (The `StoryWebView`), . Follow our guide step by step and setup: 
-
-1 - create a new instance for APEStripService with a channel token and app main bundle:
-```
-let stripServiceInstance = APEStripService(channelToken: "5890a541a9133e0e000e31aa",
-                                           bundle:  Bundle.main)
-```
-
-2 - set `APEStripServiceDelegate`, `APEStripServiceDataSource` (optional), so you can handle story unit presentation, show / hide events. 
-```
-self.stripServiceInstance.delegate = self
-self.stripServiceInstance.dataSource = self
-```
-
-3 - setup the StripWebView in your `StripViewController` .
-```
-let stripWebView = self.stripServiceInstance.stripWebView
-stripWebView.frame = self.view.bounds
-self.view.addSubview(stripWebView)
-```
-4 - Implement the `APEStripServiceDelegate`, so you can handle Apester Story Unit presentation.
-
-```
-extension StripViewController: APEStripServiceDelegate {
-  func stripComponentIsReady(unitHeight height: CGFloat) {
-    // update stripWebView height (optional) 
-    // hide loading
-  }
-
-  func displayStoryComponent() {
-    if self.storyViewController == nil {
-      self.storyViewController = APEStripStoryViewController()
-      // set the `StoryWebView`
-      self.storyViewController!.webView = self.stripServiceInstance.storyWebView
-    }
-    self.navigationController?.pushViewController(self.storyViewController!, animated: true)
-  }
-
-  func hideStoryComponent() {
-    self.storyViewController?.navigationController?.popViewController(animated: true)
-  }
-}
-```
-
-5- Implement the `APEStripServiceDataSource` so you can observe the Apester Story Unit show / hide events.
-```
-extension StripViewController: APEStripServiceDataSource {
-  var showStoryFunction: String {
-    return "console.log('show story');"
-  }
-
-  var hideStoryFunction: String {
-    return "console.log('hdie story');"
-  }
-}
-```
-
-6 - Create a  `StripStoryViewController` class, so the Apester selected Unit can be displayed.
-```
-class StripStoryViewController: UIViewController {
-  var webView: WKWebView!
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    self.webView.frame = self.view.bounds
-    self.view.addSubview(self.webView)
-  }
-}
-```
-
-## Handle Unit Height Updates
-### `APEWebViewService` Implementaion
-
-1 - register the app main bundle and the webView, In your viewController  viewDidLoad function:
-
-```
-APEWebViewService.shared.register(bundle: Bundle.main, webView: webView, unitHeightHandler: { [weak self] result in
-  switch result {
-    case .success(let height):
-      print(height)
-    case .failure(let err):
-      print(err)
-  }
-})
-```
-
-2 - pass the device advertising params and get the apester unit height update by calling didStartLoad:
-
-
-```
-extension ViewController: WKNavigationDelegate {
-  func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-    APEWebViewService.shared.didStartLoad(webView: webView)
-  }
-}
-```
 
 Clone the project and Run the ApesterKitDemo App:
 ```
