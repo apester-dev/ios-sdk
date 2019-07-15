@@ -21,15 +21,6 @@ class APEWebViewViewController: UIViewController {
   }()
 
   @IBOutlet weak var contentView: UIView!
-  @IBOutlet weak var segmentControl: UISegmentedControl!
-
-  private lazy var uiWebView: UIWebView = {
-    // Create the web view
-    let webView = UIWebView(frame: .zero)
-    webView.translatesAutoresizingMaskIntoConstraints = false
-    webView.delegate = self
-    return webView
-  }()
 
   private lazy var wkWebView: WKWebView = {
     // Create the web view
@@ -55,18 +46,10 @@ class APEWebViewViewController: UIViewController {
   }
 
   private func loadWebView() {
-    var webview: APEWebViewProtocol?
+    var webview: WKWebView?
 
-    if segmentControl.selectedSegmentIndex == 0, let request = urlRequest {
-      webview = uiWebView
-      wkWebView.removeFromSuperview()
-      contentView.addSubview(uiWebView)
-      setupAutoLayout(for: uiWebView)
-      uiWebView.loadRequest(request)
-	
-    } else if segmentControl.selectedSegmentIndex == 1, let request = urlRequest {
+    if let request = urlRequest {
       webview = wkWebView
-      uiWebView.removeFromSuperview()
       contentView.addSubview(wkWebView)
       setupAutoLayout(for: wkWebView)
       wkWebView.load(request)
@@ -76,31 +59,10 @@ class APEWebViewViewController: UIViewController {
     }
 
   }
-
-  // MARK: - ACTIONS
-
-  @IBAction func onSegmentControlChange(_ sender: UISegmentedControl) {
-    loadWebView()
-  }
-
-}
-
-extension APEWebViewViewController: UIWebViewDelegate {
-  func webViewDidStartLoad(_ webView: UIWebView) {
-    APEWebViewService.shared.didStartLoad(webView: webView)
-  }
-
-  func webViewDidFinishLoad(_ webView: UIWebView) {
-    APEWebViewService.shared.didFinishLoad(webView: webView)
-  }
 }
 
 extension APEWebViewViewController: WKNavigationDelegate {
   func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
     APEWebViewService.shared.didStartLoad(webView: webView)
-  }
-
-  func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-    APEWebViewService.shared.didFinishLoad(webView: webView)
   }
 }

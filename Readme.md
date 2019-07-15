@@ -196,32 +196,13 @@ APEWebViewService.shared.register(bundle: Bundle.main, webView: webView, unitHei
 })
 ```
 
-2 - pass the device advertising params and get the apester unit height update by calling didStartLoad and didFinishLoad:
+2 - pass the device advertising params and get the apester unit height update by calling didStartLoad:
 
-• UIWebView Case:
-
-```
-extension ViewController: UIWebViewDelegate {
-  func webViewDidStartLoad(_ webView: UIWebView) {
-    APEWebViewService.shared.didStartLoad(webView: webView)
-  }
-
-  func webViewDidFinishLoad(_ webView: UIWebView) {
-    APEWebViewService.shared.didFinishLoad(webView: webView)
-  }
-}
-```
-
-• WKWebView Case:
 
 ```
 extension ViewController: WKNavigationDelegate {
   func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
     APEWebViewService.shared.didStartLoad(webView: webView)
-  }
-
-  func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-    APEWebViewService.shared.didFinishLoad(webView: webView)
   }
 }
 ```

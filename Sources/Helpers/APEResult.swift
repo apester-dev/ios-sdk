@@ -1,24 +1,15 @@
 //
-//  APE.swift
+//  APEResult.swift
 //  ApesterKit
 //
 //  Created by Hasan Sa on 13/07/2017.
 //  Copyright © 2017 Apester. All rights reserved.
 //
 
-import UIKit
 import WebKit
 
 /**
- APEWebViewProtocol where UIWebView && WKWebView confirms to it
- */
-public protocol APEWebViewProtocol: NSObjectProtocol {}
-
-extension UIWebView: APEWebViewProtocol {}
-extension WKWebView: APEWebViewProtocol {}
-
-/**
- APEWebViewServiceResult enum
+ APEResult enum
  * success
  * failure
  */

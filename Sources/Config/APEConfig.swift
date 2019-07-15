@@ -30,8 +30,9 @@ struct APEConfig {
 
   /// Strip Keys
   struct Strip {
-    static let stripUrlPath = "https://static.apester.com/strip/apester-detatched-strip.html"
-    static let stripStoryUrlPath = "https://static.apester.com/strip/apester-detatched-story.html"
+    // urls
+    static let stripUrlPath = "https://faststrip.apester.com/apester-detatched-strip.html"
+    static let stripStoryUrlPath = "https://faststrip.apester.com/apester-detatched-story.html"
     // events
     static let proxy = "apesterStripProxy"
     static let initial = "apester_strip_units"
@@ -40,6 +41,7 @@ struct APEConfig {
     static let open = "strip_open_unit"
     static let next = "strip_next_unit"
     static let off = "fullscreen_off"
+    static let destroy = "apester_strip_removed"
     static let showStripStory = "showApesterStory"
     static let hideStripStory = "hideApesterStory"
     static let stripHeight = "mobileStripHeight"

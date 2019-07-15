@@ -1,15 +1,23 @@
-//
-//  ApesterKit.swift
-//  ApesterKit
-//
-//  Created by Hasan Sa on 23/10/15.
-//  Copyright © 2017 Apester. All rights reserved.
-//
+// swift-tools-version:5.0
+// The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
 let package = Package(
     name: "ApesterKit",
+    platforms: [
+        .macOS(.v10_14), .iOS(.v11),
+    ],
+    products: [
+        .library(
+            name: "ApesterKit",
+            targets: ["ApesterKit"]),
+    ],
     dependencies: [],
-    exclude: ["Tests"]
+    targets: [
+        .target(
+            name: "ApesterKit",
+            dependencies: [],
+            path: "Sources"),
+    ]
 )
