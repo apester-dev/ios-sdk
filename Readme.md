@@ -10,7 +10,7 @@
 ApesterKit provides a light-weight framework that loads Apester Unit in a webView
 
 - [Requirements](#requirements)
-- [Implementaion](#channel-strip-webView)
+- [Implementaion](#apester-strip-view)
 - [Installation](#installation)
 - [License](#license)
 
@@ -20,12 +20,12 @@ ApesterKit provides a light-weight framework that loads Apester Unit in a webVie
 - Xcode .0+
  
 
-## The Strip View
+## Apester Strip View
 A Carousel component for a channel that  contains an apester units of that channel, the Carousel component designs can be configured. Follow our guide step by step and setup. Follow our guide step by step and setup:
 
-### `APEStripService` Implementaion:
+### `APEStripView` Implementaion:
 
-1 - declare variable of type `APEStripService`:
+1 - declare variable of type `APEStripView`:
 ```
 private var stripView: APEStripView!
 ```
@@ -36,7 +36,7 @@ private var stripView: APEStripView!
 let config = APEStripConfiguration(channelToken: "5890a541a9133e0e000e31aa", shape: .square, size: .medium, shadow: false, bundle: Bundle.main)
 ```
 
-3 - initiate the strip service  instance with the parameter value.
+3 - initiate the strip view  instance with the parameter value.
 ```
 // create instance for the strip view
 self.stripView = APEStripView(configuration: config)
