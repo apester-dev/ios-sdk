@@ -210,7 +210,7 @@ private extension APEStripView {
             }
 
         } else if (bodyString.contains(StripConfig.off) || bodyString.contains(StripConfig.destroy)) {
-            hide()
+            self.hideStoryComponent()
         }
         
         // proxy updates
@@ -221,6 +221,10 @@ private extension APEStripView {
 
     func displayStoryComponent() {
             self.stripContainerViewConroller?.present(self.stripStoryViewController, animated: true, completion: nil)
+    }
+
+    func hideStoryComponent() {
+        self.stripStoryViewController.dismiss(animated: true) {}
     }
 }
 
