@@ -27,25 +27,33 @@ An Apester Unit is a Carousel component for a Channel units with a configurable 
 
 1 - declare variable of type `APEStripService`:
 ```
-private var stripService: APEStripService!
+private var channelStripView: APEChannelStripView!
 ```
 
-2 - initiate a strip parameter `APEStripParams`. with channel token, shape, size shadow....  
+2 - initiate a strip configuration `APEStripConfiguration`. config the channel token, shape, size and shadow parameters ....  
 ```
-// set the strip params
-let params = APEStripParams(channelToken: "5890a541a9133e0e000e31aa", shape: .square, size: .medium, shadow: false, bundle: Bundle.main)
+// set the strip configuration
+let config = APEStripConfiguration(channelToken: "5890a541a9133e0e000e31aa", shape: .square, size: .medium, shadow: false, bundle: Bundle.main)
 ```
 
 3 - initiate the strip service  instance with the parameter value.
 ```
-// create the StripService Instance
-self.stripService = APEStripService(params: params)
+// create the channel strip view Instance
+self.channelStripView = APEChannelStripView(configuration: config)
 ```
-4 - display the strip webview in a container view with a container view controller for navigation porposes.
+4 - the channel strip in a container view
+4.1 - display  (with a container view controller for navigation porposes).
 
 ```
-// display the Strip Component
-self.stripService.displayStripComponent(in: self.containerView, containerViewConroller: self)
+// display
+self.channelStripView.display(in: self.containerView, containerViewConroller: self)
+```
+
+4.2 - hide the channel strip view.
+
+```
+// hide
+self.stripService.hide()
 ```
 
 

@@ -12,7 +12,7 @@
 		3549BB8B1DA38C0A00C63030 /* ApesterKitSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3549BB8A1DA38C0A00C63030 /* ApesterKitSpec.swift */; };
 		35CA2AC61E12925700147290 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35CA2A971E12920400147290 /* Nimble.framework */; };
 		35CA2AC71E12925700147290 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35CA2AB31E12920400147290 /* Quick.framework */; };
-		BB0BE33E2223169400542E3C /* APEStripService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0BE33D2223169400542E3C /* APEStripService.swift */; };
+		BB0BE33E2223169400542E3C /* APEChannelStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0BE33D2223169400542E3C /* APEChannelStripView.swift */; };
 		BB14A5441F1754DB003E393D /* APEResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB14A5431F1754DB003E393D /* APEResult.swift */; };
 		BB14A6F01F1F6BE5003E393D /* ApesterKit.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BB14A6EC1F1F6619003E393D /* ApesterKit.bundle */; };
 		BB44109222D53AAB00BB1DEC /* APEScriptMessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109122D53AAB00BB1DEC /* APEScriptMessageHandler.swift */; };
@@ -20,8 +20,7 @@
 		BB44109822D53B7000BB1DEC /* APEStripLoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109722D53B7000BB1DEC /* APEStripLoadingState.swift */; };
 		BB44109A22D53B9500BB1DEC /* APEStripServiceEventsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109922D53B9500BB1DEC /* APEStripServiceEventsTracker.swift */; };
 		BB44109D22D53BF300BB1DEC /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109C22D53BF300BB1DEC /* Extensions.swift */; };
-		BB44109F22D53D2F00BB1DEC /* APEStripParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109E22D53D2F00BB1DEC /* APEStripParams.swift */; };
-		BB4410A122D53D8400BB1DEC /* APEStripServiceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4410A022D53D8400BB1DEC /* APEStripServiceDelegate.swift */; };
+		BB44109F22D53D2F00BB1DEC /* APEStripConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109E22D53D2F00BB1DEC /* APEStripConfiguration.swift */; };
 		BB9700E02223EF270072E1F8 /* Readme.md in Resources */ = {isa = PBXBuildFile; fileRef = BB9700CD2223EF270072E1F8 /* Readme.md */; };
 		BB9709AB222322E000E1076B /* APEConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9709AA222322E000E1076B /* APEConfig.swift */; };
 		BB97263A2229BA54008C7440 /* ApesterKit.podspec in Resources */ = {isa = PBXBuildFile; fileRef = BB9726272229BA54008C7440 /* ApesterKit.podspec */; };
@@ -256,7 +255,7 @@
 		35CD65161E60192300AF060B /* watchOS-Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "watchOS-Base.xcconfig"; sourceTree = "<group>"; };
 		35CD65171E60192300AF060B /* watchOS-Framework.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "watchOS-Framework.xcconfig"; sourceTree = "<group>"; };
 		35CD65181E60192300AF060B /* watchOS-StaticLibrary.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "watchOS-StaticLibrary.xcconfig"; sourceTree = "<group>"; };
-		BB0BE33D2223169400542E3C /* APEStripService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripService.swift; sourceTree = "<group>"; };
+		BB0BE33D2223169400542E3C /* APEChannelStripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEChannelStripView.swift; sourceTree = "<group>"; };
 		BB14A5431F1754DB003E393D /* APEResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APEResult.swift; sourceTree = "<group>"; };
 		BB14A6BA1F1F58F6003E393D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BB14A6EC1F1F6619003E393D /* ApesterKit.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ApesterKit.bundle; sourceTree = "<group>"; };
@@ -271,8 +270,7 @@
 		BB44109722D53B7000BB1DEC /* APEStripLoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripLoadingState.swift; sourceTree = "<group>"; };
 		BB44109922D53B9500BB1DEC /* APEStripServiceEventsTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripServiceEventsTracker.swift; sourceTree = "<group>"; };
 		BB44109C22D53BF300BB1DEC /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		BB44109E22D53D2F00BB1DEC /* APEStripParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripParams.swift; sourceTree = "<group>"; };
-		BB4410A022D53D8400BB1DEC /* APEStripServiceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripServiceDelegate.swift; sourceTree = "<group>"; };
+		BB44109E22D53D2F00BB1DEC /* APEStripConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripConfiguration.swift; sourceTree = "<group>"; };
 		BB9700CD2223EF270072E1F8 /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = Readme.md; path = ../Readme.md; sourceTree = "<group>"; };
 		BB9700E12223EFEA0072E1F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB9709AA222322E000E1076B /* APEConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEConfig.swift; sourceTree = "<group>"; };
@@ -548,9 +546,8 @@
 		BB44109022D53AAB00BB1DEC /* FastStrip */ = {
 			isa = PBXGroup;
 			children = (
-				BB4410A022D53D8400BB1DEC /* APEStripServiceDelegate.swift */,
-				BB0BE33D2223169400542E3C /* APEStripService.swift */,
-				BB44109E22D53D2F00BB1DEC /* APEStripParams.swift */,
+				BB0BE33D2223169400542E3C /* APEChannelStripView.swift */,
+				BB44109E22D53D2F00BB1DEC /* APEStripConfiguration.swift */,
 				BB44109122D53AAB00BB1DEC /* APEScriptMessageHandler.swift */,
 				BB44109722D53B7000BB1DEC /* APEStripLoadingState.swift */,
 				BB44109922D53B9500BB1DEC /* APEStripServiceEventsTracker.swift */,
@@ -941,14 +938,13 @@
 			files = (
 				BB44109A22D53B9500BB1DEC /* APEStripServiceEventsTracker.swift in Sources */,
 				BB14A5441F1754DB003E393D /* APEResult.swift in Sources */,
-				BB4410A122D53D8400BB1DEC /* APEStripServiceDelegate.swift in Sources */,
 				BB44109622D53B2C00BB1DEC /* APEWebViewService.swift in Sources */,
 				BB44109D22D53BF300BB1DEC /* Extensions.swift in Sources */,
 				BB44109822D53B7000BB1DEC /* APEStripLoadingState.swift in Sources */,
-				BB44109F22D53D2F00BB1DEC /* APEStripParams.swift in Sources */,
+				BB44109F22D53D2F00BB1DEC /* APEStripConfiguration.swift in Sources */,
 				BB9709AB222322E000E1076B /* APEConfig.swift in Sources */,
 				BB44109222D53AAB00BB1DEC /* APEScriptMessageHandler.swift in Sources */,
-				BB0BE33E2223169400542E3C /* APEStripService.swift in Sources */,
+				BB0BE33E2223169400542E3C /* APEChannelStripView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1142,7 +1138,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.0.1;
+				MARKETING_VERSION = 2.1.0;
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apester.ApesterKit;
 				PRODUCT_NAME = ApesterKit;
@@ -1175,7 +1171,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.0.1;
+				MARKETING_VERSION = 2.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.apester.ApesterKit;
 				PRODUCT_NAME = ApesterKit;
 				SKIP_INSTALL = YES;

@@ -14,18 +14,18 @@ class APEStripViewController: UIViewController {
 
     @IBOutlet weak var containerView1: UIView!
 
-    private var stripService: APEStripService!
+    private var channelStripView: APEChannelStripView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // set strip params
-        let params = APEStripParams(channelToken: "5890a541a9133e0e000e31aa", shape: .square, size: .medium, shadow: false, bundle: Bundle.main)
+        let configuration = APEStripConfiguration(channelToken: "5890a541a9133e0e000e31aa", shape: .square, size: .medium, shadow: false, bundle: Bundle.main)
 
         // create the StripService Instance
-        stripService = APEStripService(params: params)
+        channelStripView = APEChannelStripView(configuration: configuration)
         // display the Strip Component
-        stripService.displayStripComponent(in: self.containerView1, containerViewConroller: self)
+        channelStripView.displayStripComponent(in: self.containerView1, containerViewConroller: self)
     }
 }
 

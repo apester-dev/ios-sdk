@@ -1,5 +1,5 @@
 //
-//  APEStripParams.swift
+//  APEStripConfiguration.swift
 //  ApesterKit
 //
 //  Created by Hasan Sa on 10/07/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct APEStripParams {
+public struct APEStripConfiguration {
     public enum Shape: String {
         case round, square, roundSquare
     }
