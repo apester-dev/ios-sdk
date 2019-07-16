@@ -10,7 +10,7 @@
 ApesterKit provides a light-weight framework that loads Apester Unit in a webView
 
 - [Requirements](#requirements)
-- [Implementaion](#channel-strip-webView)
+- [Implementaion](#the-strip-view)
 - [Installation](#installation)
 - [License](#license)
 
@@ -23,20 +23,20 @@ ApesterKit provides a light-weight framework that loads Apester Unit in a webVie
 ## The Strip View
 A Carousel component for a channel that  contains an apester units of that channel, the Carousel component designs can be configured. Follow our guide step by step and setup. Follow our guide step by step and setup:
 
-### `APEStripService` Implementaion:
+### `APEStripView` Implementaion:
 
-1 - declare variable of type `APEStripService`:
+1 - declare variable of type `APEStripView`:
 ```
 private var stripView: APEStripView!
 ```
 
-2 - initiate a strip configuration `APEStripConfiguration`. config the channel token, shape, size and shadow parameters ....  
+2 - initiate a strip configuration `APEStripConfiguration`. config the channel token, strip shape, size and shadow parameters, etc...
 ```
 // set the strip configuration
 let config = APEStripConfiguration(channelToken: "5890a541a9133e0e000e31aa", shape: .square, size: .medium, shadow: false, bundle: Bundle.main)
 ```
 
-3 - initiate the strip service  instance with the parameter value.
+3 - initiate the strip view  instance with the parameter value.
 ```
 // create instance for the strip view
 self.stripView = APEStripView(configuration: config)
@@ -66,7 +66,7 @@ The [Swift Package Manager](https://swift.org/package-manager/) automates the di
 ```swift
 let package = Package(
                       dependencies: [
-                        .package(url: "https://github.com/Qmerce/ios-sdk.git", from: "2.0.0")
+                        .package(url: "https://github.com/Qmerce/ios-sdk.git", from: "2.1.0")
                       ]
 )
 ```
@@ -88,7 +88,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 use_frameworks!
 
-pod 'ApesterKit', '~> 1.3'
+pod 'ApesterKit'
 ```
 
 Then, run the following command:
