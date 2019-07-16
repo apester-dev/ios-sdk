@@ -1,5 +1,5 @@
 //
-//  APEChannelStripView.swift
+//  APEStripView.swift
 //  ApesterKit
 //
 //  Created by Hasan Sa on 24/02/2019.
@@ -15,7 +15,7 @@ import SafariServices
 ///
 /// Between The Apester Units Carousel component (The `StripWebView`)
 /// And the selected Apester Unit (The `StoryWebView`)
-open class APEChannelStripView: NSObject {
+open class APEStripView: NSObject {
 
     private typealias StripConfig = APEConfig.Strip
 
@@ -130,7 +130,7 @@ open class APEChannelStripView: NSObject {
 }
 
 // MARK:- UserContentController Script Messages Handle
-private extension APEChannelStripView {
+private extension APEStripView {
     func handleUserContentController(message: WKScriptMessage) {
         if let bodyString = message.body as? String {
             if message.webView?.hash == stripWebView.hash {
@@ -225,7 +225,7 @@ private extension APEChannelStripView {
 }
 
 // MARK:- WKScriptMessageHandler
-extension APEChannelStripView: WKScriptMessageHandler {
+extension APEStripView: WKScriptMessageHandler {
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         DispatchQueue.main.async {
             self.handleUserContentController(message: message)
@@ -234,7 +234,7 @@ extension APEChannelStripView: WKScriptMessageHandler {
 }
 
 // MARK:- WKNavigationDelegate
-extension APEChannelStripView: WKNavigationDelegate {
+extension APEStripView: WKNavigationDelegate {
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         if let initialMessage = self.loadingState.initialMessage {
             self.messagesTracker.sendApesterEvent(message: initialMessage, to: self.storyWebView) { _ in

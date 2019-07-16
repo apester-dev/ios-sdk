@@ -20,14 +20,14 @@ ApesterKit provides a light-weight framework that loads Apester Unit in a webVie
 - Xcode .0+
  
 
-## Channel Strip WebView
-An Apester Unit is a Carousel component for a Channel units with a configurable designs. Follow our guide step by step and setup. Follow our guide step by step and setup:
+## The Strip View
+A Carousel component for a channel that  contains an apester units of that channel, the Carousel component designs can be configured. Follow our guide step by step and setup. Follow our guide step by step and setup:
 
 ### `APEStripService` Implementaion:
 
 1 - declare variable of type `APEStripService`:
 ```
-private var channelStripView: APEChannelStripView!
+private var stripView: APEStripView!
 ```
 
 2 - initiate a strip configuration `APEStripConfiguration`. config the channel token, shape, size and shadow parameters ....  
@@ -38,22 +38,22 @@ let config = APEStripConfiguration(channelToken: "5890a541a9133e0e000e31aa", sha
 
 3 - initiate the strip service  instance with the parameter value.
 ```
-// create the channel strip view Instance
-self.channelStripView = APEChannelStripView(configuration: config)
+// create instance for the strip view
+self.stripView = APEStripView(configuration: config)
 ```
-4 - the channel strip in a container view
+4 - The channel strip in a container view
 4.1 - display  (with a container view controller for navigation porposes).
 
 ```
 // display
-self.channelStripView.display(in: self.containerView, containerViewConroller: self)
+self.stripView.display(in: self.containerView, containerViewConroller: self)
 ```
 
 4.2 - hide the channel strip view.
 
 ```
 // hide
-self.stripService.hide()
+self.stripView.hide()
 ```
 
 
