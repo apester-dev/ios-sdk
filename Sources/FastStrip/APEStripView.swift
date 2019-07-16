@@ -1,5 +1,5 @@
 //
-//  APEStripService.swift
+//  APEStripView.swift
 //  ApesterKit
 //
 //  Created by Hasan Sa on 24/02/2019.
@@ -15,7 +15,7 @@ import SafariServices
 ///
 /// Between The Apester Units Carousel component (The `StripWebView`)
 /// And the selected Apester Unit (The `StoryWebView`)
-open class APEStripService: NSObject {
+open class APEStripView: NSObject {
 
     private typealias StripConfig = APEConfig.Strip
 
@@ -54,7 +54,7 @@ open class APEStripService: NSObject {
 
     private var loadingState = APEStripLoadingState()
 
-    private lazy var _stripWebView: WKWebView = {
+    private lazy var stripWebView: WKWebView = {
         let webView = WKWebView()
         webView.navigationDelegate = self
         webView.configuration.websiteDataStore = WKWebsiteDataStore.default()
@@ -65,7 +65,7 @@ open class APEStripService: NSObject {
         return webView
     }()
 
-    private lazy var _storyWebView: WKWebView  = {
+    private lazy var storyWebView: WKWebView  = {
         let webView = WKWebView()
         webView.navigationDelegate = self
         webView.configuration.websiteDataStore = WKWebsiteDataStore.default()
@@ -80,25 +80,25 @@ open class APEStripService: NSObject {
         return webView
     }()
 
-    // MARK:- Public Properties
-    public weak var dataSource: APEStripServiceDataSource?
-    public weak var delegate: APEStripServiceDelegate?
-
-    public var stripWebView: WKWebView { return _stripWebView }
-    public var storyWebView: WKWebView { return _storyWebView }
 
     // MARK:- Initializer
     convenience public init(channelToken: String, bundle: Bundle) {
-        let params = APEStripParams(channelToken: channelToken, shape: .roundSquare, size: .medium, shadow: false, bundle: bundle)
-        self.init(params: params)
+        let config = APEStripConfiguration(channelToken: channelToken, shape: .roundSquare, size: .medium, shadow: false, bundle: bundle)
+        self.init(configuration: config)
     }
 
-    public init(params: APEStripParams) {
+    public init(configuration: APEStripConfiguration) {
         super.init()
-        self.stripURL = params.url
+        self.stripURL = configuration.url
     }
 
-    public func displayStripComponent(in containerView: UIView, containerViewConroller: UIViewController) {
+
+    /// Display the channel carousel units view
+    ///
+    /// - Parameters:
+    ///   - containerView: the channel strip view superview
+    ///   - containerViewConroller: the container view ViewController
+    public func display(in containerView: UIView, containerViewConroller: UIViewController) {
         containerView.layoutIfNeeded()
         self.stripWebView.frame = containerView.bounds
         containerView.addSubview(self.stripWebView)
@@ -116,30 +116,23 @@ open class APEStripService: NSObject {
         spinner.centerYAnchor.constraint(equalTo: stripWebView.centerYAnchor).isActive = true
     }
 
-    deinit {
+
+    /// Remove the channel carousel units view
+    public func hide() {
         self.stripWebView.configuration.userContentController
             .unregister(from: [StripConfig.proxy])
         self.stripWebView.removeFromSuperview()
-        self.storyWebView.removeFromSuperview()
+    }
+
+    deinit {
+        hide()
     }
 }
 
 // MARK:- UserContentController Script Messages Handle
-private extension APEStripService {
+private extension APEStripView {
     func handleUserContentController(message: WKScriptMessage) {
-        if message.name == StripConfig.showStripStory {
-            if let showStoryFunction = self.dataSource?.showStoryFunction {
-                self.messagesTracker.evaluateJavaScript(message: showStoryFunction,
-                                                        to: self.storyWebView)
-            }
-
-        } else if message.name == StripConfig.hideStripStory {
-            if let hideStoryFunction = self.dataSource?.hideStoryFunction {
-                self.messagesTracker.evaluateJavaScript(message: hideStoryFunction,
-                                                        to: self.storyWebView)
-            }
-
-        } else if let bodyString = message.body as? String {
+        if let bodyString = message.body as? String {
             if message.webView?.hash == stripWebView.hash {
                 handleStripWebViewMessages(bodyString)
             } else if message.webView?.hash == storyWebView.hash {
@@ -163,7 +156,7 @@ private extension APEStripService {
                 let heightString = dictioanry[StripConfig.stripHeight] as? String,
                 let height = Float(string: heightString) {
 
-                let adjustedContentInsets = self._stripWebView.scrollView.adjustedContentInset.bottom + self._stripWebView.scrollView.adjustedContentInset.top
+                let adjustedContentInsets = self.stripWebView.scrollView.adjustedContentInset.bottom + self.stripWebView.scrollView.adjustedContentInset.top
                 self.loadingState.height = height + Float(adjustedContentInsets)
                 self.updateStripComponentHeight()
             }
@@ -195,7 +188,6 @@ private extension APEStripService {
                 self.stripWebView.frame = containerView.bounds
             }
         }
-        self.delegate?.stripComponentIsReady(unitHeight: self.loadingState.height)
     }
 
     func handleStoryWebViewMessages(_ bodyString: String) {
@@ -229,17 +221,15 @@ private extension APEStripService {
 
     func displayStoryComponent() {
             self.stripContainerViewConroller?.present(self.stripStoryViewController, animated: true, completion: nil)
-        self.delegate?.displayStoryComponent()
     }
 
     func hideStoryComponent() {
         self.stripStoryViewController.dismiss(animated: true) {}
-        self.delegate?.hideStoryComponent()
     }
 }
 
 // MARK:- WKScriptMessageHandler
-extension APEStripService: WKScriptMessageHandler {
+extension APEStripView: WKScriptMessageHandler {
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         DispatchQueue.main.async {
             self.handleUserContentController(message: message)
@@ -248,7 +238,7 @@ extension APEStripService: WKScriptMessageHandler {
 }
 
 // MARK:- WKNavigationDelegate
-extension APEStripService: WKNavigationDelegate {
+extension APEStripView: WKNavigationDelegate {
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         if let initialMessage = self.loadingState.initialMessage {
             self.messagesTracker.sendApesterEvent(message: initialMessage, to: self.storyWebView) { _ in
