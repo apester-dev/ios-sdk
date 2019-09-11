@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
  s.name = 'ApesterKit'
- s.version = '2.1.1'
+ s.version = '2.1.2'
  s.license = { :type => "MIT", :file => "LICENSE" }
  s.summary = 'ApesterKit provides a light-weight framework that loads Apester Unit in a webView'
  s.homepage = 'https://github.com/Qmerce/ios-sdk.git'
@@ -9,7 +9,9 @@ Pod::Spec.new do |s|
  s.source = { :git => "https://github.com/Qmerce/ios-sdk.git", :tag => "v"+s.version.to_s }
  s.platforms     = { :ios => "11.0" }
  s.requires_arc = true
- s.source_files = "ApesterKit", "Sources/*.{h,m,swift}"
+ s.source_files = {
+    'ApesterKit' => ['Sources/*.{h,m,swift}', 'Sources/*/*.{h,m,swift}']
+}
  s.resource_bundles = {
    'ApesterKit' => ['Sources/ApesterKit.bundle/*']
   }
