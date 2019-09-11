@@ -26,7 +26,7 @@ public struct APEStripConfiguration {
         case background = "stripBackground"
     }
 
-    private var channelToken: String
+    private(set) var channelToken: String
     private var bundleInfo: [String : String]
     private var shape: Shape = .roundSquare
     private var size: Size = .medium
