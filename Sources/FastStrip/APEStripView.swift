@@ -90,6 +90,9 @@ open class APEStripView: NSObject {
     public init(configuration: APEStripConfiguration) {
         super.init()
         self.stripURL = configuration.url
+        // prefetch channel data...
+        _ = self.stripWebView
+        _ = self.storyWebView
     }
 
 
@@ -99,6 +102,7 @@ open class APEStripView: NSObject {
     ///   - containerView: the channel strip view superview
     ///   - containerViewConroller: the container view ViewController
     public func display(in containerView: UIView, containerViewConroller: UIViewController) {
+        // update stripWebView frame according to containerView bounds
         containerView.layoutIfNeeded()
         self.stripWebView.frame = containerView.bounds
         containerView.addSubview(self.stripWebView)
@@ -119,9 +123,15 @@ open class APEStripView: NSObject {
 
     /// Remove the channel carousel units view
     public func hide() {
+        self.spinner.removeFromSuperview()
         self.stripWebView.configuration.userContentController
             .unregister(from: [StripConfig.proxy])
         self.stripWebView.removeFromSuperview()
+        self.storyWebView.configuration.userContentController
+            .unregister(from: [StripConfig.proxy,
+                           StripConfig.showStripStory,
+                           StripConfig.hideStripStory])
+        self.storyWebView.removeFromSuperview()
     }
 
     deinit {
@@ -142,7 +152,6 @@ private extension APEStripView {
     }
 
     func handleStripWebViewMessages(_ bodyString: String) {
-
         if bodyString.contains(StripConfig.initial) {
             self.loadingState.initialMessage = bodyString
 
@@ -170,9 +179,7 @@ private extension APEStripView {
                 self.displayStoryComponent()
             }
         }  else if bodyString.contains(StripConfig.destroy) {
-            self.loadingState.height = 0.0
-            self.containerView?.alpha = 0.0
-            self.updateStripComponentHeight()
+            self.hide()
         }
         // proxy updates
         if self.messagesTracker.canSendApesterEvent(message: bodyString, to: storyWebView) {
