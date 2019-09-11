@@ -79,16 +79,17 @@ let package = Package(
 $ gem install cocoapods
 ```
 
-> CocoaPods 1.1.0+ is required to build ApesterKit 1.3+.
+> CocoaPods 1.1.0+ is required to build ApesterKit.
 
 To integrate ApesterKit into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
-source 'https://github.com/CocoaPods/Specs.git'
+
+platform :ios, '11.0'
 
 use_frameworks!
+pod 'ApesterKit'
 
-pod 'ApesterKit', '~> 1.3'
 ```
 
 Then, run the following command:
@@ -111,7 +112,7 @@ $ brew install carthage
 To integrate ApesterKit into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "Qmerce/ios-sdk" ~> 1.3
+github 'Qmerce/ios-sdk'
 ```
 
 Then, run the following command:
