@@ -11,6 +11,22 @@ import WebKit
 import SafariServices
 
 #if os(iOS)
+
+/// A ChannelToken Loading state update
+public protocol APEStripViewDelegate: NSObject {
+
+    /// when the ChannelToken loaded successfuly
+    ///
+    /// - Parameter token: the channel token id
+    func stripViewService(didFinishLoadingChannelToken token:String)
+
+
+    /// when the ChannelToken couldn't be loaded
+    ///
+    /// - Parameter token: the channel token id
+    func stripViewService(didFailLoadingChannelToken token:String)
+}
+
 /// A Proxy Messaging Handler
 ///
 /// Between The Apester Units Carousel component (The `StripWebView`)
@@ -48,7 +64,7 @@ open class APEStripView: NSObject {
     }()
 
     // MARK:- Private Properties
-    private var stripURL: URL?
+    private var configuration: APEStripConfiguration!
 
     private var messagesTracker = APEStripServiceEventsTracker()
 
@@ -59,7 +75,7 @@ open class APEStripView: NSObject {
         webView.navigationDelegate = self
         webView.configuration.websiteDataStore = WKWebsiteDataStore.default()
         webView.configuration.userContentController.register(to: [StripConfig.proxy], delegate: self)
-        if let url = self.stripURL {
+        if let url = self.configuration?.url {
             webView.load(URLRequest(url: url))
         }
         return webView
@@ -80,6 +96,7 @@ open class APEStripView: NSObject {
         return webView
     }()
 
+    public weak var delegate: APEStripViewDelegate?
 
     // MARK:- Initializer
     convenience public init(channelToken: String, bundle: Bundle) {
@@ -89,7 +106,10 @@ open class APEStripView: NSObject {
 
     public init(configuration: APEStripConfiguration) {
         super.init()
-        self.stripURL = configuration.url
+        self.configuration = configuration
+        // prefetch channel data...
+        _ = self.stripWebView
+        _ = self.storyWebView
     }
 
 
@@ -99,6 +119,7 @@ open class APEStripView: NSObject {
     ///   - containerView: the channel strip view superview
     ///   - containerViewConroller: the container view ViewController
     public func display(in containerView: UIView, containerViewConroller: UIViewController) {
+        // update stripWebView frame according to containerView bounds
         containerView.layoutIfNeeded()
         self.stripWebView.frame = containerView.bounds
         containerView.addSubview(self.stripWebView)
@@ -119,9 +140,15 @@ open class APEStripView: NSObject {
 
     /// Remove the channel carousel units view
     public func hide() {
+        self.spinner.removeFromSuperview()
         self.stripWebView.configuration.userContentController
             .unregister(from: [StripConfig.proxy])
         self.stripWebView.removeFromSuperview()
+        self.storyWebView.configuration.userContentController
+            .unregister(from: [StripConfig.proxy,
+                           StripConfig.showStripStory,
+                           StripConfig.hideStripStory])
+        self.storyWebView.removeFromSuperview()
     }
 
     deinit {
@@ -142,7 +169,6 @@ private extension APEStripView {
     }
 
     func handleStripWebViewMessages(_ bodyString: String) {
-
         if bodyString.contains(StripConfig.initial) {
             self.loadingState.initialMessage = bodyString
 
@@ -160,6 +186,8 @@ private extension APEStripView {
                 self.loadingState.height = height + Float(adjustedContentInsets)
                 self.updateStripComponentHeight()
             }
+            // update the delegate on success
+            self.delegate?.stripViewService(didFinishLoadingChannelToken: self.configuration.channelToken)
 
         } else if bodyString.contains(StripConfig.open) {
             guard self.loadingState.isReady else {
@@ -170,9 +198,9 @@ private extension APEStripView {
                 self.displayStoryComponent()
             }
         }  else if bodyString.contains(StripConfig.destroy) {
-            self.loadingState.height = 0.0
-            self.containerView?.alpha = 0.0
-            self.updateStripComponentHeight()
+            self.hide()
+            // update the delegate on fail
+            self.delegate?.stripViewService(didFailLoadingChannelToken: self.configuration.channelToken)
         }
         // proxy updates
         if self.messagesTracker.canSendApesterEvent(message: bodyString, to: storyWebView) {
