@@ -12,6 +12,7 @@
 		3549BB8B1DA38C0A00C63030 /* ApesterKitSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3549BB8A1DA38C0A00C63030 /* ApesterKitSpec.swift */; };
 		35CA2AC61E12925700147290 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35CA2A971E12920400147290 /* Nimble.framework */; };
 		35CA2AC71E12925700147290 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35CA2AB31E12920400147290 /* Quick.framework */; };
+		86AFA1BB232BE99F00E1720A /* APEViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86AFA1BA232BE99F00E1720A /* APEViewController.m */; };
 		BB0BE33E2223169400542E3C /* APEStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0BE33D2223169400542E3C /* APEStripView.swift */; };
 		BB14A5441F1754DB003E393D /* APEResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB14A5431F1754DB003E393D /* APEResult.swift */; };
 		BB14A6F01F1F6BE5003E393D /* ApesterKit.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BB14A6EC1F1F6619003E393D /* ApesterKit.bundle */; };
@@ -33,7 +34,6 @@
 		BBC96DD02227844B00EA7E6B /* APEWebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB29529B1FE07E9C000C78B5 /* APEWebViewViewController.swift */; };
 		BBC96DD12227844B00EA7E6B /* APETableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB328DDA1FDFF3D900A0A159 /* APETableViewController.swift */; };
 		BBC96DD22227844F00EA7E6B /* APEStripViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9709BE22232BED00E1076B /* APEStripViewController.swift */; };
-		BBC96DD32227844F00EA7E6B /* APEStripStoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9709C022232F4100E1076B /* APEStripStoryViewController.swift */; };
 		BBC96DD42227845700EA7E6B /* Apester.mustache in Resources */ = {isa = PBXBuildFile; fileRef = BBBDFA8F1FDF550800C2F791 /* Apester.mustache */; };
 		BBC96DD52227845700EA7E6B /* APEMustacheExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3DD3741FDF47C80094A773 /* APEMustacheExtension.swift */; };
 		BBC96DD62227847F00EA7E6B /* ApesterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3549BB211DA389CD00C63030 /* ApesterKit.framework */; };
@@ -255,6 +255,9 @@
 		35CD65161E60192300AF060B /* watchOS-Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "watchOS-Base.xcconfig"; sourceTree = "<group>"; };
 		35CD65171E60192300AF060B /* watchOS-Framework.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "watchOS-Framework.xcconfig"; sourceTree = "<group>"; };
 		35CD65181E60192300AF060B /* watchOS-StaticLibrary.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "watchOS-StaticLibrary.xcconfig"; sourceTree = "<group>"; };
+		86AFA1B8232BE99F00E1720A /* Apester-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Apester-Bridging-Header.h"; sourceTree = "<group>"; };
+		86AFA1B9232BE99F00E1720A /* APEViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APEViewController.h; sourceTree = "<group>"; };
+		86AFA1BA232BE99F00E1720A /* APEViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APEViewController.m; sourceTree = "<group>"; };
 		BB0BE33D2223169400542E3C /* APEStripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripView.swift; sourceTree = "<group>"; };
 		BB14A5431F1754DB003E393D /* APEResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APEResult.swift; sourceTree = "<group>"; };
 		BB14A6BA1F1F58F6003E393D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -275,7 +278,6 @@
 		BB9700E12223EFEA0072E1F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB9709AA222322E000E1076B /* APEConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEConfig.swift; sourceTree = "<group>"; };
 		BB9709BE22232BED00E1076B /* APEStripViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripViewController.swift; sourceTree = "<group>"; };
-		BB9709C022232F4100E1076B /* APEStripStoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripStoryViewController.swift; sourceTree = "<group>"; };
 		BB9726272229BA54008C7440 /* ApesterKit.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ApesterKit.podspec; sourceTree = SOURCE_ROOT; };
 		BBBDFA8B1FDF4D5300C2F791 /* Mustache.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mustache.framework; path = Carthage/Build/iOS/Mustache.framework; sourceTree = "<group>"; };
 		BBBDFA8F1FDF550800C2F791 /* Apester.mustache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Apester.mustache; sourceTree = "<group>"; };
@@ -583,8 +585,9 @@
 		BB9709C2222332AE00E1076B /* Strip */ = {
 			isa = PBXGroup;
 			children = (
+				86AFA1B9232BE99F00E1720A /* APEViewController.h */,
+				86AFA1BA232BE99F00E1720A /* APEViewController.m */,
 				BB9709BE22232BED00E1076B /* APEStripViewController.swift */,
-				BB9709C022232F4100E1076B /* APEStripStoryViewController.swift */,
 			);
 			path = Strip;
 			sourceTree = "<group>";
@@ -617,6 +620,7 @@
 				BB3DD3781FDF47E70094A773 /* Main.storyboard */,
 				BB14A6BA1F1F58F6003E393D /* Assets.xcassets */,
 				BBC96DB0222781F500EA7E6B /* LaunchScreen.storyboard */,
+				86AFA1B8232BE99F00E1720A /* Apester-Bridging-Header.h */,
 				BBC96DB3222781F500EA7E6B /* Info.plist */,
 			);
 			path = Apester;
@@ -719,8 +723,7 @@
 					};
 					BBC96DA4222781F400EA7E6B = {
 						CreatedOnToolsVersion = 10.1;
-						DevelopmentTeam = A3JC2SBNCR;
-						LastSwiftMigration = 1020;
+						LastSwiftMigration = 1030;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -965,10 +968,10 @@
 				BBC96DD22227844F00EA7E6B /* APEStripViewController.swift in Sources */,
 				BBC96DD12227844B00EA7E6B /* APETableViewController.swift in Sources */,
 				BBC96DD52227845700EA7E6B /* APEMustacheExtension.swift in Sources */,
-				BBC96DD32227844F00EA7E6B /* APEStripStoryViewController.swift in Sources */,
 				BBC96DCF2227844400EA7E6B /* APEWKWebViewTableViewCell.swift in Sources */,
 				BBC96DD02227844B00EA7E6B /* APEWebViewViewController.swift in Sources */,
 				BBC96DA8222781F400EA7E6B /* AppDelegate.swift in Sources */,
+				86AFA1BB232BE99F00E1720A /* APEViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1227,6 +1230,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_COMMA = YES;
@@ -1239,7 +1243,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = A3JC2SBNCR;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1252,6 +1256,8 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hasansa.Apester;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Apester/Apester-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1264,6 +1270,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_COMMA = YES;
@@ -1276,7 +1283,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = A3JC2SBNCR;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1288,6 +1295,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hasansa.Apester;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Apester/Apester-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
