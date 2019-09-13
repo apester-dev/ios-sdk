@@ -13,6 +13,13 @@
 		35CA2AC61E12925700147290 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35CA2A971E12920400147290 /* Nimble.framework */; };
 		35CA2AC71E12925700147290 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35CA2AB31E12920400147290 /* Quick.framework */; };
 		86AFA1BB232BE99F00E1720A /* APEViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86AFA1BA232BE99F00E1720A /* APEViewController.m */; };
+		86AFA1F0232C052500E1720A /* APEStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0BE33D2223169400542E3C /* APEStripView.swift */; };
+		86AFA1F1232C052700E1720A /* APEStripConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109E22D53D2F00BB1DEC /* APEStripConfiguration.swift */; };
+		86AFA1F2232C052A00E1720A /* APEWebViewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109522D53B2C00BB1DEC /* APEWebViewService.swift */; };
+		86AFA1F3232C057900E1720A /* APEScriptMessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109122D53AAB00BB1DEC /* APEScriptMessageHandler.swift */; };
+		86AFA1F4232C057900E1720A /* APEStripLoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109722D53B7000BB1DEC /* APEStripLoadingState.swift */; };
+		86AFA1F5232C057900E1720A /* APEStripServiceEventsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109922D53B9500BB1DEC /* APEStripServiceEventsTracker.swift */; };
+		86AFA1F6232C057E00E1720A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109C22D53BF300BB1DEC /* Extensions.swift */; };
 		BB0BE33E2223169400542E3C /* APEStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0BE33D2223169400542E3C /* APEStripView.swift */; };
 		BB14A6F01F1F6BE5003E393D /* ApesterKit.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BB14A6EC1F1F6619003E393D /* ApesterKit.bundle */; };
 		BB44109222D53AAB00BB1DEC /* APEScriptMessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109122D53AAB00BB1DEC /* APEScriptMessageHandler.swift */; };
@@ -951,8 +958,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86AFA1F2232C052A00E1720A /* APEWebViewService.swift in Sources */,
+				86AFA1F6232C057E00E1720A /* Extensions.swift in Sources */,
+				86AFA1F0232C052500E1720A /* APEStripView.swift in Sources */,
 				BBC96DE1222785F400EA7E6B /* APEConfig.swift in Sources */,
+				86AFA1F5232C057900E1720A /* APEStripServiceEventsTracker.swift in Sources */,
+				86AFA1F1232C052700E1720A /* APEStripConfiguration.swift in Sources */,
+				86AFA1F3232C057900E1720A /* APEScriptMessageHandler.swift in Sources */,
 				3549BB8B1DA38C0A00C63030 /* ApesterKitSpec.swift in Sources */,
+				86AFA1F4232C057900E1720A /* APEStripLoadingState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

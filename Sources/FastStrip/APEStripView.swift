@@ -11,7 +11,7 @@ import WebKit
 import SafariServices
 
 #if os(iOS)
-
+@available(iOS 11.0, *)
 /// A ChannelToken Loading state update
 @objc public protocol APEStripViewDelegate: NSObjectProtocol {
 
@@ -27,6 +27,7 @@ import SafariServices
     func stripView(didFailLoadingChannelToken token:String)
 }
 
+@available(iOS 11.0, *)
 /// A Proxy Messaging Handler
 ///
 /// Between The Apester Units Carousel component (The `StripWebView`)
@@ -176,6 +177,7 @@ import SafariServices
 }
 
 // MARK:- UserContentController Script Messages Handle
+@available(iOS 11.0, *)
 private extension APEStripView {
     func handleUserContentController(message: WKScriptMessage) {
         if let bodyString = message.body as? String {
@@ -279,6 +281,7 @@ private extension APEStripView {
 }
 
 // MARK:- WKScriptMessageHandler
+@available(iOS 11.0, *)
 extension APEStripView: WKScriptMessageHandler {
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         DispatchQueue.main.async {
@@ -288,6 +291,7 @@ extension APEStripView: WKScriptMessageHandler {
 }
 
 // MARK:- WKNavigationDelegate
+@available(iOS 11.0, *)
 extension APEStripView: WKNavigationDelegate {
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         if let initialMessage = self.loadingState.initialMessage {
