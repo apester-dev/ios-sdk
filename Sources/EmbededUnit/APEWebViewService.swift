@@ -60,7 +60,7 @@ extension APEWebViewService: WKScriptMessageHandler {
         }
         // This takes a while, but eventually we'll the proper height here.
         guard let number = message.body as? NSNumber else { return }
-        handler(APEResult.success(CGFloat(truncating: number) + 15))
+        handler(.success(CGFloat(truncating: number) + 15))
         self.unitHeightHandlers[userContentController.hashValue] = nil
     }
 }
@@ -69,8 +69,8 @@ extension APEWebViewService: WKScriptMessageHandler {
 // MARK: - Interface
 public extension APEWebViewService {
 
-    typealias APEResultHandler = ((APEResult<Bool>) -> Void)
-    typealias APEUnitHeightHandler = ((APEResult<CGFloat>) -> Void)
+    typealias ResultHandler = ((Result<Bool, Error>) -> Void)
+    typealias APEUnitHeightHandler = ((Result<CGFloat, Error>) -> Void)
 
     /**
      call register(bundle:webview:unitHeightHandler:completionHandler:) function from viewDidLoad
@@ -78,8 +78,8 @@ public extension APEWebViewService {
      - Parameters:
          - bundle: the app main bundle
          - webview: the viewcontroller webview subview
-         - unitHeightHandler: an optional callback with APEResult response of the apester unit height
-         - completionHandler: an optional callback with APEResult response of the api success or failure
+         - unitHeightHandler: an optional callback with Result response of the apester unit height
+         - completionHandler: an optional callback with Result response of the api success or failure
 
      ### Usage Example: ###
 
@@ -99,7 +99,7 @@ public extension APEWebViewService {
      ````
      */
     func register(bundle: Bundle, webView: WKWebView,
-                  unitHeightHandler: APEUnitHeightHandler? = nil, completionHandler: APEResultHandler? = nil) {
+                  unitHeightHandler: APEUnitHeightHandler? = nil, completionHandler: ResultHandler? = nil) {
         self.bundle = bundle
 
         // Create a config and add the listener and the custom script
@@ -117,7 +117,7 @@ public extension APEWebViewService {
         }
 
 
-        completionHandler?(APEResult.success(self.bundle != nil))
+        completionHandler?(.success(self.bundle != nil))
     }
 
     /**
@@ -126,7 +126,7 @@ public extension APEWebViewService {
 
      - Parameters:
          - webView: must be an instance of WKWebview
-         - completionHandler: an optional callback with APEResult response
+         - completionHandler: an optional callback with Result response
 
      ### Usage Example: ###
 
@@ -137,7 +137,7 @@ public extension APEWebViewService {
      }
      ````
      */
-    func didStartLoad(webView: WKWebView, completionHandler: APEResultHandler? = nil) {
+    func didStartLoad(webView: WKWebView, completionHandler: ResultHandler? = nil) {
         guard !unitsLoadedSet.contains(webView.configuration.userContentController.hashValue) else {
             return
         }
@@ -148,6 +148,6 @@ public extension APEWebViewService {
 
         // call initAdevrtisingParams function with the device params info
         res = self.evaluateJavaScript(self.adevrtisingParamsJSFunctionString, webView: webView)
-        completionHandler?(APEResult.success(res != nil))
+        completionHandler?(.success(res != nil))
     }
 }

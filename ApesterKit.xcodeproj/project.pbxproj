@@ -14,7 +14,6 @@
 		35CA2AC71E12925700147290 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35CA2AB31E12920400147290 /* Quick.framework */; };
 		86AFA1BB232BE99F00E1720A /* APEViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86AFA1BA232BE99F00E1720A /* APEViewController.m */; };
 		BB0BE33E2223169400542E3C /* APEStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0BE33D2223169400542E3C /* APEStripView.swift */; };
-		BB14A5441F1754DB003E393D /* APEResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB14A5431F1754DB003E393D /* APEResult.swift */; };
 		BB14A6F01F1F6BE5003E393D /* ApesterKit.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BB14A6EC1F1F6619003E393D /* ApesterKit.bundle */; };
 		BB44109222D53AAB00BB1DEC /* APEScriptMessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109122D53AAB00BB1DEC /* APEScriptMessageHandler.swift */; };
 		BB44109622D53B2C00BB1DEC /* APEWebViewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109522D53B2C00BB1DEC /* APEWebViewService.swift */; };
@@ -259,7 +258,6 @@
 		86AFA1B9232BE99F00E1720A /* APEViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APEViewController.h; sourceTree = "<group>"; };
 		86AFA1BA232BE99F00E1720A /* APEViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APEViewController.m; sourceTree = "<group>"; };
 		BB0BE33D2223169400542E3C /* APEStripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripView.swift; sourceTree = "<group>"; };
-		BB14A5431F1754DB003E393D /* APEResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APEResult.swift; sourceTree = "<group>"; };
 		BB14A6BA1F1F58F6003E393D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BB14A6EC1F1F6619003E393D /* ApesterKit.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ApesterKit.bundle; sourceTree = "<group>"; };
 		BB29529B1FE07E9C000C78B5 /* APEWebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEWebViewViewController.swift; sourceTree = "<group>"; };
@@ -576,7 +574,6 @@
 		BB44109B22D53BE500BB1DEC /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				BB14A5431F1754DB003E393D /* APEResult.swift */,
 				BB44109C22D53BF300BB1DEC /* Extensions.swift */,
 			);
 			path = Helpers;
@@ -940,7 +937,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB44109A22D53B9500BB1DEC /* APEStripServiceEventsTracker.swift in Sources */,
-				BB14A5441F1754DB003E393D /* APEResult.swift in Sources */,
 				BB44109622D53B2C00BB1DEC /* APEWebViewService.swift in Sources */,
 				BB44109D22D53BF300BB1DEC /* Extensions.swift in Sources */,
 				BB44109822D53B7000BB1DEC /* APEStripLoadingState.swift in Sources */,

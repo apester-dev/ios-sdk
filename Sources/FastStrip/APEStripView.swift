@@ -99,21 +99,36 @@ import SafariServices
     public weak var delegate: APEStripViewDelegate?
 
     // MARK:- Initializer
+
+    /// init with channelToken and bundle
+    ///
+    /// - Parameters:
+    ///   - channelToken: the publisher channel id
+    ///   - bundle: the bundle to extract the app basic information
     convenience public init(channelToken: String, bundle: Bundle) {
         let config = APEStripConfiguration(channelToken: channelToken, shape: .roundSquare, size: .medium, shadow: false, bundle: bundle)
         self.init(configuration: config)
     }
 
+    /// init with configuration
+    ///
+    /// - Parameter configuration: the strip view custom configuration, i.e channelToken, shape, size
     public init(configuration: APEStripConfiguration) {
         super.init()
         self.configuration = configuration
         // prefetch channel data...
         _ = self.stripWebView
         _ = self.storyWebView
-        NotificationCenter.default.addObserver(forName: UIDevice.orientationDidChangeNotification,
-                                               object: nil,
-                                               queue: .main,
-                                               using: didRotate)
+        NotificationCenter.default.addObserver(forName: UIDevice.orientationDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
+            guard let stronSelf = self, let containerView = stronSelf.containerView, let stripContainerViewConroller = stronSelf.stripContainerViewConroller else {
+                return
+            }
+            stronSelf.stripWebView.reload()
+            stronSelf.storyWebView.reload()
+            stronSelf.storyWebView.removeFromSuperview()
+            stronSelf.stripWebView.removeFromSuperview()
+            stronSelf.display(in: containerView, containerViewConroller: stripContainerViewConroller)
+        }
     }
 
 
@@ -157,10 +172,6 @@ import SafariServices
 
     deinit {
         hide()
-        NotificationCenter.default.removeObserver(self,
-                                                  name: UIDevice.orientationDidChangeNotification,
-                                                  object: nil)
-
     }
 }
 
@@ -264,17 +275,6 @@ private extension APEStripView {
 
     func hideStoryComponent() {
         self.stripStoryViewController.dismiss(animated: true) {}
-    }
-
-    func didRotate(_ notification: Notification) {
-        guard let containerView = self.containerView, let stripContainerViewConroller = self.stripContainerViewConroller else {
-            return
-        }
-        self.stripWebView.reload()
-        self.storyWebView.reload()
-        self.storyWebView.removeFromSuperview()
-        self.stripWebView.removeFromSuperview()
-        self.display(in: containerView, containerViewConroller: stripContainerViewConroller)
     }
 }
 
