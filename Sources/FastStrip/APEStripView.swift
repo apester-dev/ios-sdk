@@ -11,39 +11,25 @@ import WebKit
 import SafariServices
 
 #if os(iOS)
-<<<<<<< Updated upstream
-
-/// A ChannelToken Loading state update
-public protocol APEStripViewDelegate: NSObject {
-=======
 @available(iOS 11.0, *)
 /// A ChannelToken Loading state update
 @objc public protocol APEStripViewDelegate: NSObjectProtocol {
->>>>>>> Stashed changes
+
 
     /// when the ChannelToken loaded successfuly
     ///
     /// - Parameter token: the channel token id
-<<<<<<< Updated upstream
-    func stripViewService(didFinishLoadingChannelToken token:String)
-=======
     func stripView(didFinishLoadingChannelToken token:String)
->>>>>>> Stashed changes
 
 
     /// when the ChannelToken couldn't be loaded
     ///
     /// - Parameter token: the channel token id
-<<<<<<< Updated upstream
-    func stripViewService(didFailLoadingChannelToken token:String)
-}
-
-=======
     func stripView(didFailLoadingChannelToken token:String)
 }
 
 @available(iOS 11.0, *)
->>>>>>> Stashed changes
+
 /// A Proxy Messaging Handler
 ///
 /// Between The Apester Units Carousel component (The `StripWebView`)
@@ -136,8 +122,6 @@ public protocol APEStripViewDelegate: NSObject {
         // prefetch channel data...
         _ = self.stripWebView
         _ = self.storyWebView
-<<<<<<< Updated upstream
-=======
         NotificationCenter.default.addObserver(forName: UIDevice.orientationDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
             guard let stronSelf = self, let containerView = stronSelf.containerView, let stripContainerViewConroller = stronSelf.stripContainerViewConroller else {
                 return
@@ -148,7 +132,7 @@ public protocol APEStripViewDelegate: NSObject {
             stronSelf.stripWebView.removeFromSuperview()
             stronSelf.display(in: containerView, containerViewConroller: stripContainerViewConroller)
         }
->>>>>>> Stashed changes
+
     }
 
 
@@ -227,11 +211,7 @@ private extension APEStripView {
                 self.updateStripComponentHeight()
             }
             // update the delegate on success
-<<<<<<< Updated upstream
-            self.delegate?.stripViewService(didFinishLoadingChannelToken: self.configuration.channelToken)
-=======
             self.delegate?.stripView(didFinishLoadingChannelToken: self.configuration.channelToken)
->>>>>>> Stashed changes
 
         } else if bodyString.contains(StripConfig.open) {
             guard self.loadingState.isReady else {
@@ -242,18 +222,12 @@ private extension APEStripView {
                 self.displayStoryComponent()
             }
         }  else if bodyString.contains(StripConfig.destroy) {
-<<<<<<< Updated upstream
-            self.hide()
-            // update the delegate on fail
-            self.delegate?.stripViewService(didFailLoadingChannelToken: self.configuration.channelToken)
-=======
             // update the delegate on fail or hide if needed
             if let delegate = self.delegate {
                 delegate.stripView(didFailLoadingChannelToken: self.configuration.channelToken)
             } else {
                 self.hide()
             }
->>>>>>> Stashed changes
         }
         // proxy updates
         if self.messagesTracker.canSendApesterEvent(message: bodyString, to: storyWebView) {
