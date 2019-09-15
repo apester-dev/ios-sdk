@@ -8,13 +8,40 @@
 
 import Foundation
 
-public struct APEStripConfiguration {
-    public enum Shape: String {
+@objcMembers public class APEStripConfiguration: NSObject {
+
+    @objc public enum APEStripShape: Int {
         case round, square, roundSquare
+
+        var value: String {
+            switch self {
+            case .round:
+                return "round"
+            case .square:
+                return "square"
+            case .roundSquare:
+                return "roundSquare"
+            @unknown default:
+                return ""
+            }
+        }
     }
 
-    public enum Size: String {
+    @objc public enum APEStripSize: Int {
         case small, medium, large
+
+        var value: String {
+            switch self {
+            case .small:
+                return "small"
+            case .medium:
+                return "medium"
+            case .large:
+                return "large"
+            @unknown default:
+                return ""
+            }
+        }
     }
 
     private enum Keys: String {
@@ -28,8 +55,8 @@ public struct APEStripConfiguration {
 
     private(set) var channelToken: String
     private var bundleInfo: [String : String]
-    private var shape: Shape = .roundSquare
-    private var size: Size = .medium
+    private var shape: APEStripShape = .roundSquare
+    private var size: APEStripSize = .medium
     private var shadow: Bool = false
     private var textColor: String?
     private var background: String?
@@ -37,8 +64,8 @@ public struct APEStripConfiguration {
     private var parameters: [String: String] {
         var value = self.bundleInfo
         value[Keys.channelToken.rawValue] = channelToken
-        value[Keys.shape.rawValue] = shape.rawValue
-        value[Keys.size.rawValue] = size.rawValue
+        value[Keys.shape.rawValue] = shape.value
+        value[Keys.size.rawValue] = size.value
         value[Keys.shadow.rawValue] = "\(shadow)"
         value[Keys.textColor.rawValue] = textColor
         value[Keys.background.rawValue] = background
@@ -49,7 +76,7 @@ public struct APEStripConfiguration {
         return self.parameters.componentsURL(baseURL: APEConfig.Strip.stripUrlPath)
     }
 
-    public init(channelToken: String, shape: Shape, size: Size, shadow: Bool, bundle: Bundle, textColor: String? = nil, background: String? = nil) {
+    public init(channelToken: String, shape: APEStripShape, size: APEStripSize, shadow: Bool, bundle: Bundle, textColor: String? = nil, background: String? = nil) {
         self.channelToken = channelToken
         self.shape = shape
         self.size = size

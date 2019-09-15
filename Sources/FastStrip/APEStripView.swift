@@ -11,27 +11,30 @@ import WebKit
 import SafariServices
 
 #if os(iOS)
-
+@available(iOS 11.0, *)
 /// A ChannelToken Loading state update
-public protocol APEStripViewDelegate: NSObject {
+@objc public protocol APEStripViewDelegate: NSObjectProtocol {
+
 
     /// when the ChannelToken loaded successfuly
     ///
     /// - Parameter token: the channel token id
-    func stripViewService(didFinishLoadingChannelToken token:String)
+    func stripView(didFinishLoadingChannelToken token:String)
 
 
     /// when the ChannelToken couldn't be loaded
     ///
     /// - Parameter token: the channel token id
-    func stripViewService(didFailLoadingChannelToken token:String)
+    func stripView(didFailLoadingChannelToken token:String)
 }
+
+@available(iOS 11.0, *)
 
 /// A Proxy Messaging Handler
 ///
 /// Between The Apester Units Carousel component (The `StripWebView`)
 /// And the selected Apester Unit (The `StoryWebView`)
-open class APEStripView: NSObject {
+@objcMembers public class APEStripView: NSObject {
 
     private typealias StripConfig = APEConfig.Strip
 
@@ -99,17 +102,37 @@ open class APEStripView: NSObject {
     public weak var delegate: APEStripViewDelegate?
 
     // MARK:- Initializer
+
+    /// init with channelToken and bundle
+    ///
+    /// - Parameters:
+    ///   - channelToken: the publisher channel id
+    ///   - bundle: the bundle to extract the app basic information
     convenience public init(channelToken: String, bundle: Bundle) {
         let config = APEStripConfiguration(channelToken: channelToken, shape: .roundSquare, size: .medium, shadow: false, bundle: bundle)
         self.init(configuration: config)
     }
 
+    /// init with configuration
+    ///
+    /// - Parameter configuration: the strip view custom configuration, i.e channelToken, shape, size
     public init(configuration: APEStripConfiguration) {
         super.init()
         self.configuration = configuration
         // prefetch channel data...
         _ = self.stripWebView
         _ = self.storyWebView
+        NotificationCenter.default.addObserver(forName: UIDevice.orientationDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
+            guard let stronSelf = self, let containerView = stronSelf.containerView, let stripContainerViewConroller = stronSelf.stripContainerViewConroller else {
+                return
+            }
+            stronSelf.stripWebView.reload()
+            stronSelf.storyWebView.reload()
+            stronSelf.storyWebView.removeFromSuperview()
+            stronSelf.stripWebView.removeFromSuperview()
+            stronSelf.display(in: containerView, containerViewConroller: stripContainerViewConroller)
+        }
+
     }
 
 
@@ -157,6 +180,7 @@ open class APEStripView: NSObject {
 }
 
 // MARK:- UserContentController Script Messages Handle
+@available(iOS 11.0, *)
 private extension APEStripView {
     func handleUserContentController(message: WKScriptMessage) {
         if let bodyString = message.body as? String {
@@ -187,7 +211,7 @@ private extension APEStripView {
                 self.updateStripComponentHeight()
             }
             // update the delegate on success
-            self.delegate?.stripViewService(didFinishLoadingChannelToken: self.configuration.channelToken)
+            self.delegate?.stripView(didFinishLoadingChannelToken: self.configuration.channelToken)
 
         } else if bodyString.contains(StripConfig.open) {
             guard self.loadingState.isReady else {
@@ -198,9 +222,12 @@ private extension APEStripView {
                 self.displayStoryComponent()
             }
         }  else if bodyString.contains(StripConfig.destroy) {
-            self.hide()
-            // update the delegate on fail
-            self.delegate?.stripViewService(didFailLoadingChannelToken: self.configuration.channelToken)
+            // update the delegate on fail or hide if needed
+            if let delegate = self.delegate {
+                delegate.stripView(didFailLoadingChannelToken: self.configuration.channelToken)
+            } else {
+                self.hide()
+            }
         }
         // proxy updates
         if self.messagesTracker.canSendApesterEvent(message: bodyString, to: storyWebView) {
@@ -257,6 +284,7 @@ private extension APEStripView {
 }
 
 // MARK:- WKScriptMessageHandler
+@available(iOS 11.0, *)
 extension APEStripView: WKScriptMessageHandler {
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         DispatchQueue.main.async {
@@ -266,6 +294,7 @@ extension APEStripView: WKScriptMessageHandler {
 }
 
 // MARK:- WKNavigationDelegate
+@available(iOS 11.0, *)
 extension APEStripView: WKNavigationDelegate {
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         if let initialMessage = self.loadingState.initialMessage {
