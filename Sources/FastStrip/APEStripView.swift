@@ -26,6 +26,12 @@ import SafariServices
     ///
     /// - Parameter token: the channel token id
     func stripView(didFailLoadingChannelToken token:String)
+
+
+    /// when the stripView height has been updated
+    ///
+    /// - Parameter height: the stripView new height
+    func stripView(didUpdateHeight height:CGFloat)
 }
 
 @available(iOS 11.0, *)
@@ -38,6 +44,7 @@ import SafariServices
 
     private typealias StripConfig = APEConfig.Strip
 
+    private var lastDeviceOrientation: UIDeviceOrientation = UIDevice.current.orientation
 
     class FastStripStoryViewController: UIViewController {
         var webView: WKWebView?
@@ -56,7 +63,6 @@ import SafariServices
         }
     }
 
-    private var spinner = UIActivityIndicatorView(style: .whiteLarge)
     private weak var stripContainerViewConroller: UIViewController?
     private var containerView: UIView?
 
@@ -101,6 +107,10 @@ import SafariServices
 
     public weak var delegate: APEStripViewDelegate?
 
+    public var height: CGFloat {
+        return CGFloat(self.loadingState.height) + (self.configuration.style.verticalPadding)
+    }
+
     // MARK:- Initializer
 
     /// init with channelToken and bundle
@@ -108,8 +118,12 @@ import SafariServices
     /// - Parameters:
     ///   - channelToken: the publisher channel id
     ///   - bundle: the bundle to extract the app basic information
+    @available(*, deprecated, message: "Please Use init(configuration: APEStripConfiguration) inializer")
     convenience public init(channelToken: String, bundle: Bundle) {
-        let config = APEStripConfiguration(channelToken: channelToken, shape: .roundSquare, size: .medium, shadow: false, bundle: bundle)
+        let style = APEStripStyle(shape: .roundSquare, size: .medium,
+                                  padding: UIEdgeInsets(top: 5.0, left: 0, bottom: 0, right: 0),
+                                  shadow: false, textColor: nil, background: nil)
+        let config = try! APEStripConfiguration(channelToken: channelToken, style: style, bundle: bundle)
         self.init(configuration: config)
     }
 
@@ -126,15 +140,19 @@ import SafariServices
             guard let stronSelf = self, let containerView = stronSelf.containerView, let stripContainerViewConroller = stronSelf.stripContainerViewConroller else {
                 return
             }
+            // validate that when the stripStoryViewController is presented the orientation must be portrait mode
+            if stronSelf.stripStoryViewController.presentingViewController != nil, !UIDevice.current.orientation.isPortrait {
+                stronSelf.lastDeviceOrientation = UIDevice.current.orientation
+                stronSelf.setDeviceOrientation(UIInterfaceOrientation.portrait.rawValue)
+                return
+            }
+            // reload stripWebView
             stronSelf.stripWebView.reload()
-            stronSelf.storyWebView.reload()
-            stronSelf.storyWebView.removeFromSuperview()
             stronSelf.stripWebView.removeFromSuperview()
             stronSelf.display(in: containerView, containerViewConroller: stripContainerViewConroller)
         }
 
     }
-
 
     /// Display the channel carousel units view
     ///
@@ -142,28 +160,23 @@ import SafariServices
     ///   - containerView: the channel strip view superview
     ///   - containerViewConroller: the container view ViewController
     public func display(in containerView: UIView, containerViewConroller: UIViewController) {
-        // update stripWebView frame according to containerView bounds
+//        // update stripWebView frame according to containerView bounds
         containerView.layoutIfNeeded()
-        self.stripWebView.frame = containerView.bounds
         containerView.addSubview(self.stripWebView)
+        stripWebView.translatesAutoresizingMaskIntoConstraints = false
+        stripWebView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
+        stripWebView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
+        stripWebView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
+        let heightAnchor = stripWebView.heightAnchor.constraint(equalTo: containerView.heightAnchor)
+        heightAnchor.priority = .defaultLow
+        heightAnchor.isActive = true
 
         self.containerView = containerView
         self.stripContainerViewConroller = containerViewConroller
-
-        stripWebView.isUserInteractionEnabled = false
-        stripWebView.alpha = 0.5
-
-        containerView.addSubview(spinner)
-        spinner.startAnimating()
-        spinner.translatesAutoresizingMaskIntoConstraints = false
-        spinner.centerXAnchor.constraint(equalTo: stripWebView.centerXAnchor).isActive = true
-        spinner.centerYAnchor.constraint(equalTo: stripWebView.centerYAnchor).isActive = true
     }
-
 
     /// Remove the channel carousel units view
     public func hide() {
-        self.spinner.removeFromSuperview()
         self.stripWebView.configuration.userContentController
             .unregister(from: [StripConfig.proxy])
         self.stripWebView.removeFromSuperview()
@@ -198,7 +211,7 @@ private extension APEStripView {
 
         } else if bodyString.contains(StripConfig.loaded) {
             if let superView = stripWebView.superview, storyWebView.superview == nil {
-                superView.addSubview(storyWebView)
+                superView.insertSubview(storyWebView, belowSubview: stripWebView)
             }
             self.loadingState.isLoaded = true
             // get unit height
@@ -208,7 +221,7 @@ private extension APEStripView {
 
                 let adjustedContentInsets = self.stripWebView.scrollView.adjustedContentInset.bottom + self.stripWebView.scrollView.adjustedContentInset.top
                 self.loadingState.height = height + Float(adjustedContentInsets)
-                self.updateStripComponentHeight()
+                self.updateStripComponentHeight(self.height)
             }
             // update the delegate on success
             self.delegate?.stripView(didFinishLoadingChannelToken: self.configuration.channelToken)
@@ -235,23 +248,20 @@ private extension APEStripView {
         }
     }
 
-    func updateStripComponentHeight() {
+    func updateStripComponentHeight(_ height: CGFloat) {
         self.containerView.flatMap { containerView in
-            UIView.animate(withDuration: 0.33) {
-                // Auto Layout
-                containerView.frame.size.height = CGFloat(self.loadingState.height)
-                self.stripWebView.frame = containerView.bounds
-            }
+            // Auto Layout
+            let heightAnchor = stripWebView.heightAnchor.constraint(equalToConstant: height)
+            heightAnchor.priority = .defaultHigh
+            heightAnchor.isActive = true
         }
+        self.delegate?.stripView(didUpdateHeight: height)
     }
 
     func handleStoryWebViewMessages(_ bodyString: String) {
         if bodyString.contains(StripConfig.isReady) {
             self.loadingState.isReady = true
 
-            self.stripWebView.isUserInteractionEnabled = true
-            stripWebView.alpha = 1
-            spinner.removeFromSuperview()
             // send openUnitMessage if needed
             if let openUnitMessage = self.loadingState.openUnitMessage {
                 self.messagesTracker.sendApesterEvent(message: openUnitMessage, to: storyWebView) { _ in
@@ -275,11 +285,23 @@ private extension APEStripView {
     }
 
     func displayStoryComponent() {
-            self.stripContainerViewConroller?.present(self.stripStoryViewController, animated: true, completion: nil)
+        self.lastDeviceOrientation = UIDevice.current.orientation
+        if !self.lastDeviceOrientation.isPortrait, self.lastDeviceOrientation != .unknown {
+            setDeviceOrientation(UIInterfaceOrientation.portrait.rawValue)
+        }
+        self.stripContainerViewConroller?.present(self.stripStoryViewController, animated: true, completion: nil)
     }
 
     func hideStoryComponent() {
-        self.stripStoryViewController.dismiss(animated: true) {}
+        self.stripStoryViewController.dismiss(animated: false) {
+            if !self.lastDeviceOrientation.isPortrait, self.lastDeviceOrientation != .unknown {
+                self.setDeviceOrientation(self.lastDeviceOrientation.rawValue)
+            }
+        }
+    }
+
+    func setDeviceOrientation(_ rawValue: Int) {
+        UIDevice.current.setValue(rawValue, forKey: "orientation")
     }
 }
 
@@ -306,16 +328,26 @@ extension APEStripView: WKNavigationDelegate {
 
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         var policy = WKNavigationActionPolicy.cancel
-        switch navigationAction.navigationType {
-        case .other, .reload, .backForward:
-            policy = .allow
-        case .linkActivated:
-            guard let url = navigationAction.request.url else { return }
+        defer {
+            decisionHandler(policy)
+        }
+        guard let url = navigationAction.request.url else { return }
+        func presentSFSafariViewController() {
+            guard url.scheme != nil else { return }
             let presntedVC = self.stripContainerViewConroller?.presentedViewController ?? self.stripContainerViewConroller
             presntedVC?.present(SFSafariViewController(url: url), animated: true, completion: nil)
+        }
+        switch navigationAction.navigationType {
+        case .other, .reload, .backForward:
+            if let host = url.host, host.contains(APEConfig.Strip.apester) {
+                policy = .allow
+            } else if (url.absoluteString != APEConfig.Strip.blank && !url.absoluteString.contains(APEConfig.Strip.safeframe)) {
+                presentSFSafariViewController()
+            }
+        case .linkActivated:
+            presentSFSafariViewController()
         default: break
         }
-        decisionHandler(policy)
     }
 
     public func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {

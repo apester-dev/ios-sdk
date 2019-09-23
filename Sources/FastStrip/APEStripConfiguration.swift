@@ -6,69 +6,28 @@
 //  Copyright © 2019 Apester. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+public enum APEStripConfigurationError: Error {
+    case invalidChannelToken
+}
 
 @objcMembers public class APEStripConfiguration: NSObject {
 
-    @objc public enum APEStripShape: Int {
-        case round, square, roundSquare
-
-        var value: String {
-            switch self {
-            case .round:
-                return "round"
-            case .square:
-                return "square"
-            case .roundSquare:
-                return "roundSquare"
-            @unknown default:
-                return ""
-            }
-        }
-    }
-
-    @objc public enum APEStripSize: Int {
-        case small, medium, large
-
-        var value: String {
-            switch self {
-            case .small:
-                return "small"
-            case .medium:
-                return "medium"
-            case .large:
-                return "large"
-            @unknown default:
-                return ""
-            }
-        }
-    }
-
     private enum Keys: String {
-        case channelToken = "token"
-        case shape = "itemShape"
-        case size = "itemSize"
-        case shadow = "itemHasShadow"
-        case textColor = "itemTextColor"
-        case background = "stripBackground"
+        case channelToken   = "token"
+        case channelTokens  = "tokens"
     }
 
     private(set) var channelToken: String
+    private(set) var style: APEStripStyle
+    private(set) var channelTokens: [String] = []
     private var bundleInfo: [String : String]
-    private var shape: APEStripShape = .roundSquare
-    private var size: APEStripSize = .medium
-    private var shadow: Bool = false
-    private var textColor: String?
-    private var background: String?
 
     private var parameters: [String: String] {
-        var value = self.bundleInfo
+        var value = self.bundleInfo.merging(self.style.parameters, uniquingKeysWith: { $1 })
         value[Keys.channelToken.rawValue] = channelToken
-        value[Keys.shape.rawValue] = shape.value
-        value[Keys.size.rawValue] = size.value
-        value[Keys.shadow.rawValue] = "\(shadow)"
-        value[Keys.textColor.rawValue] = textColor
-        value[Keys.background.rawValue] = background
+        // TODO: Handle channelTokens
         return value
     }
 
@@ -76,14 +35,25 @@ import Foundation
         return self.parameters.componentsURL(baseURL: APEConfig.Strip.stripUrlPath)
     }
 
+    private init(channelTokens: [String], style: APEStripStyle, bundle: Bundle) throws {
+        guard let channelToken = channelTokens.first, !channelToken.isEmpty else {
+            throw APEStripConfigurationError.invalidChannelToken
+        }
+        self.channelToken = channelToken
+        self.channelTokens = channelTokens
+        self.style = style
+        self.bundleInfo = APEBundle.bundleInfoPayload(with: bundle)
+    }
+
+    public convenience init(channelToken: String, style: APEStripStyle, bundle: Bundle) throws {
+        try self.init(channelTokens: [channelToken], style: style, bundle: bundle)
+    }
+
+    @available(*, deprecated, message: "Please Use init(channelToken:style:bundle:) inializer")
     public init(channelToken: String, shape: APEStripShape, size: APEStripSize, shadow: Bool, bundle: Bundle, textColor: String? = nil, background: String? = nil) {
         self.channelToken = channelToken
-        self.shape = shape
-        self.size = size
-        self.shadow = shadow
+        self.style = APEStripStyle.init(shape: shape, size: size, padding: .zero, shadow: shadow, textColor: textColor, background: background)
         self.bundleInfo = APEBundle.bundleInfoPayload(with: bundle)
-        self.textColor = textColor
-        self.background  = background
     }
 }
 

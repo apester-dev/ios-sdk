@@ -20,6 +20,8 @@
 		86AFA1F4232C057900E1720A /* APEStripLoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109722D53B7000BB1DEC /* APEStripLoadingState.swift */; };
 		86AFA1F5232C057900E1720A /* APEStripServiceEventsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109922D53B9500BB1DEC /* APEStripServiceEventsTracker.swift */; };
 		86AFA1F6232C057E00E1720A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109C22D53BF300BB1DEC /* Extensions.swift */; };
+		86B735ED23380D9100949864 /* APEStripStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B735EC23380D9100949864 /* APEStripStyle.swift */; };
+		86B73602233871CF00949864 /* APEStripCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B73601233871CF00949864 /* APEStripCollectionViewCell.swift */; };
 		BB0BE33E2223169400542E3C /* APEStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0BE33D2223169400542E3C /* APEStripView.swift */; };
 		BB14A6F01F1F6BE5003E393D /* ApesterKit.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BB14A6EC1F1F6619003E393D /* ApesterKit.bundle */; };
 		BB44109222D53AAB00BB1DEC /* APEScriptMessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109122D53AAB00BB1DEC /* APEScriptMessageHandler.swift */; };
@@ -41,7 +43,6 @@
 		BBC96DD12227844B00EA7E6B /* APETableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB328DDA1FDFF3D900A0A159 /* APETableViewController.swift */; };
 		BBC96DD22227844F00EA7E6B /* APEStripViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9709BE22232BED00E1076B /* APEStripViewController.swift */; };
 		BBC96DD42227845700EA7E6B /* Apester.mustache in Resources */ = {isa = PBXBuildFile; fileRef = BBBDFA8F1FDF550800C2F791 /* Apester.mustache */; };
-		BBC96DD52227845700EA7E6B /* APEMustacheExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3DD3741FDF47C80094A773 /* APEMustacheExtension.swift */; };
 		BBC96DD62227847F00EA7E6B /* ApesterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3549BB211DA389CD00C63030 /* ApesterKit.framework */; };
 		BBC96DD72227847F00EA7E6B /* ApesterKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3549BB211DA389CD00C63030 /* ApesterKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BBC96DDB2227853600EA7E6B /* Mustache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBBDFA8B1FDF4D5300C2F791 /* Mustache.framework */; };
@@ -264,6 +265,8 @@
 		86AFA1B8232BE99F00E1720A /* Apester-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Apester-Bridging-Header.h"; sourceTree = "<group>"; };
 		86AFA1B9232BE99F00E1720A /* APEViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APEViewController.h; sourceTree = "<group>"; };
 		86AFA1BA232BE99F00E1720A /* APEViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APEViewController.m; sourceTree = "<group>"; };
+		86B735EC23380D9100949864 /* APEStripStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripStyle.swift; sourceTree = "<group>"; };
+		86B73601233871CF00949864 /* APEStripCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripCollectionViewCell.swift; sourceTree = "<group>"; };
 		BB0BE33D2223169400542E3C /* APEStripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripView.swift; sourceTree = "<group>"; };
 		BB14A6BA1F1F58F6003E393D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BB14A6EC1F1F6619003E393D /* ApesterKit.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ApesterKit.bundle; sourceTree = "<group>"; };
@@ -532,6 +535,14 @@
 			path = watchOS;
 			sourceTree = "<group>";
 		};
+		86B73600233871B500949864 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				86B73601233871CF00949864 /* APEStripCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		BB328DEE1FDFF3EB00A0A159 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -553,8 +564,9 @@
 		BB44109022D53AAB00BB1DEC /* FastStrip */ = {
 			isa = PBXGroup;
 			children = (
-				BB0BE33D2223169400542E3C /* APEStripView.swift */,
+				86B735EC23380D9100949864 /* APEStripStyle.swift */,
 				BB44109E22D53D2F00BB1DEC /* APEStripConfiguration.swift */,
+				BB0BE33D2223169400542E3C /* APEStripView.swift */,
 				BB44109122D53AAB00BB1DEC /* APEScriptMessageHandler.swift */,
 				BB44109722D53B7000BB1DEC /* APEStripLoadingState.swift */,
 				BB44109922D53B9500BB1DEC /* APEStripServiceEventsTracker.swift */,
@@ -589,6 +601,7 @@
 		BB9709C2222332AE00E1076B /* Strip */ = {
 			isa = PBXGroup;
 			children = (
+				86B73600233871B500949864 /* View */,
 				86AFA1B9232BE99F00E1720A /* APEViewController.h */,
 				86AFA1BA232BE99F00E1720A /* APEViewController.m */,
 				BB9709BE22232BED00E1076B /* APEStripViewController.swift */,
@@ -944,6 +957,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB44109A22D53B9500BB1DEC /* APEStripServiceEventsTracker.swift in Sources */,
+				86B735ED23380D9100949864 /* APEStripStyle.swift in Sources */,
 				BB44109622D53B2C00BB1DEC /* APEWebViewService.swift in Sources */,
 				BB44109D22D53BF300BB1DEC /* Extensions.swift in Sources */,
 				BB44109822D53B7000BB1DEC /* APEStripLoadingState.swift in Sources */,
@@ -975,9 +989,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBC96DCD2227844400EA7E6B /* APEWebViewTableViewCell.swift in Sources */,
+				86B73602233871CF00949864 /* APEStripCollectionViewCell.swift in Sources */,
 				BBC96DD22227844F00EA7E6B /* APEStripViewController.swift in Sources */,
 				BBC96DD12227844B00EA7E6B /* APETableViewController.swift in Sources */,
-				BBC96DD52227845700EA7E6B /* APEMustacheExtension.swift in Sources */,
 				BBC96DCF2227844400EA7E6B /* APEWKWebViewTableViewCell.swift in Sources */,
 				BBC96DD02227844B00EA7E6B /* APEWebViewViewController.swift in Sources */,
 				BBC96DA8222781F400EA7E6B /* AppDelegate.swift in Sources */,
