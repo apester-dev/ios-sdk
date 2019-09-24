@@ -19,19 +19,19 @@ import SafariServices
     /// when the ChannelToken loaded successfuly
     ///
     /// - Parameter token: the channel token id
-    func stripView(didFinishLoadingChannelToken token:String)
+    func stripView(_ stripView: APEStripView, didFinishLoadingChannelToken token:String)
 
 
     /// when the ChannelToken couldn't be loaded
     ///
     /// - Parameter token: the channel token id
-    func stripView(didFailLoadingChannelToken token:String)
+    func stripView(_ stripView: APEStripView, didFailLoadingChannelToken token:String)
 
 
     /// when the stripView height has been updated
     ///
     /// - Parameter height: the stripView new height
-    func stripView(didUpdateHeight height:CGFloat)
+    func stripView(_ stripView: APEStripView, didUpdateHeight height:CGFloat)
 }
 
 @available(iOS 11.0, *)
@@ -224,7 +224,7 @@ private extension APEStripView {
                 self.updateStripComponentHeight(self.height)
             }
             // update the delegate on success
-            self.delegate?.stripView(didFinishLoadingChannelToken: self.configuration.channelToken)
+            self.delegate?.stripView(self, didFinishLoadingChannelToken: self.configuration.channelToken)
 
         } else if bodyString.contains(StripConfig.open) {
             guard self.loadingState.isReady else {
@@ -237,7 +237,7 @@ private extension APEStripView {
         }  else if bodyString.contains(StripConfig.destroy) {
             // update the delegate on fail or hide if needed
             if let delegate = self.delegate {
-                delegate.stripView(didFailLoadingChannelToken: self.configuration.channelToken)
+                delegate.stripView(self, didFailLoadingChannelToken: self.configuration.channelToken)
             } else {
                 self.hide()
             }
@@ -255,7 +255,7 @@ private extension APEStripView {
             heightAnchor.priority = .defaultHigh
             heightAnchor.isActive = true
         }
-        self.delegate?.stripView(didUpdateHeight: height)
+        self.delegate?.stripView(self, didUpdateHeight: height)
     }
 
     func handleStoryWebViewMessages(_ bodyString: String) {
