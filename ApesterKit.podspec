@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
  s.name = 'ApesterKit'
- s.version = '2.2.3'
+ s.version = '2.2.5'
  s.swift_version = '5.0'
  s.license = { :type => "MIT", :file => "LICENSE" }
  s.summary = 'ApesterKit provides a light-weight framework that loads Apester Unit in a webView'

@@ -82,6 +82,10 @@ import SafariServices
     private lazy var stripWebView: WKWebView = {
         let webView = WKWebView()
         webView.navigationDelegate = self
+        webView.insetsLayoutMarginsFromSafeArea = true
+        webView.scrollView.isScrollEnabled = false
+        webView.scrollView.bouncesZoom = false
+        webView.scrollView.delegate = self
         webView.configuration.websiteDataStore = WKWebsiteDataStore.default()
         webView.configuration.userContentController.register(to: [StripConfig.proxy], delegate: self)
         if let url = self.configuration?.url {
@@ -93,6 +97,10 @@ import SafariServices
     private lazy var storyWebView: WKWebView  = {
         let webView = WKWebView()
         webView.navigationDelegate = self
+        webView.insetsLayoutMarginsFromSafeArea = true
+        webView.scrollView.isScrollEnabled = false
+        webView.scrollView.bouncesZoom = false
+        webView.scrollView.delegate = self
         webView.configuration.websiteDataStore = WKWebsiteDataStore.default()
         webView.configuration.userContentController
             .register(to: [StripConfig.proxy,
@@ -286,7 +294,7 @@ private extension APEStripView {
 
     func displayStoryComponent() {
         self.lastDeviceOrientation = UIDevice.current.orientation
-        if !self.lastDeviceOrientation.isPortrait, self.lastDeviceOrientation != .unknown {
+        if self.lastDeviceOrientation.isLandscape {
             setDeviceOrientation(UIInterfaceOrientation.portrait.rawValue)
         }
         self.stripContainerViewConroller?.present(self.stripStoryViewController, animated: true, completion: nil)
@@ -294,7 +302,7 @@ private extension APEStripView {
 
     func hideStoryComponent() {
         self.stripStoryViewController.dismiss(animated: false) {
-            if !self.lastDeviceOrientation.isPortrait, self.lastDeviceOrientation != .unknown {
+            if self.lastDeviceOrientation.isLandscape {
                 self.setDeviceOrientation(self.lastDeviceOrientation.rawValue)
             }
         }
@@ -365,5 +373,11 @@ extension APEStripView: WKNavigationDelegate {
         decisionHandler(.allow)
     }
 }
-
+// MARK:- WKScriptMessageHandler
+@available(iOS 11.0, *)
+extension APEStripView: UIScrollViewDelegate {
+    public func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
+        scrollView.pinchGestureRecognizer?.isEnabled = false
+    }
+}
 #endif
