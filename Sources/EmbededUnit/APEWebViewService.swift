@@ -21,12 +21,12 @@ public class APEWebViewService: NSObject {
 
     // the converted apesterLoadCallback js file to  string
     fileprivate lazy var loadCallbackJSString: String = {
-        return APEBundle.contentsOfFile(APEConfig.WebView.loadCallbackFileName)
+        return APEBundle.contentsOfFile(Constants.WebView.loadCallbackFileName)
     }()
 
     // the converted apesterLoadCallback js file to  string
     fileprivate lazy var registerJSString: String = {
-        return APEBundle.contentsOfFile(APEConfig.WebView.registerJSFileName)
+        return APEBundle.contentsOfFile(Constants.WebView.registerJSFileName)
     }()
 
     // the function with payload params string
@@ -35,7 +35,7 @@ public class APEWebViewService: NSObject {
         if let serializedData = try? JSONSerialization.data(withJSONObject: APEBundle.bundleInfoPayload(with: self.bundle), options: []) ,
             // Encode the data into JSON string
             let encodedData = String(data: serializedData, encoding: String.Encoding.utf8) {
-            return "\(APEConfig.WebView.initAdevrtisingParamsFunctionName)('\(encodedData)')"
+            return "\(Constants.WebView.initAdevrtisingParamsFunctionName)('\(encodedData)')"
         }
         return nil
     }
@@ -108,8 +108,8 @@ public extension APEWebViewService {
         // Load the script to be inserted into the template
         let script = WKUserScript(source: registerJSString, injectionTime: .atDocumentStart, forMainFrameOnly: true)
 
-        config.userContentController.removeScriptMessageHandler(forName: APEConfig.WebView.callbackFunction)
-        config.userContentController.add(self, name: APEConfig.WebView.callbackFunction)
+        config.userContentController.removeScriptMessageHandler(forName: Constants.WebView.callbackFunction)
+        config.userContentController.add(self, name: Constants.WebView.callbackFunction)
         config.userContentController.addUserScript(script)
 
         if let unitHeightHandler = unitHeightHandler {

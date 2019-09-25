@@ -32,7 +32,7 @@ public enum APEStripConfigurationError: Error {
     }
 
     var url: URL? {
-        return self.parameters.componentsURL(baseURL: APEConfig.Strip.stripUrlPath)
+        return self.parameters.componentsURL(baseURL: Constants.Strip.stripUrlPath)
     }
 
     private init(channelTokens: [String], style: APEStripStyle, bundle: Bundle) throws {

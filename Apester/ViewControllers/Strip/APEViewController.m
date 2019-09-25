@@ -18,13 +18,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSError *error = nil;
     // setup the strip view style
     APEStripStyle *style = [[APEStripStyle alloc] initWithShape:APEStripShapeRoundSquare
                                                            size:APEStripSizeMedium
                                                         padding:UIEdgeInsetsMake(10.0, 0, 0, 0)
                                                          shadow:NO textColor:nil background:nil];
     // initate the strip config
+    NSError *error = nil;
     APEStripConfiguration *config = [[APEStripConfiguration alloc] initWithChannelToken:@"5890a541a9133e0e000e31aa"
                                                                                   style:style
                                                                                  bundle:[NSBundle mainBundle]

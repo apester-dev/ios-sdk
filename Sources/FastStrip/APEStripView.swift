@@ -18,18 +18,21 @@ import SafariServices
 
     /// when the ChannelToken loaded successfuly
     ///
+    /// - Parameter stripView: the strip view updater
     /// - Parameter token: the channel token id
     func stripView(_ stripView: APEStripView, didFinishLoadingChannelToken token:String)
 
 
     /// when the ChannelToken couldn't be loaded
     ///
+    /// - Parameter stripView: the strip view updater
     /// - Parameter token: the channel token id
     func stripView(_ stripView: APEStripView, didFailLoadingChannelToken token:String)
 
 
     /// when the stripView height has been updated
     ///
+    /// - Parameter stripView: the strip view updater
     /// - Parameter height: the stripView new height
     func stripView(_ stripView: APEStripView, didUpdateHeight height:CGFloat)
 }
@@ -42,11 +45,15 @@ import SafariServices
 /// And the selected Apester Unit (The `StoryWebView`)
 @objcMembers public class APEStripView: NSObject {
 
-    private typealias StripConfig = APEConfig.Strip
+    private struct LoadingState {
+        var isLoaded = false
+        var height: CGFloat = 10
+        var isReady = false
+        var initialMessage: String?
+        var openUnitMessage: String?
+    }
 
-    private var lastDeviceOrientation: UIDeviceOrientation = UIDevice.current.orientation
-
-    class FastStripStoryViewController: UIViewController {
+    private class FastStripStoryViewController: UIViewController {
         var webView: WKWebView?
 
         override func viewDidLoad() {
@@ -63,6 +70,10 @@ import SafariServices
         }
     }
 
+    private typealias StripConfig = Constants.Strip
+
+    private var lastDeviceOrientation: UIDeviceOrientation = UIDevice.current.orientation
+
     private weak var stripContainerViewConroller: UIViewController?
     private var containerView: UIView?
 
@@ -75,9 +86,9 @@ import SafariServices
     // MARK:- Private Properties
     private var configuration: APEStripConfiguration!
 
-    private var messagesTracker = APEStripServiceEventsTracker()
+    private var messageDispatcher = MessageDispatcher()
 
-    private var loadingState = APEStripLoadingState()
+    private var loadingState = LoadingState()
 
     private lazy var stripWebView: WKWebView = {
         let webView = WKWebView()
@@ -105,10 +116,7 @@ import SafariServices
         webView.scrollView.delegate = self
         webView.configuration.websiteDataStore = WKWebsiteDataStore.default()
         webView.configuration.userContentController
-            .register(to: [StripConfig.proxy,
-                           StripConfig.showStripStory,
-                           StripConfig.hideStripStory],
-                      delegate: self)
+            .register(to: [StripConfig.proxy, StripConfig.showStripStory, StripConfig.hideStripStory], delegate: self)
         if let storyUrl = URL(string: StripConfig.stripStoryUrlPath) {
             webView.load(URLRequest(url: storyUrl))
         }
@@ -119,15 +127,15 @@ import SafariServices
 
     public var height: CGFloat {
         var calculatedHeight: CGFloat = self.loadingState.height
-        let runner = APEScriptRunner()
-        runner.lock()
-        self.messagesTracker.evaluateJavaScript(message: APEConfig.Strip.getHeight, to: self.stripWebView) { response in
+        let script = SynchronizedScript()
+        script.lock()
+        self.messageDispatcher.dispatch(message: Constants.Strip.getHeight, to: self.stripWebView) { response in
             if let height = response as? CGFloat {
                 calculatedHeight = height
             }
-            runner.unlock()
+            script.unlock()
         }
-        runner.wait()
+        script.wait()
         return calculatedHeight
     }
 
@@ -243,7 +251,7 @@ private extension APEStripView {
                 self.loadingState.openUnitMessage = bodyString
                 return
             }
-            self.messagesTracker.sendApesterEvent(message: bodyString, to: storyWebView) { _ in
+            self.messageDispatcher.dispatch(apesterEvent: bodyString, to: storyWebView) { _ in
                 self.displayStoryComponent()
             }
         }  else if bodyString.contains(StripConfig.destroy) {
@@ -255,8 +263,8 @@ private extension APEStripView {
             }
         }
         // proxy updates
-        if self.messagesTracker.canSendApesterEvent(message: bodyString, to: storyWebView) {
-            self.messagesTracker.sendApesterEvent(message: bodyString, to: storyWebView)
+        if !self.messageDispatcher.contains(message: bodyString, for: storyWebView) {
+            self.messageDispatcher.dispatch(apesterEvent: bodyString, to: storyWebView)
         }
     }
 
@@ -276,7 +284,7 @@ private extension APEStripView {
 
             // send openUnitMessage if needed
             if let openUnitMessage = self.loadingState.openUnitMessage {
-                self.messagesTracker.sendApesterEvent(message: openUnitMessage, to: storyWebView) { _ in
+                self.messageDispatcher.dispatch(apesterEvent: openUnitMessage, to: storyWebView) { _ in
                     self.loadingState.openUnitMessage = nil
                 }
             }
@@ -291,8 +299,8 @@ private extension APEStripView {
         }
         
         // proxy updates
-        if self.messagesTracker.canSendApesterEvent(message: bodyString, to: stripWebView) {
-            self.messagesTracker.sendApesterEvent(message: bodyString, to: stripWebView)
+        if !self.messageDispatcher.contains(message: bodyString, for: stripWebView) {
+            self.messageDispatcher.dispatch(apesterEvent: bodyString, to: stripWebView)
         }
     }
 
@@ -332,7 +340,7 @@ extension APEStripView: WKScriptMessageHandler {
 extension APEStripView: WKNavigationDelegate {
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         if let initialMessage = self.loadingState.initialMessage {
-            self.messagesTracker.sendApesterEvent(message: initialMessage, to: self.storyWebView) { _ in
+            self.messageDispatcher.dispatch(apesterEvent: initialMessage, to: self.storyWebView) { _ in
                 self.loadingState.initialMessage = nil
             }
         }
@@ -351,9 +359,9 @@ extension APEStripView: WKNavigationDelegate {
         }
         switch navigationAction.navigationType {
         case .other, .reload, .backForward:
-            if let host = url.host, host.contains(APEConfig.Strip.apester) {
+            if let host = url.host, host.contains(Constants.Strip.apester) {
                 policy = .allow
-            } else if (url.absoluteString != APEConfig.Strip.blank && !url.absoluteString.contains(APEConfig.Strip.safeframe)) {
+            } else if (url.absoluteString != Constants.Strip.blank && !url.absoluteString.contains(Constants.Strip.safeframe)) {
                 presentSFSafariViewController()
             }
         case .linkActivated:

@@ -1,5 +1,5 @@
 //
-//  APEConfig.swift
+//  Constants.swift
 //  ApesterKit
 //
 //  Created by Hasan Sa on 24/02/2019.
@@ -9,7 +9,7 @@
 import Foundation
 import AdSupport
 
-struct APEConfig {
+struct Constants {
   /// Payload Keys
   struct Payload {
     static let advertisingId = "advertisingId"
@@ -91,19 +91,19 @@ class APEBundle {
     // get the device advertisingIdentifier
     let identifierManager = ASIdentifierManager.shared()
     let idfa = identifierManager.advertisingIdentifier
-    deviceInfoPayload[APEConfig.Payload.advertisingId] = idfa.uuidString
-    deviceInfoPayload[APEConfig.Payload.trackingEnabled] = "\(identifierManager.isAdvertisingTrackingEnabled)"
+    deviceInfoPayload[Constants.Payload.advertisingId] = idfa.uuidString
+    deviceInfoPayload[Constants.Payload.trackingEnabled] = "\(identifierManager.isAdvertisingTrackingEnabled)"
 
     if let bundle = bundle {
       // get the app bundleIdentifier
       if let bundleIdentifier = bundle.bundleIdentifier {
-        deviceInfoPayload[APEConfig.Payload.bundleId] = bundleIdentifier
+        deviceInfoPayload[Constants.Payload.bundleId] = bundleIdentifier
       }
       // get the app name and
       if let infoDictionary = bundle.infoDictionary,
         let appName = infoDictionary[kCFBundleNameKey as String] as? String {
-        deviceInfoPayload[APEConfig.Payload.appName] = appName
-        deviceInfoPayload[APEConfig.Payload.appStoreUrl] = "https://appstore.com/\(appName.trimmingCharacters(in: .whitespaces))"
+        deviceInfoPayload[Constants.Payload.appName] = appName
+        deviceInfoPayload[Constants.Payload.appStoreUrl] = "https://appstore.com/\(appName.trimmingCharacters(in: .whitespaces))"
       }
     }
     return deviceInfoPayload
