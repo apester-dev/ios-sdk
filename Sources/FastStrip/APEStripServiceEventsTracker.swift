@@ -18,16 +18,15 @@ class APEStripServiceEventsTracker {
         return self.messages[webView.hash] != message
     }
 
-    func sendApesterEvent(message: String, to webView: WKWebView, completion: ((Bool) -> Void)? = nil) {
-        self.messages[webView.hash] = message
-        webView.evaluateJavaScript("window.__sendApesterEvent(\(message))") { (response, error) in
-            completion?(error == nil)
+    func evaluateJavaScript(message: String, to webView: WKWebView, completion: ((Any?) -> Void)? = nil) {
+        webView.evaluateJavaScript(message) { (response, error) in
+            completion?(response)
         }
     }
 
-    func evaluateJavaScript(message: String, to webView: WKWebView, completion: ((Bool) -> Void)? = nil) {
-        webView.evaluateJavaScript(message) { (response, error) in
-            completion?(error == nil)
-        }
+    func sendApesterEvent(message: String, to webView: WKWebView, completion: ((Any?) -> Void)? = nil) {
+        self.messages[webView.hash] = message
+        self.evaluateJavaScript(message: APEConfig.Strip.sendApesterEvent(with: message), to: webView, completion: completion)
     }
+
 }

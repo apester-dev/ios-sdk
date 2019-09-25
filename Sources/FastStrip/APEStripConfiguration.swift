@@ -48,13 +48,6 @@ public enum APEStripConfigurationError: Error {
     public convenience init(channelToken: String, style: APEStripStyle, bundle: Bundle) throws {
         try self.init(channelTokens: [channelToken], style: style, bundle: bundle)
     }
-
-    @available(*, deprecated, message: "Please Use init(channelToken:style:bundle:) inializer")
-    public init(channelToken: String, shape: APEStripShape, size: APEStripSize, shadow: Bool, bundle: Bundle, textColor: String? = nil, background: String? = nil) {
-        self.channelToken = channelToken
-        self.style = APEStripStyle.init(shape: shape, size: size, padding: .zero, shadow: shadow, textColor: textColor, background: background)
-        self.bundleInfo = APEBundle.bundleInfoPayload(with: bundle)
-    }
 }
 
 // MARK:- Dictionary Extension

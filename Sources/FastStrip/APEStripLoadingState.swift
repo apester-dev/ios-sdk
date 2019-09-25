@@ -6,12 +6,12 @@
 //  Copyright © 2019 Apester. All rights reserved.
 //
 
-import Foundation
+import CoreGraphics
 
 // MARK:- APEStripLoadingState
 struct APEStripLoadingState {
     var isLoaded = false
-    var height: Float = 0
+    var height: CGFloat = 10
     var isReady = false
     var initialMessage: String?
     var openUnitMessage: String?

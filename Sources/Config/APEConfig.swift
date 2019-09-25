@@ -50,6 +50,12 @@ struct APEConfig {
     static let showStripStory = "showApesterStory"
     static let hideStripStory = "hideApesterStory"
     static let stripHeight = "mobileStripHeight"
+    static let stripResizeHeight = "strip_resize"
+    // functions
+    static func sendApesterEvent(with message: String) -> String {
+        return "window.__sendApesterEvent(" + message + ")"
+    }
+    static let getHeight = "window.__getHeight()"
   }
 }
 

@@ -12,6 +12,7 @@
 		3549BB8B1DA38C0A00C63030 /* ApesterKitSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3549BB8A1DA38C0A00C63030 /* ApesterKitSpec.swift */; };
 		35CA2AC61E12925700147290 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35CA2A971E12920400147290 /* Nimble.framework */; };
 		35CA2AC71E12925700147290 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35CA2AB31E12920400147290 /* Quick.framework */; };
+		8652CB21233BF93B0092E309 /* APEScriptRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8652CB20233BF93B0092E309 /* APEScriptRunner.swift */; };
 		86AFA1BB232BE99F00E1720A /* APEViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86AFA1BA232BE99F00E1720A /* APEViewController.m */; };
 		86AFA1F0232C052500E1720A /* APEStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0BE33D2223169400542E3C /* APEStripView.swift */; };
 		86AFA1F1232C052700E1720A /* APEStripConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109E22D53D2F00BB1DEC /* APEStripConfiguration.swift */; };
@@ -262,6 +263,7 @@
 		35CD65161E60192300AF060B /* watchOS-Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "watchOS-Base.xcconfig"; sourceTree = "<group>"; };
 		35CD65171E60192300AF060B /* watchOS-Framework.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "watchOS-Framework.xcconfig"; sourceTree = "<group>"; };
 		35CD65181E60192300AF060B /* watchOS-StaticLibrary.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "watchOS-StaticLibrary.xcconfig"; sourceTree = "<group>"; };
+		8652CB20233BF93B0092E309 /* APEScriptRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEScriptRunner.swift; sourceTree = "<group>"; };
 		86AFA1B8232BE99F00E1720A /* Apester-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Apester-Bridging-Header.h"; sourceTree = "<group>"; };
 		86AFA1B9232BE99F00E1720A /* APEViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APEViewController.h; sourceTree = "<group>"; };
 		86AFA1BA232BE99F00E1720A /* APEViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APEViewController.m; sourceTree = "<group>"; };
@@ -570,6 +572,7 @@
 				BB44109122D53AAB00BB1DEC /* APEScriptMessageHandler.swift */,
 				BB44109722D53B7000BB1DEC /* APEStripLoadingState.swift */,
 				BB44109922D53B9500BB1DEC /* APEStripServiceEventsTracker.swift */,
+				8652CB20233BF93B0092E309 /* APEScriptRunner.swift */,
 			);
 			path = FastStrip;
 			sourceTree = "<group>";
@@ -957,6 +960,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB44109A22D53B9500BB1DEC /* APEStripServiceEventsTracker.swift in Sources */,
+				8652CB21233BF93B0092E309 /* APEScriptRunner.swift in Sources */,
 				86B735ED23380D9100949864 /* APEStripStyle.swift in Sources */,
 				BB44109622D53B2C00BB1DEC /* APEWebViewService.swift in Sources */,
 				BB44109D22D53BF300BB1DEC /* Extensions.swift in Sources */,

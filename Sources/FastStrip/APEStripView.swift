@@ -99,6 +99,7 @@ import SafariServices
         let webView = WKWebView()
         webView.navigationDelegate = self
         webView.insetsLayoutMarginsFromSafeArea = true
+        webView.scrollView.contentInsetAdjustmentBehavior = .always
         webView.scrollView.isScrollEnabled = false
         webView.scrollView.bouncesZoom = false
         webView.scrollView.delegate = self
@@ -117,25 +118,20 @@ import SafariServices
     public weak var delegate: APEStripViewDelegate?
 
     public var height: CGFloat {
-        return CGFloat(self.loadingState.height) + (self.configuration.style.verticalPadding)
+        var calculatedHeight: CGFloat = self.loadingState.height
+        let runner = APEScriptRunner()
+        runner.lock()
+        self.messagesTracker.evaluateJavaScript(message: APEConfig.Strip.getHeight, to: self.stripWebView) { response in
+            if let height = response as? CGFloat {
+                calculatedHeight = height
+            }
+            runner.unlock()
+        }
+        runner.wait()
+        return calculatedHeight
     }
 
     // MARK:- Initializer
-
-    /// init with channelToken and bundle
-    ///
-    /// - Parameters:
-    ///   - channelToken: the publisher channel id
-    ///   - bundle: the bundle to extract the app basic information
-    @available(*, deprecated, message: "Please Use init(configuration: APEStripConfiguration) inializer")
-    convenience public init(channelToken: String, bundle: Bundle) {
-        let style = APEStripStyle(shape: .roundSquare, size: .medium,
-                                  padding: UIEdgeInsets(top: 5.0, left: 0, bottom: 0, right: 0),
-                                  shadow: false, textColor: nil, background: nil)
-        let config = try! APEStripConfiguration(channelToken: channelToken, style: style, bundle: bundle)
-        self.init(configuration: config)
-    }
-
     /// init with configuration
     ///
     /// - Parameter configuration: the strip view custom configuration, i.e channelToken, shape, size
@@ -225,15 +221,22 @@ private extension APEStripView {
             self.loadingState.isLoaded = true
             // get unit height
             if let dictioanry = bodyString.dictionary,
-                let heightString = dictioanry[StripConfig.stripHeight] as? String,
-                let height = Float(string: heightString) {
+                let height = dictioanry[StripConfig.stripHeight] as? CFloat {
 
                 let adjustedContentInsets = self.stripWebView.scrollView.adjustedContentInset.bottom + self.stripWebView.scrollView.adjustedContentInset.top
-                self.loadingState.height = height + Float(adjustedContentInsets)
-                self.updateStripComponentHeight(self.height)
+                self.loadingState.height = CGFloat(height) + adjustedContentInsets
+                self.updateStripComponentHeight()
             }
             // update the delegate on success
             self.delegate?.stripView(self, didFinishLoadingChannelToken: self.configuration.channelToken)
+
+        } else if bodyString.contains(StripConfig.stripResizeHeight),
+            let dictioanry = bodyString.dictionary, let height = dictioanry[StripConfig.stripHeight] as? CFloat {
+            let adjustedContentInsets = self.stripWebView.scrollView.adjustedContentInset.bottom + self.stripWebView.scrollView.adjustedContentInset.top
+            if CGFloat(height) + adjustedContentInsets != self.loadingState.height {
+                self.loadingState.height = CGFloat(height) + adjustedContentInsets
+                self.updateStripComponentHeight()
+            }
 
         } else if bodyString.contains(StripConfig.open) {
             guard self.loadingState.isReady else {
@@ -257,14 +260,14 @@ private extension APEStripView {
         }
     }
 
-    func updateStripComponentHeight(_ height: CGFloat) {
+    func updateStripComponentHeight() {
         self.containerView.flatMap { containerView in
             // Auto Layout
-            let heightAnchor = stripWebView.heightAnchor.constraint(equalToConstant: height)
+            let heightAnchor = stripWebView.heightAnchor.constraint(equalToConstant: self.loadingState.height)
             heightAnchor.priority = .defaultHigh
             heightAnchor.isActive = true
         }
-        self.delegate?.stripView(self, didUpdateHeight: height)
+        self.delegate?.stripView(self, didUpdateHeight: self.loadingState.height)
     }
 
     func handleStoryWebViewMessages(_ bodyString: String) {
