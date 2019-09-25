@@ -83,6 +83,7 @@ import SafariServices
         let webView = WKWebView()
         webView.navigationDelegate = self
         webView.insetsLayoutMarginsFromSafeArea = true
+        webView.scrollView.contentInsetAdjustmentBehavior = .never
         webView.scrollView.isScrollEnabled = false
         webView.scrollView.bouncesZoom = false
         webView.scrollView.delegate = self
@@ -98,6 +99,7 @@ import SafariServices
         let webView = WKWebView()
         webView.navigationDelegate = self
         webView.insetsLayoutMarginsFromSafeArea = true
+        webView.scrollView.contentInsetAdjustmentBehavior = .never
         webView.scrollView.isScrollEnabled = false
         webView.scrollView.bouncesZoom = false
         webView.scrollView.delegate = self
