@@ -18,14 +18,23 @@ import SafariServices
 
     /// when the ChannelToken loaded successfuly
     ///
+    /// - Parameter stripView: the strip view updater
     /// - Parameter token: the channel token id
-    func stripView(didFinishLoadingChannelToken token:String)
+    func stripView(_ stripView: APEStripView, didFinishLoadingChannelToken token:String)
 
 
     /// when the ChannelToken couldn't be loaded
     ///
+    /// - Parameter stripView: the strip view updater
     /// - Parameter token: the channel token id
-    func stripView(didFailLoadingChannelToken token:String)
+    func stripView(_ stripView: APEStripView, didFailLoadingChannelToken token:String)
+
+
+    /// when the stripView height has been updated
+    ///
+    /// - Parameter stripView: the strip view updater
+    /// - Parameter height: the stripView new height
+    func stripView(_ stripView: APEStripView, didUpdateHeight height:CGFloat)
 }
 
 @available(iOS 11.0, *)
@@ -36,10 +45,15 @@ import SafariServices
 /// And the selected Apester Unit (The `StoryWebView`)
 @objcMembers public class APEStripView: NSObject {
 
-    private typealias StripConfig = APEConfig.Strip
+    private struct LoadingState {
+        var isLoaded = false
+        var height: CGFloat = 10
+        var isReady = false
+        var initialMessage: String?
+        var openUnitMessage: String?
+    }
 
-
-    class FastStripStoryViewController: UIViewController {
+    private class FastStripStoryViewController: UIViewController {
         var webView: WKWebView?
 
         override func viewDidLoad() {
@@ -56,7 +70,10 @@ import SafariServices
         }
     }
 
-    private var spinner = UIActivityIndicatorView(style: .whiteLarge)
+    private typealias StripConfig = Constants.Strip
+
+    private var lastDeviceOrientation: UIDeviceOrientation = UIDevice.current.orientation
+
     private weak var stripContainerViewConroller: UIViewController?
     private var containerView: UIView?
 
@@ -69,13 +86,18 @@ import SafariServices
     // MARK:- Private Properties
     private var configuration: APEStripConfiguration!
 
-    private var messagesTracker = APEStripServiceEventsTracker()
+    private var messageDispatcher = MessageDispatcher()
 
-    private var loadingState = APEStripLoadingState()
+    private var loadingState = LoadingState()
 
     private lazy var stripWebView: WKWebView = {
         let webView = WKWebView()
         webView.navigationDelegate = self
+        webView.insetsLayoutMarginsFromSafeArea = true
+        webView.scrollView.contentInsetAdjustmentBehavior = .never
+        webView.scrollView.isScrollEnabled = false
+        webView.scrollView.bouncesZoom = false
+        webView.scrollView.delegate = self
         webView.configuration.websiteDataStore = WKWebsiteDataStore.default()
         webView.configuration.userContentController.register(to: [StripConfig.proxy], delegate: self)
         if let url = self.configuration?.url {
@@ -87,12 +109,14 @@ import SafariServices
     private lazy var storyWebView: WKWebView  = {
         let webView = WKWebView()
         webView.navigationDelegate = self
+        webView.insetsLayoutMarginsFromSafeArea = true
+        webView.scrollView.contentInsetAdjustmentBehavior = .always
+        webView.scrollView.isScrollEnabled = false
+        webView.scrollView.bouncesZoom = false
+        webView.scrollView.delegate = self
         webView.configuration.websiteDataStore = WKWebsiteDataStore.default()
         webView.configuration.userContentController
-            .register(to: [StripConfig.proxy,
-                           StripConfig.showStripStory,
-                           StripConfig.hideStripStory],
-                      delegate: self)
+            .register(to: [StripConfig.proxy, StripConfig.showStripStory, StripConfig.hideStripStory], delegate: self)
         if let storyUrl = URL(string: StripConfig.stripStoryUrlPath) {
             webView.load(URLRequest(url: storyUrl))
         }
@@ -101,18 +125,21 @@ import SafariServices
 
     public weak var delegate: APEStripViewDelegate?
 
-    // MARK:- Initializer
-
-    /// init with channelToken and bundle
-    ///
-    /// - Parameters:
-    ///   - channelToken: the publisher channel id
-    ///   - bundle: the bundle to extract the app basic information
-    convenience public init(channelToken: String, bundle: Bundle) {
-        let config = APEStripConfiguration(channelToken: channelToken, shape: .roundSquare, size: .medium, shadow: false, bundle: bundle)
-        self.init(configuration: config)
+    public var height: CGFloat {
+        var calculatedHeight: CGFloat = self.loadingState.height
+        let script = SynchronizedScript()
+        script.lock()
+        self.messageDispatcher.dispatch(message: Constants.Strip.getHeight, to: self.stripWebView) { response in
+            if let height = response as? CGFloat {
+                calculatedHeight = height
+            }
+            script.unlock()
+        }
+        script.wait()
+        return calculatedHeight
     }
 
+    // MARK:- Initializer
     /// init with configuration
     ///
     /// - Parameter configuration: the strip view custom configuration, i.e channelToken, shape, size
@@ -126,15 +153,19 @@ import SafariServices
             guard let stronSelf = self, let containerView = stronSelf.containerView, let stripContainerViewConroller = stronSelf.stripContainerViewConroller else {
                 return
             }
+            // validate that when the stripStoryViewController is presented the orientation must be portrait mode
+            if stronSelf.stripStoryViewController.presentingViewController != nil, !UIDevice.current.orientation.isPortrait {
+                stronSelf.lastDeviceOrientation = UIDevice.current.orientation
+                stronSelf.setDeviceOrientation(UIInterfaceOrientation.portrait.rawValue)
+                return
+            }
+            // reload stripWebView
             stronSelf.stripWebView.reload()
-            stronSelf.storyWebView.reload()
-            stronSelf.storyWebView.removeFromSuperview()
             stronSelf.stripWebView.removeFromSuperview()
             stronSelf.display(in: containerView, containerViewConroller: stripContainerViewConroller)
         }
 
     }
-
 
     /// Display the channel carousel units view
     ///
@@ -142,28 +173,23 @@ import SafariServices
     ///   - containerView: the channel strip view superview
     ///   - containerViewConroller: the container view ViewController
     public func display(in containerView: UIView, containerViewConroller: UIViewController) {
-        // update stripWebView frame according to containerView bounds
+//        // update stripWebView frame according to containerView bounds
         containerView.layoutIfNeeded()
-        self.stripWebView.frame = containerView.bounds
         containerView.addSubview(self.stripWebView)
+        stripWebView.translatesAutoresizingMaskIntoConstraints = false
+        stripWebView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
+        stripWebView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
+        stripWebView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
+        let heightAnchor = stripWebView.heightAnchor.constraint(equalTo: containerView.heightAnchor)
+        heightAnchor.priority = .defaultLow
+        heightAnchor.isActive = true
 
         self.containerView = containerView
         self.stripContainerViewConroller = containerViewConroller
-
-        stripWebView.isUserInteractionEnabled = false
-        stripWebView.alpha = 0.5
-
-        containerView.addSubview(spinner)
-        spinner.startAnimating()
-        spinner.translatesAutoresizingMaskIntoConstraints = false
-        spinner.centerXAnchor.constraint(equalTo: stripWebView.centerXAnchor).isActive = true
-        spinner.centerYAnchor.constraint(equalTo: stripWebView.centerYAnchor).isActive = true
     }
-
 
     /// Remove the channel carousel units view
     public func hide() {
-        self.spinner.removeFromSuperview()
         self.stripWebView.configuration.userContentController
             .unregister(from: [StripConfig.proxy])
         self.stripWebView.removeFromSuperview()
@@ -198,63 +224,67 @@ private extension APEStripView {
 
         } else if bodyString.contains(StripConfig.loaded) {
             if let superView = stripWebView.superview, storyWebView.superview == nil {
-                superView.addSubview(storyWebView)
+                superView.insertSubview(storyWebView, belowSubview: stripWebView)
             }
             self.loadingState.isLoaded = true
             // get unit height
             if let dictioanry = bodyString.dictionary,
-                let heightString = dictioanry[StripConfig.stripHeight] as? String,
-                let height = Float(string: heightString) {
+                let height = dictioanry[StripConfig.stripHeight] as? CFloat {
 
                 let adjustedContentInsets = self.stripWebView.scrollView.adjustedContentInset.bottom + self.stripWebView.scrollView.adjustedContentInset.top
-                self.loadingState.height = height + Float(adjustedContentInsets)
+                self.loadingState.height = CGFloat(height) + adjustedContentInsets
                 self.updateStripComponentHeight()
             }
             // update the delegate on success
-            self.delegate?.stripView(didFinishLoadingChannelToken: self.configuration.channelToken)
+            self.delegate?.stripView(self, didFinishLoadingChannelToken: self.configuration.channelToken)
+
+        } else if bodyString.contains(StripConfig.stripResizeHeight),
+            let dictioanry = bodyString.dictionary, let height = dictioanry[StripConfig.stripHeight] as? CFloat {
+            let adjustedContentInsets = self.stripWebView.scrollView.adjustedContentInset.bottom + self.stripWebView.scrollView.adjustedContentInset.top
+            if CGFloat(height) + adjustedContentInsets != self.loadingState.height {
+                self.loadingState.height = CGFloat(height) + adjustedContentInsets
+                self.updateStripComponentHeight()
+            }
 
         } else if bodyString.contains(StripConfig.open) {
             guard self.loadingState.isReady else {
                 self.loadingState.openUnitMessage = bodyString
                 return
             }
-            self.messagesTracker.sendApesterEvent(message: bodyString, to: storyWebView) { _ in
+            self.messageDispatcher.dispatch(apesterEvent: bodyString, to: storyWebView) { _ in
                 self.displayStoryComponent()
             }
         }  else if bodyString.contains(StripConfig.destroy) {
             // update the delegate on fail or hide if needed
             if let delegate = self.delegate {
-                delegate.stripView(didFailLoadingChannelToken: self.configuration.channelToken)
+                delegate.stripView(self, didFailLoadingChannelToken: self.configuration.channelToken)
             } else {
                 self.hide()
             }
         }
         // proxy updates
-        if self.messagesTracker.canSendApesterEvent(message: bodyString, to: storyWebView) {
-            self.messagesTracker.sendApesterEvent(message: bodyString, to: storyWebView)
+        if !self.messageDispatcher.contains(message: bodyString, for: storyWebView) {
+            self.messageDispatcher.dispatch(apesterEvent: bodyString, to: storyWebView)
         }
     }
 
     func updateStripComponentHeight() {
         self.containerView.flatMap { containerView in
-            UIView.animate(withDuration: 0.33) {
-                // Auto Layout
-                containerView.frame.size.height = CGFloat(self.loadingState.height)
-                self.stripWebView.frame = containerView.bounds
-            }
+            // Auto Layout
+            let heightAnchor = stripWebView.heightAnchor.constraint(equalToConstant: self.loadingState.height)
+            heightAnchor.priority = .defaultHigh
+            heightAnchor.isActive = true
         }
+        self.delegate?.stripView(self, didUpdateHeight: self.loadingState.height)
     }
 
     func handleStoryWebViewMessages(_ bodyString: String) {
         if bodyString.contains(StripConfig.isReady) {
             self.loadingState.isReady = true
 
-            self.stripWebView.isUserInteractionEnabled = true
-            stripWebView.alpha = 1
-            spinner.removeFromSuperview()
             // send openUnitMessage if needed
             if let openUnitMessage = self.loadingState.openUnitMessage {
-                self.messagesTracker.sendApesterEvent(message: openUnitMessage, to: storyWebView) { _ in
+                self.messageDispatcher.dispatch(apesterEvent: openUnitMessage, to: storyWebView) { _ in
                     self.loadingState.openUnitMessage = nil
                 }
             }
@@ -269,17 +299,29 @@ private extension APEStripView {
         }
         
         // proxy updates
-        if self.messagesTracker.canSendApesterEvent(message: bodyString, to: stripWebView) {
-            self.messagesTracker.sendApesterEvent(message: bodyString, to: stripWebView)
+        if !self.messageDispatcher.contains(message: bodyString, for: stripWebView) {
+            self.messageDispatcher.dispatch(apesterEvent: bodyString, to: stripWebView)
         }
     }
 
     func displayStoryComponent() {
-            self.stripContainerViewConroller?.present(self.stripStoryViewController, animated: true, completion: nil)
+        self.lastDeviceOrientation = UIDevice.current.orientation
+        if self.lastDeviceOrientation.isLandscape {
+            setDeviceOrientation(UIInterfaceOrientation.portrait.rawValue)
+        }
+        self.stripContainerViewConroller?.present(self.stripStoryViewController, animated: true, completion: nil)
     }
 
     func hideStoryComponent() {
-        self.stripStoryViewController.dismiss(animated: true) {}
+        self.stripStoryViewController.dismiss(animated: false) {
+            if self.lastDeviceOrientation.isLandscape {
+                self.setDeviceOrientation(self.lastDeviceOrientation.rawValue)
+            }
+        }
+    }
+
+    func setDeviceOrientation(_ rawValue: Int) {
+        UIDevice.current.setValue(rawValue, forKey: "orientation")
     }
 }
 
@@ -298,7 +340,7 @@ extension APEStripView: WKScriptMessageHandler {
 extension APEStripView: WKNavigationDelegate {
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         if let initialMessage = self.loadingState.initialMessage {
-            self.messagesTracker.sendApesterEvent(message: initialMessage, to: self.storyWebView) { _ in
+            self.messageDispatcher.dispatch(apesterEvent: initialMessage, to: self.storyWebView) { _ in
                 self.loadingState.initialMessage = nil
             }
         }
@@ -306,16 +348,26 @@ extension APEStripView: WKNavigationDelegate {
 
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         var policy = WKNavigationActionPolicy.cancel
-        switch navigationAction.navigationType {
-        case .other, .reload, .backForward:
-            policy = .allow
-        case .linkActivated:
-            guard let url = navigationAction.request.url else { return }
+        defer {
+            decisionHandler(policy)
+        }
+        guard let url = navigationAction.request.url else { return }
+        func presentSFSafariViewController() {
+            guard url.scheme != nil else { return }
             let presntedVC = self.stripContainerViewConroller?.presentedViewController ?? self.stripContainerViewConroller
             presntedVC?.present(SFSafariViewController(url: url), animated: true, completion: nil)
+        }
+        switch navigationAction.navigationType {
+        case .other, .reload, .backForward:
+            if let host = url.host, host.contains(Constants.Strip.apester) {
+                policy = .allow
+            } else if (url.absoluteString != Constants.Strip.blank && !url.absoluteString.contains(Constants.Strip.safeframe)) {
+                presentSFSafariViewController()
+            }
+        case .linkActivated:
+            presentSFSafariViewController()
         default: break
         }
-        decisionHandler(policy)
     }
 
     public func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
@@ -333,5 +385,11 @@ extension APEStripView: WKNavigationDelegate {
         decisionHandler(.allow)
     }
 }
-
+// MARK:- WKScriptMessageHandler
+@available(iOS 11.0, *)
+extension APEStripView: UIScrollViewDelegate {
+    public func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
+        scrollView.pinchGestureRecognizer?.isEnabled = false
+    }
+}
 #endif

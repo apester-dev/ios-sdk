@@ -63,7 +63,7 @@ class APEWebViewTableViewCell: UITableViewCell {
   private func loadContent(with mediaId: String) {
     // The templated with the `mediaId` already injected.
     var sourceHTMLString: String? {
-      return Mustache.render("Apester", data: ["mediaId": mediaId as AnyObject])
+      return nil// Mustache.render("Apester", data: ["mediaId": mediaId as AnyObject])
     }
     guard let sourceString = sourceHTMLString else { return }
     if let webview = webContentView {

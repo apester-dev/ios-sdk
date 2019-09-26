@@ -1,5 +1,5 @@
 //
-//  APEConfig.swift
+//  Constants.swift
 //  ApesterKit
 //
 //  Created by Hasan Sa on 24/02/2019.
@@ -9,7 +9,7 @@
 import Foundation
 import AdSupport
 
-struct APEConfig {
+struct Constants {
   /// Payload Keys
   struct Payload {
     static let advertisingId = "advertisingId"
@@ -31,8 +31,13 @@ struct APEConfig {
   /// Strip Keys
   struct Strip {
     // urls
-    static let stripUrlPath = "https://faststrip.apester.com/apester-detatched-strip.html"
-    static let stripStoryUrlPath = "https://faststrip.apester.com/apester-detatched-story.html"
+    static let baseUrl = "https://faststrip.apester.com"
+    static let stripUrlPath = baseUrl + "/apester-detatched-strip.html"
+    static let stripStoryUrlPath = baseUrl + "/apester-detatched-story.html"
+    //
+    static let apester = "apester"
+    static let blank = "about:blank"
+    static let safeframe = "safeframe"
     // events
     static let proxy = "apesterStripProxy"
     static let initial = "apester_strip_units"
@@ -45,6 +50,12 @@ struct APEConfig {
     static let showStripStory = "showApesterStory"
     static let hideStripStory = "hideApesterStory"
     static let stripHeight = "mobileStripHeight"
+    static let stripResizeHeight = "strip_resize"
+    // functions
+    static func sendApesterEvent(with message: String) -> String {
+        return "window.__sendApesterEvent(" + message + ")"
+    }
+    static let getHeight = "window.__getHeight()"
   }
 }
 
@@ -80,19 +91,19 @@ class APEBundle {
     // get the device advertisingIdentifier
     let identifierManager = ASIdentifierManager.shared()
     let idfa = identifierManager.advertisingIdentifier
-    deviceInfoPayload[APEConfig.Payload.advertisingId] = idfa.uuidString
-    deviceInfoPayload[APEConfig.Payload.trackingEnabled] = "\(identifierManager.isAdvertisingTrackingEnabled)"
+    deviceInfoPayload[Constants.Payload.advertisingId] = idfa.uuidString
+    deviceInfoPayload[Constants.Payload.trackingEnabled] = "\(identifierManager.isAdvertisingTrackingEnabled)"
 
     if let bundle = bundle {
       // get the app bundleIdentifier
       if let bundleIdentifier = bundle.bundleIdentifier {
-        deviceInfoPayload[APEConfig.Payload.bundleId] = bundleIdentifier
+        deviceInfoPayload[Constants.Payload.bundleId] = bundleIdentifier
       }
       // get the app name and
       if let infoDictionary = bundle.infoDictionary,
         let appName = infoDictionary[kCFBundleNameKey as String] as? String {
-        deviceInfoPayload[APEConfig.Payload.appName] = appName
-        deviceInfoPayload[APEConfig.Payload.appStoreUrl] = "https://appstore.com/\(appName.trimmingCharacters(in: .whitespaces))"
+        deviceInfoPayload[Constants.Payload.appName] = appName
+        deviceInfoPayload[Constants.Payload.appStoreUrl] = "https://appstore.com/\(appName.trimmingCharacters(in: .whitespaces))"
       }
     }
     return deviceInfoPayload

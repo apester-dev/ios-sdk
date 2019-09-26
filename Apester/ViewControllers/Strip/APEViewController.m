@@ -18,15 +18,21 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // setup the strip view style
+    APEStripStyle *style = [[APEStripStyle alloc] initWithShape:APEStripShapeRoundSquare
+                                                           size:APEStripSizeMedium
+                                                        padding:UIEdgeInsetsMake(10.0, 0, 0, 0)
+                                                         shadow:NO textColor:nil background:nil];
+    // initate the strip config
+    NSError *error = nil;
     APEStripConfiguration *config = [[APEStripConfiguration alloc] initWithChannelToken:@"5890a541a9133e0e000e31aa"
-                                                                                  shape:APEStripShapeRoundSquare
-                                                                                   size:APEStripSizeMedium
-                                                                                 shadow:NO
+                                                                                  style:style
                                                                                  bundle:[NSBundle mainBundle]
-                                                                              textColor:nil
-                                                                             background:nil];
-    self.stripView = [[APEStripView alloc] initWithConfiguration:config];
-    [self.stripView displayIn:self.containerView containerViewConroller:self];
+                                                                                  error:&error];
+    if (error == nil) {
+        self.stripView = [[APEStripView alloc] initWithConfiguration:config];
+        [self.stripView displayIn:self.containerView containerViewConroller:self];
+    }
 }
 
 @end

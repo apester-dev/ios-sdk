@@ -10,56 +10,106 @@
 ApesterKit provides a light-weight framework that loads Apester Unit in a webView
 
 - [Requirements](#requirements)
-- [Implementaion](#apester-strip-view)
+- [Implementation](#apester-strip-view)
 - [Installation](#installation)
 - [License](#license)
 
+#
 ## Requirements
 
 - iOS 11.0+
-- Xcode .0+
+- Xcode 10.2+
  
-
+#
 ## Apester Strip View
-A Carousel component for a channel that  contains an apester units of that channel, the Carousel component designs can be configured. Follow our guide step by step and setup. Follow our guide step by step and setup:
+A Carousel component for a channel that contains an Apester units of the media publisher. These units were built with [Apester Platform](https://apester.com), The Carousel component design can be configured and displayed any where.
+Follow our guide step by step and setup. Follow our guide step by step and setup:
 
-### `APEStripView` Implementaion:
+### Implementaion:
 
-1 - declare variable of type `APEStripView`:
-```
+##### 1 - declare variable of type `APEStripView`:
+```ruby
+## Swift
 private var stripView: APEStripView!
 ```
-
-2 - initiate a strip configuration `APEStripConfiguration`. config the channel token, shape, size and shadow parameters ....  
-```
-// set the strip configuration
-let config = APEStripConfiguration(channelToken: "5890a541a9133e0e000e31aa", shape: .square, size: .medium, shadow: false, bundle: Bundle.main)
+```ruby
+## Objective C
+@property (nonatomic, strong) APEStripView *stripView;
 ```
 
-3 - initiate the strip view  instance with the parameter value.
+##### 2 - initiate a strip style configuration `APEStripStyle`. configure the strip view style, i.e shape, size, padding, shadow and more parameters....
+```ruby
+## Swift
+let style = APEStripStyle(shape: .roundSquare, size: .medium, 
+                        padding: UIEdgeInsets(top: 5.0, left: 0, bottom: 0, right: 0),
+                        shadow: false, textColor: nil, background: nil)
+
 ```
-// create instance for the strip view
+```ruby
+## Objective C
+APEStripStyle *style = [[APEStripStyle alloc] initWithShape:APEStripShapeRoundSquare
+                                              size:APEStripSizeMedium
+                                              padding:UIEdgeInsetsMake(10.0, 0, 0, 0)
+                                              shadow:NO textColor:nil background:nil];
+
+```
+
+##### 3 - initiate a strip configuration `APEStripConfiguration`. set the channel token, style and bundle parameters ....  
+```ruby
+## Swift
+let configuration = try? APEStripConfiguration(channelToken: channelToken,
+                                               style: style,
+                                               bundle: Bundle.main)
+```
+```ruby
+## Objective C
+NSError *error = nil;
+APEStripConfiguration *config = [[APEStripConfiguration alloc] initWithChannelToken:channelToken
+                                                               style:style
+                                                               bundle:[NSBundle mainBundle]
+                                                               error:&error];
+
+```
+##### 4 - initiate the strip view  instance with the parameter value.
+```ruby
+## Swift
 self.stripView = APEStripView(configuration: config)
 ```
-4 - The channel strip in a container view
-4.1 - display  (with a container view controller for navigation porposes).
-
-```
-// display
-self.stripView.display(in: self.containerView, containerViewConroller: self)
+```ruby
+## Objective C
+self.stripView = [[APEStripView alloc] initWithConfiguration:config];
 ```
 
-4.2 - hide the channel strip view.
+##### 5 - The channel strip in a container view
+###### 5.1 - display  (with a container view controller for navigation porposes).
 
+```ruby
+## Swift
+stripView?.display(in: self.containerView, containerViewConroller: self)
 ```
-// hide
+```ruby
+## Objective C
+[self.stripView displayIn:self.containerView containerViewConroller:self];
+```
+
+###### 5.2 - hide the channel strip view.
+```ruby
+## Swift
 self.stripView.hide()
 ```
+```ruby
+## Objective C
+[self.stripView hide];
+```
+
+##### 6 - Implemet The `APEStripViewDelegate` to observe the stripView updates when success, failure or height updates.
 
 
+
+#
 ## Installation
 
-## Swift Package Manager
+### Swift Package Manager
 
 The [Swift Package Manager](https://swift.org/package-manager/) automates the distribution of Swift code. To use ApesterKit with SPM, add a dependency to your `Package.swift` file:
 

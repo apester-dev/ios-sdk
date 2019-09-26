@@ -1,5 +1,5 @@
 //
-//  APEScriptMessageHandler.swift
+//  ScriptMessageHandler.swift
 //  ApesterKit
 //
 //  Created by Hasan Sa on 10/07/2019.
@@ -9,8 +9,8 @@
 import Foundation
 import WebKit
 
-// MARK:- APEScriptMessageHandler Wrapper
-class APEScriptMessageHandler : NSObject, WKScriptMessageHandler {
+// MARK:- ScriptMessageHandler Wrapper
+class ScriptMessageHandler : NSObject, WKScriptMessageHandler {
 
     weak var delegate : WKScriptMessageHandler?
 
@@ -29,7 +29,7 @@ extension WKUserContentController {
 
     func register(to scriptMessages: [String], delegate: WKScriptMessageHandler) {
         scriptMessages.forEach({
-            self.add(APEScriptMessageHandler(delegate: delegate), name: $0)
+            self.add(ScriptMessageHandler(delegate: delegate), name: $0)
         })
     }
 

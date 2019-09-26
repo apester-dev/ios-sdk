@@ -91,3 +91,4 @@ fastlane/screenshots
 fastlane/test_output
 ApesterKit.xcodeproj/xcshareddata/xcschemes/Apester.xcscheme
 ApesterKit.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+*.resolved
