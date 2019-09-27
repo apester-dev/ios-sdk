@@ -42,7 +42,7 @@ public enum APEStripConfigurationError: Error {
         self.channelToken = channelToken
         self.channelTokens = channelTokens
         self.style = style
-        self.bundleInfo = APEBundle.bundleInfoPayload(with: bundle)
+        self.bundleInfo = BundleInfo.bundleInfoPayload(with: bundle)
     }
 
     public convenience init(channelToken: String, style: APEStripStyle, bundle: Bundle) throws {

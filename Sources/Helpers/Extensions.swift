@@ -15,4 +15,8 @@ import Foundation
         }
         return nil
     }
+
+    var customizedForAds: String {
+        return self.replacingOccurrences(of: "iPhone", with: "IPHONE")
+    }
 }
