@@ -34,7 +34,7 @@ struct Constants {
         static let stripUrlPath = baseUrl + "/apester-detatched-strip.html"
         static let stripStoryUrlPath = baseUrl + "/apester-detatched-story.html"
         //
-        static let apester = "apester"
+        static let apester = "apester.com"
         static let blank = "about:blank"
         static let safeframe = "safeframe"
         // events

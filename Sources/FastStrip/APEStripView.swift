@@ -352,7 +352,7 @@ extension APEStripView: WKNavigationDelegate {
         }
         switch navigationAction.navigationType {
         case .other, .reload, .backForward:
-            if let host = url.host, host.contains(Constants.Strip.apester) {
+            if url.absoluteString.contains(Constants.Strip.apester) {
                 policy = .allow
             } else if (url.absoluteString != Constants.Strip.blank && !url.absoluteString.contains(Constants.Strip.safeframe)) {
                 presentSFSafariViewController()
