@@ -105,7 +105,7 @@ import SafariServices
         webView.scrollView.isScrollEnabled = false
         webView.scrollView.bouncesZoom = false
         webView.scrollView.delegate = self
-        webView.appendAppNameToUserAgent(self.configuration.bundleInfo[Constants.Payload.appName])
+        webView.appendAppNameToUserAgent(self.configuration.bundleInfo)
         webView.configuration.websiteDataStore = WKWebsiteDataStore.default()
         webView.configuration.userContentController.register(to: [StripConfig.proxy], delegate: self)
         if let url = self.configuration?.url {

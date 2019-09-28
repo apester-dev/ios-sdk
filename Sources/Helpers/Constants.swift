@@ -15,6 +15,7 @@ struct Constants {
         static let trackingEnabled = "trackingEnabled"
         static let bundleId = "bundleId"
         static let appName = "appName"
+        static let appVersion = "appVersion"
         static let appStoreUrl = "appStoreUrl"
     }
 

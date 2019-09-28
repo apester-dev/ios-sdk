@@ -46,11 +46,21 @@ class BundleInfo {
                 deviceInfoPayload[Constants.Payload.bundleId] = bundleIdentifier
             }
             // get the app name and
-            if let infoDictionary = bundle.infoDictionary, let appName = infoDictionary[kCFBundleNameKey as String] as? String {
-                deviceInfoPayload[Constants.Payload.appName] = appName
-                deviceInfoPayload[Constants.Payload.appStoreUrl] = "https://appstore.com/\(appName.trimmingCharacters(in: .whitespaces))"
+            if let infoDictionary = bundle.infoDictionary {
+                if let appName = infoDictionary[kCFBundleNameKey as String] as? String {
+                    deviceInfoPayload[Constants.Payload.appName] = appName
+                    deviceInfoPayload[Constants.Payload.appStoreUrl] = "https://appstore.com/\(appName.trimmingCharacters(in: .whitespaces))"
+                }
+                if let appVersion = infoDictionary[kCFBundleVersionKey as String] as? String {
+                    deviceInfoPayload[Constants.Payload.appVersion] = appVersion
+                }
+
             }
         }
         return deviceInfoPayload
+    }
+
+    static func appNameAndVersion(from infoDictionary: [String : String]) -> String {
+         return "\(infoDictionary[Constants.Payload.appName] ?? "")/\(infoDictionary[Constants.Payload.appVersion] ?? "")"
     }
 }

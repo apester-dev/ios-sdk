@@ -22,11 +22,11 @@ import WebKit
 extension WKWebView {
     private static let navigatorUserAgent = "navigator.userAgent"
 
-    func appendAppNameToUserAgent(_ appNamed: String?) {
+    func appendAppNameToUserAgent(_ bundleInfo: [String: String]) {
         var userAgent = ""
         MessageDispatcher().dispatchSync(message: WKWebView.navigatorUserAgent, to: self) { response in
             userAgent = (response as? String) ?? ""
         }
-        self.customUserAgent = userAgent.replacingOccurrences(of: "iPhone", with: "IPHONE").replacingOccurrences(of: "IPHONE;", with: "\(appNamed ?? "IPHONE");")
+        self.customUserAgent = (userAgent + UserAgent.UA(bundleInfo: bundleInfo)).replacingOccurrences(of: "iPhone", with: "IPHONE")
     }
 }
