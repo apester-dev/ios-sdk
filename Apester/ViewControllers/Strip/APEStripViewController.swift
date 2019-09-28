@@ -10,23 +10,17 @@ import UIKit
 import WebKit
 import ApesterKit
 
+extension APEStripConfiguration {
+    @objc static let channelToken = "58ce70315eeaf50e00de3da7"
+}
+
 class APEStripViewController: UIViewController {
 
     @IBOutlet private weak var collectionView: UICollectionView!
 
     private let colors: [UIColor] = [.blue, .red, .green, .purple, .orange, .darkGray ].shuffled()
 
-    private let channelToken = "5890a541a9133e0e000e31aa"
-    private lazy var stripView: APEStripView? = {
-        // set strip params
-        if let configuration = try? APEStripConfiguration(channelToken: self.channelToken,
-                                                          style: style,
-                                                          bundle: Bundle.main) {
-            // create the StripService Instance
-            return APEStripView(configuration: configuration)
-        }
-        return nil
-    }()
+    private var stripView: APEStripView?
 
     private lazy var style: APEStripStyle = {
         return APEStripStyle(shape: .roundSquare, size: .medium,
@@ -37,7 +31,7 @@ class APEStripViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.collectionView.contentInsetAdjustmentBehavior = .never
-        if let configuration = try? APEStripConfiguration(channelToken: self.channelToken,
+        if let configuration = try? APEStripConfiguration(channelToken: APEStripConfiguration.channelToken,
                                                           style: style,
                                                           bundle: Bundle.main) {
             // create the StripService Instance

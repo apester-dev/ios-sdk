@@ -77,10 +77,6 @@ import UIKit
         return value
     }
 
-    var verticalPadding: CGFloat {
-        return (self.padding.top + self.padding.bottom * 2.0)
-    }
-
     public init(shape: APEStripShape, size: APEStripSize, padding: UIEdgeInsets, shadow: Bool, textColor: String?, background: String?) {
         self.shape = shape
         self.size = size

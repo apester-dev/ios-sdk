@@ -21,18 +21,18 @@ public class APEWebViewService: NSObject {
 
     // the converted apesterLoadCallback js file to  string
     fileprivate lazy var loadCallbackJSString: String = {
-        return APEBundle.contentsOfFile(Constants.WebView.loadCallbackFileName)
+        return BundleInfo.contentsOfFile(Constants.WebView.loadCallbackFileName)
     }()
 
     // the converted apesterLoadCallback js file to  string
     fileprivate lazy var registerJSString: String = {
-        return APEBundle.contentsOfFile(Constants.WebView.registerJSFileName)
+        return BundleInfo.contentsOfFile(Constants.WebView.registerJSFileName)
     }()
 
     // the function with payload params string
     fileprivate var adevrtisingParamsJSFunctionString: String? {
         // Serialize the Swift object into Data
-        if let serializedData = try? JSONSerialization.data(withJSONObject: APEBundle.bundleInfoPayload(with: self.bundle), options: []) ,
+        if let serializedData = try? JSONSerialization.data(withJSONObject: BundleInfo.bundleInfoPayload(with: self.bundle), options: []) ,
             // Encode the data into JSON string
             let encodedData = String(data: serializedData, encoding: String.Encoding.utf8) {
             return "\(Constants.WebView.initAdevrtisingParamsFunctionName)('\(encodedData)')"

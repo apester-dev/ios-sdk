@@ -6,6 +6,7 @@
 //  Copyright © 2019 Apester. All rights reserved.
 //
 import Foundation
+import WebKit
 
 // MARK:- String
  extension String {
@@ -14,5 +15,18 @@ import Foundation
             return try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
         }
         return nil
+    }
+
+}
+
+extension WKWebView {
+    private static let navigatorUserAgent = "navigator.userAgent"
+
+    func appendAppNameToUserAgent(_ bundleInfo: [String: String]) {
+        var userAgent = ""
+        MessageDispatcher().dispatchSync(message: WKWebView.navigatorUserAgent, to: self) { response in
+            userAgent = (response as? String) ?? ""
+        }
+        self.customUserAgent = (userAgent + UserAgent.UA(bundleInfo: bundleInfo)).replacingOccurrences(of: "iPhone", with: "IPHONE")
     }
 }

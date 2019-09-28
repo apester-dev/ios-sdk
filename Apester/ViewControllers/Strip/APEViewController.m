@@ -8,6 +8,7 @@
 
 #import "APEViewController.h"
 #import <ApesterKit/ApesterKit.h>
+#import "Apester-Swift.h"
 
 @interface APEViewController()
 @property (weak, nonatomic) IBOutlet UIView *containerView;
@@ -25,7 +26,7 @@
                                                          shadow:NO textColor:nil background:nil];
     // initate the strip config
     NSError *error = nil;
-    APEStripConfiguration *config = [[APEStripConfiguration alloc] initWithChannelToken:@"5890a541a9133e0e000e31aa"
+    APEStripConfiguration *config = [[APEStripConfiguration alloc] initWithChannelToken: APEStripConfiguration.channelToken
                                                                                   style:style
                                                                                  bundle:[NSBundle mainBundle]
                                                                                   error:&error];

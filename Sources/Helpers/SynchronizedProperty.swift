@@ -10,7 +10,7 @@ import Foundation
 
 class SynchronizedProperty<T> {
 
-    private let queue = DispatchQueue(label: "com.ScriptRunner.reader-writer.queue", attributes: .concurrent)
+    private let queue = DispatchQueue(label: "com.synchronized-property.reader-writer.queue", attributes: .concurrent)
 
     private var internalValue: T
 
