@@ -22,7 +22,7 @@ public enum APEStripConfigurationError: Error {
     private(set) var channelToken: String
     private(set) var style: APEStripStyle
     private(set) var channelTokens: [String] = []
-    private var bundleInfo: [String : String]
+    private(set) var bundleInfo: [String : String]
 
     private var parameters: [String: String] {
         var value = self.bundleInfo.merging(self.style.parameters, uniquingKeysWith: { $1 })

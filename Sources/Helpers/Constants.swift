@@ -55,6 +55,5 @@ struct Constants {
             return "window.__sendApesterEvent(" + message + ")"
         }
         static let getHeight = "window.__getHeight()"
-        static let getUserAgent = "navigator.userAgent"
     }
 }
