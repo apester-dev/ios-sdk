@@ -122,6 +122,7 @@ import SafariServices
         webView.scrollView.isScrollEnabled = false
         webView.scrollView.bouncesZoom = false
         webView.scrollView.delegate = self
+        webView.appendAppNameToUserAgent(self.configuration.bundleInfo)
         webView.configuration.websiteDataStore = WKWebsiteDataStore.default()
         webView.configuration.userContentController
             .register(to: [StripConfig.proxy, StripConfig.showStripStory, StripConfig.hideStripStory], delegate: self)
