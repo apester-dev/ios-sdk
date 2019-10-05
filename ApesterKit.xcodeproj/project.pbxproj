@@ -1171,7 +1171,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.3.5;
+				MARKETING_VERSION = 2.4.0;
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apester.ApesterKit;
 				PRODUCT_NAME = ApesterKit;
@@ -1204,7 +1204,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.3.5;
+				MARKETING_VERSION = 2.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.apester.ApesterKit;
 				PRODUCT_NAME = ApesterKit;
 				SKIP_INSTALL = YES;
@@ -1282,7 +1282,7 @@
 				INFOPLIST_FILE = Apester/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.3.5;
+				MARKETING_VERSION = 2.4.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hasansa.Apester;
@@ -1323,7 +1323,7 @@
 				INFOPLIST_FILE = Apester/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.3.5;
+				MARKETING_VERSION = 2.4.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hasansa.Apester;
 				PRODUCT_NAME = "$(TARGET_NAME)";
