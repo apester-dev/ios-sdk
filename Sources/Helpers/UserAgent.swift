@@ -36,7 +36,7 @@ class UserAgent {
         return String(bytes: Data(bytes: &sysinfo.machine, count: Int(_SYS_NAMELEN)), encoding: .ascii)!.trimmingCharacters(in: .controlCharacters)
     }
 
-    static func customizedUA(with dictionary: [String : String]) -> String {
+    static func customized(with dictionary: [String : String]) -> String {
         return " WebViewApp \(BundleInfo.appNameAndVersion(from: dictionary)) \(deviceName) \(deviceVersion) \(CFNetworkVersion) \(darwinVersion)"
     }
 }
