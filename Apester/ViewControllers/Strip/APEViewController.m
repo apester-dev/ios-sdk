@@ -26,7 +26,8 @@
                                                          shadow:NO textColor:nil background:nil];
     // initate the strip config
     NSError *error = nil;
-    APEStripConfiguration *config = [[APEStripConfiguration alloc] initWithChannelToken: APEStripConfiguration.channelToken
+    NSString *token = APEStripConfiguration.channelTokens.firstObject;
+    APEStripConfiguration *config = [[APEStripConfiguration alloc] initWithChannelToken:token
                                                                                   style:style
                                                                                  bundle:[NSBundle mainBundle]
                                                                                   error:&error];
