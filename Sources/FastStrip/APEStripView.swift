@@ -193,19 +193,13 @@ import SafariServices
 
     /// Remove the channel carousel units view
     public func hide() {
-        self.stripWebView.configuration.userContentController
-            .unregister(from: [StripConfig.proxy])
         self.stripWebView.removeFromSuperview()
-        self.storyWebView.configuration.userContentController
-            .unregister(from: [StripConfig.proxy,
-                               StripConfig.showStripStory,
-                               StripConfig.hideStripStory])
         self.storyWebView.removeFromSuperview()
-        self.delegate = nil
     }
 
     deinit {
         hide()
+        destroy()
     }
 }
 
@@ -254,12 +248,9 @@ private extension APEStripView {
             }
         }  else if bodyString.contains(StripConfig.destroy) {
             // update the delegate on fail or hide if needed
-            if let delegate = self.delegate {
-                self.loadingState.isLoaded = false
-                delegate.stripView(self, didFailLoadingChannelToken: self.configuration.channelToken)
-            } else {
-                self.hide()
-            }
+            self.destroy()
+            self.loadingState.isLoaded = false
+            delegate?.stripView(self, didFailLoadingChannelToken: self.configuration.channelToken)
         }
         // proxy updates
         if !self.messageDispatcher.contains(message: bodyString, for: storyWebView) {
@@ -320,6 +311,15 @@ private extension APEStripView {
 
     func setDeviceOrientation(_ rawValue: Int) {
         UIDevice.current.setValue(rawValue, forKey: "orientation")
+    }
+
+    func destroy() {
+        self.stripWebView.configuration.userContentController
+            .unregister(from: [StripConfig.proxy])
+        self.storyWebView.configuration.userContentController
+            .unregister(from: [StripConfig.proxy,
+                               StripConfig.showStripStory,
+                               StripConfig.hideStripStory])
     }
 }
 
