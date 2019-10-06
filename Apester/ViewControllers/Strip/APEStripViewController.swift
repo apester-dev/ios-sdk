@@ -11,17 +11,16 @@ import WebKit
 import ApesterKit
 
 extension APEStripConfiguration {
-    @objc static let channelToken = "58ce70315eeaf50e00de3da7"
+    @objc static let channelTokens = ["5ad092c7e16efe4e5c4fb821",
+                                      "58ce70315eeaf50e00de3da7",
+                                      "5aa15c4f85b36c0001b1023c"]
 }
 
 class APEStripViewController: UIViewController {
 
     @IBOutlet private weak var collectionView: UICollectionView!
 
-    private let colors: [UIColor] = [.blue, .red, .green, .purple, .orange, .darkGray ].shuffled()
-
-    private var stripView: APEStripView?
-
+    private var stripViewsData: [String: APEStripView] = [:]
     private lazy var style: APEStripStyle = {
         return APEStripStyle(shape: .roundSquare, size: .medium,
                              padding: UIEdgeInsets(top: 5.0, left: 0, bottom: 0, right: 0),
@@ -30,44 +29,41 @@ class APEStripViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.collectionView.contentInsetAdjustmentBehavior = .never
-        if let configuration = try? APEStripConfiguration(channelToken: APEStripConfiguration.channelToken,
-                                                          style: style,
-                                                          bundle: Bundle.main) {
-            // create the StripService Instance
-            self.stripView = APEStripView(configuration: configuration)
-            stripView?.delegate = self
-        }
+        self.stripViewsData = APEStripConfiguration.channelTokens.reduce(into: [:], {
+            if let configuration = try? APEStripConfiguration(channelToken: $1,
+                                                              style: style,
+                                                              bundle: Bundle.main) {
+                // create the StripService Instance
+                let stripView = APEStripView(configuration: configuration)
+                stripView.delegate = self
+                $0[$1] = stripView
+            }
+        })
     }
 }
 
 extension APEStripViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return self.stripViewsData.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        var cell: UICollectionViewCell!
-        if indexPath.row == 1 {
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ReuseIdentifier", for: indexPath)
-            (cell as! APEStripCollectionViewCell).show(stripView: self.stripView, containerViewConroller: self)
-        } else {
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DefaultReuseIdentifier", for: indexPath) 
-            cell.contentView.backgroundColor = colors[indexPath.row % colors.count]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ReuseCellIdentifier", for: indexPath) as! APEStripCollectionViewCell
+        guard indexPath.row < self.stripViewsData.values.count else {
+            return cell
         }
+        let stripView = Array(self.stripViewsData.values)[indexPath.row]
+        cell.show(stripView: stripView, containerViewConroller: self)
         return cell
     }
 }
 
 extension APEStripViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let random = CGFloat((180...400).randomElement().flatMap({ $0 }) ?? 180)
-        var size = CGSize(width: collectionView.bounds.width, height: random)
-        if indexPath.row == 1 {
-            size.height = self.stripView?.height ?? 180
-        }
-        return size
+        guard indexPath.row < self.stripViewsData.values.count else { return .zero }
+        let stripView = Array(self.stripViewsData.values)[indexPath.row]
+        return CGSize(width: collectionView.bounds.width, height: stripView.height)
     }
 }
 
@@ -79,5 +75,10 @@ extension APEStripViewController: APEStripViewDelegate {
 
     func stripView(_ stripView: APEStripView, didFinishLoadingChannelToken token: String) {}
 
-    func stripView(_ stripView: APEStripView, didFailLoadingChannelToken token: String) {}
+    func stripView(_ stripView: APEStripView, didFailLoadingChannelToken token: String) {
+        DispatchQueue.main.async {
+            self.stripViewsData[stripView.configuration.channelToken] = nil
+            self.collectionView.reloadData()
+        }
+    }
 }

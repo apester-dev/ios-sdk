@@ -16,18 +16,15 @@ public enum APEStripConfigurationError: Error {
 
     private enum Keys: String {
         case channelToken   = "token"
-        case channelTokens  = "tokens"
     }
 
-    private(set) var channelToken: String
-    private(set) var style: APEStripStyle
-    private(set) var channelTokens: [String] = []
+    public private(set) var channelToken: String
+    public private(set) var style: APEStripStyle
     private(set) var bundleInfo: [String : String]
 
     private var parameters: [String: String] {
         var value = self.bundleInfo.merging(self.style.parameters, uniquingKeysWith: { $1 })
         value[Keys.channelToken.rawValue] = channelToken
-        // TODO: Handle channelTokens
         return value
     }
 
@@ -35,18 +32,13 @@ public enum APEStripConfigurationError: Error {
         return self.parameters.componentsURL(baseURL: Constants.Strip.stripUrlPath)
     }
 
-    private init(channelTokens: [String], style: APEStripStyle, bundle: Bundle) throws {
-        guard let channelToken = channelTokens.first, !channelToken.isEmpty else {
+    public init(channelToken: String, style: APEStripStyle, bundle: Bundle) throws {
+        guard !channelToken.isEmpty else {
             throw APEStripConfigurationError.invalidChannelToken
         }
         self.channelToken = channelToken
-        self.channelTokens = channelTokens
         self.style = style
         self.bundleInfo = BundleInfo.bundleInfoPayload(with: bundle)
-    }
-
-    public convenience init(channelToken: String, style: APEStripStyle, bundle: Bundle) throws {
-        try self.init(channelTokens: [channelToken], style: style, bundle: bundle)
     }
 }
 
