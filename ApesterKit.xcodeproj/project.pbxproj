@@ -34,6 +34,9 @@
 		BB44109A22D53B9500BB1DEC /* MessagesDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109922D53B9500BB1DEC /* MessagesDispatcher.swift */; };
 		BB44109D22D53BF300BB1DEC /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109C22D53BF300BB1DEC /* Extensions.swift */; };
 		BB44109F22D53D2F00BB1DEC /* APEStripConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109E22D53D2F00BB1DEC /* APEStripConfiguration.swift */; };
+		BB532AA2235AEDC700F326D3 /* SynchronizedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8652CB24233C1EA80092E309 /* SynchronizedProperty.swift */; };
+		BB532AB5235AEDCF00F326D3 /* BundleInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EAFF2C233E9D1000081AAB /* BundleInfo.swift */; };
+		BB532AB6235AEDFD00F326D3 /* UserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86120811233F74A9006608F1 /* UserAgent.swift */; };
 		BB9700E02223EF270072E1F8 /* Readme.md in Resources */ = {isa = PBXBuildFile; fileRef = BB9700CD2223EF270072E1F8 /* Readme.md */; };
 		BB9709AB222322E000E1076B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9709AA222322E000E1076B /* Constants.swift */; };
 		BB97263A2229BA54008C7440 /* ApesterKit.podspec in Resources */ = {isa = PBXBuildFile; fileRef = BB9726272229BA54008C7440 /* ApesterKit.podspec */; };
@@ -984,7 +987,10 @@
 				BBC96DE1222785F400EA7E6B /* Constants.swift in Sources */,
 				86AFA1F5232C057900E1720A /* MessagesDispatcher.swift in Sources */,
 				86AFA1F1232C052700E1720A /* APEStripConfiguration.swift in Sources */,
+				BB532AA2235AEDC700F326D3 /* SynchronizedProperty.swift in Sources */,
 				8652CB23233C0F1D0092E309 /* APEStripStyle.swift in Sources */,
+				BB532AB6235AEDFD00F326D3 /* UserAgent.swift in Sources */,
+				BB532AB5235AEDCF00F326D3 /* BundleInfo.swift in Sources */,
 				86AFA1F3232C057900E1720A /* ScriptMessageHandler.swift in Sources */,
 				3549BB8B1DA38C0A00C63030 /* ApesterKitSpec.swift in Sources */,
 			);
@@ -1090,7 +1096,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1139,7 +1145,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -1171,7 +1177,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.4.0;
+				MARKETING_VERSION = 2.5.0;
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apester.ApesterKit;
 				PRODUCT_NAME = ApesterKit;
@@ -1204,7 +1210,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.4.0;
+				MARKETING_VERSION = 2.5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.apester.ApesterKit;
 				PRODUCT_NAME = ApesterKit;
 				SKIP_INSTALL = YES;
@@ -1282,7 +1288,7 @@
 				INFOPLIST_FILE = Apester/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.4.0;
+				MARKETING_VERSION = 2.5.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hasansa.Apester;
@@ -1323,7 +1329,7 @@
 				INFOPLIST_FILE = Apester/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.4.0;
+				MARKETING_VERSION = 2.5.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hasansa.Apester;
 				PRODUCT_NAME = "$(TARGET_NAME)";

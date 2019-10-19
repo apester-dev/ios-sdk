@@ -23,7 +23,8 @@
     APEStripStyle *style = [[APEStripStyle alloc] initWithShape:APEStripShapeRoundSquare
                                                            size:APEStripSizeMedium
                                                         padding:UIEdgeInsetsMake(10.0, 0, 0, 0)
-                                                         shadow:NO textColor:nil background:nil];
+                                                         shadow:NO textColor:nil background:nil
+                                                         header: nil];
     // initate the strip config
     NSError *error = nil;
     NSString *token = APEStripConfiguration.channelTokens.firstObject;
