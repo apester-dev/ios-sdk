@@ -22,9 +22,10 @@ class APEStripViewController: UIViewController {
 
     private var stripViewsData: [String: APEStripView] = [:]
     private lazy var style: APEStripStyle = {
+        let header = APEStripHeader(text: "Weitere Beiträge", size: 25, family: "Knockout", weight: 600, color: .orange)
         return APEStripStyle(shape: .roundSquare, size: .medium,
                              padding: UIEdgeInsets(top: 5.0, left: 0, bottom: 0, right: 0),
-                             shadow: false, textColor: nil, background: nil)
+                             shadow: false, textColor: nil, background: nil, header: header)
     }()
 
     override func viewDidLoad() {

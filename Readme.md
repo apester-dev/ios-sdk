@@ -50,7 +50,7 @@ let style = APEStripStyle(shape: .roundSquare, size: .medium,
 APEStripStyle *style = [[APEStripStyle alloc] initWithShape:APEStripShapeRoundSquare
                                               size:APEStripSizeMedium
                                               padding:UIEdgeInsetsMake(10.0, 0, 0, 0)
-                                              shadow:NO textColor:nil background:nil];
+                                              shadow:NO textColor:nil background:nil, header: nil];
 
 ```
 

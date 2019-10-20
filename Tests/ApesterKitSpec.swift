@@ -9,7 +9,6 @@
 import WebKit
 import Quick
 import Nimble
-//@testable import ApesterKit
 
 class ApesterKitSpec: QuickSpec {
 
@@ -23,10 +22,8 @@ class ApesterKitSpec: QuickSpec {
   }
 
   override func spec() {
-    let viewController = WKWebViewViewController()
-
-    
     describe("ApesterKitSpec") {
+        let viewController = WKWebViewViewController()
       // 1
       context("Bundle registered successfully") {
         beforeEach {
@@ -67,6 +64,53 @@ class ApesterKitSpec: QuickSpec {
           }
         }
       }
+    }
+
+    describe("ApesterKitFastStripSpec") {
+        context("strip style url params") {
+            let equalTo = ["paddingTop": "", "paddingLeft": "",  "paddingBottom": "", "paddingRight": "",
+                           "itemShape": "", "itemSize": "", "itemHasShadow": ""]
+            let style = APEStripStyle(shape: .round, size: .medium, padding: .zero, shadow: false, textColor: nil, background: nil)
+            it("1") {
+                let isSuperset = Set(equalTo.keys).isSuperset(of: Set(style.parameters.keys))
+                expect(isSuperset).to(beTrue())
+            }
+        }
+
+        context("strip style url params with itemTextColor, stripBackground") {
+            let equalTo = ["paddingTop": "", "paddingLeft": "",  "paddingBottom": "", "paddingRight": "",
+                           "itemShape": "", "itemSize": "", "itemHasShadow": "",
+                           "itemTextColor": "", "stripBackground": ""]
+            let style = APEStripStyle(shape: .round, size: .medium, padding: .zero, shadow: false, textColor: .darkGray, background: .white)
+            it("2") {
+                let isSuperset = Set(equalTo.keys).isSuperset(of: Set(style.parameters.keys))
+                expect(isSuperset).to(beTrue())
+            }
+        }
+
+        context("strip style url params header") {
+            let equalTo = ["paddingTop": "", "paddingLeft": "",  "paddingBottom": "", "paddingRight": ""]
+            let header = APEStripHeader(text: "My Test", size: 15.0, family: nil, weight: 300, color: .blue)
+            let style = APEStripStyle(shape: .round, size: .medium, padding: .zero, shadow: false, textColor: .darkGray, background: .white, header: header)
+            it("3") {
+                let isSuperset = Set(equalTo.keys).isSuperset(of: Set(style.parameters.keys))
+                expect(isSuperset).to(beFalse())
+            }
+        }
+
+        context("strip style url params header") {
+             let equalTo = ["paddingTop": "", "paddingLeft": "",  "paddingBottom": "", "paddingRight": "",
+                            "itemShape": "", "itemSize": "", "itemHasShadow": "",
+                            "itemTextColor": "", "stripBackground": "",
+                            "headerText": "",
+                            "headerFontSize": "", "headerFontColor": "", "headerFontWeight": "", "headerLtr": ""]
+            let header = APEStripHeader(text: "My Test", size: 15.0, family: nil, weight: 400, color: .blue, isLTR: false)
+             let style = APEStripStyle(shape: .round, size: .medium, padding: .zero, shadow: false, textColor: .darkGray, background: .white, header: header)
+             it("4") {
+                 let isSuperset = Set(equalTo.keys).isSuperset(of: Set(style.parameters.keys))
+                 expect(isSuperset).to(beTrue())
+             }
+         }
     }
   }
 }

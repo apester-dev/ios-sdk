@@ -1,4 +1,4 @@
-github "Quick/Nimble" "v8.0.2"
-github "Quick/Quick" "v2.1.0"
+github "Quick/Nimble" "v8.0.4"
+github "Quick/Quick" "v2.2.0"
 github "groue/GRMustache.swift" "4.0.1"
 github "jspahrsummers/xcconfigs" "d0f8992afad45262cfe3a3cf512e7127fdcf296c"

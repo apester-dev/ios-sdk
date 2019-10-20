@@ -30,3 +30,15 @@ extension WKWebView {
         self.customUserAgent = (userAgent + UserAgent.customized(with: bundleInfo)).replacingOccurrences(of: "iPhone", with: "IPHONE")
     }
 }
+
+extension UIColor {
+    var rgba: String {
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
+        self.getRed(&r, green: &g, blue: &b, alpha: &a)
+        let rgba = "rgba(\(Int(r * 255)),\(Int(g * 255)),\(Int(b * 255)),\(Int(a * 255.0)))"
+        return rgba
+    }
+}
