@@ -96,7 +96,7 @@ import SafariServices
         }
     }
 
-    private var stripWebViewHeightAnchor: NSLayoutConstraint?
+    private var stripWebViewHeightConstraint: NSLayoutConstraint?
     private lazy var stripWebView: WKWebView = {
         let webView = WKWebView()
         webView.navigationDelegate = self
@@ -184,9 +184,9 @@ import SafariServices
         stripWebView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
         stripWebView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
         stripWebView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
-        stripWebViewHeightAnchor = stripWebView.heightAnchor.constraint(equalTo: containerView.heightAnchor)
-        stripWebViewHeightAnchor?.priority = .defaultLow
-        stripWebViewHeightAnchor?.isActive = true
+        stripWebViewHeightConstraint = stripWebView.heightAnchor.constraint(equalTo: containerView.heightAnchor)
+        stripWebViewHeightConstraint?.priority = .defaultLow
+        stripWebViewHeightConstraint?.isActive = true
         self.containerView = containerView
         self.stripContainerViewConroller = containerViewConroller
     }
@@ -259,11 +259,21 @@ private extension APEStripView {
     }
 
     func updateStripWebView(height: CGFloat) {
-        guard let anchor = stripWebViewHeightAnchor else { return }
-        NSLayoutConstraint.deactivate([anchor])
-        stripWebViewHeightAnchor = stripWebView.heightAnchor.constraint(equalToConstant: height)
-        stripWebViewHeightAnchor?.priority = .defaultHigh
-        stripWebViewHeightAnchor?.isActive = true
+        // 1 - update the stripWebView height constraint
+        self.stripWebViewHeightConstraint.flatMap { NSLayoutConstraint.deactivate([$0]) }
+        stripWebViewHeightConstraint = stripWebView.heightAnchor.constraint(equalToConstant: height)
+        stripWebViewHeightConstraint?.priority = .defaultHigh
+        stripWebViewHeightConstraint?.isActive = true
+
+        // 2 - update the strip containerView height constraint
+        self.containerView?.constraints
+            .first(where: { $0.firstAttribute == .height })
+            .flatMap { NSLayoutConstraint.deactivate([$0]) }
+        let containerViewHeightConstraint = self.containerView?.heightAnchor.constraint(equalToConstant: height)
+        containerViewHeightConstraint?.priority = .defaultHigh
+        containerViewHeightConstraint?.isActive = true
+
+        // 3 - update the delegate about the new height
         self.delegate?.stripView(self, didUpdateHeight: height)
     }
 
