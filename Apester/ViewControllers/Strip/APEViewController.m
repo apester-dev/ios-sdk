@@ -19,12 +19,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    APEStripHeader *header =  [[APEStripHeader alloc] initWithText:@"Weitere Beiträge" size:25.0  family:@"Knockout" weight:400 color:[UIColor purpleColor]];
     // setup the strip view style
     APEStripStyle *style = [[APEStripStyle alloc] initWithShape:APEStripShapeRoundSquare
                                                            size:APEStripSizeMedium
                                                         padding:UIEdgeInsetsMake(10.0, 0, 0, 0)
                                                          shadow:NO textColor:nil background:nil
-                                                         header: nil];
+                                                         header:header];
     // initate the strip config
     NSError *error = nil;
     NSString *token = APEStripConfiguration.channelTokens.firstObject;

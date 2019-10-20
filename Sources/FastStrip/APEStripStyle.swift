@@ -50,34 +50,38 @@ import UIKit
         case family  = "headerFontFamily"
         case weight  = "headerFontWeight"
         case color   = "headerFontColor"
-        case isRTL   = "headerLtr"
+        case isLTR   = "headerLtr"
     }
 
     private let text    : String
-    private let size    : CGFloat?
+    private let size    : CGFloat
+    private let weight  : Int
+    private let isLTR   : Bool
     private let family  : String?
-    private let weight  : String?
     private let color   : UIColor?
-    private let isRTL   : Bool?
 
     fileprivate var parameters: [String: String] {
         var value = [String: String]()
         value[Keys.text.rawValue]       = self.text
-        value[Keys.size.rawValue]       = self.size != nil ? "\(self.size!)" : nil
+        value[Keys.size.rawValue]       = "\(self.size)"
+        value[Keys.isLTR.rawValue]      = "\(self.isLTR)"
+        value[Keys.weight.rawValue]     = "\(self.weight)"
         value[Keys.family.rawValue]     = self.family != nil ? "\(self.family!)" : nil
-        value[Keys.weight.rawValue]     = self.weight != nil ? "\(self.weight!)" : nil
         value[Keys.color.rawValue]      = self.color != nil ? "\(self.color!.rgba)" : nil
-        value[Keys.isRTL.rawValue]      = self.isRTL != nil ? "\(self.isRTL!)" : nil
         return value
     }
 
-    public init(text: String, size: CGFloat?, family: String?, weight: String?, color: UIColor?, isRTL: Bool?) {
+    public init(text: String, size: CGFloat, family: String?, weight: Int, color: UIColor?, isLTR: Bool) {
         self.text = text
         self.size = size
         self.family = family
         self.weight = weight
         self.color = color
-        self.isRTL = isRTL
+        self.isLTR = isLTR
+    }
+
+    public convenience init(text: String, size: CGFloat, family: String?, weight: Int, color: UIColor?) {
+        self.init(text: text, size: size, family: family, weight: weight, color: color, isLTR: true)
     }
 }
 

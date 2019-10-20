@@ -357,9 +357,11 @@ extension APEStripView: WKNavigationDelegate {
         }
         switch navigationAction.navigationType {
         case .other, .reload, .backForward:
-            if url.absoluteString.contains(Constants.Strip.apester) {
+            if (url.absoluteString.contains(Constants.Strip.apester) ||
+                url.absoluteString.hasPrefix(Constants.Strip.about) ||
+                url.absoluteString.range(of: Constants.Strip.safeframe) != nil) {
                 policy = .allow
-            } else if (url.absoluteString != Constants.Strip.blank && !url.absoluteString.contains(Constants.Strip.safeframe)) {
+            } else {
                 presentSFSafariViewController()
             }
         case .linkActivated:
