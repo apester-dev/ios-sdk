@@ -51,18 +51,21 @@ import UIKit
         case weight  = "headerFontWeight"
         case color   = "headerFontColor"
         case isLTR   = "headerLtr"
+        case padding = "horizontalHeaderPadding"
     }
 
     private let text    : String
     private let size    : CGFloat
     private let weight  : Int
     private let isLTR   : Bool
+    private let horizontalPadding: CGFloat
     private let family  : String?
     private let color   : UIColor?
 
     fileprivate var parameters: [String: String] {
         var value = [String: String]()
         value[Keys.text.rawValue]       = self.text
+        value[Keys.padding.rawValue]     = "\(self.horizontalPadding)"
         value[Keys.size.rawValue]       = "\(self.size)"
         value[Keys.isLTR.rawValue]      = "\(self.isLTR)"
         value[Keys.weight.rawValue]     = "\(self.weight)"
@@ -71,17 +74,22 @@ import UIKit
         return value
     }
 
-    public init(text: String, size: CGFloat, family: String?, weight: Int, color: UIColor?, isLTR: Bool) {
+    public init(text: String, size: CGFloat, family: String?, weight: Int, color: UIColor?, isLTR: Bool, horizontalPadding: CGFloat) {
         self.text = text
         self.size = size
         self.family = family
         self.weight = weight
         self.color = color
         self.isLTR = isLTR
+        self.horizontalPadding = horizontalPadding
+    }
+
+    public convenience init(text: String, size: CGFloat, family: String?, weight: Int, color: UIColor?, horizontalPadding: CGFloat) {
+        self.init(text: text, size: size, family: family, weight: weight, color: color, isLTR: true, horizontalPadding: horizontalPadding)
     }
 
     public convenience init(text: String, size: CGFloat, family: String?, weight: Int, color: UIColor?) {
-        self.init(text: text, size: size, family: family, weight: weight, color: color, isLTR: true)
+        self.init(text: text, size: size, family: family, weight: weight, color: color, horizontalPadding: 0)
     }
 }
 

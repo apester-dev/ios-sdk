@@ -106,6 +106,8 @@ import SafariServices
         webView.scrollView.bouncesZoom = false
         webView.scrollView.delegate = self
         webView.configuration.websiteDataStore = WKWebsiteDataStore.default()
+        webView.configuration.allowsInlineMediaPlayback = true
+        webView.configuration.mediaTypesRequiringUserActionForPlayback = []
         webView.configuration.userContentController.register(to: [StripConfig.proxy], delegate: self)
         if let url = self.configuration?.url {
             webView.load(URLRequest(url: url))
@@ -122,6 +124,8 @@ import SafariServices
         webView.scrollView.bouncesZoom = false
         webView.scrollView.delegate = self
         webView.configuration.websiteDataStore = WKWebsiteDataStore.default()
+        webView.configuration.allowsInlineMediaPlayback = true
+        webView.configuration.mediaTypesRequiringUserActionForPlayback = []
         webView.configuration.userContentController
             .register(to: [StripConfig.proxy, StripConfig.showStripStory, StripConfig.hideStripStory], delegate: self)
         if let storyUrl = URL(string: StripConfig.stripStoryUrlPath) {

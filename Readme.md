@@ -37,20 +37,25 @@ private var stripView: APEStripView!
 @property (nonatomic, strong) APEStripView *stripView;
 ```
 
-##### 2 - initiate a strip style configuration `APEStripStyle`. configure the strip view style, i.e shape, size, padding, shadow and more parameters....
+##### 2 - initiate a strip style configuration `APEStripStyle`. configure the strip view style, i.e shape, size, padding, shadow, title header  and more....
 ```ruby
 ## Swift
-let style = APEStripStyle(shape: .roundSquare, size: .medium, 
-                        padding: UIEdgeInsets(top: 5.0, left: 0, bottom: 0, right: 0),
-                        shadow: false, textColor: nil, background: nil)
+let header = APEStripHeader(text: "Title", size: 25.0, family: nil, weight: 400, color: .darkText)
+let style  = APEStripStyle(shape: .roundSquare, size: .medium, 
+                         padding: UIEdgeInsets(top: 5.0, left: 0, bottom: 0, right: 0),
+                         shadow: false, textColor: nil, background: nil, header: header)
 
 ```
 ```ruby
 ## Objective C
+APEStripHeader *header =  [[APEStripHeader alloc] initWithText:@"Title" size:25.0 family:nil weight:400 color:[UIColor purpleColor]];
 APEStripStyle *style = [[APEStripStyle alloc] initWithShape:APEStripShapeRoundSquare
-                                              size:APEStripSizeMedium
-                                              padding:UIEdgeInsetsMake(10.0, 0, 0, 0)
-                                              shadow:NO textColor:nil background:nil, header: nil];
+                                                       size:APEStripSizeMedium
+                                                    padding:UIEdgeInsetsMake(10.0, 0, 0, 0)
+                                                     shadow:NO  
+                                                     textColor:nil
+                                                     background:[UIColor whiteColor]
+                                                     header:header];
 
 ```
 
