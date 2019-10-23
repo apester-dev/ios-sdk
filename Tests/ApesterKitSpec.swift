@@ -103,8 +103,9 @@ class ApesterKitSpec: QuickSpec {
                             "itemShape": "", "itemSize": "", "itemHasShadow": "",
                             "itemTextColor": "", "stripBackground": "",
                             "headerText": "",
+                            "horizontalHeaderPadding": "0",
                             "headerFontSize": "", "headerFontColor": "", "headerFontWeight": "", "headerLtr": ""]
-            let header = APEStripHeader(text: "My Test", size: 15.0, family: nil, weight: 400, color: .blue, isLTR: false)
+            let header = APEStripHeader(text: "My Test", size: 15.0, family: nil, weight: 400, color: .blue)
              let style = APEStripStyle(shape: .round, size: .medium, padding: .zero, shadow: false, textColor: .darkGray, background: .white, header: header)
              it("4") {
                  let isSuperset = Set(equalTo.keys).isSuperset(of: Set(style.parameters.keys))
