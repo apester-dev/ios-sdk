@@ -109,7 +109,7 @@ import SafariServices
         webView.configuration.allowsInlineMediaPlayback = true
         webView.configuration.mediaTypesRequiringUserActionForPlayback = []
         webView.configuration.userContentController.register(to: [StripConfig.proxy], delegate: self)
-        if let url = self.configuration?.url {
+        if let url = self.configuration?.stripURL {
             webView.load(URLRequest(url: url))
         }
         return webView
@@ -128,7 +128,7 @@ import SafariServices
         webView.configuration.mediaTypesRequiringUserActionForPlayback = []
         webView.configuration.userContentController
             .register(to: [StripConfig.proxy, StripConfig.showStripStory, StripConfig.hideStripStory], delegate: self)
-        if let storyUrl = URL(string: StripConfig.stripStoryUrlPath) {
+        if let storyUrl = self.configuration?.storyURL {
             webView.load(URLRequest(url: storyUrl))
         }
         return webView

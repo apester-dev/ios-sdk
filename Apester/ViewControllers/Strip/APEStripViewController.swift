@@ -33,7 +33,8 @@ class APEStripViewController: UIViewController {
         self.stripViewsData = APEStripConfiguration.channelTokens.reduce(into: [:], {
             if let configuration = try? APEStripConfiguration(channelToken: $1,
                                                               style: style,
-                                                              bundle: Bundle.main) {
+                                                              bundle: Bundle.main,
+                                                              environment: .stage) {
                 // create the StripService Instance
                 let stripView = APEStripView(configuration: configuration)
                 stripView.delegate = self
