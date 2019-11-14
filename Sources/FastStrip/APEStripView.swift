@@ -88,13 +88,7 @@ import SafariServices
 
     private var messageDispatcher = MessageDispatcher()
 
-    private var loadingState = LoadingState() {
-        didSet {
-            if loadingState.height != oldValue.height, loadingState.isLoaded {
-                self.updateStripWebView(height: loadingState.height)
-            }
-        }
-    }
+    private var loadingState = LoadingState()
 
     private var stripWebViewHeightConstraint: NSLayoutConstraint?
     private lazy var stripWebView: WKWebView = {
@@ -235,6 +229,7 @@ private extension APEStripView {
             storyWebView.appendAppNameToUserAgent(self.configuration.bundleInfo)
             //
             self.loadingState.isLoaded = true
+            self.updateStripWebViewHeight()
             // update the delegate on success
             self.delegate?.stripView(self, didFinishLoadingChannelToken: self.configuration.channelToken)
 
@@ -242,6 +237,9 @@ private extension APEStripView {
             let dictioanry = bodyString.dictionary, let height = dictioanry[StripConfig.stripHeight] as? CFloat {
             if CGFloat(height) != self.loadingState.height {
                 self.loadingState.height = CGFloat(height)
+                if loadingState.isLoaded {
+                    self.updateStripWebViewHeight()
+                }
             }
 
         } else if bodyString.contains(StripConfig.open) {
@@ -264,7 +262,8 @@ private extension APEStripView {
         }
     }
 
-    func updateStripWebView(height: CGFloat) {
+    func updateStripWebViewHeight() {
+        let height = self.loadingState.height
         // 1 - update the stripWebView height constraint
         self.stripWebViewHeightConstraint.flatMap { NSLayoutConstraint.deactivate([$0]) }
         stripWebViewHeightConstraint = stripWebView.heightAnchor.constraint(equalToConstant: height)
