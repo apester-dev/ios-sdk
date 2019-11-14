@@ -207,7 +207,7 @@ import SafariServices
     }
 }
 
-// MARK:- UserContentController Script Messages Handle
+// MARK:- UserContentController Script Messages Handler
 @available(iOS 11.0, *)
 private extension APEStripView {
     func handleUserContentController(message: WKScriptMessage) {
@@ -306,7 +306,11 @@ private extension APEStripView {
             self.messageDispatcher.dispatch(apesterEvent: bodyString, to: stripWebView)
         }
     }
+}
 
+// MARK:- Strip Visual Handle
+@available(iOS 11.0, * )
+private extension APEStripView {
     func displayStoryComponent() {
         self.lastDeviceOrientation = UIDevice.current.orientation
         if self.lastDeviceOrientation.isLandscape {
@@ -335,6 +339,12 @@ private extension APEStripView {
                                StripConfig.showStripStory,
                                StripConfig.hideStripStory])
     }
+
+    func redirect(_ url: URL) {
+        guard let scheme = url.scheme, scheme.contains("http") else { return }
+        let presntedVC = self.stripContainerViewConroller?.presentedViewController ?? self.stripContainerViewConroller
+        presntedVC?.present(SFSafariViewController(url: url), animated: true, completion: nil)
+    }
 }
 
 // MARK:- WKScriptMessageHandler
@@ -360,28 +370,23 @@ extension APEStripView: WKNavigationDelegate {
 
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         var policy = WKNavigationActionPolicy.cancel
-        defer {
-            decisionHandler(policy)
-        }
-        guard let url = navigationAction.request.url else { return }
-        func presentSFSafariViewController() {
-            guard url.scheme != nil else { return }
-            let presntedVC = self.stripContainerViewConroller?.presentedViewController ?? self.stripContainerViewConroller
-            presntedVC?.present(SFSafariViewController(url: url), animated: true, completion: nil)
-        }
-        switch navigationAction.navigationType {
-        case .other, .reload, .backForward:
-            if (url.absoluteString.contains(Constants.Strip.apester) ||
-                url.absoluteString.hasPrefix(Constants.Strip.about) ||
-                url.absoluteString.range(of: Constants.Strip.safeframe) != nil) {
-                policy = .allow
-            } else {
-                presentSFSafariViewController()
+        // is valid URL
+        if let url = navigationAction.request.url {
+            switch navigationAction.navigationType {
+            case .other, .reload, .formSubmitted:
+                // redirect when the target is a main frame and the strip has been loaded.
+                if loadingState.isLoaded, let targetFrame = navigationAction.targetFrame, targetFrame.isMainFrame {
+                    redirect(url)
+                } else {
+                    policy = .allow // allow webview requests communication
+                }
+            case .linkActivated:
+                // redirect when the main web view link got clickd.
+                redirect(url)
+            default: break
             }
-        case .linkActivated:
-            presentSFSafariViewController()
-        default: break
         }
+        decisionHandler(policy)
     }
 
     public func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {

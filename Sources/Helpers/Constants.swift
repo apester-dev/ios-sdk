@@ -34,10 +34,6 @@ struct Constants {
         static let baseUrl = "https://faststrip.apester.com"
         static let stripUrlPath = baseUrl + "/apester-detatched-strip.html"
         static let stripStoryUrlPath = baseUrl + "/apester-detatched-story.html"
-        //
-        static let apester = "apester.com"
-        static let about = "about:"
-        static let safeframe = "safeframe"
         // events
         static let proxy = "apesterStripProxy"
         static let initial = "apester_strip_units"
