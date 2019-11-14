@@ -129,6 +129,7 @@ import SafariServices
     }()
 
     private let setDeviceOrientation: ((Int) -> Void) = { UIDevice.current.setValue($0, forKey: "orientation") }
+    private var linksRedirectViewController: SFSafariViewController?
 
     public weak var delegate: APEStripViewDelegate?
 
@@ -317,6 +318,10 @@ private extension APEStripView {
         if self.lastDeviceOrientation.isLandscape {
             setDeviceOrientation(UIInterfaceOrientation.portrait.rawValue)
         }
+
+        if self.stripStoryViewController.presentingViewController != nil {
+            self.stripStoryViewController.dismiss(animated: false, completion: nil)
+        }
         self.stripContainerViewConroller?.present(self.stripStoryViewController, animated: true, completion: nil)
     }
 
@@ -339,8 +344,13 @@ private extension APEStripView {
 
     func redirect(_ url: URL) {
         guard let scheme = url.scheme, scheme.contains("http") else { return }
+        if linksRedirectViewController?.presentingViewController != nil {
+            linksRedirectViewController?.dismiss(animated: false, completion: nil)
+        }
+        let linkRedirectViewController = SFSafariViewController(url: url)
+        self.linksRedirectViewController = linkRedirectViewController
         let presntedVC = self.stripContainerViewConroller?.presentedViewController ?? self.stripContainerViewConroller
-        presntedVC?.present(SFSafariViewController(url: url), animated: true, completion: nil)
+        presntedVC?.present(linkRedirectViewController, animated: true, completion: nil)
     }
 }
 
