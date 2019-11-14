@@ -134,6 +134,8 @@ import SafariServices
         return webView
     }()
 
+    private let setDeviceOrientation: ((Int) -> Void) = { UIDevice.current.setValue($0, forKey: "orientation") }
+
     public weak var delegate: APEStripViewDelegate?
 
     public var height: CGFloat {
@@ -207,7 +209,7 @@ import SafariServices
     }
 }
 
-// MARK:- UserContentController Script Messages Handler
+// MARK:- Handle UserContentController Script Messages
 @available(iOS 11.0, *)
 private extension APEStripView {
     func handleUserContentController(message: WKScriptMessage) {
@@ -308,7 +310,7 @@ private extension APEStripView {
     }
 }
 
-// MARK:- Strip Visual Handle
+// MARK:- Handle WebView Presentation
 @available(iOS 11.0, * )
 private extension APEStripView {
     func displayStoryComponent() {
@@ -325,10 +327,6 @@ private extension APEStripView {
                 self.setDeviceOrientation(self.lastDeviceOrientation.rawValue)
             }
         }
-    }
-
-    func setDeviceOrientation(_ rawValue: Int) {
-        UIDevice.current.setValue(rawValue, forKey: "orientation")
     }
 
     func destroy() {
