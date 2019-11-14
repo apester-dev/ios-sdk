@@ -318,10 +318,7 @@ private extension APEStripView {
         if self.lastDeviceOrientation.isLandscape {
             setDeviceOrientation(UIInterfaceOrientation.portrait.rawValue)
         }
-
-        if self.stripStoryViewController.presentingViewController != nil {
-            self.stripStoryViewController.dismiss(animated: false, completion: nil)
-        }
+        self.stripStoryViewController.dismiss(animated: false, completion: nil)
         self.stripContainerViewConroller?.present(self.stripStoryViewController, animated: true, completion: nil)
     }
 
@@ -344,9 +341,7 @@ private extension APEStripView {
 
     func redirect(_ url: URL) {
         guard let scheme = url.scheme, scheme.contains("http") else { return }
-        if linksRedirectViewController?.presentingViewController != nil {
-            linksRedirectViewController?.dismiss(animated: false, completion: nil)
-        }
+        linksRedirectViewController?.dismiss(animated: false, completion: nil)
         let linkRedirectViewController = SFSafariViewController(url: url)
         self.linksRedirectViewController = linkRedirectViewController
         let presntedVC = self.stripContainerViewConroller?.presentedViewController ?? self.stripContainerViewConroller
@@ -382,7 +377,8 @@ extension APEStripView: WKNavigationDelegate {
             switch navigationAction.navigationType {
             case .other, .reload, .formSubmitted:
                 // redirect when the target is a main frame and the strip has been loaded.
-                if loadingState.isLoaded, let targetFrame = navigationAction.targetFrame, targetFrame.isMainFrame {
+                if loadingState.isLoaded, let targetFrame = navigationAction.targetFrame, targetFrame.isMainFrame,
+                    targetFrame.request.url?.absoluteString != webView.url?.absoluteString {
                     redirect(url)
                 } else {
                     policy = .allow // allow webview requests communication
