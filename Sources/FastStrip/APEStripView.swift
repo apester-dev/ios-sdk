@@ -54,12 +54,16 @@ import SafariServices
     }
 
     private class FastStripStoryViewController: UIViewController {
-        var webView: WKWebView?
+        var webView: WKWebView!
 
         override func viewDidLoad() {
             super.viewDidLoad()
-            self.webView!.frame = self.view.bounds
-            self.view.addSubview(self.webView!)
+            self.view.addSubview(self.webView)
+            self.webView.translatesAutoresizingMaskIntoConstraints = false
+            self.webView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+            self.webView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+            self.webView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+            self.webView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         }
 
         deinit {
@@ -73,6 +77,7 @@ import SafariServices
     private typealias StripConfig = Constants.Strip
 
     private var lastDeviceOrientation: UIDeviceOrientation = UIDevice.current.orientation
+    private let setDeviceOrientation: ((Int) -> Void) = { UIDevice.current.setValue($0, forKey: "orientation") }
 
     private weak var containerViewConroller: UIViewController?
     private var containerView: UIView?
@@ -82,6 +87,8 @@ import SafariServices
         stripStoryVC.webView = self.storyWebView
         return stripStoryVC
     }()
+
+    private var linksRedirectViewController: SFSafariViewController?
 
     // MARK:- Private Properties
     public private(set) var configuration: APEStripConfiguration!
@@ -128,11 +135,9 @@ import SafariServices
         return webView
     }()
 
-    private let setDeviceOrientation: ((Int) -> Void) = { UIDevice.current.setValue($0, forKey: "orientation") }
-    private var linksRedirectViewController: SFSafariViewController?
-
     public weak var delegate: APEStripViewDelegate?
 
+    // MARK:- Public Properties
     public var height: CGFloat {
         guard self.loadingState.isLoaded else {
             return .zero
@@ -154,6 +159,7 @@ import SafariServices
         // prefetch channel data...
         _ = self.stripWebView
         _ = self.storyWebView
+        _ = self.stripStoryViewController
         NotificationCenter.default.addObserver(forName: UIDevice.orientationDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
             guard let stronSelf = self, let containerView = stronSelf.containerView, let viewConroller = stronSelf.containerViewConroller else {
                 return
@@ -320,18 +326,22 @@ private extension APEStripView {
     }
 
     func displayStoryComponent() {
-        self.lastDeviceOrientation = UIDevice.current.orientation
-        if self.lastDeviceOrientation.isLandscape {
-            setDeviceOrientation(UIInterfaceOrientation.portrait.rawValue)
+        DispatchQueue.main.async {
+            self.lastDeviceOrientation = UIDevice.current.orientation
+            if self.lastDeviceOrientation.isLandscape {
+                self.setDeviceOrientation(UIInterfaceOrientation.portrait.rawValue)
+            }
+            self.stripStoryViewController.dismiss(animated: false, completion: nil)
+            self.preset(self.stripStoryViewController)
         }
-        self.stripStoryViewController.dismiss(animated: false, completion: nil)
-        self.preset(self.stripStoryViewController)
     }
 
     func hideStoryComponent() {
-        self.stripStoryViewController.dismiss(animated: false) {
-            if self.lastDeviceOrientation.isLandscape {
-                self.setDeviceOrientation(self.lastDeviceOrientation.rawValue)
+        DispatchQueue.main.async {
+            self.stripStoryViewController.dismiss(animated: false) {
+                if self.lastDeviceOrientation.isLandscape {
+                    self.setDeviceOrientation(self.lastDeviceOrientation.rawValue)
+                }
             }
         }
     }
@@ -347,10 +357,12 @@ private extension APEStripView {
 
     func redirect(_ url: URL) {
         guard let scheme = url.scheme, scheme.contains("http") else { return }
-        linksRedirectViewController?.dismiss(animated: false, completion: nil)
-        let linkRedirectViewController = SFSafariViewController(url: url)
-        self.linksRedirectViewController = linkRedirectViewController
-        self.preset(linkRedirectViewController)
+        DispatchQueue.main.async {
+            self.linksRedirectViewController?.dismiss(animated: false, completion: nil)
+            let linkRedirectViewController = SFSafariViewController(url: url)
+            self.linksRedirectViewController = linkRedirectViewController
+            self.preset(linkRedirectViewController)
+        }
     }
 }
 
