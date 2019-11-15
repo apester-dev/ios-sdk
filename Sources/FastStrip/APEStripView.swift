@@ -74,7 +74,7 @@ import SafariServices
 
     private var lastDeviceOrientation: UIDeviceOrientation = UIDevice.current.orientation
 
-    private weak var stripContainerViewConroller: UIViewController?
+    private weak var containerViewConroller: UIViewController?
     private var containerView: UIView?
 
     private lazy var stripStoryViewController: FastStripStoryViewController = {
@@ -155,7 +155,7 @@ import SafariServices
         _ = self.stripWebView
         _ = self.storyWebView
         NotificationCenter.default.addObserver(forName: UIDevice.orientationDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
-            guard let stronSelf = self, let containerView = stronSelf.containerView, let stripContainerViewConroller = stronSelf.stripContainerViewConroller else {
+            guard let stronSelf = self, let containerView = stronSelf.containerView, let viewConroller = stronSelf.containerViewConroller else {
                 return
             }
             // validate that when the stripStoryViewController is presented the orientation must be portrait mode
@@ -167,7 +167,7 @@ import SafariServices
             // reload stripWebView
             stronSelf.stripWebView.reload()
             stronSelf.stripWebView.removeFromSuperview()
-            stronSelf.display(in: containerView, containerViewConroller: stripContainerViewConroller)
+            stronSelf.display(in: containerView, containerViewConroller: viewConroller)
         }
 
     }
@@ -189,7 +189,7 @@ import SafariServices
         stripWebViewHeightConstraint?.priority = .defaultLow
         stripWebViewHeightConstraint?.isActive = true
         self.containerView = containerView
-        self.stripContainerViewConroller = containerViewConroller
+        self.containerViewConroller = containerViewConroller
     }
 
     /// Remove the channel carousel units view
@@ -313,13 +313,19 @@ private extension APEStripView {
 // MARK:- Handle WebView Presentation
 @available(iOS 11.0, * )
 private extension APEStripView {
+
+    func preset(_ viewController: UIViewController) {
+        let presntedVC = self.containerViewConroller?.presentedViewController ?? self.containerViewConroller
+        presntedVC?.present(viewController, animated: true, completion: nil)
+    }
+
     func displayStoryComponent() {
         self.lastDeviceOrientation = UIDevice.current.orientation
         if self.lastDeviceOrientation.isLandscape {
             setDeviceOrientation(UIInterfaceOrientation.portrait.rawValue)
         }
         self.stripStoryViewController.dismiss(animated: false, completion: nil)
-        self.stripContainerViewConroller?.present(self.stripStoryViewController, animated: true, completion: nil)
+        self.preset(self.stripStoryViewController)
     }
 
     func hideStoryComponent() {
@@ -344,8 +350,7 @@ private extension APEStripView {
         linksRedirectViewController?.dismiss(animated: false, completion: nil)
         let linkRedirectViewController = SFSafariViewController(url: url)
         self.linksRedirectViewController = linkRedirectViewController
-        let presntedVC = self.stripContainerViewConroller?.presentedViewController ?? self.stripContainerViewConroller
-        presntedVC?.present(linkRedirectViewController, animated: true, completion: nil)
+        self.preset(linkRedirectViewController)
     }
 }
 
