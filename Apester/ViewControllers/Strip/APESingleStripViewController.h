@@ -1,5 +1,5 @@
 //
-//  APEViewController.h
+//  APESingleStripViewController.h
 //  Apester
 //
 //  Created by Hasan Sawaed Tabash on 9/13/19.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface APEViewController : UIViewController
+@interface APESingleStripViewController : UIViewController
 
 @end
 

@@ -1,122 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oXn-ea-6sv">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oXn-ea-6sv">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Multiple Apester Units-->
-        <scene sceneID="huX-kZ-FKY">
-            <objects>
-                <tableViewController id="qWs-3Z-apY" customClass="APETableViewController" customModule="Apester" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="ZoH-49-ak5">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="separatorColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <connections>
-                            <outlet property="dataSource" destination="qWs-3Z-apY" id="rjp-1k-Pkd"/>
-                            <outlet property="delegate" destination="qWs-3Z-apY" id="yHr-hW-wVc"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Multiple Apester Units" leftItemsSupplementBackButton="YES" largeTitleDisplayMode="never" id="2zR-XF-UbE"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bso-1c-AWJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1938" y="834"/>
-        </scene>
-        <!--ApesterKit Demo-->
+        <!--ApesterKit-->
         <scene sceneID="QTM-lg-cc7">
             <objects>
                 <tableViewController id="LMb-PD-XyA" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Ckd-Cj-vZS">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="Ckd-Cj-vZS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <sections>
-                            <tableViewSection id="CMa-K5-aoY">
+                            <tableViewSection headerTitle="StripView" id="cD7-CH-5kT">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="CFn-6n-8g1" rowHeight="78" style="IBUITableViewCellStyleDefault" id="rkc-vT-Uu3">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="78"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rkc-vT-Uu3" id="HuX-1X-DIu">
-                                            <rect key="frame" x="0.0" y="0.0" width="341" height="77.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Website With Embeded Apester Unit" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CFn-6n-8g1">
-                                                    <rect key="frame" x="16" y="0.0" width="324" height="77.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="HxZ-9m-hf0" kind="show" id="KCr-Mz-ZMu"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection id="8iz-Sl-UWI">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="MD4-uu-SvT" rowHeight="78" style="IBUITableViewCellStyleDefault" id="L5J-jV-3Cu">
-                                        <rect key="frame" x="0.0" y="78" width="375" height="78"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="L5J-jV-3Cu" id="q1E-6h-eYO">
-                                            <rect key="frame" x="0.0" y="0.0" width="341" height="77.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Multiple Apester Units List" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MD4-uu-SvT">
-                                                    <rect key="frame" x="16" y="0.0" width="324" height="77.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="qWs-3Z-apY" kind="show" id="VUL-Op-KVb"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection id="cD7-CH-5kT">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="QQm-HL-Nb6" rowHeight="78" style="IBUITableViewCellStyleDefault" id="Yt1-9b-xn4">
-                                        <rect key="frame" x="0.0" y="156" width="375" height="78"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Yt1-9b-xn4" id="pEr-e7-JVv">
-                                            <rect key="frame" x="0.0" y="0.0" width="341" height="77.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Apester Strip" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="QQm-HL-Nb6">
-                                                    <rect key="frame" x="16" y="0.0" width="324" height="77.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="fOt-2H-GaU" kind="show" id="xRa-v6-grK"/>
-                                        </connections>
-                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="jcW-o5-z3t" rowHeight="78" style="IBUITableViewCellStyleDefault" id="c7c-f0-lJA">
-                                        <rect key="frame" x="0.0" y="234" width="375" height="78"/>
+                                        <rect key="frame" x="16" y="55.5" width="343" height="78"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="c7c-f0-lJA" id="zID-Ks-u6J">
-                                            <rect key="frame" x="0.0" y="0.0" width="341" height="77.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="317" height="78"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Apester Strip (objc)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jcW-o5-z3t">
-                                                    <rect key="frame" x="16" y="0.0" width="324" height="77.5"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Single (Container View)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jcW-o5-z3t">
+                                                    <rect key="frame" x="15" y="0.0" width="294" height="78"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -128,6 +37,26 @@
                                             <segue destination="MQo-q3-7r6" kind="show" id="QPb-qN-q6h"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="QQm-HL-Nb6" rowHeight="78" style="IBUITableViewCellStyleDefault" id="Yt1-9b-xn4">
+                                        <rect key="frame" x="16" y="133.5" width="343" height="78"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Yt1-9b-xn4" id="pEr-e7-JVv">
+                                            <rect key="frame" x="0.0" y="0.0" width="317" height="78"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Multiple (Collection View)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="QQm-HL-Nb6">
+                                                    <rect key="frame" x="15" y="0.0" width="294" height="78"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="fOt-2H-GaU" kind="show" id="xRa-v6-grK"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -136,60 +65,26 @@
                             <outlet property="delegate" destination="LMb-PD-XyA" id="bsR-ba-g8h"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="ApesterKit Demo" id="nBi-HY-uV0"/>
+                    <navigationItem key="navigationItem" title="ApesterKit" leftItemsSupplementBackButton="YES" largeTitleDisplayMode="always" id="nBi-HY-uV0"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eEB-SW-ugs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="800.79999999999995" y="834.33283358320841"/>
-        </scene>
-        <!--Embeded ApesterUnit-->
-        <scene sceneID="Lrc-WI-8EY">
-            <objects>
-                <viewController id="HxZ-9m-hf0" customClass="APEWebViewViewController" customModule="Apester" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="xyV-7I-Fa9"/>
-                        <viewControllerLayoutGuide type="bottom" id="y9H-oR-luJ"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="7BG-4d-2iX">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LOH-W7-6fm">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
-                            </containerView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="y9H-oR-luJ" firstAttribute="top" secondItem="LOH-W7-6fm" secondAttribute="bottom" id="B6A-IN-bs0"/>
-                            <constraint firstAttribute="trailing" secondItem="LOH-W7-6fm" secondAttribute="trailing" id="LmZ-om-lI2"/>
-                            <constraint firstItem="LOH-W7-6fm" firstAttribute="top" secondItem="xyV-7I-Fa9" secondAttribute="bottom" id="NaN-DG-jvM"/>
-                            <constraint firstItem="LOH-W7-6fm" firstAttribute="leading" secondItem="7BG-4d-2iX" secondAttribute="leading" id="hde-Rc-Wfc"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Embeded ApesterUnit" largeTitleDisplayMode="never" id="xXl-kV-DTc"/>
-                    <connections>
-                        <outlet property="contentView" destination="LOH-W7-6fm" id="ii8-RU-0tT"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Kv7-7D-b9R" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1936.8" y="88.605697151424295"/>
+            <point key="canvasLocation" x="926" y="833"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="PD7-rd-ZBd">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="oXn-ea-6sv" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="blackTranslucent" id="y7p-kr-UjG">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="y7p-kr-UjG">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="barTintColor" red="0.0" green="0.32852089410000002" blue="0.57488495110000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" red="0.94374185799999999" green="0.16660878060000001" blue="0.2141781747" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="textColor" red="0.94374185799999999" green="0.16660878060000001" blue="0.2141781747" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </textAttributes>
                         <textAttributes key="largeTitleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="textColor" red="0.94374185799999999" green="0.16660878060000001" blue="0.2141781747" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -201,10 +96,10 @@
             </objects>
             <point key="canvasLocation" x="46" y="834"/>
         </scene>
-        <!--Strip-->
+        <!--Multiple StripView-->
         <scene sceneID="eiQ-mw-1h6">
             <objects>
-                <viewController title="Strip" id="fOt-2H-GaU" customClass="APEStripViewController" customModule="Apester" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Multiple StripView" id="fOt-2H-GaU" customClass="APEMultipleStripsViewController" customModule="Apester" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZL4-IJ-CHq"/>
                         <viewControllerLayoutGuide type="bottom" id="dkN-SG-8z9"/>
@@ -214,7 +109,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Lq0-op-lId">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="20" y="101" width="335" height="561"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="NNR-EA-UZs">
                                     <size key="itemSize" width="375" height="200"/>
@@ -224,7 +119,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ReuseCellIdentifier" id="ZlC-Np-5R3" customClass="APEStripCollectionViewCell" customModule="Apester" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                                        <rect key="frame" x="-20" y="0.0" width="375" height="200"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
@@ -246,18 +141,24 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="dataSource" destination="fOt-2H-GaU" id="AUx-xL-EIm"/>
                                     <outlet property="delegate" destination="fOt-2H-GaU" id="VbN-S2-Nwb"/>
                                 </connections>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.91748589277267456" green="0.91733479499816895" blue="0.93793874979019165" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="dkN-SG-8z9" firstAttribute="top" secondItem="Lq0-op-lId" secondAttribute="bottom" id="5QG-xi-LOj"/>
-                            <constraint firstItem="Lq0-op-lId" firstAttribute="leading" secondItem="ben-VV-yfm" secondAttribute="leading" id="6xY-uc-qEp"/>
-                            <constraint firstAttribute="trailing" secondItem="Lq0-op-lId" secondAttribute="trailing" id="qqj-kN-fMh"/>
-                            <constraint firstItem="Lq0-op-lId" firstAttribute="top" secondItem="ZL4-IJ-CHq" secondAttribute="bottom" id="sTC-Vl-i5b"/>
+                            <constraint firstItem="dkN-SG-8z9" firstAttribute="top" secondItem="Lq0-op-lId" secondAttribute="bottom" constant="5" id="5QG-xi-LOj"/>
+                            <constraint firstItem="Lq0-op-lId" firstAttribute="leading" secondItem="ben-VV-yfm" secondAttribute="leading" constant="20" id="6xY-uc-qEp"/>
+                            <constraint firstAttribute="trailing" secondItem="Lq0-op-lId" secondAttribute="trailing" constant="20" id="qqj-kN-fMh"/>
+                            <constraint firstItem="Lq0-op-lId" firstAttribute="top" secondItem="ZL4-IJ-CHq" secondAttribute="bottom" constant="5" id="sTC-Vl-i5b"/>
                         </constraints>
                     </view>
                     <connections>
@@ -266,12 +167,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NJ9-nH-Dfx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1937" y="1592"/>
+            <point key="canvasLocation" x="1966" y="1191"/>
         </scene>
-        <!--Strip (objc)-->
+        <!--Single StripView-->
         <scene sceneID="ZXa-mi-4CD">
             <objects>
-                <viewController title="Strip (objc)" id="MQo-q3-7r6" customClass="APEViewController" sceneMemberID="viewController">
+                <viewController title="Single StripView" id="MQo-q3-7r6" customClass="APESingleStripViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="A2D-nh-aV4"/>
                         <viewControllerLayoutGuide type="bottom" id="ajn-Qh-5Sv"/>
@@ -281,18 +182,23 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1uh-Lx-CHo">
-                                <rect key="frame" x="0.0" y="64" width="375" height="128"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <rect key="frame" x="20" y="101" width="335" height="128"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="NE8-4o-yKx"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.9410129189491272" green="0.94086575508117676" blue="0.96146577596664429" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="1uh-Lx-CHo" firstAttribute="leading" secondItem="1S7-qO-L0y" secondAttribute="leading" id="D2a-wi-oJe"/>
-                            <constraint firstAttribute="trailing" secondItem="1uh-Lx-CHo" secondAttribute="trailing" id="L9B-kv-mZp"/>
-                            <constraint firstItem="1uh-Lx-CHo" firstAttribute="top" secondItem="A2D-nh-aV4" secondAttribute="bottom" id="l5B-PU-amD"/>
+                            <constraint firstItem="1uh-Lx-CHo" firstAttribute="leading" secondItem="1S7-qO-L0y" secondAttribute="leading" constant="20" id="D2a-wi-oJe"/>
+                            <constraint firstAttribute="trailing" secondItem="1uh-Lx-CHo" secondAttribute="trailing" constant="20" id="L9B-kv-mZp"/>
+                            <constraint firstItem="1uh-Lx-CHo" firstAttribute="top" secondItem="A2D-nh-aV4" secondAttribute="bottom" constant="5" id="l5B-PU-amD"/>
                         </constraints>
                     </view>
                     <connections>
@@ -301,7 +207,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DqF-g3-hGY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1188" y="1592"/>
+            <point key="canvasLocation" x="1966" y="506"/>
         </scene>
     </scenes>
 </document>
