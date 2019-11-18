@@ -12,40 +12,6 @@ import SafariServices
 
 #if os(iOS)
 @available(iOS 11.0, *)
-/// A ChannelToken Loading state update
-@objc public protocol APEStripViewDelegate: NSObjectProtocol {
-
-
-    /// when the ChannelToken loaded successfuly
-    ///
-    /// - Parameters:
-    ///   - stripView: the strip view updater
-    ///   - token: the channel token id
-    func stripView(_ stripView: APEStripView, didFinishLoadingChannelToken token:String)
-
-    /// when the ChannelToken couldn't be loaded
-    /// - Parameters:
-    ///   - stripView: the strip view updater
-    ///   - token: the channel token id
-    func stripView(_ stripView: APEStripView, didFailLoadingChannelToken token:String)
-
-    /// when the stripView height has been updated
-    /// - Parameters:
-    ///   - stripView: the strip view updater
-    ///   - height: the stripView new height
-    func stripView(_ stripView: APEStripView, didUpdateHeight height:CGFloat)
-
-    /// when a subscribed event message has been recived
-    /// for Example, subscribe to load and ready events by: `stripView.subscribe(["strip_loaded", "apester_strip_units"])`
-    /// - Parameters:
-    ///   - stripView: the strip view updater
-    ///   - name: the subscribed event
-    ///   - message: the message data for that event
-    @objc optional
-    func stripView(_ stripView: APEStripView, didReciveEvent name:String, message: String)
-}
-
-@available(iOS 11.0, *)
 
 /// A Proxy Messaging Handler
 ///
@@ -61,7 +27,7 @@ import SafariServices
         var openUnitMessage: String?
     }
 
-    private class FastStripStoryViewController: UIViewController {
+    private class StripStoryViewController: UIViewController {
         var webView: WKWebView!
 
         override func viewDidLoad() {
@@ -90,8 +56,8 @@ import SafariServices
     private weak var containerViewConroller: UIViewController?
     private var containerView: UIView?
     private var topStoryConstraint: NSLayoutConstraint?
-    private lazy var stripStoryViewController: FastStripStoryViewController = {
-        let stripStoryVC = FastStripStoryViewController()
+    private lazy var storyViewController: StripStoryViewController = {
+        let stripStoryVC = StripStoryViewController()
         stripStoryVC.webView = self.storyWebView
         return stripStoryVC
     }()
@@ -169,14 +135,14 @@ import SafariServices
         // prefetch channel data...
         _ = self.stripWebView
         _ = self.storyWebView
-        _ = self.stripStoryViewController
+        _ = self.storyViewController
         NotificationCenter.default.addObserver(forName: UIDevice.orientationDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
             guard let stronSelf = self, let containerView = stronSelf.containerView, let viewConroller = stronSelf.containerViewConroller else {
                 return
             }
             // validate that when the stripStoryViewController is presented the orientation must be portrait mode
             stronSelf.lastDeviceOrientation = UIDevice.current.orientation
-            if stronSelf.stripStoryViewController.parent != nil, !UIDevice.current.orientation.isPortrait {
+            if stronSelf.storyViewController.parent != nil, !UIDevice.current.orientation.isPortrait {
                 stronSelf.setDeviceOrientation(UIInterfaceOrientation.portrait.rawValue)
                 return
             }
@@ -362,25 +328,25 @@ private extension APEStripView {
             if self.lastDeviceOrientation.isLandscape {
                 self.setDeviceOrientation(UIInterfaceOrientation.portrait.rawValue)
             }
-            self.stripStoryViewController.dismiss(animated: false, completion: nil)
-            guard let containerViewConroller = self.containerViewConroller, self.stripStoryViewController.parent == nil else {
+            self.storyViewController.dismiss(animated: false, completion: nil)
+            guard let containerViewConroller = self.containerViewConroller, self.storyViewController.parent == nil else {
                 return
             }
-            self.stripStoryViewController.willMove(toParent: containerViewConroller)
-            containerViewConroller.view.addSubview(self.stripStoryViewController.view)
-            self.stripStoryViewController.view.translatesAutoresizingMaskIntoConstraints = false
-            self.stripStoryViewController.view.widthAnchor.constraint(equalTo: containerViewConroller.view.widthAnchor).isActive = true
-            self.stripStoryViewController.view.heightAnchor.constraint(equalTo: containerViewConroller.view.heightAnchor).isActive = true
-            self.stripStoryViewController.view.centerXAnchor.constraint(equalTo: containerViewConroller.view.centerXAnchor).isActive = true
-            self.topStoryConstraint = self.stripStoryViewController.view.topAnchor.constraint(equalTo: containerViewConroller.view.bottomAnchor)
+            self.storyViewController.willMove(toParent: containerViewConroller)
+            containerViewConroller.view.addSubview(self.storyViewController.view)
+            self.storyViewController.view.translatesAutoresizingMaskIntoConstraints = false
+            self.storyViewController.view.widthAnchor.constraint(equalTo: containerViewConroller.view.widthAnchor).isActive = true
+            self.storyViewController.view.heightAnchor.constraint(equalTo: containerViewConroller.view.heightAnchor).isActive = true
+            self.storyViewController.view.centerXAnchor.constraint(equalTo: containerViewConroller.view.centerXAnchor).isActive = true
+            self.topStoryConstraint = self.storyViewController.view.topAnchor.constraint(equalTo: containerViewConroller.view.bottomAnchor)
             self.topStoryConstraint?.isActive = true
-            containerViewConroller.addChild(self.stripStoryViewController)
-            self.stripStoryViewController.didMove(toParent: containerViewConroller)
+            containerViewConroller.addChild(self.storyViewController)
+            self.storyViewController.didMove(toParent: containerViewConroller)
             containerViewConroller.navigationController?.isNavigationBarHidden = true
             containerViewConroller.view.alpha = 0.05
             UIView.animate(withDuration: 0.1, animations: { containerViewConroller.view.layoutIfNeeded() }) { (_) in
                 self.topStoryConstraint?.isActive = false
-                self.topStoryConstraint = self.stripStoryViewController.view.topAnchor.constraint(equalTo: containerViewConroller.view.topAnchor)
+                self.topStoryConstraint = self.storyViewController.view.topAnchor.constraint(equalTo: containerViewConroller.view.topAnchor)
                 self.topStoryConstraint?.isActive = true
                 UIView.animate(withDuration: 0.25, delay: 0.1, animations: {
                     containerViewConroller.view.alpha = 1.0
@@ -392,11 +358,11 @@ private extension APEStripView {
 
     func hideStoryComponent() {
         DispatchQueue.main.async {
-            guard let containerViewConroller = self.containerViewConroller, self.stripStoryViewController.parent != nil else {
+            guard let containerViewConroller = self.containerViewConroller, self.storyViewController.parent != nil else {
                 return
             }
             self.topStoryConstraint?.isActive = false
-            self.topStoryConstraint = self.stripStoryViewController.view.topAnchor.constraint(equalTo: containerViewConroller.view.bottomAnchor)
+            self.topStoryConstraint = self.storyViewController.view.topAnchor.constraint(equalTo: containerViewConroller.view.bottomAnchor)
             self.topStoryConstraint?.isActive = true
             UIView.animate(withDuration: 0.2, animations: {
                 containerViewConroller.view.layoutIfNeeded()
@@ -405,10 +371,10 @@ private extension APEStripView {
                 if self.lastDeviceOrientation.isLandscape {
                     self.setDeviceOrientation(self.lastDeviceOrientation.rawValue)
                 }
-                self.stripStoryViewController.removeFromParent()
-                self.stripStoryViewController.willMove(toParent: nil)
-                self.stripStoryViewController.view.removeFromSuperview()
-                self.stripStoryViewController.didMove(toParent: nil)
+                self.storyViewController.removeFromParent()
+                self.storyViewController.willMove(toParent: nil)
+                self.storyViewController.view.removeFromSuperview()
+                self.storyViewController.didMove(toParent: nil)
             }
         }
     }

@@ -12,21 +12,6 @@ public enum APEStripConfigurationError: Error {
     case invalidChannelToken
 }
 
-@objc public enum APEEnvironment: Int {
-    case production, stage
-
-    var baseUrl: String {
-        var env: String
-        switch self {
-        case .production:
-            env = ""
-        case .stage:
-            env = "stg."
-        }
-        return "https://faststrip." + env + "apester.com"
-    }
-}
-
 @objcMembers public class APEStripConfiguration: NSObject {
 
     private enum Keys: String {

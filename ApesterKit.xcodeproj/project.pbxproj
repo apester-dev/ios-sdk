@@ -13,6 +13,10 @@
 		8652CB21233BF93B0092E309 /* SynchronizedScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8652CB20233BF93B0092E309 /* SynchronizedScript.swift */; };
 		8652CB22233C0B140092E309 /* SynchronizedScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8652CB20233BF93B0092E309 /* SynchronizedScript.swift */; };
 		8652CB23233C0F1D0092E309 /* APEStripStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B735EC23380D9100949864 /* APEStripStyle.swift */; };
+		8658F76A23832E4500C23BDA /* APEStripViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8658F76923832E4500C23BDA /* APEStripViewDelegate.swift */; };
+		8658F76C23832F9700C23BDA /* APEEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8658F76B23832F9700C23BDA /* APEEnvironment.swift */; };
+		8658F76D2383304800C23BDA /* APEEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8658F76B23832F9700C23BDA /* APEEnvironment.swift */; };
+		8658F76E2383305B00C23BDA /* APEStripViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8658F76923832E4500C23BDA /* APEStripViewDelegate.swift */; };
 		86AFA1BB232BE99F00E1720A /* APESingleStripViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86AFA1BA232BE99F00E1720A /* APESingleStripViewController.m */; };
 		86AFA1F0232C052500E1720A /* APEStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0BE33D2223169400542E3C /* APEStripView.swift */; };
 		86AFA1F1232C052700E1720A /* APEStripConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109E22D53D2F00BB1DEC /* APEStripConfiguration.swift */; };
@@ -89,6 +93,8 @@
 		3549BB611DA38ADB00C63030 /* ApesterKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ApesterKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		86120811233F74A9006608F1 /* UserAgent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAgent.swift; sourceTree = "<group>"; };
 		8652CB20233BF93B0092E309 /* SynchronizedScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynchronizedScript.swift; sourceTree = "<group>"; };
+		8658F76923832E4500C23BDA /* APEStripViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripViewDelegate.swift; sourceTree = "<group>"; };
+		8658F76B23832F9700C23BDA /* APEEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEEnvironment.swift; sourceTree = "<group>"; };
 		86AFA1B8232BE99F00E1720A /* Apester-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Apester-Bridging-Header.h"; sourceTree = "<group>"; };
 		86AFA1B9232BE99F00E1720A /* APESingleStripViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APESingleStripViewController.h; sourceTree = "<group>"; };
 		86AFA1BA232BE99F00E1720A /* APESingleStripViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APESingleStripViewController.m; sourceTree = "<group>"; };
@@ -238,9 +244,11 @@
 		BB44109022D53AAB00BB1DEC /* FastStrip */ = {
 			isa = PBXGroup;
 			children = (
-				BB0BE33D2223169400542E3C /* APEStripView.swift */,
-				BB44109E22D53D2F00BB1DEC /* APEStripConfiguration.swift */,
+				8658F76B23832F9700C23BDA /* APEEnvironment.swift */,
 				86B735EC23380D9100949864 /* APEStripStyle.swift */,
+				BB44109E22D53D2F00BB1DEC /* APEStripConfiguration.swift */,
+				8658F76923832E4500C23BDA /* APEStripViewDelegate.swift */,
+				BB0BE33D2223169400542E3C /* APEStripView.swift */,
 			);
 			path = FastStrip;
 			sourceTree = "<group>";
@@ -466,9 +474,11 @@
 			files = (
 				BB44109A22D53B9500BB1DEC /* MessagesDispatcher.swift in Sources */,
 				8652CB21233BF93B0092E309 /* SynchronizedScript.swift in Sources */,
+				8658F76A23832E4500C23BDA /* APEStripViewDelegate.swift in Sources */,
 				86B735ED23380D9100949864 /* APEStripStyle.swift in Sources */,
 				86120824233F74A9006608F1 /* UserAgent.swift in Sources */,
 				BB44109D22D53BF300BB1DEC /* Extensions.swift in Sources */,
+				8658F76C23832F9700C23BDA /* APEEnvironment.swift in Sources */,
 				BB44109F22D53D2F00BB1DEC /* APEStripConfiguration.swift in Sources */,
 				BB9709AB222322E000E1076B /* Constants.swift in Sources */,
 				86EAFF2D233E9D1000081AAB /* BundleInfo.swift in Sources */,
@@ -483,10 +493,12 @@
 			files = (
 				86B2AA6D23830D40000F171D /* APEStripViewTests.swift in Sources */,
 				8652CB22233C0B140092E309 /* SynchronizedScript.swift in Sources */,
+				8658F76E2383305B00C23BDA /* APEStripViewDelegate.swift in Sources */,
 				86AFA1F6232C057E00E1720A /* Extensions.swift in Sources */,
 				86AFA1F0232C052500E1720A /* APEStripView.swift in Sources */,
 				BBC96DE1222785F400EA7E6B /* Constants.swift in Sources */,
 				86AFA1F5232C057900E1720A /* MessagesDispatcher.swift in Sources */,
+				8658F76D2383304800C23BDA /* APEEnvironment.swift in Sources */,
 				86AFA1F1232C052700E1720A /* APEStripConfiguration.swift in Sources */,
 				8652CB23233C0F1D0092E309 /* APEStripStyle.swift in Sources */,
 				BB532AB6235AEDFD00F326D3 /* UserAgent.swift in Sources */,
