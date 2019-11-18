@@ -10,12 +10,6 @@ import UIKit
 import WebKit
 import ApesterKit
 
-extension APEStripConfiguration {
-    @objc static let channelTokens = ["5ad092c7e16efe4e5c4fb821",
-                                      "58ce70315eeaf50e00de3da7",
-                                      "5aa15c4f85b36c0001b1023c"]
-}
-
 class APEStripViewController: UIViewController {
 
     @IBOutlet private weak var collectionView: UICollectionView!
@@ -30,10 +24,11 @@ class APEStripViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.stripViewsData = APEStripConfiguration.channelTokens.reduce(into: [:], {
+        let env: APEEnvironment = .production
+        self.stripViewsData = env.tokens.reduce(into: [:], {
             if let configuration = try? APEStripConfiguration(channelToken: $1,
                                                               style: style,
-                                                              bundle: Bundle.main) {
+                                                              bundle: Bundle.main, environment: env) {
                 // create the StripService Instance
                 let stripView = APEStripView(configuration: configuration)
                 stripView.delegate = self
@@ -82,4 +77,19 @@ extension APEStripViewController: APEStripViewDelegate {
             self.collectionView.reloadData()
         }
     }
+}
+
+extension APEEnvironment {
+    var tokens: [String] {
+        switch self {
+        case .production:
+            return ["5ad092c7e16efe4e5c4fb821", "58ce70315eeaf50e00de3da7", "5aa15c4f85b36c0001b1023c"]
+        case .stage:
+            return ["58c551f76a67357e3b4aa943"]
+        }
+    }
+}
+
+extension APEStripConfiguration {
+    @objc static var tokens: [String] { APEEnvironment.production.tokens }
 }
