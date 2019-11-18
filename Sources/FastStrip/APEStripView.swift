@@ -341,12 +341,12 @@ private extension APEStripView {
             containerViewConroller.addChild(self.stripStoryViewController)
             self.stripStoryViewController.didMove(toParent: containerViewConroller)
             containerViewConroller.navigationController?.isNavigationBarHidden = true
-            UIView.animate(withDuration: 0.1, animations: { containerViewConroller.view.layoutIfNeeded() }) { (_) in
-                containerViewConroller.view.alpha = 0
+            containerViewConroller.view.alpha = 0.1
+            UIView.animate(withDuration: 0.2, animations: { containerViewConroller.view.layoutIfNeeded() }) { (_) in
                 self.topStoryConstraint?.isActive = false
                 self.topStoryConstraint = self.stripStoryViewController.view.topAnchor.constraint(equalTo: containerViewConroller.view.topAnchor)
                 self.topStoryConstraint?.isActive = true
-                UIView.animate(withDuration: 0.4, animations: {
+                UIView.animate(withDuration: 0.3, delay: 0.2, animations: {
                     containerViewConroller.view.alpha = 1.0
                     containerViewConroller.view.layoutIfNeeded()
                 })
