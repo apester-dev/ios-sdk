@@ -28,7 +28,7 @@
                                                          header:header];
     // initate the strip config
     NSError *error = nil;
-    NSString *token = APEStripConfiguration.channelTokens.firstObject;
+    NSString *token = APEStripConfiguration.tokens.firstObject;
     APEStripConfiguration *config = [[APEStripConfiguration alloc] initWithChannelToken:token
                                                                                   style:style
                                                                                  bundle:[NSBundle mainBundle]

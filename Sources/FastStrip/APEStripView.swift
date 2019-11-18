@@ -54,12 +54,16 @@ import SafariServices
     }
 
     private class FastStripStoryViewController: UIViewController {
-        var webView: WKWebView?
+        var webView: WKWebView!
 
         override func viewDidLoad() {
             super.viewDidLoad()
-            self.webView!.frame = self.view.bounds
-            self.view.addSubview(self.webView!)
+            self.view.addSubview(self.webView)
+            self.webView.translatesAutoresizingMaskIntoConstraints = false
+            self.webView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+            self.webView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+            self.webView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+            self.webView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         }
 
         deinit {
@@ -73,28 +77,25 @@ import SafariServices
     private typealias StripConfig = Constants.Strip
 
     private var lastDeviceOrientation: UIDeviceOrientation = UIDevice.current.orientation
+    private let setDeviceOrientation: ((Int) -> Void) = { UIDevice.current.setValue($0, forKey: "orientation") }
 
-    private weak var stripContainerViewConroller: UIViewController?
+    private weak var containerViewConroller: UIViewController?
     private var containerView: UIView?
-
+    private var topStoryConstraint: NSLayoutConstraint?
     private lazy var stripStoryViewController: FastStripStoryViewController = {
         let stripStoryVC = FastStripStoryViewController()
         stripStoryVC.webView = self.storyWebView
         return stripStoryVC
     }()
 
+    private var linksRedirectViewController: SFSafariViewController?
+
     // MARK:- Private Properties
     public private(set) var configuration: APEStripConfiguration!
 
     private var messageDispatcher = MessageDispatcher()
 
-    private var loadingState = LoadingState() {
-        didSet {
-            if loadingState.height != oldValue.height, loadingState.isLoaded {
-                self.updateStripWebView(height: loadingState.height)
-            }
-        }
-    }
+    private var loadingState = LoadingState()
 
     private var stripWebViewHeightConstraint: NSLayoutConstraint?
     private lazy var stripWebView: WKWebView = {
@@ -109,7 +110,7 @@ import SafariServices
         webView.configuration.allowsInlineMediaPlayback = true
         webView.configuration.mediaTypesRequiringUserActionForPlayback = []
         webView.configuration.userContentController.register(to: [StripConfig.proxy], delegate: self)
-        if let url = self.configuration?.url {
+        if let url = self.configuration?.stripURL {
             webView.load(URLRequest(url: url))
         }
         return webView
@@ -128,7 +129,7 @@ import SafariServices
         webView.configuration.mediaTypesRequiringUserActionForPlayback = []
         webView.configuration.userContentController
             .register(to: [StripConfig.proxy, StripConfig.showStripStory, StripConfig.hideStripStory], delegate: self)
-        if let storyUrl = URL(string: StripConfig.stripStoryUrlPath) {
+        if let storyUrl = self.configuration?.storyURL {
             webView.load(URLRequest(url: storyUrl))
         }
         return webView
@@ -136,6 +137,7 @@ import SafariServices
 
     public weak var delegate: APEStripViewDelegate?
 
+    // MARK:- Public Properties
     public var height: CGFloat {
         guard self.loadingState.isLoaded else {
             return .zero
@@ -157,20 +159,21 @@ import SafariServices
         // prefetch channel data...
         _ = self.stripWebView
         _ = self.storyWebView
+        _ = self.stripStoryViewController
         NotificationCenter.default.addObserver(forName: UIDevice.orientationDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
-            guard let stronSelf = self, let containerView = stronSelf.containerView, let stripContainerViewConroller = stronSelf.stripContainerViewConroller else {
+            guard let stronSelf = self, let containerView = stronSelf.containerView, let viewConroller = stronSelf.containerViewConroller else {
                 return
             }
             // validate that when the stripStoryViewController is presented the orientation must be portrait mode
-            if stronSelf.stripStoryViewController.presentingViewController != nil, !UIDevice.current.orientation.isPortrait {
-                stronSelf.lastDeviceOrientation = UIDevice.current.orientation
+            stronSelf.lastDeviceOrientation = UIDevice.current.orientation
+            if stronSelf.stripStoryViewController.parent != nil, !UIDevice.current.orientation.isPortrait {
                 stronSelf.setDeviceOrientation(UIInterfaceOrientation.portrait.rawValue)
                 return
             }
             // reload stripWebView
             stronSelf.stripWebView.reload()
             stronSelf.stripWebView.removeFromSuperview()
-            stronSelf.display(in: containerView, containerViewConroller: stripContainerViewConroller)
+            stronSelf.display(in: containerView, containerViewConroller: viewConroller)
         }
 
     }
@@ -192,7 +195,7 @@ import SafariServices
         stripWebViewHeightConstraint?.priority = .defaultLow
         stripWebViewHeightConstraint?.isActive = true
         self.containerView = containerView
-        self.stripContainerViewConroller = containerViewConroller
+        self.containerViewConroller = containerViewConroller
     }
 
     /// Remove the channel carousel units view
@@ -207,7 +210,7 @@ import SafariServices
     }
 }
 
-// MARK:- UserContentController Script Messages Handle
+// MARK:- Handle UserContentController Script Messages
 @available(iOS 11.0, *)
 private extension APEStripView {
     func handleUserContentController(message: WKScriptMessage) {
@@ -233,6 +236,7 @@ private extension APEStripView {
             storyWebView.appendAppNameToUserAgent(self.configuration.bundleInfo)
             //
             self.loadingState.isLoaded = true
+            self.updateStripWebViewHeight()
             // update the delegate on success
             self.delegate?.stripView(self, didFinishLoadingChannelToken: self.configuration.channelToken)
 
@@ -240,6 +244,9 @@ private extension APEStripView {
             let dictioanry = bodyString.dictionary, let height = dictioanry[StripConfig.stripHeight] as? CFloat {
             if CGFloat(height) != self.loadingState.height {
                 self.loadingState.height = CGFloat(height)
+                if loadingState.isLoaded {
+                    self.updateStripWebViewHeight()
+                }
             }
 
         } else if bodyString.contains(StripConfig.open) {
@@ -262,7 +269,8 @@ private extension APEStripView {
         }
     }
 
-    func updateStripWebView(height: CGFloat) {
+    func updateStripWebViewHeight() {
+        let height = self.loadingState.height
         // 1 - update the stripWebView height constraint
         self.stripWebViewHeightConstraint.flatMap { NSLayoutConstraint.deactivate([$0]) }
         stripWebViewHeightConstraint = stripWebView.heightAnchor.constraint(equalToConstant: height)
@@ -306,25 +314,67 @@ private extension APEStripView {
             self.messageDispatcher.dispatch(apesterEvent: bodyString, to: stripWebView)
         }
     }
+}
+
+// MARK:- Handle WebView Presentation
+@available(iOS 11.0, * )
+private extension APEStripView {
 
     func displayStoryComponent() {
-        self.lastDeviceOrientation = UIDevice.current.orientation
-        if self.lastDeviceOrientation.isLandscape {
-            setDeviceOrientation(UIInterfaceOrientation.portrait.rawValue)
-        }
-        self.stripContainerViewConroller?.present(self.stripStoryViewController, animated: true, completion: nil)
-    }
-
-    func hideStoryComponent() {
-        self.stripStoryViewController.dismiss(animated: false) {
+        DispatchQueue.main.async {
+            self.lastDeviceOrientation = UIDevice.current.orientation
             if self.lastDeviceOrientation.isLandscape {
-                self.setDeviceOrientation(self.lastDeviceOrientation.rawValue)
+                self.setDeviceOrientation(UIInterfaceOrientation.portrait.rawValue)
+            }
+            self.stripStoryViewController.dismiss(animated: false, completion: nil)
+            guard let containerViewConroller = self.containerViewConroller, self.stripStoryViewController.parent == nil else {
+                return
+            }
+            self.stripStoryViewController.willMove(toParent: containerViewConroller)
+            containerViewConroller.view.addSubview(self.stripStoryViewController.view)
+            self.stripStoryViewController.view.translatesAutoresizingMaskIntoConstraints = false
+            self.stripStoryViewController.view.widthAnchor.constraint(equalTo: containerViewConroller.view.widthAnchor).isActive = true
+            self.stripStoryViewController.view.heightAnchor.constraint(equalTo: containerViewConroller.view.heightAnchor).isActive = true
+            self.stripStoryViewController.view.centerXAnchor.constraint(equalTo: containerViewConroller.view.centerXAnchor).isActive = true
+            self.topStoryConstraint = self.stripStoryViewController.view.topAnchor.constraint(equalTo: containerViewConroller.view.bottomAnchor)
+            self.topStoryConstraint?.isActive = true
+            containerViewConroller.addChild(self.stripStoryViewController)
+            self.stripStoryViewController.didMove(toParent: containerViewConroller)
+            containerViewConroller.navigationController?.isNavigationBarHidden = true
+            containerViewConroller.view.alpha = 0.05
+            UIView.animate(withDuration: 0.1, animations: { containerViewConroller.view.layoutIfNeeded() }) { (_) in
+                self.topStoryConstraint?.isActive = false
+                self.topStoryConstraint = self.stripStoryViewController.view.topAnchor.constraint(equalTo: containerViewConroller.view.topAnchor)
+                self.topStoryConstraint?.isActive = true
+                UIView.animate(withDuration: 0.25, delay: 0.1, animations: {
+                    containerViewConroller.view.alpha = 1.0
+                    containerViewConroller.view.layoutIfNeeded()
+                })
             }
         }
     }
 
-    func setDeviceOrientation(_ rawValue: Int) {
-        UIDevice.current.setValue(rawValue, forKey: "orientation")
+    func hideStoryComponent() {
+        DispatchQueue.main.async {
+            guard let containerViewConroller = self.containerViewConroller, self.stripStoryViewController.parent != nil else {
+                return
+            }
+            self.topStoryConstraint?.isActive = false
+            self.topStoryConstraint = self.stripStoryViewController.view.topAnchor.constraint(equalTo: containerViewConroller.view.bottomAnchor)
+            self.topStoryConstraint?.isActive = true
+            UIView.animate(withDuration: 0.2, animations: {
+                containerViewConroller.view.layoutIfNeeded()
+                self.containerViewConroller?.navigationController?.isNavigationBarHidden = false
+            }) { (_) in
+                if self.lastDeviceOrientation.isLandscape {
+                    self.setDeviceOrientation(self.lastDeviceOrientation.rawValue)
+                }
+                self.stripStoryViewController.removeFromParent()
+                self.stripStoryViewController.willMove(toParent: nil)
+                self.stripStoryViewController.view.removeFromSuperview()
+                self.stripStoryViewController.didMove(toParent: nil)
+            }
+        }
     }
 
     func destroy() {
@@ -334,6 +384,17 @@ private extension APEStripView {
             .unregister(from: [StripConfig.proxy,
                                StripConfig.showStripStory,
                                StripConfig.hideStripStory])
+    }
+
+    func redirect(_ url: URL) {
+        guard let scheme = url.scheme, scheme.contains("http") else { return }
+        DispatchQueue.main.async {
+            self.linksRedirectViewController?.dismiss(animated: false, completion: nil)
+            let linkRedirectViewController = SFSafariViewController(url: url)
+            self.linksRedirectViewController = linkRedirectViewController
+            let presntedVC = self.containerViewConroller?.presentedViewController ?? self.containerViewConroller
+            presntedVC?.present(linkRedirectViewController, animated: true, completion: nil)
+        }
     }
 }
 
@@ -360,28 +421,24 @@ extension APEStripView: WKNavigationDelegate {
 
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         var policy = WKNavigationActionPolicy.cancel
-        defer {
-            decisionHandler(policy)
-        }
-        guard let url = navigationAction.request.url else { return }
-        func presentSFSafariViewController() {
-            guard url.scheme != nil else { return }
-            let presntedVC = self.stripContainerViewConroller?.presentedViewController ?? self.stripContainerViewConroller
-            presntedVC?.present(SFSafariViewController(url: url), animated: true, completion: nil)
-        }
-        switch navigationAction.navigationType {
-        case .other, .reload, .backForward:
-            if (url.absoluteString.contains(Constants.Strip.apester) ||
-                url.absoluteString.hasPrefix(Constants.Strip.about) ||
-                url.absoluteString.range(of: Constants.Strip.safeframe) != nil) {
-                policy = .allow
-            } else {
-                presentSFSafariViewController()
+        // is valid URL
+        if let url = navigationAction.request.url {
+            switch navigationAction.navigationType {
+            case .other, .reload, .formSubmitted:
+                // redirect when the target is a main frame and the strip has been loaded.
+                if loadingState.isLoaded, let targetFrame = navigationAction.targetFrame, targetFrame.isMainFrame,
+                    url.absoluteString != webView.url?.absoluteString {
+                    redirect(url)
+                } else {
+                    policy = .allow // allow webview requests communication
+                }
+            case .linkActivated:
+                // redirect when the main web view link got clickd.
+                redirect(url)
+            default: break
             }
-        case .linkActivated:
-            presentSFSafariViewController()
-        default: break
         }
+        decisionHandler(policy)
     }
 
     public func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {

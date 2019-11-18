@@ -12,6 +12,21 @@ public enum APEStripConfigurationError: Error {
     case invalidChannelToken
 }
 
+@objc public enum APEEnvironment: Int {
+    case production, stage
+
+    var baseUrl: String {
+        var env: String
+        switch self {
+        case .production:
+            env = ""
+        case .stage:
+            env = "stg."
+        }
+        return "https://faststrip." + env + "apester.com"
+    }
+}
+
 @objcMembers public class APEStripConfiguration: NSObject {
 
     private enum Keys: String {
@@ -21,6 +36,7 @@ public enum APEStripConfigurationError: Error {
     public private(set) var channelToken: String
     public private(set) var style: APEStripStyle
     private(set) var bundleInfo: [String : String]
+    private(set) var environment: APEEnvironment
 
     private var parameters: [String: String] {
         var value = self.bundleInfo.merging(self.style.parameters, uniquingKeysWith: { $1 })
@@ -28,17 +44,26 @@ public enum APEStripConfigurationError: Error {
         return value
     }
 
-    var url: URL? {
-        return self.parameters.componentsURL(baseURL: Constants.Strip.stripUrlPath)
+    var stripURL: URL? {
+        return self.parameters.componentsURL(baseURL: (self.environment.baseUrl + Constants.Strip.stripPath))
     }
 
-    public init(channelToken: String, style: APEStripStyle, bundle: Bundle) throws {
+    var storyURL: URL? {
+        return self.parameters.componentsURL(baseURL: (self.environment.baseUrl + Constants.Strip.stripStoryPath))
+    }
+
+    public init(channelToken: String, style: APEStripStyle, bundle: Bundle, environment: APEEnvironment) throws {
         guard !channelToken.isEmpty else {
             throw APEStripConfigurationError.invalidChannelToken
         }
         self.channelToken = channelToken
         self.style = style
         self.bundleInfo = BundleInfo.bundleInfoPayload(with: bundle)
+        self.environment = environment
+    }
+
+    public convenience init(channelToken: String, style: APEStripStyle, bundle: Bundle) throws {
+        try self.init(channelToken: channelToken, style: style, bundle: bundle, environment: .production)
     }
 }
 
