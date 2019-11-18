@@ -18,23 +18,31 @@ import SafariServices
 
     /// when the ChannelToken loaded successfuly
     ///
-    /// - Parameter stripView: the strip view updater
-    /// - Parameter token: the channel token id
+    /// - Parameters:
+    ///   - stripView: the strip view updater
+    ///   - token: the channel token id
     func stripView(_ stripView: APEStripView, didFinishLoadingChannelToken token:String)
 
-
     /// when the ChannelToken couldn't be loaded
-    ///
-    /// - Parameter stripView: the strip view updater
-    /// - Parameter token: the channel token id
+    /// - Parameters:
+    ///   - stripView: the strip view updater
+    ///   - token: the channel token id
     func stripView(_ stripView: APEStripView, didFailLoadingChannelToken token:String)
 
-
     /// when the stripView height has been updated
-    ///
-    /// - Parameter stripView: the strip view updater
-    /// - Parameter height: the stripView new height
+    /// - Parameters:
+    ///   - stripView: the strip view updater
+    ///   - height: the stripView new height
     func stripView(_ stripView: APEStripView, didUpdateHeight height:CGFloat)
+
+    /// when a subscribed event message has been recived
+    /// for Example, subscribe to load and ready events by: `stripView.subscribe(["strip_loaded", "apester_strip_units"])`
+    /// - Parameters:
+    ///   - stripView: the strip view updater
+    ///   - name: the subscribed event
+    ///   - message: the message data for that event
+    @objc optional
+    func stripView(_ stripView: APEStripView, didReciveEvent name:String, message: String)
 }
 
 @available(iOS 11.0, *)
@@ -96,6 +104,8 @@ import SafariServices
     private var messageDispatcher = MessageDispatcher()
 
     private var loadingState = LoadingState()
+
+    private var subscribedEvents: Set<String> = Set()
 
     private var stripWebViewHeightConstraint: NSLayoutConstraint?
     private lazy var stripWebView: WKWebView = {
@@ -204,6 +214,24 @@ import SafariServices
         self.storyWebView.removeFromSuperview()
     }
 
+
+    /// subscribe to events in order to observe the events messages data.
+    /// for Example, subscribe to load and ready events by: `stripView.subscribe(["strip_loaded", "apester_strip_units"])`
+    /// - Parameter events: the event names.
+    public func subscribe(events: [String]) {
+        DispatchQueue.main.async {
+            self.subscribedEvents = self.subscribedEvents.union(events)
+        }
+    }
+
+    /// unsubscribe from events.
+    /// - Parameter events: the event names.
+    public func unsubscribe(events: [String]) {
+        DispatchQueue.main.async {
+            self.subscribedEvents = self.subscribedEvents.subtracting(events)
+        }
+    }
+
     deinit {
         hide()
         destroy()
@@ -220,6 +248,14 @@ private extension APEStripView {
             } else if message.webView?.hash == storyWebView.hash {
                 handleStoryWebViewMessages(bodyString)
             }
+            self.publish(message: bodyString)
+        }
+    }
+
+    func publish(message: String) {
+        guard let event = self.subscribedEvents.first(where: { message.contains($0) }) else { return }
+        if self.subscribedEvents.contains(event) {
+            self.delegate?.stripView?(self, didReciveEvent: event, message: message)
         }
     }
 
