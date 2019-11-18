@@ -1,5 +1,5 @@
 //
-//  APEStripViewController.swift
+//  APEMultipleStripsViewController.swift
 //  ApisterKitDemo
 //
 //  Created by Hasan Sa on 24/02/2019.
@@ -10,7 +10,7 @@ import UIKit
 import WebKit
 import ApesterKit
 
-class APEStripViewController: UIViewController {
+class APEMultipleStripsViewController: UIViewController {
 
     @IBOutlet private weak var collectionView: UICollectionView!
 
@@ -38,7 +38,7 @@ class APEStripViewController: UIViewController {
     }
 }
 
-extension APEStripViewController: UICollectionViewDataSource {
+extension APEMultipleStripsViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.stripViewsData.count
@@ -55,7 +55,7 @@ extension APEStripViewController: UICollectionViewDataSource {
     }
 }
 
-extension APEStripViewController: UICollectionViewDelegateFlowLayout {
+extension APEMultipleStripsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard indexPath.row < self.stripViewsData.values.count else { return .zero }
         let stripView = Array(self.stripViewsData.values)[indexPath.row]
@@ -63,7 +63,7 @@ extension APEStripViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension APEStripViewController: APEStripViewDelegate {
+extension APEMultipleStripsViewController: APEStripViewDelegate {
 
     func stripView(_ stripView: APEStripView, didUpdateHeight height: CGFloat) {
         self.collectionView.reloadData()

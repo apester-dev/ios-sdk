@@ -1,21 +1,21 @@
 //
-//  APEViewController.m
+//  APESingleStripViewController.m
 //  Apester
 //
 //  Created by Hasan Sawaed Tabash on 9/13/19.
 //  Copyright © 2019 Apester. All rights reserved.
 //
 
-#import "APEViewController.h"
+#import "APESingleStripViewController.h"
 #import <ApesterKit/ApesterKit.h>
 #import "Apester-Swift.h"
 
-@interface APEViewController()
+@interface APESingleStripViewController()
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 @property (nonatomic, strong) APEStripView *stripView;
 @end
 
-@implementation APEViewController
+@implementation APESingleStripViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
