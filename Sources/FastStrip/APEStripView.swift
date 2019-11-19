@@ -53,9 +53,8 @@ import SafariServices
     private var lastDeviceOrientation: UIDeviceOrientation = UIDevice.current.orientation
     private let setDeviceOrientation: ((Int) -> Void) = { UIDevice.current.setValue($0, forKey: "orientation") }
 
-    private weak var containerViewConroller: UIViewController?
+    private var containerViewConroller: UIViewController?
     private var containerView: UIView?
-    private var topStoryConstraint: NSLayoutConstraint?
     private lazy var storyViewController: StripStoryViewController = {
         let stripStoryVC = StripStoryViewController()
         stripStoryVC.webView = self.storyWebView
@@ -141,11 +140,11 @@ import SafariServices
                 return
             }
             // validate that when the stripStoryViewController is presented the orientation must be portrait mode
-            stronSelf.lastDeviceOrientation = UIDevice.current.orientation
-            if stronSelf.storyViewController.parent != nil, !UIDevice.current.orientation.isPortrait {
+            if stronSelf.storyViewController.presentingViewController != nil, !UIDevice.current.orientation.isPortrait {
                 stronSelf.setDeviceOrientation(UIInterfaceOrientation.portrait.rawValue)
                 return
             }
+            stronSelf.lastDeviceOrientation = UIDevice.current.orientation
             // reload stripWebView
             stronSelf.stripWebView.reload()
             stronSelf.stripWebView.removeFromSuperview()
@@ -329,52 +328,20 @@ private extension APEStripView {
                 self.setDeviceOrientation(UIInterfaceOrientation.portrait.rawValue)
             }
             self.storyViewController.dismiss(animated: false, completion: nil)
-            guard let containerViewConroller = self.containerViewConroller, self.storyViewController.parent == nil else {
+            guard let containerViewConroller = self.containerViewConroller, self.storyViewController.presentedViewController == nil else {
                 return
             }
-            self.storyViewController.willMove(toParent: containerViewConroller)
-            containerViewConroller.view.addSubview(self.storyViewController.view)
-            self.storyViewController.view.translatesAutoresizingMaskIntoConstraints = false
-            self.storyViewController.view.widthAnchor.constraint(equalTo: containerViewConroller.view.widthAnchor).isActive = true
-            self.storyViewController.view.heightAnchor.constraint(equalTo: containerViewConroller.view.heightAnchor).isActive = true
-            self.storyViewController.view.centerXAnchor.constraint(equalTo: containerViewConroller.view.centerXAnchor).isActive = true
-            self.topStoryConstraint = self.storyViewController.view.topAnchor.constraint(equalTo: containerViewConroller.view.bottomAnchor)
-            self.topStoryConstraint?.isActive = true
-            containerViewConroller.addChild(self.storyViewController)
-            self.storyViewController.didMove(toParent: containerViewConroller)
-            containerViewConroller.navigationController?.isNavigationBarHidden = true
-            containerViewConroller.view.alpha = 0.05
-            UIView.animate(withDuration: 0.1, animations: { containerViewConroller.view.layoutIfNeeded() }) { (_) in
-                self.topStoryConstraint?.isActive = false
-                self.topStoryConstraint = self.storyViewController.view.topAnchor.constraint(equalTo: containerViewConroller.view.topAnchor)
-                self.topStoryConstraint?.isActive = true
-                UIView.animate(withDuration: 0.25, delay: 0.1, animations: {
-                    containerViewConroller.view.alpha = 1.0
-                    containerViewConroller.view.layoutIfNeeded()
-                })
-            }
+            let presntedVC = containerViewConroller.presentedViewController ?? containerViewConroller
+            presntedVC.present(self.storyViewController, animated: true, completion: nil)
         }
     }
 
     func hideStoryComponent() {
         DispatchQueue.main.async {
-            guard let containerViewConroller = self.containerViewConroller, self.storyViewController.parent != nil else {
-                return
-            }
-            self.topStoryConstraint?.isActive = false
-            self.topStoryConstraint = self.storyViewController.view.topAnchor.constraint(equalTo: containerViewConroller.view.bottomAnchor)
-            self.topStoryConstraint?.isActive = true
-            UIView.animate(withDuration: 0.2, animations: {
-                containerViewConroller.view.layoutIfNeeded()
-                self.containerViewConroller?.navigationController?.isNavigationBarHidden = false
-            }) { (_) in
+            self.storyViewController.dismiss(animated: true) {
                 if self.lastDeviceOrientation.isLandscape {
                     self.setDeviceOrientation(self.lastDeviceOrientation.rawValue)
                 }
-                self.storyViewController.removeFromParent()
-                self.storyViewController.willMove(toParent: nil)
-                self.storyViewController.view.removeFromSuperview()
-                self.storyViewController.didMove(toParent: nil)
             }
         }
     }
