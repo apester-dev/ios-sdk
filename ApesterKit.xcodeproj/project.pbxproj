@@ -395,7 +395,6 @@
 					};
 					BBC96DA4222781F400EA7E6B = {
 						CreatedOnToolsVersion = 10.1;
-						DevelopmentTeam = 33Y76XNPZ4;
 						LastSwiftMigration = 1030;
 						ProvisioningStyle = Automatic;
 					};
@@ -757,7 +756,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1000;
-				DEVELOPMENT_TEAM = 33Y76XNPZ4;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Apester/Info.plist;
@@ -766,7 +765,7 @@
 				MARKETING_VERSION = 2.7.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hasansa.Apestera;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hasansa.Apester;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Apester/Apester-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -796,7 +795,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1000;
-				DEVELOPMENT_TEAM = 33Y76XNPZ4;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Apester/Info.plist;
@@ -804,7 +803,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 2.7.5;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hasansa.Apestera;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hasansa.Apester;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Apester/Apester-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
