@@ -344,23 +344,10 @@ private extension APEStripView {
 
     func hideStoryComponent() {
         DispatchQueue.main.async {
-            guard let containerViewConroller = self.containerViewConroller, self.storyViewController.parent != nil else {
-                return
-            }
-            self.topStoryConstraint?.isActive = false
-            self.topStoryConstraint = self.storyViewController.view.topAnchor.constraint(equalTo: containerViewConroller.view.bottomAnchor)
-            self.topStoryConstraint?.isActive = true
-            UIView.animate(withDuration: 0.2, animations: {
-                containerViewConroller.view.layoutIfNeeded()
-                self.containerViewConroller?.navigationController?.isNavigationBarHidden = false
-            }) { (_) in
+            self.storyViewController.dismiss(animated: true) {
                 if self.lastDeviceOrientation.isLandscape {
                     self.setDeviceOrientation(self.lastDeviceOrientation.rawValue)
                 }
-                self.storyViewController.removeFromParent()
-                self.storyViewController.willMove(toParent: nil)
-                self.storyViewController.view.removeFromSuperview()
-                self.storyViewController.didMove(toParent: nil)
             }
         }
     }
