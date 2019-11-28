@@ -16,10 +16,14 @@ class APEMultipleStripsViewController: UIViewController {
 
     private var stripViewsData: [String: APEStripView] = [:]
     private lazy var style: APEStripStyle = {
-        let header = APEStripHeader(text: "Title", size: 25.0, family: nil, weight: 400, color: .darkText)
-        return APEStripStyle(shape: .roundSquare, size: .medium,
-                             padding: UIEdgeInsets(top: 5.0, left: 0, bottom: 0, right: 0),
-                             shadow: false, textColor: nil, background: nil, header: header)
+        var background: UIColor = .white
+        var header: APEStripHeader?
+        if #available(iOS 13.0, *) {
+            header = APEStripHeader(text: "Title", size: 25.0, family: nil, weight: 400, color: UIColor.systemFill)
+            background = UIColor.systemBackground
+        }
+        return APEStripStyle(shape: .roundSquare, size: .medium, padding: UIEdgeInsets(top: 5.0, left: 5.0, bottom: 0, right: 0),
+                             shadow: false, textColor: nil, background: background, header: header)
     }()
 
     override func viewDidLoad() {
