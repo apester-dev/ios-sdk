@@ -337,16 +337,10 @@ private extension APEStripView {
             if self.lastDeviceOrientation.isLandscape {
                 self.setDeviceOrientation(UIInterfaceOrientation.portrait.rawValue)
             }
-            if let containerViewConroller = self.containerViewConroller, self.storyViewController.presentedViewController == nil {
-                let script = SynchronizedScript()
-                script.lock()
-                self.storyViewController.presentationController?.delegate = self
-                let presntedVC = containerViewConroller.presentedViewController ?? containerViewConroller
-                presntedVC.present(self.storyViewController, animated: true) {
-                    script.unlock()
-                }
-                script.wait()
-            }
+            guard let containerViewConroller = self.containerViewConroller, self.storyViewController.presentingViewController == nil else { return }
+            self.storyViewController.dismiss(animated: false, completion: nil)
+            self.storyViewController.presentationController?.delegate = self
+            (containerViewConroller.presentingViewController ?? containerViewConroller).present(self.storyViewController, animated: true) {}
         }
     }
 
