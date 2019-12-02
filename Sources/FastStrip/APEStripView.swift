@@ -49,7 +49,6 @@ import SafariServices
     private var containerView: UIView?
     private weak var containerViewConroller: UIViewController?
     private var storyViewController: StripStoryViewController!
-    private var linksRedirectViewController: SFSafariViewController?
 
     // MARK:- Private Properties
     public private(set) var configuration: APEStripConfiguration!
@@ -80,9 +79,17 @@ import SafariServices
     }
 
     // MARK:- Initializer
-    /// init with configuration
-    ///
-    /// - Parameter configuration: the strip view custom configuration, i.e channelToken, shape, size
+    /// init with configuration and UIapplication
+    ///   `````
+    /// // FYI, in order to open URLs like WhatsApp Application
+    /// // The Info.plist file must include the query schemes for that app, i,e:
+    ///   <key>LSApplicationQueriesSchemes</key>
+    ///     <array>
+    ///       <string>whatsapp</string>
+    ///     </array>
+    ///   `````
+    /// - Parameters:
+    ///   - configuration: the strip view custom configuration, i.e channelToken, shape, size
     public init(configuration: APEStripConfiguration) {
         super.init()
         self.configuration = configuration
@@ -189,6 +196,7 @@ private extension APEStripView {
         webView.scrollView.isScrollEnabled = false
         webView.scrollView.bouncesZoom = false
         webView.scrollView.delegate = self
+        webView.uiDelegate = self
         webView.configuration.websiteDataStore = WKWebsiteDataStore.default()
         webView.configuration.allowsInlineMediaPlayback = true
         webView.configuration.mediaTypesRequiringUserActionForPlayback = []
@@ -329,16 +337,10 @@ private extension APEStripView {
             if self.lastDeviceOrientation.isLandscape {
                 self.setDeviceOrientation(UIInterfaceOrientation.portrait.rawValue)
             }
-            if let containerViewConroller = self.containerViewConroller, self.storyViewController.presentedViewController == nil {
-                let script = SynchronizedScript()
-                script.lock()
-                self.storyViewController.presentationController?.delegate = self
-                let presntedVC = containerViewConroller.presentedViewController ?? containerViewConroller
-                presntedVC.present(self.storyViewController, animated: true) {
-                    script.unlock()
-                }
-                script.wait()
-            }
+            guard let containerViewConroller = self.containerViewConroller, self.storyViewController.presentingViewController == nil else { return }
+            self.storyViewController.dismiss(animated: false, completion: nil)
+            self.storyViewController.presentationController?.delegate = self
+            (containerViewConroller.presentingViewController ?? containerViewConroller).present(self.storyViewController, animated: true) {}
         }
     }
 
@@ -361,14 +363,11 @@ private extension APEStripView {
                                StripConfig.hideStripStory])
     }
 
-    func redirect(_ url: URL) {
-        guard let scheme = url.scheme, scheme.contains("http") else { return }
+    func open(url: URL) {
         DispatchQueue.main.async {
-            self.linksRedirectViewController?.dismiss(animated: false, completion: nil)
-            let linkRedirectViewController = SFSafariViewController(url: url)
-            self.linksRedirectViewController = linkRedirectViewController
-            let presntedVC = self.containerViewConroller?.presentedViewController ?? self.containerViewConroller
-            presntedVC?.present(linkRedirectViewController, animated: true, completion: nil)
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url, options: [:]) { _ in }
+            }
         }
     }
 }
@@ -393,6 +392,13 @@ extension APEStripView: WKScriptMessageHandler {
 // MARK:- WKNavigationDelegate
 @available(iOS 11.0, *)
 extension APEStripView: WKNavigationDelegate {
+
+    public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        self.destroy()
+        self.loadingState.isLoaded = false
+        self.delegate?.stripView(self, didFailLoadingChannelToken: self.configuration.channelToken)
+    }
+
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         if let initialMessage = self.loadingState.initialMessage {
             self.messageDispatcher.dispatch(apesterEvent: initialMessage, to: self.storyWebView) { _ in
@@ -410,13 +416,15 @@ extension APEStripView: WKNavigationDelegate {
                 // redirect when the target is a main frame and the strip has been loaded.
                 if loadingState.isLoaded, let targetFrame = navigationAction.targetFrame, targetFrame.isMainFrame,
                     url.absoluteString != webView.url?.absoluteString {
-                    redirect(url)
+                    open(url: url)
                 } else {
                     policy = .allow // allow webview requests communication
                 }
             case .linkActivated:
                 // redirect when the main web view link got clickd.
-                redirect(url)
+                if let scheme = url.scheme, scheme.contains("http") {
+                    open(url: url)
+                }
             default: break
             }
         }
@@ -438,6 +446,18 @@ extension APEStripView: WKNavigationDelegate {
         decisionHandler(.allow)
     }
 }
+
+// MARK:- WKUIDelegate
+@available(iOS 11.0, *)
+extension APEStripView: WKUIDelegate {
+    public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        if let url = navigationAction.request.url {
+            self.open(url: url)
+        }
+        return nil
+    }
+}
+
 // MARK:- WKScriptMessageHandler
 @available(iOS 11.0, *)
 extension APEStripView: UIScrollViewDelegate {
