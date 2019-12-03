@@ -8,17 +8,37 @@
 
 import Foundation
 
-@objc public enum APEEnvironment: Int {
-    case production, stage
+@objc public class APEEnvironment: NSObject {
 
-    var baseUrl: String {
-        var env: String
-        switch self {
-        case .production:
-            env = ""
-        case .stage:
-            env = "stg."
-        }
-        return "https://faststrip." + env + "apester.com"
+    public enum EnvironmentType {
+        case production, stage
+        case local(_: String)
     }
+
+    public private(set) var type: EnvironmentType!
+
+    private override init() {
+        super.init()
+    }
+
+    public init(_ type: EnvironmentType) {
+        self.type = type
+        super.init()
+    }
+
+    var baseUrlString: String {
+        switch self.type {
+            case .production:
+                return "https://faststrip.apester.com"
+            case .stage:
+                return "https://faststrip.stg.apester.com"
+            case .local(let url):
+                return url
+            case .none: fatalError()
+        }
+    }
+    // MARK: @backward compatibility
+    @objc public static private(set) var production = APEEnvironment(.production)
+    @objc public static private(set) var stage = APEEnvironment(.stage)
+    @objc public static private(set) var local: ((String) -> APEEnvironment) = { APEEnvironment(.local($0)) }
 }

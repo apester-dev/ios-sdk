@@ -30,11 +30,11 @@ public enum APEStripConfigurationError: Error {
     }
 
     var stripURL: URL? {
-        return self.parameters.componentsURL(baseURL: (self.environment.baseUrl + Constants.Strip.stripPath))
+        return self.parameters.componentsURL(baseURL: (self.environment.baseUrlString + Constants.Strip.stripPath))
     }
 
     var storyURL: URL? {
-        return self.parameters.componentsURL(baseURL: (self.environment.baseUrl + Constants.Strip.stripStoryPath))
+        return self.parameters.componentsURL(baseURL: (self.environment.baseUrlString + Constants.Strip.stripStoryPath))
     }
 
     public init(channelToken: String, style: APEStripStyle, bundle: Bundle, environment: APEEnvironment) throws {
@@ -48,7 +48,7 @@ public enum APEStripConfigurationError: Error {
     }
 
     public convenience init(channelToken: String, style: APEStripStyle, bundle: Bundle) throws {
-        try self.init(channelToken: channelToken, style: style, bundle: bundle, environment: .production)
+        try self.init(channelToken: channelToken, style: style, bundle: bundle, environment: APEEnvironment.production)
     }
 }
 
