@@ -374,8 +374,8 @@ private extension APEStripView {
 // MARK: UIAdaptivePresentationControllerDelegate
 @available(iOS 11.0, *)
 extension APEStripView: UIAdaptivePresentationControllerDelegate {
-    public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        self.hideStoryComponent()
+    public func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
+        return false
     }
 }
 
