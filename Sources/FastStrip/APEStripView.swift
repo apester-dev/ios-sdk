@@ -375,7 +375,7 @@ private extension APEStripView {
 @available(iOS 11.0, *)
 extension APEStripView: UIAdaptivePresentationControllerDelegate {
     public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        self.hideStoryComponent()
+        self.messageDispatcher.dispatch(apesterEvent: Constants.Strip.close, to: self.storyWebView)
     }
 }
 
