@@ -27,7 +27,9 @@ extension WKWebView {
         MessageDispatcher().dispatchSync(message: WKWebView.navigatorUserAgent, to: self) { response in
             userAgent = (response as? String) ?? ""
         }
-        self.customUserAgent = (userAgent + UserAgent.customized(with: bundleInfo)).replacingOccurrences(of: "iPhone", with: "IPHONE")
+        self.customUserAgent = (userAgent + UserAgent.customized(with: bundleInfo))
+            .replacingOccurrences(of: "iPhone", with: "IPHONE")
+            .replacingOccurrences(of: "iPad", with: "IPAD")
     }
 }
 

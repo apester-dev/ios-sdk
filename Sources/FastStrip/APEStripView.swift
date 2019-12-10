@@ -407,6 +407,13 @@ extension APEStripView: WKNavigationDelegate {
         }
     }
 
+    @available(iOS 13.0, *)
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction,
+                        preferences: WKWebpagePreferences, decisionHandler: @escaping (WKNavigationActionPolicy, WKWebpagePreferences) -> Void) {
+        preferences.preferredContentMode = .mobile
+        decisionHandler(.allow, preferences)
+    }
+
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         var policy = WKNavigationActionPolicy.cancel
         // is valid URL
