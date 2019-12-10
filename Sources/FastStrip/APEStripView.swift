@@ -375,7 +375,7 @@ private extension APEStripView {
 @available(iOS 11.0, *)
 extension APEStripView: UIAdaptivePresentationControllerDelegate {
     public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        self.hideStoryComponent()
+        self.messageDispatcher.dispatch(apesterEvent: Constants.Strip.close, to: self.storyWebView)
     }
 }
 
@@ -405,6 +405,13 @@ extension APEStripView: WKNavigationDelegate {
                 self.loadingState.initialMessage = nil
             }
         }
+    }
+
+    @available(iOS 13.0, *)
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction,
+                        preferences: WKWebpagePreferences, decisionHandler: @escaping (WKNavigationActionPolicy, WKWebpagePreferences) -> Void) {
+        preferences.preferredContentMode = .mobile
+        decisionHandler(.allow, preferences)
     }
 
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {

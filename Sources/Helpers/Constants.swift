@@ -46,6 +46,7 @@ struct Constants {
         static let hideStripStory = "hideApesterStory"
         static let stripHeight = "mobileStripHeight"
         static let stripResizeHeight = "strip_resize"
+        static let close = "window.__closeApesterStory()"
         // functions
         static func sendApesterEvent(with message: String) -> String {
             return "window.__sendApesterEvent(" + message + ")"
