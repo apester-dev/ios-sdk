@@ -370,6 +370,30 @@ private extension APEStripView {
             }
         }
     }
+
+    func decisionHandler(navigationAction: WKNavigationAction, webView: WKWebView, completion: (WKNavigationActionPolicy) -> Void) {
+        var policy = WKNavigationActionPolicy.cancel
+        // is valid URL
+        if let url = navigationAction.request.url {
+            switch navigationAction.navigationType {
+                case .other:
+                    // redirect when the target is a main frame and the strip has been loaded.
+                    if loadingState.isLoaded, let targetFrame = navigationAction.targetFrame, targetFrame.isMainFrame,
+                        url.absoluteString != webView.url?.absoluteString {
+                        open(url: url)
+                    } else {
+                        policy = .allow // allow webview requests communication
+                }
+                case .linkActivated:
+                    // redirect when the main web view link got clickd.
+                    if let scheme = url.scheme, scheme.contains("http") {
+                        open(url: url)
+                }
+                default: break
+            }
+        }
+        completion(policy)
+    }
 }
 // MARK: UIAdaptivePresentationControllerDelegate
 @available(iOS 11.0, *)
@@ -411,31 +435,13 @@ extension APEStripView: WKNavigationDelegate {
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction,
                         preferences: WKWebpagePreferences, decisionHandler: @escaping (WKNavigationActionPolicy, WKWebpagePreferences) -> Void) {
         preferences.preferredContentMode = .mobile
-        decisionHandler(.allow, preferences)
+        self.decisionHandler(navigationAction: navigationAction, webView: webView) { policy in
+            decisionHandler(policy, preferences)
+        }
     }
 
     public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        var policy = WKNavigationActionPolicy.cancel
-        // is valid URL
-        if let url = navigationAction.request.url {
-            switch navigationAction.navigationType {
-            case .other:
-                // redirect when the target is a main frame and the strip has been loaded.
-                if loadingState.isLoaded, let targetFrame = navigationAction.targetFrame, targetFrame.isMainFrame,
-                    url.absoluteString != webView.url?.absoluteString {
-                    open(url: url)
-                } else {
-                    policy = .allow // allow webview requests communication
-                }
-            case .linkActivated:
-                // redirect when the main web view link got clickd.
-                if let scheme = url.scheme, scheme.contains("http") {
-                    open(url: url)
-                }
-            default: break
-            }
-        }
-        decisionHandler(policy)
+        self.decisionHandler(navigationAction: navigationAction, webView: webView, completion: decisionHandler)
     }
 
     public func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
