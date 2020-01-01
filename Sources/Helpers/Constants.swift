@@ -17,6 +17,7 @@ struct Constants {
         static let appName = "appName"
         static let appVersion = "appVersion"
         static let appStoreUrl = "appStoreUrl"
+        static let sdkVersion = "sdkVersion"
     }
 
     /// WebView Keys

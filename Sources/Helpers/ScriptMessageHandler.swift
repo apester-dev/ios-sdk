@@ -27,7 +27,8 @@ class ScriptMessageHandler : NSObject, WKScriptMessageHandler {
 // MARK:- Private WKUserContentController Extension
 extension WKUserContentController {
 
-    func register(to scriptMessages: [String], delegate: WKScriptMessageHandler) {
+    func register(to scriptMessages: [String], delegate: WKScriptMessageHandler?) {
+        guard let delegate = delegate else { return }
         scriptMessages.forEach({
             self.add(ScriptMessageHandler(delegate: delegate), name: $0)
         })

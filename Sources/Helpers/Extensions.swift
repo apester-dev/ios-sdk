@@ -20,6 +20,14 @@ import WebKit
 }
 
 extension WKWebView {
+
+    struct Options {
+        typealias Delegate = WKNavigationDelegate & UIScrollViewDelegate & WKScriptMessageHandler & WKUIDelegate
+        let events: [String]
+        let contentBehavior: UIScrollView.ContentInsetAdjustmentBehavior
+        weak var delegate: Delegate?
+    }
+
     private static let navigatorUserAgent = "navigator.userAgent"
 
     func appendAppNameToUserAgent(_ bundleInfo: [String: String]) {
@@ -30,6 +38,23 @@ extension WKWebView {
         self.customUserAgent = (userAgent + UserAgent.customized(with: bundleInfo))
             .replacingOccurrences(of: "iPhone", with: "IPHONE")
             .replacingOccurrences(of: "iPad", with: "IPAD")
+    }
+
+    static func make(with options: Options) -> WKWebView {
+        let configuration = WKWebViewConfiguration()
+        configuration.websiteDataStore = WKWebsiteDataStore.default()
+        configuration.userContentController.register(to: options.events, delegate: options.delegate)
+        configuration.allowsInlineMediaPlayback = true
+        configuration.mediaTypesRequiringUserActionForPlayback = []
+        let webView = WKWebView(frame: .zero, configuration: configuration)
+        webView.navigationDelegate = options.delegate
+        webView.insetsLayoutMarginsFromSafeArea = true
+        webView.scrollView.isScrollEnabled = false
+        webView.scrollView.bouncesZoom = false
+        webView.scrollView.delegate = options.delegate
+        webView.uiDelegate = options.delegate
+        webView.scrollView.contentInsetAdjustmentBehavior = options.contentBehavior
+        return webView
     }
 }
 
