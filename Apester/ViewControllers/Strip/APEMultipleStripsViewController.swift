@@ -28,7 +28,7 @@ class APEMultipleStripsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let env: APEEnvironment = .stage
+        let env: APEEnvironment = .production
         self.stripViewsData = env.tokens.reduce(into: [:], {
             if let configuration = try? APEStripConfiguration(channelToken: $1,
                                                               style: style,
