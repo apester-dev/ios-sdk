@@ -164,6 +164,7 @@ import SafariServices
 // MARK:- Setup
 @available(iOS 11.0, *)
 private extension APEStripView {
+
     func prepareStripView() {
         setupStripWebView()
         setupStoryWebView()
@@ -171,41 +172,23 @@ private extension APEStripView {
     }
 
     func setupStripWebView() {
-        let webView = WKWebView()
-        webView.navigationDelegate = self
-        webView.insetsLayoutMarginsFromSafeArea = true
-        webView.scrollView.contentInsetAdjustmentBehavior = .never
-        webView.scrollView.isScrollEnabled = false
-        webView.scrollView.bouncesZoom = false
-        webView.scrollView.delegate = self
-        webView.configuration.websiteDataStore = WKWebsiteDataStore.default()
-        webView.configuration.allowsInlineMediaPlayback = true
-        webView.configuration.mediaTypesRequiringUserActionForPlayback = []
-        webView.configuration.userContentController.register(to: [StripConfig.proxy], delegate: self)
+        let options = WKWebView.Options(events: [StripConfig.proxy],
+                                        contentBehavior: .never,
+                                        delegate: self)
+        self.stripWebView = WKWebView.make(with: options)
         if let url = self.configuration?.stripURL {
-            webView.load(URLRequest(url: url))
+            self.stripWebView.load(URLRequest(url: url))
         }
-        self.stripWebView = webView
     }
 
     func setupStoryWebView() {
-        let webView = WKWebView()
-        webView.navigationDelegate = self
-        webView.insetsLayoutMarginsFromSafeArea = true
-        webView.scrollView.contentInsetAdjustmentBehavior = .always
-        webView.scrollView.isScrollEnabled = false
-        webView.scrollView.bouncesZoom = false
-        webView.scrollView.delegate = self
-        webView.uiDelegate = self
-        webView.configuration.websiteDataStore = WKWebsiteDataStore.default()
-        webView.configuration.allowsInlineMediaPlayback = true
-        webView.configuration.mediaTypesRequiringUserActionForPlayback = []
-        webView.configuration.userContentController
-            .register(to: [StripConfig.proxy, StripConfig.showStripStory, StripConfig.hideStripStory], delegate: self)
+        let options = WKWebView.Options(events: [StripConfig.proxy, StripConfig.showStripStory, StripConfig.hideStripStory],
+                                        contentBehavior: .always,
+                                        delegate: self)
+        self.storyWebView = WKWebView.make(with: options)
         if let storyUrl = self.configuration?.storyURL {
-            webView.load(URLRequest(url: storyUrl))
+            self.storyWebView.load(URLRequest(url: storyUrl))
         }
-        self.storyWebView = webView
     }
 
     func setupStoryViewController() {

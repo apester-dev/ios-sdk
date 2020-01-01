@@ -45,16 +45,26 @@ class BundleInfo {
             if let bundleIdentifier = bundle.bundleIdentifier {
                 deviceInfoPayload[Constants.Payload.bundleId] = bundleIdentifier
             }
-            // get the app name and
+            // get the app name and the app version
             if let infoDictionary = bundle.infoDictionary {
                 if let appName = infoDictionary[kCFBundleNameKey as String] as? String {
                     deviceInfoPayload[Constants.Payload.appName] = appName
                     deviceInfoPayload[Constants.Payload.appStoreUrl] = "https://appstore.com/\(appName.trimmingCharacters(in: .whitespaces))"
                 }
-                if let appVersion = infoDictionary[kCFBundleVersionKey as String] as? String {
-                    deviceInfoPayload[Constants.Payload.appVersion] = appVersion
+                var appVersion = ""
+                if let value = infoDictionary["CFBundleShortVersionString"] as? String {
+                    appVersion += value
                 }
-
+                if let value = infoDictionary[kCFBundleVersionKey as String] as? String {
+                    let version: (String) -> String = (appVersion.isEmpty) ? { $0 } : { "(\($0))" }
+                    appVersion += (version(value))
+                }
+                deviceInfoPayload[Constants.Payload.appVersion] = appVersion
+            }
+            // get the SDK version
+            if let infoDictionary = Bundle(for: Self.self).infoDictionary,
+                let sdkVersion = infoDictionary["CFBundleShortVersionString"] as? String {
+                deviceInfoPayload[Constants.Payload.sdkVersion] = sdkVersion
             }
         }
         return deviceInfoPayload
