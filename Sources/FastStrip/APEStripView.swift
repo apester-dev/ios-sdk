@@ -346,11 +346,21 @@ private extension APEStripView {
                                StripConfig.hideStripStory])
     }
 
-    func open(url: URL) {
-        DispatchQueue.main.async {
-            if UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.open(url, options: [:]) { _ in }
+    func open(url: URL, type: APEStripViewNavigationType) {
+        let open: ((URL) -> Void) = { url in
+            DispatchQueue.main.async {
+                if UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url, options: [:]) { _ in }
+                }
             }
+        }
+        // wait for shouldHandleURL callback
+        let shouldHandleURL: Void? = self.delegate?.stripView?(self, shouldHandleURL: url, type: type) {
+            if !$0 { open(url) }
+        }
+        // check if the shouldHandleURL is implemented
+        if shouldHandleURL == nil {
+            open(url)
         }
     }
 
@@ -363,14 +373,14 @@ private extension APEStripView {
                     // redirect when the target is a main frame and the strip has been loaded.
                     if loadingState.isLoaded, let targetFrame = navigationAction.targetFrame, targetFrame.isMainFrame,
                         url.absoluteString != webView.url?.absoluteString {
-                        open(url: url)
+                        open(url: url, type: .other)
                     } else {
                         policy = .allow // allow webview requests communication
                 }
                 case .linkActivated:
                     // redirect when the main web view link got clickd.
                     if let scheme = url.scheme, scheme.contains("http") {
-                        open(url: url)
+                        open(url: url, type: .linkActivated)
                 }
                 default: break
             }
@@ -448,7 +458,7 @@ extension APEStripView: WKNavigationDelegate {
 extension APEStripView: WKUIDelegate {
     public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
         if let url = navigationAction.request.url {
-            self.open(url: url)
+            self.open(url: url, type: .shareLinkActivated)
         }
         return nil
     }
