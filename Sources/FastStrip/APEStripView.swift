@@ -138,6 +138,10 @@ import SafariServices
         self.storyWebView.removeFromSuperview()
     }
 
+    /// Hide the story view
+    public func hideStory() {
+        self.messageDispatcher.dispatch(apesterEvent: Constants.Strip.close, to: self.storyWebView)
+    }
 
     /// subscribe to events in order to observe the events messages data.
     /// for Example, subscribe to load and ready events by: `stripView.subscribe(["strip_loaded", "apester_strip_units"])`
@@ -392,7 +396,7 @@ private extension APEStripView {
 @available(iOS 11.0, *)
 extension APEStripView: UIAdaptivePresentationControllerDelegate {
     public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        self.messageDispatcher.dispatch(apesterEvent: Constants.Strip.close, to: self.storyWebView)
+        self.hideStory()
     }
 }
 
