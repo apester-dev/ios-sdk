@@ -22,13 +22,15 @@ import UIKit
     /// i.e the channel token, style etc...
     /// - Parameter configurations: the configurations to preload
     public func preloadStripViews(with configurations: [APEStripConfiguration]) {
-        DispatchQueue.main.async {
-            let configs = configurations.filter({ self.stripView(for: $0.channelToken) == nil })
-            let stripViewsData = configs.reduce(into: [:]) {
-                $0[$1.channelToken] = APEStripView(configuration: $1)
-            }
-            self.stripViewsData.merge(stripViewsData, uniquingKeysWith: { $1 })
+        guard Thread.isMainThread else {
+            DispatchQueue.main.async { self.preloadStripViews(with: configurations) }
+            return
         }
+        let configs = configurations.filter({ self.stripView(for: $0.channelToken) == nil })
+        let stripViewsData = configs.reduce(into: [:]) {
+            $0[$1.channelToken] = APEStripView(configuration: $1)
+        }
+        self.stripViewsData.merge(stripViewsData, uniquingKeysWith: { $1 })
     }
 
     /// Unload strip views so it can be Removed from cache with the given channelTokens if exists
