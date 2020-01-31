@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ApesterKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
+    APEStripViewService.shared.preloadStripViews(with: StripConfigurationsFactory.configurations)
     return true
   }
 
@@ -43,4 +45,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
+
+@objcMembers class StripConfigurationsFactory: NSObject {
+    private static let style: APEStripStyle = {
+        let header = APEStripHeader(text: "Weitere Beiträge", size: 25.0, family: "Knockout", weight:400, color: .black)
+        return APEStripStyle(shape: .roundSquare,
+                             size: .medium,
+                             padding: UIEdgeInsets(top: 5.0, left: 5.0, bottom: 0, right: 0),
+                             shadow: false,
+                             textColor: nil,
+                             background: .white,
+                             header: header)
+    }()
+
+    static let configurations: [APEStripConfiguration] = {
+        let tokens = ["5e03500a2fd560e0220ff327",
+                      "5ad092c7e16efe4e5c4fb821",
+                      "58ce70315eeaf50e00de3da7",
+                      "5aa15c4f85b36c0001b1023c"]
+
+        return tokens.compactMap {
+            try? APEStripConfiguration(channelToken: $0,
+                                       style: style,
+                                       bundle: Bundle.main)
+        }
+    }()
+}
+
 

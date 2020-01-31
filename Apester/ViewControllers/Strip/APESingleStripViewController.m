@@ -20,25 +20,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    APEStripHeader *header =  [[APEStripHeader alloc] initWithText:@"Weitere Beiträge" size:25.0  family:@"Knockout" weight:400 color:[UIColor purpleColor]];
-    // setup the strip view style
-    APEStripStyle *style = [[APEStripStyle alloc] initWithShape:APEStripShapeRoundSquare
-                                                           size:APEStripSizeMedium
-                                                        padding:UIEdgeInsetsMake(5.0, 5.0, 0, 0)
-                                                         shadow:NO textColor:nil background:nil
-                                                         header:header];
-    // initate the strip config
-    NSError *error = nil;
-    NSString *token = APEStripConfiguration.tokens.firstObject;
-    APEStripConfiguration *config = [[APEStripConfiguration alloc] initWithChannelToken:token
-                                                                                  style:style
-                                                                                 bundle:[NSBundle mainBundle]
-                                                                                  error:&error];
-    if (error == nil) {
-        self.stripView = [[APEStripView alloc] initWithConfiguration:config];
-        self.stripView.delegate = self;
-        [self.stripView displayIn:self.containerView containerViewConroller:self];
-    }
+    // 1 - Get token form the ChannleTokens Service
+    NSString *token = StripConfigurationsFactory.configurations.firstObject.channelToken;
+    // 2 - load
+    self.stripView = [APEStripViewService.shared stripViewFor:token];;
+    self.stripView.delegate = self;
+    self.containerViewHeightConstraint.constant = self.stripView.height;
+    [self.stripView displayIn:self.containerView containerViewConroller:self];
+
 }
 
 #pragma mark - APEStripViewDelegate
