@@ -38,9 +38,6 @@ extension APEMultipleStripsViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ReuseCellIdentifier", for: indexPath) as! APEStripCollectionViewCell
-        guard indexPath.row < self.channelTokens.count else {
-            return cell
-        }
         let token = self.channelTokens[indexPath.row]
         let stripView = APEStripViewService.shared.stripView(for: token)
         cell.show(stripView: stripView, containerViewConroller: self)
