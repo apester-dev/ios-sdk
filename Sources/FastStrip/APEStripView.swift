@@ -77,12 +77,13 @@ import SafariServices
         }
         return calculatedHeight
     }
-
+    
     /// The strip view visibility status, update this property either when the strip view is visible or not.
     public var isDisplayed: Bool = false {
         didSet {
-            self.messageDispatcher.dispatchAsync(Constants.Strip.setViewVisibilityStatus(isDisplayed),
-                                                 to: self.stripWebView)
+            self.messageDispatcher
+                .dispatchAsync(Constants.Strip.setViewVisibilityStatus(isDisplayed),
+                               to: self.stripWebView)
         }
     }
 

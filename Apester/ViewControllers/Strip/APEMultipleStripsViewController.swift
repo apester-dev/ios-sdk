@@ -19,7 +19,7 @@ class APEMultipleStripsViewController: UIViewController {
         }
     }
 
-    private lazy var channelTokens: [String] = StripConfigurationsFactory.configurations.map { $0.channelToken }
+    private var channelTokens: [String] = StripConfigurationsFactory.tokens
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +43,6 @@ extension APEMultipleStripsViewController: UICollectionViewDataSource {
             let token = self.channelTokens[indexPath.row / Self.emptyCellsCount]
             let stripView = APEStripViewService.shared.stripView(for: token)
             cell.show(stripView: stripView, containerViewConroller: self)
-
         }
         return cell
     }

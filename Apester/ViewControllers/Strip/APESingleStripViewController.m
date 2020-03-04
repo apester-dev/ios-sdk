@@ -21,7 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // 1 - Get token form the ChannleTokens Service
-    NSString *token = StripConfigurationsFactory.configurations.firstObject.channelToken;
+    NSString *token = StripConfigurationsFactory.tokens.firstObject;
     // 2 - load cached stripView
     self.stripView = [APEStripViewService.shared stripViewFor:token];
     self.stripView.delegate = self;

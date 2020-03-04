@@ -20,16 +20,25 @@ import ApesterKit
                       header: APEStripHeader(text: "Weitere Beiträge", size: 25.0, family: "Knockout", weight:400, color: .black))
     }()
 
-    static let configurations: [APEStripConfiguration] = {
-        let tokens = ["5e03500a2fd560e0220ff327", "5ad092c7e16efe4e5c4fb821", "58ce70315eeaf50e00de3da7", "5aa15c4f85b36c0001b1023c"]
-        return makeStripConfigurations(with: tokens)
-    }()
+    static private(set) var tokens: [String] = []
+
+    static func configurations(for env: APEEnvironment = .production) -> [APEStripConfiguration]  {
+        var tokens: [String]
+        switch env {
+            case .production:
+            tokens = ["5e03500a2fd560e0220ff327", "5ad092c7e16efe4e5c4fb821", "58ce70315eeaf50e00de3da7", "5aa15c4f85b36c0001b1023c"]
+            case .stage:
+            tokens = ["58c551f76a67357e3b4aa943"]
+        }
+        self.tokens = tokens
+        return makeStripConfigurations(with: tokens, environment: env)
+    }
 
     /// transform all given channel toekns to [APEStripConfiguration]
     /// - Parameter channleTokens: the channelTokens to transform
-    static func makeStripConfigurations(with channleTokens: [String]) -> [APEStripConfiguration] {
+    static func makeStripConfigurations(with channleTokens: [String], environment: APEEnvironment) -> [APEStripConfiguration] {
         channleTokens.compactMap {
-            try? APEStripConfiguration(channelToken: $0, style: style, bundle: Bundle.main)
+            try? APEStripConfiguration(channelToken: $0, style: style, bundle: Bundle.main, environment: environment)
         }
     }
 }
