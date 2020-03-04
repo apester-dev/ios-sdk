@@ -77,6 +77,15 @@ import SafariServices
         }
         return calculatedHeight
     }
+    
+    /// The strip view visibility status, update this property either when the strip view is visible or not.
+    public var isDisplayed: Bool = false {
+        didSet {
+            self.messageDispatcher
+                .dispatchAsync(Constants.Strip.setViewVisibilityStatus(isDisplayed),
+                               to: self.stripWebView)
+        }
+    }
 
     // MARK:- Initializer
     /// init with configuration and UIapplication
@@ -140,7 +149,7 @@ import SafariServices
 
     /// Hide the story view
     public func hideStory() {
-        self.messageDispatcher.dispatch(apesterEvent: Constants.Strip.close, to: self.storyWebView)
+        self.messageDispatcher.dispatchAsync(Constants.Strip.close, to: self.storyWebView)
     }
 
     /// subscribe to events in order to observe the events messages data.
@@ -176,7 +185,7 @@ private extension APEStripView {
     }
 
     func setupStripWebView() {
-        let options = WKWebView.Options(events: [StripConfig.proxy],
+        let options = WKWebView.Options(events: [StripConfig.proxy, StripConfig.validateStripViewVisibity],
                                         contentBehavior: .never,
                                         delegate: self)
         self.stripWebView = WKWebView.make(with: options)
@@ -207,7 +216,7 @@ private extension APEStripView {
     func handleUserContentController(message: WKScriptMessage) {
         if let bodyString = message.body as? String {
             if message.webView?.hash == stripWebView.hash {
-                handleStripWebViewMessages(bodyString)
+                handleStripWebViewMessages(bodyString, messageName: message.name)
             } else if message.webView?.hash == storyWebView.hash {
                 handleStoryWebViewMessages(bodyString)
             }
@@ -222,7 +231,7 @@ private extension APEStripView {
         }
     }
 
-    func handleStripWebViewMessages(_ bodyString: String) {
+    func handleStripWebViewMessages(_ bodyString: String, messageName: String) {
         if bodyString.contains(StripConfig.initial) {
             self.loadingState.initialMessage = bodyString
 
@@ -261,6 +270,18 @@ private extension APEStripView {
             self.destroy()
             self.loadingState.isLoaded = false
             delegate?.stripView(self, didFailLoadingChannelToken: self.configuration.channelToken)
+        }
+        else if messageName == StripConfig.validateStripViewVisibity {
+            guard let containerVC = self.containerViewConroller, let view = self.containerView else {
+                self.isDisplayed = false
+                return
+            }
+            if containerVC.view.allSubviews.first(where: { $0 == view }) != nil {
+                let convertedCenterPoint = view.convert(view.center, to: containerVC.view)
+                self.isDisplayed = containerVC.view.bounds.contains(convertedCenterPoint)
+            } else {
+                self.isDisplayed = false
+            }
         }
         // proxy updates
         if !self.messageDispatcher.contains(message: bodyString, for: storyWebView) {
@@ -391,6 +412,12 @@ private extension APEStripView {
         }
         completion(policy)
     }
+}
+private extension UIView {
+    var allSubviews: [UIView] {
+        return subviews + subviews.flatMap { $0.allSubviews }
+    }
+
 }
 // MARK: UIAdaptivePresentationControllerDelegate
 @available(iOS 11.0, *)

@@ -19,7 +19,7 @@ class APEMultipleStripsViewController: UIViewController {
         }
     }
 
-    private lazy var channelTokens: [String] = StripConfigurationsFactory.configurations.map { $0.channelToken }
+    private var channelTokens: [String] = StripConfigurationsFactory.tokens
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,26 +31,31 @@ class APEMultipleStripsViewController: UIViewController {
 }
 
 extension APEMultipleStripsViewController: UICollectionViewDataSource {
+    static let emptyCellsCount = 2
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.channelTokens.count
+        return self.channelTokens.count * Self.emptyCellsCount
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ReuseCellIdentifier", for: indexPath) as! APEStripCollectionViewCell
-        let token = self.channelTokens[indexPath.row]
-        let stripView = APEStripViewService.shared.stripView(for: token)
-        cell.show(stripView: stripView, containerViewConroller: self)
+        if indexPath.row % Self.emptyCellsCount == 0 {
+            let token = self.channelTokens[indexPath.row / Self.emptyCellsCount]
+            let stripView = APEStripViewService.shared.stripView(for: token)
+            cell.show(stripView: stripView, containerViewConroller: self)
+        }
         return cell
     }
 }
 
 extension APEMultipleStripsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        guard indexPath.row < self.channelTokens.count else { return .zero }
-        let token = self.channelTokens[indexPath.row]
-        let stripView = APEStripViewService.shared.stripView(for: token)
-        return CGSize(width: collectionView.bounds.width, height: stripView?.height ?? 0)
+        if indexPath.row % Self.emptyCellsCount == 0 {
+            let token = self.channelTokens[indexPath.row / Self.emptyCellsCount]
+            let stripView = APEStripViewService.shared.stripView(for: token)
+            return CGSize(width: collectionView.bounds.width, height: stripView?.height ?? 0)
+        }
+        return CGSize(width: collectionView.bounds.width, height: 220)
     }
 }
 
