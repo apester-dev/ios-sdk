@@ -19,6 +19,7 @@
 		8658F76E2383305B00C23BDA /* APEStripViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8658F76923832E4500C23BDA /* APEStripViewDelegate.swift */; };
 		867D559B23E4A0D600190D64 /* APEStripViewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867D559A23E4A0D600190D64 /* APEStripViewService.swift */; };
 		867D559D23E4A0DC00190D64 /* APEStripViewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867D559A23E4A0D600190D64 /* APEStripViewService.swift */; };
+		86AC3115240BA788003F4753 /* StripConfigurationsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86AC3114240BA788003F4753 /* StripConfigurationsFactory.swift */; };
 		86AFA1BB232BE99F00E1720A /* APESingleStripViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86AFA1BA232BE99F00E1720A /* APESingleStripViewController.m */; };
 		86AFA1F0232C052500E1720A /* APEStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0BE33D2223169400542E3C /* APEStripView.swift */; };
 		86AFA1F1232C052700E1720A /* APEStripConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109E22D53D2F00BB1DEC /* APEStripConfiguration.swift */; };
@@ -98,6 +99,7 @@
 		8658F76923832E4500C23BDA /* APEStripViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripViewDelegate.swift; sourceTree = "<group>"; };
 		8658F76B23832F9700C23BDA /* APEEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEEnvironment.swift; sourceTree = "<group>"; };
 		867D559A23E4A0D600190D64 /* APEStripViewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripViewService.swift; sourceTree = "<group>"; };
+		86AC3114240BA788003F4753 /* StripConfigurationsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripConfigurationsFactory.swift; sourceTree = "<group>"; };
 		86AFA1B8232BE99F00E1720A /* Apester-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Apester-Bridging-Header.h"; sourceTree = "<group>"; };
 		86AFA1B9232BE99F00E1720A /* APESingleStripViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APESingleStripViewController.h; sourceTree = "<group>"; };
 		86AFA1BA232BE99F00E1720A /* APESingleStripViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APESingleStripViewController.m; sourceTree = "<group>"; };
@@ -282,6 +284,7 @@
 		BB9709C2222332AE00E1076B /* Strip */ = {
 			isa = PBXGroup;
 			children = (
+				86AC3114240BA788003F4753 /* StripConfigurationsFactory.swift */,
 				86AFA1B9232BE99F00E1720A /* APESingleStripViewController.h */,
 				86AFA1BA232BE99F00E1720A /* APESingleStripViewController.m */,
 				BB9709BE22232BED00E1076B /* APEMultipleStripsViewController.swift */,
@@ -516,6 +519,7 @@
 			files = (
 				86B73602233871CF00949864 /* APEStripCollectionViewCell.swift in Sources */,
 				BBC96DD22227844F00EA7E6B /* APEMultipleStripsViewController.swift in Sources */,
+				86AC3115240BA788003F4753 /* StripConfigurationsFactory.swift in Sources */,
 				BBC96DA8222781F400EA7E6B /* AppDelegate.swift in Sources */,
 				86AFA1BB232BE99F00E1720A /* APESingleStripViewController.m in Sources */,
 			);

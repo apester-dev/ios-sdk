@@ -30,6 +30,11 @@ class MessageDispatcher {
         self.dispatch(message: Constants.Strip.sendApesterEvent(with: message), to: webView, completion: completion)
     }
 
+    func dispatchAsync(_ message: String, to webView: WKWebView, completion: ((Any?) -> Void)? = nil) {
+        self.messages[webView.hash] = message
+        self.dispatch(message: message, to: webView, completion: completion)
+    }
+
     func dispatchSync(message: String, to webView: WKWebView, completion: ((Any?) -> Void)? = nil) {
         let script = SynchronizedScript()
         script.lock()
