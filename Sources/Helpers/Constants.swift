@@ -61,4 +61,9 @@ struct Constants {
         //
         static let getHeight = "window.__getHeight()"
     }
+    
+    struct Unit {
+        static let unitPath = "/v2/static/in-app-unit-detached.html"
+        static let proxy = "apesterUnitProxy"
+    }
 }
