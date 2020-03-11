@@ -41,21 +41,23 @@ extension WKWebView {
     }
 
     static func make(with options: Options) -> WKWebView {
+        let delegate = options.delegate
         let configuration = WKWebViewConfiguration()
         configuration.websiteDataStore = WKWebsiteDataStore.default()
-        configuration.userContentController.register(to: options.events, delegate: options.delegate)
+        configuration.userContentController.register(to: options.events, delegate: delegate)
         configuration.allowsInlineMediaPlayback = true
         configuration.mediaTypesRequiringUserActionForPlayback = []
         let webView = WKWebView(frame: .zero, configuration: configuration)
-        webView.navigationDelegate = options.delegate
+        webView.navigationDelegate = delegate
         webView.insetsLayoutMarginsFromSafeArea = true
         webView.scrollView.isScrollEnabled = false
         webView.scrollView.bouncesZoom = false
-        webView.scrollView.delegate = options.delegate
-        webView.uiDelegate = options.delegate
+        webView.scrollView.delegate = delegate
+        webView.uiDelegate = delegate
         webView.scrollView.contentInsetAdjustmentBehavior = options.contentBehavior
         return webView
     }
+    
 }
 
 extension UIColor {

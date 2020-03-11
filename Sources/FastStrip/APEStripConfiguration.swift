@@ -53,7 +53,7 @@ public enum APEStripConfigurationError: Error {
 }
 
 // MARK:- Dictionary Extension
-private extension Dictionary {
+extension Dictionary {
     func componentsURL(baseURL urlString: String) -> URL? {
         var components = URLComponents(string: urlString)
         components?.queryItems = self.compactMap { (arg) in
