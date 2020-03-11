@@ -15,7 +15,7 @@ class APEUnitViewController: UIViewController {
     // local story: 5ddeaa945d06ef005f3668e8
     // stg story: 5e67832958c4d8457106a2ed
     
-    var apeUnitWebView: APEUnitWebView!
+    var apeUnitWebView: APEUnitView!
     let configuration = try? APEUnitConfiguration(mediaId: "5e67832958c4d8457106a2ed",
                                                   bundle: Bundle.main, environment: .stage)
    @IBOutlet weak var unitContainerView: UIView!
@@ -24,7 +24,7 @@ class APEUnitViewController: UIViewController {
         super.viewDidLoad()
         
         guard let unitConfig = configuration else { return }
-        apeUnitWebView = APEUnitWebView(unitConfig)
+        apeUnitWebView = APEUnitView(unitConfig)
         
         let apesterUnit = apeUnitWebView.unitWebView!
         unitContainerView.addSubview(apesterUnit)

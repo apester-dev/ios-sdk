@@ -12,8 +12,8 @@
 		3697E8642417F77100B6AC79 /* APEUnitEnviorment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697E8632417F77100B6AC79 /* APEUnitEnviorment.swift */; };
 		3697E8662417F86700B6AC79 /* APEUnitConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */; };
 		3697E8672417FAF900B6AC79 /* APEUnitConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */; };
-		36FC4E56241776BC00A25076 /* APEUnitWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FC4E55241776BC00A25076 /* APEUnitWebView.swift */; };
-		36FC4E5E24178CB800A25076 /* APEUnitWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FC4E55241776BC00A25076 /* APEUnitWebView.swift */; };
+		36FC4E56241776BC00A25076 /* APEUnitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FC4E55241776BC00A25076 /* APEUnitView.swift */; };
+		36FC4E5E24178CB800A25076 /* APEUnitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FC4E55241776BC00A25076 /* APEUnitView.swift */; };
 		36FC4E6324178CE600A25076 /* APEWebViewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109522D53B2C00BB1DEC /* APEWebViewService.swift */; };
 		36FC4E6424178CE700A25076 /* APEWebViewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109522D53B2C00BB1DEC /* APEWebViewService.swift */; };
 		36FC4E6E2417932000A25076 /* APEUnitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36795E7D2416531A00546AA5 /* APEUnitViewController.swift */; };
@@ -105,7 +105,7 @@
 		36795E7D2416531A00546AA5 /* APEUnitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitViewController.swift; sourceTree = "<group>"; };
 		3697E8632417F77100B6AC79 /* APEUnitEnviorment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitEnviorment.swift; sourceTree = "<group>"; };
 		3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitConfiguration.swift; sourceTree = "<group>"; };
-		36FC4E55241776BC00A25076 /* APEUnitWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitWebView.swift; sourceTree = "<group>"; };
+		36FC4E55241776BC00A25076 /* APEUnitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitView.swift; sourceTree = "<group>"; };
 		86120811233F74A9006608F1 /* UserAgent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAgent.swift; sourceTree = "<group>"; };
 		8652CB20233BF93B0092E309 /* SynchronizedScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynchronizedScript.swift; sourceTree = "<group>"; };
 		8658F76923832E4500C23BDA /* APEStripViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripViewDelegate.swift; sourceTree = "<group>"; };
@@ -284,7 +284,7 @@
 			isa = PBXGroup;
 			children = (
 				BB44109522D53B2C00BB1DEC /* APEWebViewService.swift */,
-				36FC4E55241776BC00A25076 /* APEUnitWebView.swift */,
+				36FC4E55241776BC00A25076 /* APEUnitView.swift */,
 				3697E8632417F77100B6AC79 /* APEUnitEnviorment.swift */,
 				3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */,
 			);
@@ -512,7 +512,7 @@
 				BB44109F22D53D2F00BB1DEC /* APEStripConfiguration.swift in Sources */,
 				3697E8662417F86700B6AC79 /* APEUnitConfiguration.swift in Sources */,
 				BB9709AB222322E000E1076B /* Constants.swift in Sources */,
-				36FC4E56241776BC00A25076 /* APEUnitWebView.swift in Sources */,
+				36FC4E56241776BC00A25076 /* APEUnitView.swift in Sources */,
 				86EAFF2D233E9D1000081AAB /* BundleInfo.swift in Sources */,
 				BB44109222D53AAB00BB1DEC /* ScriptMessageHandler.swift in Sources */,
 				36FC4E6324178CE600A25076 /* APEWebViewService.swift in Sources */,
@@ -531,7 +531,7 @@
 				86AFA1F0232C052500E1720A /* APEStripView.swift in Sources */,
 				BBC96DE1222785F400EA7E6B /* Constants.swift in Sources */,
 				86AFA1F5232C057900E1720A /* MessagesDispatcher.swift in Sources */,
-				36FC4E5E24178CB800A25076 /* APEUnitWebView.swift in Sources */,
+				36FC4E5E24178CB800A25076 /* APEUnitView.swift in Sources */,
 				8658F76D2383304800C23BDA /* APEEnvironment.swift in Sources */,
 				86AFA1F1232C052700E1720A /* APEStripConfiguration.swift in Sources */,
 				3697E8672417FAF900B6AC79 /* APEUnitConfiguration.swift in Sources */,

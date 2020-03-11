@@ -9,7 +9,7 @@
 import Foundation
 import WebKit
 
-@objcMembers public class APEUnitWebView: NSObject, UIScrollViewDelegate, WKUIDelegate {
+@objcMembers public class APEUnitView: NSObject, UIScrollViewDelegate, WKUIDelegate {
     
     public private(set) var unitWebView: WKWebView!
     public private(set) var apeUnitEnviorement: APEUnitEnvironment!
@@ -54,7 +54,7 @@ import WebKit
     }
 }
 
-extension APEUnitWebView: WKNavigationDelegate {
+extension APEUnitView: WKNavigationDelegate {
     public func webView(_ webView: WKWebView,
                  didReceive challenge: URLAuthenticationChallenge,
                  completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void)
@@ -76,7 +76,7 @@ extension APEUnitWebView: WKNavigationDelegate {
     
 }
 
-extension APEUnitWebView: WKScriptMessageHandler {
+extension APEUnitView: WKScriptMessageHandler {
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == Constants.Unit.proxy {
             if let bodyString = message.body as? String {
