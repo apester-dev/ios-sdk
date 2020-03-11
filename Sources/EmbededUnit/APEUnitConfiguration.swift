@@ -45,17 +45,3 @@ public enum AlmogError: Error {
         try self.init(mediaId: mediaId, bundle: bundle, environment: .local)
     }
 }
-
-// MARK:- Dictionary Extension
-private extension Dictionary {
-    func componentsURL(baseURL urlString: String) -> URL? {
-        var components = URLComponents(string: urlString)
-        components?.queryItems = self.compactMap { (arg) in
-            guard let key = arg.key as? String, let value = arg.value as? String else {
-                return nil
-            }
-            return URLQueryItem(name: key, value: value)
-        }
-        return components?.url
-    }
-}
