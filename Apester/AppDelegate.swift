@@ -13,20 +13,16 @@ import ApesterKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
-private var unitViewData: [String: APEUnitWebViewV2] = [:]
-
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
     APEStripViewService.shared.preloadStripViews(with: StripConfigurationsFactory.configurations(for: .stage))
     
-    let configuration = try? APEUnitConfiguration(mediaId: "5e67bd1c6abc6400725787ab",
-    bundle: Bundle.main, environment: .local)
-    
-    guard let unitConfig = configuration else { return true}
-    let apeUnitWebView = APEUnitWebViewV2(unitConfig)
+    if let unitConfig = UnitConfigurationsFactory.configuration(for: .local) {
 
-    self.unitViewData[unitConfig.mediaId] = apeUnitWebView
+        APEUnitViewService.shared.preloadUnitView(with: unitConfig)
+
+    }
     
     return true
   }

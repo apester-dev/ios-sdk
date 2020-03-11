@@ -70,6 +70,10 @@ extension APEUnitView: WKNavigationDelegate {
         completionHandler(.performDefaultHandling, nil)
     }
     
+    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        print("loading web view completed")
+    }
+    
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
           // todo handle failures
        }
