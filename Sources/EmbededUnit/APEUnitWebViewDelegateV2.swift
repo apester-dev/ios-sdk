@@ -11,10 +11,12 @@ import WebKit
 
 class APEUnitWebViewDelegateV2: NSObject, WKUIDelegate, UIScrollViewDelegate {
     
-    var apeUnitView: APEUnitWebViewV2?
+    var apeUnitView: APEUnitWebViewV2!
+    var enviorment: APEUnitEnvironment!
     
-    func initApeUnitView(_ apeUnitView: APEUnitWebViewV2) {
+    public init(_ apeUnitView: APEUnitWebViewV2, _ enviorment: APEUnitEnvironment) {
         self.apeUnitView = apeUnitView
+        self.enviorment = enviorment
     }
     
 }
@@ -24,16 +26,24 @@ extension APEUnitWebViewDelegateV2: WKNavigationDelegate {
                  didReceive challenge: URLAuthenticationChallenge,
                  completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void)
     {
-        if(challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust)
-        {
-            let cred = URLCredential(trust: challenge.protectionSpace.serverTrust!)
-            completionHandler(.useCredential, cred)
-        }
-        else
-        {
-            completionHandler(.performDefaultHandling, nil)
+        if(enviorment == .local) {
+            
+            if(challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust)
+            {
+                let cred = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+                completionHandler(.useCredential, cred)
+            }
+            else
+            {
+                completionHandler(.performDefaultHandling, nil)
+            }
         }
     }
+    
+    public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+          // todo handle failures
+       }
+    
 }
 
 extension APEUnitWebViewDelegateV2: WKScriptMessageHandler {

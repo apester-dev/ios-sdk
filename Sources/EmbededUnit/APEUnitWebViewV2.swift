@@ -12,18 +12,19 @@ import WebKit
 @objcMembers public class APEUnitWebViewV2: NSObject {
     
     private var unitWebView: WKWebView!
-    private let apeUnitWebViewDelegate = APEUnitWebViewDelegateV2()
+    private var apeUnitWebViewDelegate: APEUnitWebViewDelegateV2!
     private var apeUnitSize: (widht: CGFloat, height: CGFloat)!
     
     public init(_ configuration: APEUnitConfiguration) {
         super.init()
+        
+        apeUnitWebViewDelegate = APEUnitWebViewDelegateV2(self, configuration.environment)
         
         let options = WKWebView.Options(events: [Constants.Unit.proxy],
                                         contentBehavior: .never,
                                         delegate: apeUnitWebViewDelegate)
 
         self.unitWebView = WKWebView.make(with: options)
-        apeUnitWebViewDelegate.initApeUnitView(self)
         
         guard let unitUrl = configuration.unitURL else { return }
         
