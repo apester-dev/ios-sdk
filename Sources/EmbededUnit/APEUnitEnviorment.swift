@@ -21,6 +21,6 @@ import Foundation
         case .local:
             return "https://player.apester.local.com"
         }
-        return "https://faststrip." + env + "apester.com"
+        return "https://renderer.\(env).apester.com"
     }
 }
