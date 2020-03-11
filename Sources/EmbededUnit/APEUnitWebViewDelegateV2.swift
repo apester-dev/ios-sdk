@@ -37,7 +37,10 @@ extension APEUnitWebViewDelegateV2: WKNavigationDelegate {
             {
                 completionHandler(.performDefaultHandling, nil)
             }
+        } else {
+                completionHandler(.performDefaultHandling, nil)
         }
+        
     }
     
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {

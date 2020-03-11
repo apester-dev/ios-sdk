@@ -12,8 +12,8 @@ import ApesterKit
 class APEUnitViewController: UIViewController {
     
     var apeUnitWebView: APEUnitWebViewV2!
-    let configuration = try? APEUnitConfiguration(mediaId: "5e67bd1c6abc6400725787ab",
-                                                  bundle: Bundle.main, environment: .local)
+    let configuration = try? APEUnitConfiguration(mediaId: "5e67832958c4d8457106a2ed",
+                                                  bundle: Bundle.main, environment: .stage)
     
     override func viewDidLoad() {
         super.viewDidLoad()
