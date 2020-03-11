@@ -20,11 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VWw-u6-TLD">
-                                <rect key="frame" x="16" y="146" width="0.0" height="513"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" id="Uom-4q-TCt"/>
-                                    <constraint firstAttribute="width" id="wan-9k-DUk"/>
-                                </constraints>
+                                <rect key="frame" x="16" y="146" width="343" height="513"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>

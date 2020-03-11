@@ -13,8 +13,6 @@
 		3697E8662417F86700B6AC79 /* APEUnitConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */; };
 		3697E8672417FAF900B6AC79 /* APEUnitConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */; };
 		36FC4E56241776BC00A25076 /* APEUnitWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FC4E55241776BC00A25076 /* APEUnitWebView.swift */; };
-		36FC4E582417775300A25076 /* APEUnitWebViewDelegateV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FC4E572417775300A25076 /* APEUnitWebViewDelegateV2.swift */; };
-		36FC4E5D24178CB500A25076 /* APEUnitWebViewDelegateV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FC4E572417775300A25076 /* APEUnitWebViewDelegateV2.swift */; };
 		36FC4E5E24178CB800A25076 /* APEUnitWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FC4E55241776BC00A25076 /* APEUnitWebView.swift */; };
 		36FC4E6324178CE600A25076 /* APEWebViewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109522D53B2C00BB1DEC /* APEWebViewService.swift */; };
 		36FC4E6424178CE700A25076 /* APEWebViewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109522D53B2C00BB1DEC /* APEWebViewService.swift */; };
@@ -108,7 +106,6 @@
 		3697E8632417F77100B6AC79 /* APEUnitEnviorment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitEnviorment.swift; sourceTree = "<group>"; };
 		3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitConfiguration.swift; sourceTree = "<group>"; };
 		36FC4E55241776BC00A25076 /* APEUnitWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitWebView.swift; sourceTree = "<group>"; };
-		36FC4E572417775300A25076 /* APEUnitWebViewDelegateV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitWebViewDelegateV2.swift; sourceTree = "<group>"; };
 		86120811233F74A9006608F1 /* UserAgent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAgent.swift; sourceTree = "<group>"; };
 		8652CB20233BF93B0092E309 /* SynchronizedScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynchronizedScript.swift; sourceTree = "<group>"; };
 		8658F76923832E4500C23BDA /* APEStripViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripViewDelegate.swift; sourceTree = "<group>"; };
@@ -288,7 +285,6 @@
 			children = (
 				BB44109522D53B2C00BB1DEC /* APEWebViewService.swift */,
 				36FC4E55241776BC00A25076 /* APEUnitWebView.swift */,
-				36FC4E572417775300A25076 /* APEUnitWebViewDelegateV2.swift */,
 				3697E8632417F77100B6AC79 /* APEUnitEnviorment.swift */,
 				3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */,
 			);
@@ -507,7 +503,6 @@
 				BB44109A22D53B9500BB1DEC /* MessagesDispatcher.swift in Sources */,
 				8652CB21233BF93B0092E309 /* SynchronizedScript.swift in Sources */,
 				8658F76A23832E4500C23BDA /* APEStripViewDelegate.swift in Sources */,
-				36FC4E582417775300A25076 /* APEUnitWebViewDelegateV2.swift in Sources */,
 				86B735ED23380D9100949864 /* APEStripStyle.swift in Sources */,
 				86120824233F74A9006608F1 /* UserAgent.swift in Sources */,
 				BB44109D22D53BF300BB1DEC /* Extensions.swift in Sources */,
@@ -532,7 +527,6 @@
 				86B2AA6D23830D40000F171D /* APEStripViewTests.swift in Sources */,
 				8652CB22233C0B140092E309 /* SynchronizedScript.swift in Sources */,
 				8658F76E2383305B00C23BDA /* APEStripViewDelegate.swift in Sources */,
-				36FC4E5D24178CB500A25076 /* APEUnitWebViewDelegateV2.swift in Sources */,
 				86AFA1F6232C057E00E1720A /* Extensions.swift in Sources */,
 				86AFA1F0232C052500E1720A /* APEStripView.swift in Sources */,
 				BBC96DE1222785F400EA7E6B /* Constants.swift in Sources */,

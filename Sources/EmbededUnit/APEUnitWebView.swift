@@ -9,19 +9,19 @@
 import Foundation
 import WebKit
 
-@objcMembers public class APEUnitWebView: NSObject {
+@objcMembers public class APEUnitWebView: NSObject, UIScrollViewDelegate, WKUIDelegate {
     
     public private(set) var unitWebView: WKWebView!
-    private var apeUnitWebViewDelegate: APEUnitWebViewDelegateV2!
+    public private(set) var apeUnitEnviorement: APEUnitEnvironment!
     
     public init(_ configuration: APEUnitConfiguration) {
         super.init()
         
-        apeUnitWebViewDelegate = APEUnitWebViewDelegateV2(self, configuration.environment)
+        apeUnitEnviorement = configuration.environment
         
         let options = WKWebView.Options(events: [Constants.Unit.proxy],
                                         contentBehavior: .never,
-                                        delegate: apeUnitWebViewDelegate)
+                                        delegate: self)
 
         self.unitWebView = WKWebView.make(with: options)
         
@@ -53,6 +53,53 @@ import WebKit
         
     }
 }
+
+extension APEUnitWebView: WKNavigationDelegate {
+    public func webView(_ webView: WKWebView,
+                 didReceive challenge: URLAuthenticationChallenge,
+                 completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void)
+    {
+        if self.apeUnitEnviorement == .local {
+            if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust
+            {
+                let cred = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+                completionHandler(.useCredential, cred)
+                return
+            }
+        }
+        completionHandler(.performDefaultHandling, nil)
+    }
+    
+    public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+          // todo handle failures
+       }
+    
+}
+
+extension APEUnitWebView: WKScriptMessageHandler {
+    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        if message.name == Constants.Unit.proxy {
+            if let bodyString = message.body as? String {
+                if(bodyString.contains(Constants.Unit.resize)) {
+                    guard let dictionary = bodyString.dictionary else {
+                        return
+                    }
+                    let height = dictionary.floatValue(for: Constants.Unit.height)
+                    let width = dictionary.floatValue(for: Constants.Unit.width)
+                    self.update(CGSize(width: width, height: height));
+                }
+                
+            }
+        }
+    }
+}
+
+private extension Dictionary {
+    func floatValue(for key: Key) -> CGFloat {
+        CGFloat(self[key] as? Double ?? 0)
+    }
+}
+
 
 // gallery - 5d3ff466640846006e46146e
 // quiz 5d6527a40f10dd006186dbcd

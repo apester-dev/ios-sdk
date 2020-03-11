@@ -16,8 +16,8 @@ class APEUnitViewController: UIViewController {
     // stg story: 5e67832958c4d8457106a2ed
     
     var apeUnitWebView: APEUnitWebView!
-    let configuration = try? APEUnitConfiguration(mediaId: "5ddeaa945d06ef005f3668e8",
-                                                  bundle: Bundle.main, environment: .local)
+    let configuration = try? APEUnitConfiguration(mediaId: "5e67832958c4d8457106a2ed",
+                                                  bundle: Bundle.main, environment: .stage)
    @IBOutlet weak var unitContainerView: UIView!
     
     override func viewDidLoad() {
