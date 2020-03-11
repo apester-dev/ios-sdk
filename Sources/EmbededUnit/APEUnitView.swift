@@ -9,19 +9,19 @@
 import Foundation
 import WebKit
 
-@objcMembers public class APEUnitView: NSObject, UIScrollViewDelegate, WKUIDelegate {
+@objcMembers public class APEUnitView: NSObject {
     
     public private(set) var unitWebView: WKWebView!
     public private(set) var apeUnitEnviorement: APEUnitEnvironment!
     
-    public init(_ configuration: APEUnitConfiguration) {
+    public init(configuration: APEUnitConfiguration) {
         super.init()
         
         apeUnitEnviorement = configuration.environment
         
         let options = WKWebView.Options(events: [Constants.Unit.proxy],
                                         contentBehavior: .never,
-                                        delegate: self)
+                                        unitDelegate: self)
 
         self.unitWebView = WKWebView.make(with: options)
         
@@ -30,7 +30,7 @@ import WebKit
         unitWebView.load(URLRequest(url: unitUrl))
     }
     
-    public func update(_ size: CGSize) {
+    public func update(size: CGSize) {
         
         self.unitWebView.translatesAutoresizingMaskIntoConstraints = false
         let containerViewHeightConstraint = unitWebView.heightAnchor.constraint(equalToConstant: size.height)
@@ -86,7 +86,7 @@ extension APEUnitView: WKScriptMessageHandler {
                     }
                     let height = dictionary.floatValue(for: Constants.Unit.height)
                     let width = dictionary.floatValue(for: Constants.Unit.width)
-                    self.update(CGSize(width: width, height: height));
+                    self.update(size: CGSize(width: width, height: height));
                 }
                 
             }
@@ -99,6 +99,11 @@ private extension Dictionary {
         CGFloat(self[key] as? Double ?? 0)
     }
 }
+
+extension APEUnitView: WKUIDelegate {
+    
+}
+
 
 
 // gallery - 5d3ff466640846006e46146e

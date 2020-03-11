@@ -24,7 +24,7 @@ class APEUnitViewController: UIViewController {
         super.viewDidLoad()
         
         guard let unitConfig = configuration else { return }
-        apeUnitWebView = APEUnitView(unitConfig)
+        apeUnitWebView = APEUnitView(configuration: unitConfig)
         
         let apesterUnit = apeUnitWebView.unitWebView!
         unitContainerView.addSubview(apesterUnit)
