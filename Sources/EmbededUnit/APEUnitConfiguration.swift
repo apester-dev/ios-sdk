@@ -8,8 +8,8 @@
 
 import UIKit
 
-public enum AlmogError: Error {
-    case invalidChannelToken
+public enum APEUnitConfigurationError: Error {
+    case invalidMediaId
 }
                           
 @objcMembers public class APEUnitConfiguration: NSObject {
@@ -34,7 +34,7 @@ public enum AlmogError: Error {
 
     public init(mediaId: String, bundle: Bundle, environment: APEUnitEnvironment) throws {
         guard !mediaId.isEmpty else {
-            throw AlmogError.invalidChannelToken
+            throw APEUnitConfigurationError.invalidMediaId
         }
         self.mediaId = mediaId
         self.bundleInfo = BundleInfo.bundleInfoPayload(with: bundle)
