@@ -12,11 +12,11 @@ import WebKit
 @objcMembers public class APEUnitView: NSObject {
     
     public private(set) var unitWebView: WKWebView!
-    public private(set) var apeUnitEnviorement: APEUnitEnvironment!
+    private var enviorement: APEUnitEnvironment!
     
     public init(configuration: APEUnitConfiguration) {
         super.init()
-        self.apeUnitEnviorement = configuration.environment
+        self.enviorement = configuration.environment
         
         let options = WKWebView.Options(events: [Constants.Unit.proxy], contentBehavior: .never, delegate: self)
 
@@ -50,7 +50,7 @@ extension APEUnitView: WKNavigationDelegate {
     public func webView(_ webView: WKWebView,
                  didReceive challenge: URLAuthenticationChallenge,
                  completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        if case .local = self.apeUnitEnviorement,
+        if case .local = self.enviorement,
             challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust,
             let serverTrust = challenge.protectionSpace.serverTrust {
             let credential = URLCredential(trust: serverTrust)
@@ -87,8 +87,3 @@ private extension Dictionary {
         CGFloat(self[key] as? Double ?? 0)
     }
 }
-
-// gallery - 5d3ff466640846006e46146e
-// quiz 5d6527a40f10dd006186dbcd
-//story 5ddeaa945d06ef005f3668e8
-// like quiz 5d6523720f10dd006186dbc9
