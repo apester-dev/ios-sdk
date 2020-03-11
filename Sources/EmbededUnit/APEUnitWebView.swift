@@ -9,11 +9,10 @@
 import Foundation
 import WebKit
 
-@objcMembers public class APEUnitWebViewV2: NSObject {
+@objcMembers public class APEUnitWebView: NSObject {
     
-    private var unitWebView: WKWebView!
+    public private(set) var unitWebView: WKWebView!
     private var apeUnitWebViewDelegate: APEUnitWebViewDelegateV2!
-    private var apeUnitSize: (widht: CGFloat, height: CGFloat)!
     
     public init(_ configuration: APEUnitConfiguration) {
         super.init()
@@ -31,7 +30,7 @@ import WebKit
         unitWebView.load(URLRequest(url: unitUrl))
     }
     
-    public func updateSize(_ size: ApeUnitSize) {
+    public func update(_ size: CGSize) {
         
         self.unitWebView.translatesAutoresizingMaskIntoConstraints = false
         let containerViewHeightConstraint = unitWebView.heightAnchor.constraint(equalToConstant: size.height)
@@ -53,26 +52,7 @@ import WebKit
         unitWebView.centerXAnchor.constraint(equalTo: safeSuperview.centerXAnchor).isActive = true
         
     }
-    
-    public func getWebView() -> WKWebView {
-        return unitWebView
-    }
 }
-
-extension APEUnitWebViewV2 {
-
-    public struct ApeUnitSize {
-        var width: CGFloat!
-        var height: CGFloat!
-        
-        public init(width: CGFloat, height: CGFloat) {
-            self.width = width
-            self.height = height
-        }
-    }
-
-}
-
 
 // gallery - 5d3ff466640846006e46146e
 // quiz 5d6527a40f10dd006186dbcd
