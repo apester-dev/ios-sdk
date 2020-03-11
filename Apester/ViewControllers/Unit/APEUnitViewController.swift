@@ -11,33 +11,23 @@ import ApesterKit
 
 class APEUnitViewController: UIViewController {
     
-    var apeUnitWebView: APEUnitWebViewV2!
-    let configuration = try? APEUnitConfiguration(mediaId: "5e67bd1c6abc6400725787ab",
-                                                  bundle: Bundle.main, environment: .local)
+    
+    // local story: 5ddeaa945d06ef005f3668e8
+    // stg story: 5e67832958c4d8457106a2ed
+    
+    var apeUnitWebView: APEUnitView!
+    let configuration = try? APEUnitConfiguration(mediaId: "5e67832958c4d8457106a2ed",
+                                                  bundle: Bundle.main, environment: .stage)
+   @IBOutlet weak var unitContainerView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let containerView = setupContainerView()
-        
         guard let unitConfig = configuration else { return }
-        apeUnitWebView = APEUnitWebViewV2(unitConfig)
+        apeUnitWebView = APEUnitView(configuration: unitConfig)
         
-        let apesterUnit = apeUnitWebView.getWebView();
-        containerView.addSubview(apesterUnit)
-    }
-    
-    func setupContainerView() -> UIView {
-        let myView = UIView(frame: .zero)
-        myView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(myView)
-        
-        myView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        myView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        myView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        myView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
-        
-        return myView
+        let apesterUnit = apeUnitWebView.unitWebView!
+        unitContainerView.addSubview(apesterUnit)
     }
 
 }

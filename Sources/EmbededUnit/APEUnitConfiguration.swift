@@ -42,6 +42,6 @@ public enum APEUnitConfigurationError: Error {
     }
 
     public convenience init(mediaId: String, bundle: Bundle) throws {
-        try self.init(mediaId: mediaId, bundle: bundle, environment: .local)
+        try self.init(mediaId: mediaId, bundle: bundle, environment: .production)
     }
 }
