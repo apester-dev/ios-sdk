@@ -17,10 +17,10 @@ import Foundation
         case .production:
             env = ""
         case .stage:
-            env = "stg"
+            env = "stg."
         case .local:
             return "https://player.apester.local.com"
         }
-        return "https://renderer.\(env).apester.com"
+        return "https://renderer.\(env)apester.com"
     }
 }
