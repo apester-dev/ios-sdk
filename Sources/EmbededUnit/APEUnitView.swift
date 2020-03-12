@@ -27,7 +27,7 @@ import WebKit
         }
     }
     
-    public func update(size: CGSize) {
+    func update(size: CGSize) {
         self.unitWebView.translatesAutoresizingMaskIntoConstraints = false
         let containerViewHeightConstraint = unitWebView.heightAnchor.constraint(equalToConstant: size.height)
         containerViewHeightConstraint.priority = .defaultHigh
