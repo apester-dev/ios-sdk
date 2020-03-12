@@ -9,9 +9,9 @@
 import Foundation
 import UIKit
 
-@objcMembers public class APEUnitViewService: NSObject {
+@objcMembers public class APEUnitsViewService: NSObject {
 
-    public static let shared = APEUnitViewService()
+    public static let shared = APEUnitsViewService()
     private var unitViewsData: [String: APEUnitView] = [:]
 
     private override init() {}

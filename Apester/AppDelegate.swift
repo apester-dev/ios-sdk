@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         APEStripViewService.shared.preloadStripViews(with: StripConfigurationsFactory.configurations(for: .stage))
         
-        APEUnitViewService.shared.preloadUnitsView(with: UnitConfigurationsFactory.configuration(for: .local))
+        APEUnitsViewService.shared.preloadUnitsView(with: UnitConfigurationsFactory.configuration(for: .local))
         
         
         return true

@@ -28,7 +28,7 @@ class APEUnitViewController: UIViewController {
         
         if let mediaId = mediaIds.first {
             // preLoad implemntation
-            apesterUnitView = APEUnitViewService.shared.unitView(for: mediaId)
+            apesterUnitView = APEUnitsViewService.shared.unitView(for: mediaId)
         }
         
         if apesterUnitView == nil {
