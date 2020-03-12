@@ -24,7 +24,7 @@ class APEUnitViewController: UIViewController {
         super.viewDidLoad()
         
         // preLoad implemntation
-        apesterUnitView = APEUnitViewService.shared.unitView()
+        apesterUnitView = APEUnitViewService.shared.unitView
         
         if apesterUnitView == nil {
             // not preload!

@@ -11,7 +11,7 @@ import WebKit
 
 @objcMembers public class APEUnitView: NSObject {
     
-    public private(set) var unitWebView: WKWebView!    
+    public private(set) var unitWebView: WKWebView!
     private var enviorement: APEUnitEnvironment!
     
     public init(configuration: APEUnitConfiguration) {

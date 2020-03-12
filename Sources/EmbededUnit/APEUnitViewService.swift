@@ -12,8 +12,7 @@ import UIKit
 @objcMembers public class APEUnitViewService: NSObject {
 
     public static let shared = APEUnitViewService()
-
-    private var unitViewData: APEUnitView?
+    public private(set) var unitView: APEUnitView?
 
     private override init() {}
 
@@ -26,24 +25,8 @@ import UIKit
             return
         }
         
-        let apeUnitWebView = APEUnitView(configuration: configuration)
-
-        self.unitViewData = apeUnitWebView
+        self.unitView = APEUnitView(configuration: configuration)
         
     }
 
-    /// Unload view so it can be Removed from cache with the given mediaId if exists
-    /// - Parameter mediaId: the mediaId to remove from cache
-//    public func unloadUnitView() {
-//        DispatchQueue.main.async {
-//            self.unitViewData = nil
-//        }
-//    }
-
-    /// Get Cached view if exists..
-    /// FYI, the view value will be nil in case it hasn't been initialized Via the `preloadUnitView` API first.
-    /// - Parameter mediaId: the mediaId
-    public func unitView() -> APEUnitView? {
-        self.unitViewData
-    }
 }
