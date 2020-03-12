@@ -42,10 +42,8 @@ extension WKWebView {
             .replacingOccurrences(of: "iPad", with: "IPAD")
     }
 
-    static func make(with options: Options) -> WKWebView? {
-        guard let delegate = (options.delegate ?? options.unitDelegate) else {
-            return nil
-        }
+    static func make(with options: Options) -> WKWebView {
+        let delegate = options.delegate
         let configuration = WKWebViewConfiguration()
         configuration.websiteDataStore = WKWebsiteDataStore.default()
         configuration.userContentController.register(to: options.events, delegate: delegate)
@@ -56,9 +54,7 @@ extension WKWebView {
         webView.insetsLayoutMarginsFromSafeArea = true
         webView.scrollView.isScrollEnabled = false
         webView.scrollView.bouncesZoom = false
-        if ((delegate as? UIScrollViewDelegate) != nil) {
-            webView.scrollView.delegate = (delegate as! UIScrollViewDelegate)
-        }
+        webView.scrollView.delegate = delegate
         webView.uiDelegate = delegate
         webView.scrollView.contentInsetAdjustmentBehavior = options.contentBehavior
         return webView
