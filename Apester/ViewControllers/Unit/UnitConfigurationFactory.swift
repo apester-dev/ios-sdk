@@ -10,30 +10,31 @@ import UIKit
 import ApesterKit
 
 @objcMembers class UnitConfigurationsFactory: NSObject {
-
-    static private(set) var mediaId: String = ""
-
-    static func configuration(for env: APEUnitEnvironment = .production) -> APEUnitConfiguration?  {
-        var mediaId: String
+    
+    static private(set) var mediaIds: [String] = [""]
+    
+    static func configuration(for env: APEUnitEnvironment = .production) -> [APEUnitConfiguration]  {
+        var mediaIds: [String]
         
         switch env {
-            case .production:
-            mediaId = ""
-            case .stage:
-            mediaId = "5e67832958c4d8457106a2ed"
+        case .production:
+            mediaIds = [""]
+        case .stage:
+            mediaIds = ["5e67832958c4d8457106a2ed"]
         case .local:
-            mediaId = "5ddeaa945d06ef005f3668e8"
+            mediaIds = ["5ddeaa945d06ef005f3668e8"]
         }
-        self.mediaId = mediaId
-        return makeUnitConfigurations(with: mediaId, environment: env)
+        self.mediaIds = mediaIds
+        return makeUnitConfigurations(with: mediaIds, environment: env)
     }
     
     /// transform given media id to APEStripConfiguration
     /// - Parameter mediaId: the mediaId to transform
-    static func makeUnitConfigurations(with mediaId: String, environment: APEUnitEnvironment) -> APEUnitConfiguration? {
+    static func makeUnitConfigurations(with mediaIds: [String], environment: APEUnitEnvironment) -> [APEUnitConfiguration] {
         
-        try? APEUnitConfiguration(mediaId: mediaId,
-                                  bundle: Bundle.main, environment: environment)
+        mediaIds.compactMap {
+            try? APEUnitConfiguration(mediaId: $0, bundle: Bundle.main, environment: environment)
+        }
         
     }
 }

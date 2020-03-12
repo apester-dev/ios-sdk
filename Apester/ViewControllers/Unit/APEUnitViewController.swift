@@ -18,13 +18,18 @@ class APEUnitViewController: UIViewController {
     var apesterUnitView: APEUnitView!
     let configuration = try? APEUnitConfiguration(mediaId: "5e67832958c4d8457106a2ed",
                                                   bundle: Bundle.main, environment: .stage)
-   @IBOutlet weak var unitContainerView: UIView!
+    
+    private var mediaIds: [String] = UnitConfigurationsFactory.mediaIds
+    
+    @IBOutlet weak var unitContainerView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // preLoad implemntation
-        apesterUnitView = APEUnitViewService.shared.unitView
+        if let mediaId = mediaIds.first {
+            // preLoad implemntation
+            apesterUnitView = APEUnitViewService.shared.unitView(for: mediaId)
+        }
         
         if apesterUnitView == nil {
             // not preload!
@@ -35,5 +40,5 @@ class APEUnitViewController: UIViewController {
         unitContainerView.addSubview(apesterUnitView.unitWebView)
         
     }
-
+    
 }
