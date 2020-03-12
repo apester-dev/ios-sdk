@@ -23,11 +23,9 @@ extension WKWebView {
 
     struct Options {
         typealias Delegate = WKNavigationDelegate & UIScrollViewDelegate & WKScriptMessageHandler & WKUIDelegate
-         typealias UnitDelegate = WKNavigationDelegate & WKScriptMessageHandler & WKUIDelegate
         let events: [String]
         let contentBehavior: UIScrollView.ContentInsetAdjustmentBehavior
         weak var delegate: Delegate?
-        weak var unitDelegate: UnitDelegate?
     }
 
     private static let navigatorUserAgent = "navigator.userAgent"
