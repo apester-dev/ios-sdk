@@ -9,7 +9,7 @@
 import Foundation
 
 @objc public enum APEEnvironment: Int {
-    case production, stage
+    case production, stage, local
 
     var baseUrl: String {
         var env: String
@@ -18,6 +18,8 @@ import Foundation
             env = ""
         case .stage:
             env = "stg."
+            case .local:
+                return "https://strip-pwa.apester.local.com"
         }
         return "https://faststrip." + env + "apester.com"
     }
