@@ -20,15 +20,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VWw-u6-TLD">
-                                <rect key="frame" x="16" y="146" width="343" height="513"/>
+                                <rect key="frame" x="10" y="96" width="355" height="571"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="VWw-u6-TLD" firstAttribute="top" secondItem="Tha-vb-h2l" secondAttribute="bottom" constant="50" id="Dok-IL-CxT"/>
-                            <constraint firstItem="VWw-u6-TLD" firstAttribute="leading" secondItem="kQk-Ck-MAY" secondAttribute="leadingMargin" id="GhO-lD-6sz"/>
-                            <constraint firstItem="UCx-eN-l3Z" firstAttribute="top" secondItem="VWw-u6-TLD" secondAttribute="bottom" constant="8" symbolic="YES" id="Khh-qr-C0o"/>
-                            <constraint firstItem="VWw-u6-TLD" firstAttribute="trailing" secondItem="kQk-Ck-MAY" secondAttribute="trailingMargin" id="T6u-4Q-NeL"/>
+                            <constraint firstAttribute="trailing" secondItem="VWw-u6-TLD" secondAttribute="trailing" constant="10" id="1Ab-uu-SMr"/>
+                            <constraint firstItem="VWw-u6-TLD" firstAttribute="top" secondItem="Tha-vb-h2l" secondAttribute="bottom" id="Dok-IL-CxT"/>
+                            <constraint firstItem="UCx-eN-l3Z" firstAttribute="top" secondItem="VWw-u6-TLD" secondAttribute="bottom" id="Khh-qr-C0o"/>
+                            <constraint firstItem="VWw-u6-TLD" firstAttribute="leading" secondItem="kQk-Ck-MAY" secondAttribute="leading" constant="10" id="iJ0-sW-QR4"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="B81-fM-OCQ"/>
