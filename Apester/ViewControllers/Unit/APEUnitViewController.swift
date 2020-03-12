@@ -10,24 +10,34 @@ import UIKit
 import ApesterKit
 
 class APEUnitViewController: UIViewController {
-    
-    
+
     // local story: 5ddeaa945d06ef005f3668e8
     // stg story: 5e67832958c4d8457106a2ed
     
-    var apeUnitWebView: APEUnitView!
+    var apesterUnitView: APEUnitView!
     let configuration = try? APEUnitConfiguration(mediaId: "5e67832958c4d8457106a2ed",
                                                   bundle: Bundle.main, environment: .stage)
-   @IBOutlet weak var unitContainerView: UIView!
+    
+    private var mediaIds: [String] = UnitConfigurationsFactory.mediaIds
+    
+    @IBOutlet weak var unitContainerView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let unitConfig = configuration else { return }
-        apeUnitWebView = APEUnitView(configuration: unitConfig)
+        if let mediaId = mediaIds.first {
+            // preLoad implemntation
+            apesterUnitView = APEUnitsViewService.shared.unitView(for: mediaId)
+        }
         
-        let apesterUnit = apeUnitWebView.unitWebView!
-        unitContainerView.addSubview(apesterUnit)
-    }
+        if apesterUnitView == nil {
+            // not preload!
+            guard let unitConfig = configuration else { return }
+            apesterUnitView = APEUnitView(configuration: unitConfig)
 
+        }
+        unitContainerView.addSubview(apesterUnitView.unitWebView)
+
+    }
+    
 }
