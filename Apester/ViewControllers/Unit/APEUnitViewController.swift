@@ -36,7 +36,8 @@ class APEUnitViewController: UIViewController {
             apesterUnitView = APEUnitView(configuration: unitConfig)
 
         }
-        unitContainerView.addSubview(apesterUnitView.unitWebView)
+        
+        apesterUnitView.display(in: unitContainerView, containerViewConroller: self)
 
     }
     
