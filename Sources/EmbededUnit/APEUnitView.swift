@@ -171,6 +171,8 @@ extension APEUnitView: WKNavigationDelegate {
     }
 
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        
+        self.unitWebView.appendAppNameToUserAgent(self.configuration.bundleInfo)
         self.delegate?.unitView(self, didFinishLoadingUnit: self.configuration.mediaId)
     }
 
