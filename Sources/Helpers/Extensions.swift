@@ -73,6 +73,13 @@ extension UIColor {
 }
 
 extension UIView {
+    var allSubviews: [UIView] {
+        return subviews + subviews.flatMap { $0.allSubviews }
+    }
+
+}
+
+extension UIView {
     func anchor(top: NSLayoutYAxisAnchor?, paddingTop: CGFloat, bottom: NSLayoutYAxisAnchor?, paddingBottom: CGFloat, leadingAnchor: NSLayoutXAxisAnchor?, paddingLeading: CGFloat, trailingAnchor: NSLayoutXAxisAnchor?, paddingTrailing: CGFloat, width: CGFloat?, height: CGFloat?)
     {
         translatesAutoresizingMaskIntoConstraints = false

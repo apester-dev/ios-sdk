@@ -31,7 +31,7 @@ import WebKit
         super.init()
         
         self.configuration = configuration
-        let options = WKWebView.Options(events: [Constants.Unit.proxy], contentBehavior: .never, delegate: self)
+        let options = WKWebView.Options(events: [Constants.Unit.proxy, Constants.Unit.validateStripViewVisibity], contentBehavior: .never, delegate: self)
         
         self.unitWebView = WKWebView.make(with: options)
         
