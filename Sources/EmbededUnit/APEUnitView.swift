@@ -14,6 +14,17 @@ import WebKit
     public private(set) var unitWebView: WKWebView!
     private var enviorement: APEUnitEnvironment!
     
+    private var messageDispatcher = MessageDispatcher()
+    
+    /// The view visibility status, update this property either when the view is visible or not.
+    public var isDisplayed: Bool = false {
+        didSet {
+            self.messageDispatcher
+                .dispatchAsync(Constants.Strip.setViewVisibilityStatus(isDisplayed),
+                               to: self.unitWebView)
+        }
+    }
+    
     public init(configuration: APEUnitConfiguration) {
         super.init()
         self.enviorement = configuration.environment
@@ -66,7 +77,8 @@ extension APEUnitView: WKNavigationDelegate {
 
 extension APEUnitView: WKScriptMessageHandler {
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        if message.name == Constants.Unit.proxy,
+        let messageName = message.name
+        if messageName == Constants.Unit.proxy,
             let bodyString = message.body as? String,
             bodyString.contains(Constants.Unit.resize),
             let dictionary = bodyString.dictionary {
@@ -74,6 +86,19 @@ extension APEUnitView: WKScriptMessageHandler {
             let height = dictionary.floatValue(for: Constants.Unit.height)
             let width = dictionary.floatValue(for: Constants.Unit.width)
             self.update(size: CGSize(width: width, height: height));
+        }
+        
+        if messageName == Constants.Unit.validateStripViewVisibity {
+            guard let containerVC = self.containerViewConroller, let view = self.containerView else {
+                self.isDisplayed = false
+                return
+            }
+            if containerVC.view.allSubviews.first(where: { $0 == view }) != nil {
+                let convertedCenterPoint = view.convert(view.center, to: containerVC.view)
+                self.isDisplayed = containerVC.view.bounds.contains(convertedCenterPoint)
+            } else {
+                self.isDisplayed = false
+            }
         }
     }
 }

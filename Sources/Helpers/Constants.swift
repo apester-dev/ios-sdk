@@ -68,5 +68,6 @@ struct Constants {
         static let resize = "apester_resize_unit"
         static let height = "height"
         static let width = "width"
+        static let validateStripViewVisibity = "validateStripViewVisibity"
     }
 }
