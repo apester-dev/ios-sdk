@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3549BB501DA38A2000C63030 /* ApesterKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 3549BB181DA3890B00C63030 /* ApesterKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3549BB661DA38ADB00C63030 /* ApesterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3549BB211DA389CD00C63030 /* ApesterKit.framework */; };
+		361BF13F241EB9770079BFE3 /* APEUnitViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361BF13E241EB9770079BFE3 /* APEUnitViewDelegate.swift */; };
 		3697E8642417F77100B6AC79 /* APEUnitEnviorment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697E8632417F77100B6AC79 /* APEUnitEnviorment.swift */; };
 		3697E8672417FAF900B6AC79 /* APEUnitConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */; };
 		3697E8692418DD2D00B6AC79 /* UnitConfigurationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697E8682418DD2D00B6AC79 /* UnitConfigurationFactory.swift */; };
@@ -104,6 +105,7 @@
 		3549BB211DA389CD00C63030 /* ApesterKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ApesterKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3549BB581DA38A8800C63030 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3549BB611DA38ADB00C63030 /* ApesterKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ApesterKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		361BF13E241EB9770079BFE3 /* APEUnitViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitViewDelegate.swift; sourceTree = "<group>"; };
 		36795E7D2416531A00546AA5 /* APEUnitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitViewController.swift; sourceTree = "<group>"; };
 		3697E8632417F77100B6AC79 /* APEUnitEnviorment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitEnviorment.swift; sourceTree = "<group>"; };
 		3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitConfiguration.swift; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 				3697E8632417F77100B6AC79 /* APEUnitEnviorment.swift */,
 				3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */,
 				36B5DC202419586F000E46AF /* APEUnitsViewService.swift */,
+				361BF13E241EB9770079BFE3 /* APEUnitViewDelegate.swift */,
 			);
 			path = EmbededUnit;
 			sourceTree = "<group>";
@@ -512,6 +515,7 @@
 				BB44109D22D53BF300BB1DEC /* Extensions.swift in Sources */,
 				8658F76C23832F9700C23BDA /* APEEnvironment.swift in Sources */,
 				3697E8642417F77100B6AC79 /* APEUnitEnviorment.swift in Sources */,
+				361BF13F241EB9770079BFE3 /* APEUnitViewDelegate.swift in Sources */,
 				36B5DC212419586F000E46AF /* APEUnitsViewService.swift in Sources */,
 				867D559B23E4A0D600190D64 /* APEStripViewService.swift in Sources */,
 				BB44109F22D53D2F00BB1DEC /* APEStripConfiguration.swift in Sources */,

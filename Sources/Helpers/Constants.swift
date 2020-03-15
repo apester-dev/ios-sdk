@@ -69,5 +69,8 @@ struct Constants {
         static let height = "height"
         static let width = "width"
         static let validateStripViewVisibity = "validateStripViewVisibity"
+        static func setViewVisibilityStatus(_ isVisible: Bool) -> String {
+            return "window.__setApesterViewabiity(\(isVisible))"
+        }
     }
 }

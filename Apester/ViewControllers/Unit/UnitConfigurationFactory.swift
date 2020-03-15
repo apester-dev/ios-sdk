@@ -16,13 +16,13 @@ import ApesterKit
     static func configuration(for env: APEUnitEnvironment = .production) -> [APEUnitConfiguration]  {
         var mediaIds: [String]
         
-        switch env {
-        case .production:
+        switch env {        case .production:
             mediaIds = [""]
         case .stage:
             mediaIds = ["5e67832958c4d8457106a2ed"]
         case .local:
-            mediaIds = ["5d7f7f5f8ff01b0072a496da"]
+            mediaIds = ["5e67bd1c6abc6400725787ab"]
+
         }
         self.mediaIds = mediaIds
         return makeUnitConfigurations(with: mediaIds, environment: env)

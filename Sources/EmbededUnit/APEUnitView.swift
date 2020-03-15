@@ -15,14 +15,15 @@ import WebKit
     private var containerView: UIView?
     private weak var containerViewConroller: UIViewController?
     private var configuration: APEUnitConfiguration!
-    
+    public weak var delegate: APEUnitViewDelegate?
+
     private var messageDispatcher = MessageDispatcher()
     
     /// The view visibility status, update this property either when the view is visible or not.
     public var isDisplayed: Bool = false {
         didSet {
             self.messageDispatcher
-                .dispatchAsync(Constants.Strip.setViewVisibilityStatus(isDisplayed),
+                .dispatchAsync(Constants.Unit.setViewVisibilityStatus(isDisplayed),
                                to: self.unitWebView)
         }
     }
@@ -70,6 +71,9 @@ import WebKit
             self.setContainerViewSize(anchor: widthAnchor, attribute: .width, size: size.width)
         }
         
+        // update the delegate about the new height
+        self.delegate?.unitView(self, didUpdateHeight: size.height)
+        
     }
     
      public func display(in containerView: UIView, containerViewConroller: UIViewController) {
@@ -83,6 +87,66 @@ import WebKit
         self.containerView = containerView
         self.containerViewConroller = containerViewConroller
         
+    }
+    
+    func destroy() {
+        self.unitWebView.configuration.userContentController
+            .unregister(from: [Constants.Unit.proxy, Constants.Unit.validateStripViewVisibity])
+    }
+    
+    /// Remove the unit web view
+    public func hide() {
+        self.unitWebView.removeFromSuperview()
+    }
+    
+    func open(url: URL, type: APEUnitViewNavigationType) {
+        let open: ((URL) -> Void) = { url in
+            DispatchQueue.main.async {
+                if UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url, options: [:]) { _ in }
+                }
+            }
+        }
+        
+        // wait for shouldHandleURL callback
+        let shouldHandleURL: Void? = self.delegate?.unitView?(self, shouldHandleURL: url, type: type) {
+            if !$0 {
+                open(url)
+            }
+        }
+        // check if the shouldHandleURL is implemented
+        if shouldHandleURL == nil {
+            open(url)
+        }
+    }
+
+    func decisionHandler(navigationAction: WKNavigationAction, webView: WKWebView, completion: (WKNavigationActionPolicy) -> Void) {
+        var policy = WKNavigationActionPolicy.cancel
+        // is valid URL
+        if let url = navigationAction.request.url {
+            switch navigationAction.navigationType {
+            case .other:
+                // redirect when the target is a main frame
+                if let targetFrame = navigationAction.targetFrame, targetFrame.isMainFrame,
+                    url.absoluteString != webView.url?.absoluteString {
+                    open(url: url, type: .other)
+                } else {
+                    policy = .allow // allow webview requests communication
+                }
+            case .linkActivated:
+                // redirect when the main web view link got clickd.
+                if let scheme = url.scheme, scheme.contains("http") {
+                    open(url: url, type: .linkActivated)
+                }
+            default: break
+            }
+        }
+        completion(policy)
+    }
+    
+    deinit {
+        hide()
+        destroy()
     }
     
 }
@@ -101,9 +165,56 @@ extension APEUnitView: WKNavigationDelegate {
         completionHandler(.performDefaultHandling, nil)
     }
     
-    // todo handle failures
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        self.destroy()
+        self.delegate?.unitView(self, didFailLoadingUnit: self.configuration.mediaId)
     }
+
+    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        self.delegate?.unitView(self, didFinishLoadingUnit: self.configuration.mediaId)
+    }
+
+    @available(iOS 13.0, *)
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction,
+                        preferences: WKWebpagePreferences, decisionHandler: @escaping (WKNavigationActionPolicy, WKWebpagePreferences) -> Void) {
+        preferences.preferredContentMode = .mobile
+        self.decisionHandler(navigationAction: navigationAction, webView: webView) { policy in
+            decisionHandler(policy, preferences)
+        }
+    }
+
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        self.decisionHandler(navigationAction: navigationAction, webView: webView, completion: decisionHandler)
+    }
+
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+        guard let response = navigationResponse.response as? HTTPURLResponse,
+            let url = navigationResponse.response.url else {
+                decisionHandler(.cancel)
+                return
+        }
+        if let headerFields = response.allHeaderFields as? [String: String] {
+            let cookies = HTTPCookie.cookies(withResponseHeaderFields: headerFields, for: url)
+            cookies.forEach { cookie in
+                webView.configuration.websiteDataStore.httpCookieStore.setCookie(cookie)
+            }
+        }
+        decisionHandler(.allow)
+    }
+    
+}
+
+// MARK:- WKUIDelegate
+@available(iOS 11.0, *)
+extension APEUnitView: WKUIDelegate {
+    
+    public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        if let url = navigationAction.request.url {
+            self.open(url: url, type: .shareLinkActivated)
+        }
+        return nil
+    }
+    
 }
 
 extension APEUnitView: WKScriptMessageHandler {
@@ -137,8 +248,6 @@ extension APEUnitView: WKScriptMessageHandler {
         }
     }
 }
-
-extension APEUnitView: WKUIDelegate {}
 
 extension APEUnitView: UIScrollViewDelegate {}
 

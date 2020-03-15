@@ -37,8 +37,27 @@ class APEUnitViewController: UIViewController {
 
         }
         
+        mediaIds.forEach {
+            APEUnitsViewService.shared.unitView(for: $0)?.delegate = self
+        }
+        
         apesterUnitView.display(in: unitContainerView, containerViewConroller: self)
 
+    }
+    
+}
+
+extension APEUnitViewController: APEUnitViewDelegate {
+    func unitView(_ unitView: APEUnitView, didFinishLoadingUnit mediaId: String) {
+        
+    }
+    
+    func unitView(_ unitView: APEUnitView, didFailLoadingUnit mediaId: String) {
+        
+    }
+    
+    func unitView(_ unitView: APEUnitView, didUpdateHeight height: CGFloat) {
+        
     }
     
 }
