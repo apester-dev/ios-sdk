@@ -413,12 +413,7 @@ private extension APEStripView {
         completion(policy)
     }
 }
-//private extension UIView {
-//    var allSubviews_APE: [UIView] {
-//        return subviews + subviews.flatMap { $0.allSubviews }
-//    }
-//
-//}
+
 // MARK: UIAdaptivePresentationControllerDelegate
 @available(iOS 11.0, *)
 extension APEStripView: UIAdaptivePresentationControllerDelegate {
