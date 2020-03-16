@@ -32,7 +32,7 @@ import WebKit
         super.init()
         
         self.configuration = configuration
-        let options = WKWebView.Options(events: [Constants.Unit.proxy, Constants.Unit.validateStripViewVisibity], contentBehavior: .never, delegate: self)
+        let options = WKWebView.Options(events: [Constants.Unit.proxy, Constants.Unit.validateUnitViewVisibity], contentBehavior: .never, delegate: self)
         
         self.unitWebView = WKWebView.make(with: options)
         
@@ -91,7 +91,7 @@ import WebKit
     
     func destroy() {
         self.unitWebView.configuration.userContentController
-            .unregister(from: [Constants.Unit.proxy, Constants.Unit.validateStripViewVisibity])
+            .unregister(from: [Constants.Unit.proxy, Constants.Unit.validateUnitViewVisibity])
     }
     
     /// Remove the unit web view
@@ -236,7 +236,7 @@ extension APEUnitView: WKScriptMessageHandler {
 
         }
         
-        if messageName == Constants.Unit.validateStripViewVisibity {
+        if messageName == Constants.Unit.validateUnitViewVisibity {
             guard let containerVC = self.containerViewConroller, let view = self.containerView else {
                 self.isDisplayed = false
                 return
