@@ -30,37 +30,6 @@ import WebKit
         
     }
     
-    func setContainerViewSize(anchor: NSLayoutDimension, attribute: NSLayoutConstraint.Attribute, size: CGFloat) {
-        
-        self.containerView?.constraints
-            .first(where: { $0.firstAttribute == attribute })
-            .flatMap { NSLayoutConstraint.deactivate([$0]) }
-        
-        let containerViewConstraint = anchor.constraint(equalToConstant: size)
-        containerViewConstraint.priority = .defaultHigh
-        containerViewConstraint.isActive = true
-        
-    }
-    
-    func update(size: CGSize) {
-        
-        let unitWebViewHeightConstraint = unitWebView.heightAnchor.constraint(equalToConstant: size.height)
-        unitWebViewHeightConstraint.isActive = false
-        unitWebViewHeightConstraint.priority = .defaultHigh
-        unitWebViewHeightConstraint.isActive = true
-        
-        // height
-        if let heightAnchor = self.containerView?.heightAnchor {
-            self.setContainerViewSize(anchor: heightAnchor, attribute: .height, size: size.height)
-        }
-        
-        //width
-        if let widthAnchor = self.containerView?.widthAnchor {
-            self.setContainerViewSize(anchor: widthAnchor, attribute: .width, size: size.width)
-        }
-        
-    }
-    
      public func display(in containerView: UIView, containerViewConroller: UIViewController) {
      
         // update unitWebView frame according to containerView bounds
@@ -93,6 +62,41 @@ extension APEUnitView: WKNavigationDelegate {
     // todo handle failures
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
     }
+}
+
+private extension APEUnitView {
+    
+    func setContainerViewSize(anchor: NSLayoutDimension, attribute: NSLayoutConstraint.Attribute, size: CGFloat) {
+        
+        self.containerView?.constraints
+            .first(where: { $0.firstAttribute == attribute })
+            .flatMap { NSLayoutConstraint.deactivate([$0]) }
+        
+        let containerViewConstraint = anchor.constraint(equalToConstant: size)
+        containerViewConstraint.priority = .defaultHigh
+        containerViewConstraint.isActive = true
+        
+    }
+    
+    func update(size: CGSize) {
+        
+        let unitWebViewHeightConstraint = unitWebView.heightAnchor.constraint(equalToConstant: size.height)
+        unitWebViewHeightConstraint.isActive = false
+        unitWebViewHeightConstraint.priority = .defaultHigh
+        unitWebViewHeightConstraint.isActive = true
+        
+        // height
+        if let heightAnchor = self.containerView?.heightAnchor {
+            self.setContainerViewSize(anchor: heightAnchor, attribute: .height, size: size.height)
+        }
+        
+        //width
+        if let widthAnchor = self.containerView?.widthAnchor {
+            self.setContainerViewSize(anchor: widthAnchor, attribute: .width, size: size.width)
+        }
+        
+    }
+    
 }
 
 extension APEUnitView: WKScriptMessageHandler {

@@ -16,10 +16,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
-    APEStripViewService.shared.preloadStripViews(with: StripConfigurationsFactory.configurations(for: .local))
+    APEStripViewService.shared.preloadStripViews(with: StripConfigurationsFactory.configurations(for: .stage))
 
     // Override point for customization after application launch.
-    APEUnitsViewService.shared.preloadUnitsView(with: UnitConfigurationsFactory.configuration(for: .local))
+    APEUnitsViewService.shared.preloadUnitsView(with: UnitConfigurationsFactory.configuration(for: .stage))
 
     return true
   }
