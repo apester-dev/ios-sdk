@@ -9,7 +9,7 @@ import Foundation
 import WebKit
 
 // MARK:- String
- extension String {
+extension String {
     var dictionary: [String: Any]? {
         if let data = self.data(using: .utf8) {
             return try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
