@@ -42,40 +42,6 @@ import WebKit
         
     }
     
-    func setContainerViewSize(anchor: NSLayoutDimension, attribute: NSLayoutConstraint.Attribute, size: CGFloat) {
-        
-        self.containerView?.constraints
-            .first(where: { $0.firstAttribute == attribute })
-            .flatMap { NSLayoutConstraint.deactivate([$0]) }
-        
-        let containerViewConstraint = anchor.constraint(equalToConstant: size)
-        containerViewConstraint.priority = .defaultHigh
-        containerViewConstraint.isActive = true
-        
-    }
-    
-    func update(size: CGSize) {
-        
-        let unitWebViewHeightConstraint = unitWebView.heightAnchor.constraint(equalToConstant: size.height)
-        unitWebViewHeightConstraint.isActive = false
-        unitWebViewHeightConstraint.priority = .defaultHigh
-        unitWebViewHeightConstraint.isActive = true
-        
-        // height
-        if let heightAnchor = self.containerView?.heightAnchor {
-            self.setContainerViewSize(anchor: heightAnchor, attribute: .height, size: size.height)
-        }
-        
-        //width
-        if let widthAnchor = self.containerView?.widthAnchor {
-            self.setContainerViewSize(anchor: widthAnchor, attribute: .width, size: size.width)
-        }
-        
-        // update the delegate about the new height
-        self.delegate?.unitView(self, didUpdateHeight: size.height)
-        
-    }
-    
      public func display(in containerView: UIView, containerViewConroller: UIViewController) {
      
         // update unitWebView frame according to containerView bounds
@@ -215,6 +181,41 @@ extension APEUnitView: WKUIDelegate {
             self.open(url: url, type: .shareLinkActivated)
         }
         return nil
+    }
+    
+}
+
+private extension APEUnitView {
+    
+    func setContainerViewSize(anchor: NSLayoutDimension, attribute: NSLayoutConstraint.Attribute, size: CGFloat) {
+        
+        self.containerView?.constraints
+            .first(where: { $0.firstAttribute == attribute })
+            .flatMap { NSLayoutConstraint.deactivate([$0]) }
+        
+        let containerViewConstraint = anchor.constraint(equalToConstant: size)
+        containerViewConstraint.priority = .defaultHigh
+        containerViewConstraint.isActive = true
+        
+    }
+    
+    func update(size: CGSize) {
+        
+        let unitWebViewHeightConstraint = unitWebView.heightAnchor.constraint(equalToConstant: size.height)
+        unitWebViewHeightConstraint.isActive = false
+        unitWebViewHeightConstraint.priority = .defaultHigh
+        unitWebViewHeightConstraint.isActive = true
+        
+        // height
+        if let heightAnchor = self.containerView?.heightAnchor {
+            self.setContainerViewSize(anchor: heightAnchor, attribute: .height, size: size.height)
+        }
+        
+        //width
+        if let widthAnchor = self.containerView?.widthAnchor {
+            self.setContainerViewSize(anchor: widthAnchor, attribute: .width, size: size.width)
+        }
+        
     }
     
 }
