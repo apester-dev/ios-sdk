@@ -71,3 +71,28 @@ extension UIColor {
         return rgba
     }
 }
+
+extension UIView {
+    func anchor(top: NSLayoutYAxisAnchor?, paddingTop: CGFloat, bottom: NSLayoutYAxisAnchor?, paddingBottom: CGFloat, leadingAnchor: NSLayoutXAxisAnchor?, paddingLeading: CGFloat, trailingAnchor: NSLayoutXAxisAnchor?, paddingTrailing: CGFloat, width: CGFloat?, height: CGFloat?)
+    {
+        translatesAutoresizingMaskIntoConstraints = false
+        if let top = top {
+            self.topAnchor.constraint(equalTo: top, constant: paddingTop).isActive = true
+        }
+        if let bottom = bottom {
+            self.bottomAnchor.constraint(equalTo: bottom, constant: -paddingBottom ).isActive = true
+        }
+        if let trailingAnchor = trailingAnchor {
+            self.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -paddingTrailing ).isActive = true
+        }
+        if let leadingAnchor = leadingAnchor {
+            self.leadingAnchor.constraint(equalTo: leadingAnchor, constant: paddingLeading).isActive = true
+        }
+        if let width = width {
+            widthAnchor.constraint(equalToConstant: width).isActive = true
+        }
+        if let height = height {
+            heightAnchor.constraint(equalToConstant: height).isActive = true
+        }
+    }
+}

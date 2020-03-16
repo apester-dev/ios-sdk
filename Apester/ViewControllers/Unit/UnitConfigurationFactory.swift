@@ -22,7 +22,7 @@ import ApesterKit
         case .stage:
             mediaIds = ["5e67832958c4d8457106a2ed"]
         case .local:
-            mediaIds = ["5ddeaa945d06ef005f3668e8"]
+            mediaIds = ["5d7f7f5f8ff01b0072a496da"]
         }
         self.mediaIds = mediaIds
         return makeUnitConfigurations(with: mediaIds, environment: env)
