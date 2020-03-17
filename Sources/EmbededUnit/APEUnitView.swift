@@ -16,7 +16,7 @@ import WebKit
     private weak var containerViewConroller: UIViewController?
     private var configuration: APEUnitConfiguration!
     public weak var delegate: APEUnitViewDelegate?
-
+    private var latestUnitSize: CGSize?
     private var messageDispatcher = MessageDispatcher()
     
     /// The view visibility status, update this property either when the view is visible or not.
@@ -48,9 +48,13 @@ import WebKit
         containerView.layoutIfNeeded()
         containerView.addSubview(self.unitWebView)
         unitWebView.anchor(top: containerView.topAnchor, paddingTop: 0, bottom: containerView.bottomAnchor, paddingBottom: 0, leadingAnchor: containerView.leadingAnchor, paddingLeading: 0, trailingAnchor: containerView.trailingAnchor, paddingTrailing: 0, width: nil, height: nil)
-    
+        
         self.containerView = containerView
         self.containerViewConroller = containerViewConroller
+        
+        if let latestUnitSize = self.latestUnitSize {
+            self.setContainerViewSize(anchor: self.containerView!.heightAnchor, attribute: .height, size: latestUnitSize.height)
+        }
         
     }
     
@@ -214,6 +218,8 @@ private extension APEUnitView {
         if let widthAnchor = self.containerView?.widthAnchor {
             self.setContainerViewSize(anchor: widthAnchor, attribute: .width, size: size.width)
         }
+        
+        self.latestUnitSize = size
         
     }
     

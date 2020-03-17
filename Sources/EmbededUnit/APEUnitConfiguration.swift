@@ -8,10 +8,6 @@
 
 import UIKit
 
-public enum APEUnitConfigurationError: Error {
-    case invalidMediaId
-}
-
 public enum APEUnitParams {
     case unit(mediaId: String)
     case playlist(tags: [String], channelToken: String, context: Bool, fallback: Bool)
@@ -59,16 +55,23 @@ public enum APEUnitParams {
         return self.parameters.componentsURL(baseURL: (self.environment.baseUrl + Constants.Unit.unitPath))
     }
     
-    public init(unitParams: APEUnitParams, bundle: Bundle, environment: APEUnitEnvironment) throws {
-//        guard !mediaId.isEmpty else {
-//            throw APEUnitConfigurationError.invalidMediaId
-//        }
+    public init(unitParams: APEUnitParams, bundle: Bundle, environment: APEUnitEnvironment){
         self.bundleInfo = BundleInfo.bundleInfoPayload(with: bundle)
         self.environment = environment
         self.unitParams = unitParams
     }
     
-    public convenience init(unitParams: APEUnitParams, bundle: Bundle) throws {
-        try self.init(unitParams: unitParams, bundle: bundle, environment: .production)
+    public convenience init(unitParams: APEUnitParams, bundle: Bundle) {
+        self.init(unitParams: unitParams, bundle: bundle, environment: .production)
     }
+    
+    @objc public convenience init(mediaId: String, bundle: Bundle) {
+        self.init(unitParams: .unit(mediaId: mediaId),
+                      bundle: bundle)
+    }
+    @objc public convenience init(tags: [String], channelToken: String, context: Bool, fallback: Bool, bundle: Bundle) {
+        self.init(unitParams: .playlist(tags: tags, channelToken: channelToken, context: context, fallback: fallback),
+                      bundle: bundle)
+    }
+    
 }
