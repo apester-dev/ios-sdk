@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //     Override point for customization after application launch.
     APEUnitsViewService.shared.preloadUnitsView(with: UnitConfigurationsFactory.configuration(for: .stage, isPlaylist: false))
     
-     APEUnitsViewService.shared.preloadUnitsView(with: UnitConfigurationsFactory.configuration(for: .stage, isPlaylist: true))
+//     APEUnitsViewService.shared.preloadUnitsView(with: UnitConfigurationsFactory.configuration(for: .stage, isPlaylist: true))
 
     return true
   }
