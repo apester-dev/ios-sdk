@@ -23,7 +23,7 @@ import WebKit
 /// A ChannelToken Loading state update
 @objc public protocol APEUnitViewDelegate: NSObjectProtocol {
 
-    /// when the mediaId loaded successfuly
+    /// when the unitId loaded successfuly
     ///
     /// - Parameters:
     ///   - unitView: the view updater

@@ -33,17 +33,17 @@ import UIKit
         
     }
     
-    /// Unload units views so it can be Removed from cache with the given mediaIds if exists
-    /// - Parameter mediaIds: the mediaIds to remove from cache
-    public func unloadUnitsViews(with mediaIds: [String]) {
+    /// Unload units views so it can be Removed from cache with the given unitIds if exists
+    /// - Parameter unitIds: the mediaIds to remove from cache
+    public func unloadUnitsViews(with unitIds: [String]) {
         DispatchQueue.main.async {
-            mediaIds.forEach {
+            unitIds.forEach {
                 self.unitViewsData[$0] = nil
             }
         }
     }
 
-    /// Get Cached unit view for the given mediaId if exists..
+    /// Get Cached unit view for the given unitId if exists..
     /// FYI, the unit value will be nil in case it hasn't been initialized Via the `preloadUnitViews` API first.
     /// - Parameter unitParams: the APEUnitParams
     public func unitView(for unitParams: APEUnitParams) -> APEUnitView? {

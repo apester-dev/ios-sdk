@@ -47,11 +47,11 @@ class APEUnitViewController: UIViewController {
 }
 
 extension APEUnitViewController: APEUnitViewDelegate {
-    func unitView(_ unitView: APEUnitView, didFinishLoadingUnit mediaId: String) {
+    func unitView(_ unitView: APEUnitView, didFinishLoadingUnit unitId: String) {
         
     }
     
-    func unitView(_ unitView: APEUnitView, didFailLoadingUnit mediaId: String) {
+    func unitView(_ unitView: APEUnitView, didFailLoadingUnit unitId: String) {
         
     }
     

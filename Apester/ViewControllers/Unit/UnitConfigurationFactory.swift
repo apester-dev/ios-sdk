@@ -35,11 +35,11 @@ import ApesterKit
     }
         
     /// transform given media id to APEStripConfiguration
-    /// - Parameter mediaId: the mediaId to transform
+    /// - Parameter unitIds: the unitParams to transform
     static func makeUnitConfigurations(with unitParams: [APEUnitParams], environment: APEUnitEnvironment) -> [APEUnitConfiguration] {
         
         unitParams.compactMap {
-            try? APEUnitConfiguration(unitParams: $0, bundle: Bundle.main, environment: environment)
+            APEUnitConfiguration(unitParams: $0, bundle: Bundle.main, environment: environment)
         }
         
     }
