@@ -210,8 +210,6 @@ private extension APEUnitView {
             self.setContainerViewSize(anchor: heightAnchor, attribute: .height, size: size.height)
         }
         
-        print("almog: \(size.height)")
-        
         //width
         if let widthAnchor = self.containerView?.widthAnchor {
             self.setContainerViewSize(anchor: widthAnchor, attribute: .width, size: size.width)
