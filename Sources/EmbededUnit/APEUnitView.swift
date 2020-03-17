@@ -47,7 +47,6 @@ import WebKit
         // update unitWebView frame according to containerView bounds
         containerView.layoutIfNeeded()
         containerView.addSubview(self.unitWebView)
-        
         unitWebView.anchor(top: containerView.topAnchor, paddingTop: 0, bottom: containerView.bottomAnchor, paddingBottom: 0, leadingAnchor: containerView.leadingAnchor, paddingLeading: 0, trailingAnchor: containerView.trailingAnchor, paddingTrailing: 0, width: nil, height: nil)
     
         self.containerView = containerView
@@ -133,13 +132,13 @@ extension APEUnitView: WKNavigationDelegate {
     
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         self.destroy()
-        self.delegate?.unitView(self, didFailLoadingUnit: self.configuration.mediaId)
+        self.delegate?.unitView(self, didFailLoadingUnit: self.configuration.unitParams.id)
     }
 
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         
         self.unitWebView.appendAppNameToUserAgent(self.configuration.bundleInfo)
-        self.delegate?.unitView(self, didFinishLoadingUnit: self.configuration.mediaId)
+        self.delegate?.unitView(self, didFinishLoadingUnit: self.configuration.unitParams.id)
     }
 
     @available(iOS 13.0, *)
@@ -210,6 +209,8 @@ private extension APEUnitView {
         if let heightAnchor = self.containerView?.heightAnchor {
             self.setContainerViewSize(anchor: heightAnchor, attribute: .height, size: size.height)
         }
+        
+        print("almog: \(size.height)")
         
         //width
         if let widthAnchor = self.containerView?.widthAnchor {

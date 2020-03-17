@@ -25,9 +25,9 @@ import UIKit
             return
         }
         
-        let configs = configurations.filter({ self.unitView(for: $0.mediaId) == nil })
+        let configs = configurations.filter({ self.unitView(for: $0.unitParams) == nil })
         let unitViewsData = configs.reduce(into: [:]) {
-            $0[$1.mediaId] = APEUnitView(configuration: $1)
+            $0[$1.unitParams.id] = APEUnitView(configuration: $1)
         }
         self.unitViewsData.merge(unitViewsData, uniquingKeysWith: { $1 })
         
@@ -45,9 +45,9 @@ import UIKit
 
     /// Get Cached unit view for the given mediaId if exists..
     /// FYI, the unit value will be nil in case it hasn't been initialized Via the `preloadUnitViews` API first.
-    /// - Parameter mediaId: the channelToken
-    public func unitView(for mediaId: String) -> APEUnitView? {
-        self.unitViewsData[mediaId]
+    /// - Parameter unitParams: the APEUnitParams
+    public func unitView(for unitParams: APEUnitParams) -> APEUnitView? {
+        return self.unitViewsData[unitParams.id]
     }
 
 }

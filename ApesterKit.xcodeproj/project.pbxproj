@@ -10,10 +10,6 @@
 		3549BB501DA38A2000C63030 /* ApesterKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 3549BB181DA3890B00C63030 /* ApesterKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3549BB661DA38ADB00C63030 /* ApesterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3549BB211DA389CD00C63030 /* ApesterKit.framework */; };
 		361BF13F241EB9770079BFE3 /* APEUnitViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361BF13E241EB9770079BFE3 /* APEUnitViewDelegate.swift */; };
-		361BF147241FA9F10079BFE3 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361BF146241FA9F10079BFE3 /* Helper.swift */; };
-		361BF149241FADDA0079BFE3 /* APEUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361BF148241FADDA0079BFE3 /* APEUnit.swift */; };
-		361BF14B241FAFB10079BFE3 /* APEConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361BF14A241FAFB10079BFE3 /* APEConfiguration.swift */; };
-		361BF14D241FB05D0079BFE3 /* APEPlaylistConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361BF14C241FB05D0079BFE3 /* APEPlaylistConfiguration.swift */; };
 		3697E8642417F77100B6AC79 /* APEUnitEnviorment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697E8632417F77100B6AC79 /* APEUnitEnviorment.swift */; };
 		3697E8672417FAF900B6AC79 /* APEUnitConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */; };
 		3697E8692418DD2D00B6AC79 /* UnitConfigurationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697E8682418DD2D00B6AC79 /* UnitConfigurationFactory.swift */; };
@@ -110,10 +106,6 @@
 		3549BB581DA38A8800C63030 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3549BB611DA38ADB00C63030 /* ApesterKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ApesterKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		361BF13E241EB9770079BFE3 /* APEUnitViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitViewDelegate.swift; sourceTree = "<group>"; };
-		361BF146241FA9F10079BFE3 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
-		361BF148241FADDA0079BFE3 /* APEUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnit.swift; sourceTree = "<group>"; };
-		361BF14A241FAFB10079BFE3 /* APEConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEConfiguration.swift; sourceTree = "<group>"; };
-		361BF14C241FB05D0079BFE3 /* APEPlaylistConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEPlaylistConfiguration.swift; sourceTree = "<group>"; };
 		36795E7D2416531A00546AA5 /* APEUnitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitViewController.swift; sourceTree = "<group>"; };
 		3697E8632417F77100B6AC79 /* APEUnitEnviorment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitEnviorment.swift; sourceTree = "<group>"; };
 		3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitConfiguration.swift; sourceTree = "<group>"; };
@@ -302,9 +294,6 @@
 				3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */,
 				36B5DC202419586F000E46AF /* APEUnitsViewService.swift */,
 				361BF13E241EB9770079BFE3 /* APEUnitViewDelegate.swift */,
-				361BF148241FADDA0079BFE3 /* APEUnit.swift */,
-				361BF14A241FAFB10079BFE3 /* APEConfiguration.swift */,
-				361BF14C241FB05D0079BFE3 /* APEPlaylistConfiguration.swift */,
 			);
 			path = EmbededUnit;
 			sourceTree = "<group>";
@@ -319,7 +308,6 @@
 				86EAFF2C233E9D1000081AAB /* BundleInfo.swift */,
 				86120811233F74A9006608F1 /* UserAgent.swift */,
 				BB44109C22D53BF300BB1DEC /* Extensions.swift */,
-				361BF146241FA9F10079BFE3 /* Helper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -523,24 +511,20 @@
 				8652CB21233BF93B0092E309 /* SynchronizedScript.swift in Sources */,
 				8658F76A23832E4500C23BDA /* APEStripViewDelegate.swift in Sources */,
 				86B735ED23380D9100949864 /* APEStripStyle.swift in Sources */,
-				361BF149241FADDA0079BFE3 /* APEUnit.swift in Sources */,
 				86120824233F74A9006608F1 /* UserAgent.swift in Sources */,
 				BB44109D22D53BF300BB1DEC /* Extensions.swift in Sources */,
 				8658F76C23832F9700C23BDA /* APEEnvironment.swift in Sources */,
-				361BF147241FA9F10079BFE3 /* Helper.swift in Sources */,
 				3697E8642417F77100B6AC79 /* APEUnitEnviorment.swift in Sources */,
 				361BF13F241EB9770079BFE3 /* APEUnitViewDelegate.swift in Sources */,
 				36B5DC212419586F000E46AF /* APEUnitsViewService.swift in Sources */,
 				867D559B23E4A0D600190D64 /* APEStripViewService.swift in Sources */,
 				BB44109F22D53D2F00BB1DEC /* APEStripConfiguration.swift in Sources */,
-				361BF14D241FB05D0079BFE3 /* APEPlaylistConfiguration.swift in Sources */,
 				BB9709AB222322E000E1076B /* Constants.swift in Sources */,
 				36B5DC1F241954A1000E46AF /* APEUnitConfiguration.swift in Sources */,
 				86EAFF2D233E9D1000081AAB /* BundleInfo.swift in Sources */,
 				36B5DC1D2419549B000E46AF /* APEUnitView.swift in Sources */,
 				BB44109222D53AAB00BB1DEC /* ScriptMessageHandler.swift in Sources */,
 				BB0BE33E2223169400542E3C /* APEStripView.swift in Sources */,
-				361BF14B241FAFB10079BFE3 /* APEConfiguration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
