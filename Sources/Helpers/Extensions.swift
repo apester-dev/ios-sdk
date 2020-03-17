@@ -9,7 +9,7 @@ import Foundation
 import WebKit
 
 // MARK:- String
- extension String {
+extension String {
     var dictionary: [String: Any]? {
         if let data = self.data(using: .utf8) {
             return try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
@@ -73,6 +73,11 @@ extension UIColor {
 }
 
 extension UIView {
+    
+    var allSubviews: [UIView] {
+        return subviews + subviews.flatMap { $0.allSubviews }
+    }
+    
     func anchor(top: NSLayoutYAxisAnchor?, paddingTop: CGFloat, bottom: NSLayoutYAxisAnchor?, paddingBottom: CGFloat, leadingAnchor: NSLayoutXAxisAnchor?, paddingLeading: CGFloat, trailingAnchor: NSLayoutXAxisAnchor?, paddingTrailing: CGFloat, width: CGFloat?, height: CGFloat?)
     {
         translatesAutoresizingMaskIntoConstraints = false

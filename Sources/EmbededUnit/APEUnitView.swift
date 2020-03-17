@@ -15,12 +15,24 @@ import WebKit
     private var containerView: UIView?
     private weak var containerViewConroller: UIViewController?
     private var configuration: APEUnitConfiguration!
+    public weak var delegate: APEUnitViewDelegate?
+    private var latestUnitSize: CGSize?
+    private var messageDispatcher = MessageDispatcher()
+    
+    /// The view visibility status, update this property either when the view is visible or not.
+    public var isDisplayed: Bool = false {
+        didSet {
+            self.messageDispatcher
+                .dispatchAsync(Constants.Unit.setViewVisibilityStatus(isDisplayed),
+                               to: self.unitWebView)
+        }
+    }
     
     public init(configuration: APEUnitConfiguration) {
         super.init()
         
         self.configuration = configuration
-        let options = WKWebView.Options(events: [Constants.Unit.proxy], contentBehavior: .never, delegate: self)
+        let options = WKWebView.Options(events: [Constants.Unit.proxy, Constants.Unit.validateUnitViewVisibity], contentBehavior: .never, delegate: self)
         
         self.unitWebView = WKWebView.make(with: options)
         
@@ -35,12 +47,75 @@ import WebKit
         // update unitWebView frame according to containerView bounds
         containerView.layoutIfNeeded()
         containerView.addSubview(self.unitWebView)
-        
         unitWebView.anchor(top: containerView.topAnchor, paddingTop: 0, bottom: containerView.bottomAnchor, paddingBottom: 0, leadingAnchor: containerView.leadingAnchor, paddingLeading: 0, trailingAnchor: containerView.trailingAnchor, paddingTrailing: 0, width: nil, height: nil)
-    
+        
         self.containerView = containerView
         self.containerViewConroller = containerViewConroller
         
+        if let latestUnitSize = self.latestUnitSize {
+            self.setContainerViewSize(anchor: self.containerView!.heightAnchor, attribute: .height, size: latestUnitSize.height)
+        }
+        
+    }
+    
+    func destroy() {
+        self.unitWebView.configuration.userContentController
+            .unregister(from: [Constants.Unit.proxy, Constants.Unit.validateUnitViewVisibity])
+    }
+    
+    /// Remove the unit web view
+    public func hide() {
+        self.unitWebView.removeFromSuperview()
+    }
+    
+    func open(url: URL, type: APEUnitViewNavigationType) {
+        let open: ((URL) -> Void) = { url in
+            DispatchQueue.main.async {
+                if UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url, options: [:]) { _ in }
+                }
+            }
+        }
+        
+        // wait for shouldHandleURL callback
+        let shouldHandleURL: Void? = self.delegate?.unitView?(self, shouldHandleURL: url, type: type) {
+            if !$0 {
+                open(url)
+            }
+        }
+        // check if the shouldHandleURL is implemented
+        if shouldHandleURL == nil {
+            open(url)
+        }
+    }
+
+    func decisionHandler(navigationAction: WKNavigationAction, webView: WKWebView, completion: (WKNavigationActionPolicy) -> Void) {
+        var policy = WKNavigationActionPolicy.cancel
+        // is valid URL
+        if let url = navigationAction.request.url {
+            switch navigationAction.navigationType {
+            case .other:
+                // redirect when the target is a main frame
+                if let targetFrame = navigationAction.targetFrame, targetFrame.isMainFrame,
+                    url.absoluteString != webView.url?.absoluteString {
+                    open(url: url, type: .other)
+                } else {
+                    policy = .allow // allow webview requests communication
+                }
+            case .linkActivated:
+                // redirect when the main web view link got clickd.
+                if let scheme = url.scheme, scheme.contains("http") {
+                    open(url: url, type: .linkActivated)
+                }
+            default: break
+            }
+        }
+        completion(policy)
+    }
+    
+    deinit {
+        hide()
+        destroy()
     }
     
 }
@@ -59,9 +134,58 @@ extension APEUnitView: WKNavigationDelegate {
         completionHandler(.performDefaultHandling, nil)
     }
     
-    // todo handle failures
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        self.destroy()
+        self.delegate?.unitView(self, didFailLoadingUnit: self.configuration.unitParams.id)
     }
+
+    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        
+        self.unitWebView.appendAppNameToUserAgent(self.configuration.bundleInfo)
+        self.delegate?.unitView(self, didFinishLoadingUnit: self.configuration.unitParams.id)
+    }
+
+    @available(iOS 13.0, *)
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction,
+                        preferences: WKWebpagePreferences, decisionHandler: @escaping (WKNavigationActionPolicy, WKWebpagePreferences) -> Void) {
+        preferences.preferredContentMode = .mobile
+        self.decisionHandler(navigationAction: navigationAction, webView: webView) { policy in
+            decisionHandler(policy, preferences)
+        }
+    }
+
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        self.decisionHandler(navigationAction: navigationAction, webView: webView, completion: decisionHandler)
+    }
+
+    public func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+        guard let response = navigationResponse.response as? HTTPURLResponse,
+            let url = navigationResponse.response.url else {
+                decisionHandler(.cancel)
+                return
+        }
+        if let headerFields = response.allHeaderFields as? [String: String] {
+            let cookies = HTTPCookie.cookies(withResponseHeaderFields: headerFields, for: url)
+            cookies.forEach { cookie in
+                webView.configuration.websiteDataStore.httpCookieStore.setCookie(cookie)
+            }
+        }
+        decisionHandler(.allow)
+    }
+    
+}
+
+// MARK:- WKUIDelegate
+@available(iOS 11.0, *)
+extension APEUnitView: WKUIDelegate {
+    
+    public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        if let url = navigationAction.request.url {
+            self.open(url: url, type: .shareLinkActivated)
+        }
+        return nil
+    }
+    
 }
 
 private extension APEUnitView {
@@ -95,14 +219,18 @@ private extension APEUnitView {
             self.setContainerViewSize(anchor: widthAnchor, attribute: .width, size: size.width)
         }
         
+        self.latestUnitSize = size
+        
     }
     
 }
 
 extension APEUnitView: WKScriptMessageHandler {
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        let messageName = message.name
+        
         if message.webView?.hash == self.unitWebView.hash,
-            message.name == Constants.Unit.proxy,
+            messageName == Constants.Unit.proxy,
             let bodyString = message.body as? String {
 
             if bodyString.contains(Constants.Unit.resize),
@@ -113,10 +241,21 @@ extension APEUnitView: WKScriptMessageHandler {
             }
 
         }
+        
+        if messageName == Constants.Unit.validateUnitViewVisibity {
+            guard let containerVC = self.containerViewConroller, let view = self.containerView else {
+                self.isDisplayed = false
+                return
+            }
+            if containerVC.view.allSubviews.first(where: { $0 == view }) != nil {
+                let convertedCenterPoint = view.convert(view.center, to: containerVC.view)
+                self.isDisplayed = containerVC.view.bounds.contains(convertedCenterPoint)
+            } else {
+                self.isDisplayed = false
+            }
+        }
     }
 }
-
-extension APEUnitView: WKUIDelegate {}
 
 extension APEUnitView: UIScrollViewDelegate {}
 

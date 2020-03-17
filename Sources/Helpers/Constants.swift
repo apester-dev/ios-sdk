@@ -68,5 +68,9 @@ struct Constants {
         static let resize = "apester_resize_unit"
         static let height = "height"
         static let width = "width"
+        static let validateUnitViewVisibity = "validateUnitViewVisibity"
+        static func setViewVisibilityStatus(_ isVisible: Bool) -> String {
+            return "window.__setApesterViewabiity(\(isVisible))"
+        }
     }
 }

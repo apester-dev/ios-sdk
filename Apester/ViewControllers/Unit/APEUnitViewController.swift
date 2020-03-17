@@ -10,24 +10,23 @@ import UIKit
 import ApesterKit
 
 class APEUnitViewController: UIViewController {
-
-    // local story: 5ddeaa945d06ef005f3668e8
-    // stg story: 5e67832958c4d8457106a2ed
     
     var apesterUnitView: APEUnitView!
-    let configuration = try? APEUnitConfiguration(mediaId: "5e67832958c4d8457106a2ed",
-                                                  bundle: Bundle.main, environment: .stage)
+//    let configuration = try? APEUnitConfiguration(unitParams: .unit(mediaId: "5e6fa2351d18fd8580776612"),
+//                                                  bundle: Bundle.main, environment: .stage)
     
-    private var mediaIds: [String] = UnitConfigurationsFactory.mediaIds
+    let configuration = try? APEUnitConfiguration(unitParams: .playlist(tags: ["yo", "bo", "ho"], channelToken: "5d6fc15d07d512002b67ecc6", context: false, fallback: false), bundle: Bundle.main, environment: .local)
+    
+    private var unitsParams: [APEUnitParams] = UnitConfigurationsFactory.unitsParams
     
     @IBOutlet weak var unitContainerView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let mediaId = mediaIds.first {
+        if let unitParams = unitsParams.first {
             // preLoad implemntation
-            apesterUnitView = APEUnitsViewService.shared.unitView(for: mediaId)
+            apesterUnitView = APEUnitsViewService.shared.unitView(for: unitParams)
         }
         
         if apesterUnitView == nil {
@@ -37,8 +36,27 @@ class APEUnitViewController: UIViewController {
 
         }
         
+        unitsParams.forEach {
+            APEUnitsViewService.shared.unitView(for: $0)?.delegate = self
+        }
+        
         apesterUnitView.display(in: unitContainerView, containerViewConroller: self)
 
+    }
+    
+}
+
+extension APEUnitViewController: APEUnitViewDelegate {
+    func unitView(_ unitView: APEUnitView, didFinishLoadingUnit unitId: String) {
+        
+    }
+    
+    func unitView(_ unitView: APEUnitView, didFailLoadingUnit unitId: String) {
+        
+    }
+    
+    func unitView(_ unitView: APEUnitView, didUpdateHeight height: CGFloat) {
+        
     }
     
 }

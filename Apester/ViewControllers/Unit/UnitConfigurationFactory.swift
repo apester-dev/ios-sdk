@@ -11,29 +11,35 @@ import ApesterKit
 
 @objcMembers class UnitConfigurationsFactory: NSObject {
     
-    static private(set) var mediaIds: [String] = [""]
+    static private(set) var unitsParams: [APEUnitParams] = []
     
-    static func configuration(for env: APEUnitEnvironment = .production) -> [APEUnitConfiguration]  {
-        var mediaIds: [String]
+    static func configuration(for env: APEUnitEnvironment = .production, isPlaylist: Bool) -> [APEUnitConfiguration]  {
+        
+        var unitsParams: [APEUnitParams]!
         
         switch env {
         case .production:
-            mediaIds = [""]
+            unitsParams = isPlaylist ? [.playlist(tags: [], channelToken: "", context: false, fallback: false)] : [.unit(mediaId: "")]
         case .stage:
-            mediaIds = ["5e67832958c4d8457106a2ed"]
+            unitsParams = isPlaylist ? [.playlist(tags: ["news", "sport", "yoga"], channelToken: "5dcbc10016698427404a0f57", context: false, fallback: false)] :  [.unit(mediaId: "5e6fa2351d18fd8580776612")]
         case .local:
-            mediaIds = ["5d7f7f5f8ff01b0072a496da"]
+            unitsParams =
+                isPlaylist ? [.playlist(tags: ["news", "sport", "yoga"], channelToken: "5d6fc15d07d512002b67ecc6", context: false, fallback: false)] :  [.unit(mediaId: "5e67bd1c6abc6400725787ab")]
         }
-        self.mediaIds = mediaIds
-        return makeUnitConfigurations(with: mediaIds, environment: env)
+        self.unitsParams = unitsParams
+        return makeUnitConfigurations(with: unitsParams, environment: env)
     }
     
-    /// transform given media id to APEStripConfiguration
-    /// - Parameter mediaId: the mediaId to transform
-    static func makeUnitConfigurations(with mediaIds: [String], environment: APEUnitEnvironment) -> [APEUnitConfiguration] {
+    static private func getUnitParam(isPlaylist: Bool, mediaId: String?, channelToken: String?, tags: [String]?, context: Bool?, fallback: Bool?) -> [APEUnitParams] {
+        return isPlaylist ? [.playlist(tags: tags!, channelToken: channelToken ?? "", context: context ?? false, fallback: fallback ?? false)] : [.unit(mediaId: mediaId!)]
+    }
         
-        mediaIds.compactMap {
-            try? APEUnitConfiguration(mediaId: $0, bundle: Bundle.main, environment: environment)
+    /// transform given media id to APEStripConfiguration
+    /// - Parameter unitIds: the unitParams to transform
+    static func makeUnitConfigurations(with unitParams: [APEUnitParams], environment: APEUnitEnvironment) -> [APEUnitConfiguration] {
+        
+        unitParams.compactMap {
+            APEUnitConfiguration(unitParams: $0, bundle: Bundle.main, environment: environment)
         }
         
     }
