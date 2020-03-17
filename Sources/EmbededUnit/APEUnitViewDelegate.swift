@@ -27,16 +27,14 @@ import WebKit
     ///
     /// - Parameters:
     ///   - unitView: the view updater
-    ///   - mediaId: the media id
-    func unitView(_ unitView: APEUnitView, didFinishLoadingUnit mediaId:String)
+    ///   - unitId: The mediaId for regular unit or the channel token for playlist
+    func unitView(_ unitView: APEUnitView, didFinishLoadingUnit unitId:String)
 
     /// when the webview couldn't be loaded
     /// - Parameters:
     ///   - unitView: the view updater
-    ///   - mediaId: the media id
-    func unitView(_ unitView: APEUnitView, didFailLoadingUnit mediaId:String)
-
-    // todo almog!!
+    ///   - unitId: The mediaId for regular unit or the channel token for playlist
+    func unitView(_ unitView: APEUnitView, didFailLoadingUnit unitId:String)
     
     /// when the unitView height has been updated
     /// - Parameters:

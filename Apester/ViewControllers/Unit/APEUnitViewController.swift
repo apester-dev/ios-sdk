@@ -12,10 +12,10 @@ import ApesterKit
 class APEUnitViewController: UIViewController {
     
     var apesterUnitView: APEUnitView!
-    let configuration = try? APEUnitConfiguration(unitParams: APEUnitParams.unit(mediaId: "5e6fa2351d18fd8580776612"),
-                                                  bundle: Bundle.main, environment: .stage)
+//    let configuration = try? APEUnitConfiguration(unitParams: .unit(mediaId: "5e6fa2351d18fd8580776612"),
+//                                                  bundle: Bundle.main, environment: .stage)
     
-//    let configuration = try? APEUnitConfiguration(unitParams: APEUnitParams.playlist(tags: ["yo", "bo", "ho"], channelToken: "5d6fc15d07d512002b67ecc6", context: false, fallback: false), bundle: Bundle.main, environment: .local)
+    let configuration = try? APEUnitConfiguration(unitParams: .playlist(tags: ["yo", "bo", "ho"], channelToken: "5d6fc15d07d512002b67ecc6", context: false, fallback: false), bundle: Bundle.main, environment: .local)
     
     private var unitsParams: [APEUnitParams] = UnitConfigurationsFactory.unitsParams
     
