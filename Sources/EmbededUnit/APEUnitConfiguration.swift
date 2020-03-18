@@ -69,7 +69,7 @@ public enum APEUnitParams {
     public convenience init(unitParams: APEUnitParams, bundle: Bundle) {
         self.init(unitParams: unitParams, bundle: bundle, environment: .production, noApesterAds: false)
     }
-    
+    print("almog remove")
     @objc public convenience init(mediaId: String, bundle: Bundle) {
         self.init(unitParams: .unit(mediaId: mediaId),
                   bundle: bundle)
