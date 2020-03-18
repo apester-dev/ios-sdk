@@ -15,7 +15,7 @@ class APEUnitViewController: UIViewController {
 //    let configuration = try? APEUnitConfiguration(unitParams: .unit(mediaId: "5e6fa2351d18fd8580776612"),
 //                                                  bundle: Bundle.main, environment: .stage)
     
-    let configuration = try? APEUnitConfiguration(unitParams: .playlist(tags: ["yo", "bo", "ho"], channelToken: "5d6fc15d07d512002b67ecc6", context: false, fallback: false), bundle: Bundle.main, environment: .local)
+    let configuration = APEUnitConfiguration(unitParams: .playlist(tags: ["yo", "bo", "ho"], channelToken: "5d6fc15d07d512002b67ecc6", context: false, fallback: false), bundle: Bundle.main, environment: .local, noApesterAds: false)
     
     private var unitsParams: [APEUnitParams] = UnitConfigurationsFactory.unitsParams
     
@@ -31,8 +31,7 @@ class APEUnitViewController: UIViewController {
         
         if apesterUnitView == nil {
             // not preload!
-            guard let unitConfig = configuration else { return }
-            apesterUnitView = APEUnitView(configuration: unitConfig)
+            apesterUnitView = APEUnitView(configuration: configuration)
 
         }
         

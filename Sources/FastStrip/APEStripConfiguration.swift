@@ -15,17 +15,20 @@ public enum APEStripConfigurationError: Error {
 @objcMembers public class APEStripConfiguration: NSObject {
 
     private enum Keys: String {
-        case channelToken   = "token"
+        case channelToken = "token"
+        case noApesterAds = "noApesterAds"
     }
 
     public private(set) var channelToken: String
     public private(set) var style: APEStripStyle
     private(set) var bundleInfo: [String : String]
     private(set) var environment: APEEnvironment
-
+    private(set) var noApesterAds: Bool
+    
     private var parameters: [String: String] {
         var value = self.bundleInfo.merging(self.style.parameters, uniquingKeysWith: { $1 })
         value[Keys.channelToken.rawValue] = channelToken
+        value[Keys.noApesterAds.rawValue] = String(noApesterAds)
         return value
     }
 
@@ -37,7 +40,7 @@ public enum APEStripConfigurationError: Error {
         return self.parameters.componentsURL(baseURL: (self.environment.baseUrl + Constants.Strip.stripStoryPath))
     }
 
-    public init(channelToken: String, style: APEStripStyle, bundle: Bundle, environment: APEEnvironment) throws {
+    public init(channelToken: String, style: APEStripStyle, bundle: Bundle, environment: APEEnvironment, noApesterAds: Bool) throws {
         guard !channelToken.isEmpty else {
             throw APEStripConfigurationError.invalidChannelToken
         }
@@ -45,10 +48,11 @@ public enum APEStripConfigurationError: Error {
         self.style = style
         self.bundleInfo = BundleInfo.bundleInfoPayload(with: bundle)
         self.environment = environment
+        self.noApesterAds = noApesterAds
     }
 
     public convenience init(channelToken: String, style: APEStripStyle, bundle: Bundle) throws {
-        try self.init(channelToken: channelToken, style: style, bundle: bundle, environment: .production)
+        try self.init(channelToken: channelToken, style: style, bundle: bundle, environment: .production, noApesterAds: false)
     }
 }
 

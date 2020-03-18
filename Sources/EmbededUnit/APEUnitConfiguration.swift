@@ -29,12 +29,14 @@ public enum APEUnitParams {
         case tags = "tags"
         case context = "context"
         case fallback = "fallback"
+        case noApesterAds = "noApesterAds"
     }
     
     public private(set) var unitParams: APEUnitParams
     private(set) var bundleInfo: [String : String]
     private(set) var environment: APEUnitEnvironment
     private(set) var id: String = ""
+    private(set) var noApesterAds: Bool
     
     private var parameters: [String: String] {
         
@@ -42,11 +44,13 @@ public enum APEUnitParams {
         switch self.unitParams {
         case .unit(let mediaId):
             value[Keys.mediaId.rawValue] = mediaId
+            value[Keys.noApesterAds.rawValue] = String(self.noApesterAds)
         case .playlist(let tags, let channelToken, let context, let fallback):
             value[Keys.channelToken.rawValue] = channelToken
             value[Keys.context.rawValue] = String(context)
             value[Keys.fallback.rawValue] = String(fallback)
             value[Keys.tags.rawValue] = tags.joined(separator:",")
+            value[Keys.noApesterAds.rawValue] = String(self.noApesterAds)
         }
         return value
     }
@@ -55,23 +59,24 @@ public enum APEUnitParams {
         return self.parameters.componentsURL(baseURL: (self.environment.baseUrl + Constants.Unit.unitPath))
     }
     
-    public init(unitParams: APEUnitParams, bundle: Bundle, environment: APEUnitEnvironment){
+    public init(unitParams: APEUnitParams, bundle: Bundle, environment: APEUnitEnvironment, noApesterAds: Bool){
         self.bundleInfo = BundleInfo.bundleInfoPayload(with: bundle)
         self.environment = environment
         self.unitParams = unitParams
+        self.noApesterAds = noApesterAds
     }
     
     public convenience init(unitParams: APEUnitParams, bundle: Bundle) {
-        self.init(unitParams: unitParams, bundle: bundle, environment: .production)
+        self.init(unitParams: unitParams, bundle: bundle, environment: .production, noApesterAds: false)
     }
     
     @objc public convenience init(mediaId: String, bundle: Bundle) {
         self.init(unitParams: .unit(mediaId: mediaId),
-                      bundle: bundle)
+                  bundle: bundle)
     }
     @objc public convenience init(tags: [String], channelToken: String, context: Bool, fallback: Bool, bundle: Bundle) {
         self.init(unitParams: .playlist(tags: tags, channelToken: channelToken, context: context, fallback: fallback),
-                      bundle: bundle)
+                  bundle: bundle)
     }
     
 }

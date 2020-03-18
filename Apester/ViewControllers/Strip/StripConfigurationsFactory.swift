@@ -22,7 +22,7 @@ import ApesterKit
 
     static private(set) var tokens: [String] = []
 
-    static func configurations(for env: APEEnvironment = .production) -> [APEStripConfiguration]  {
+    static func configurations(for env: APEEnvironment = .production, noApesterAds: Bool) -> [APEStripConfiguration]  {
         var tokens: [String]
         switch env {
             case .production:
@@ -33,14 +33,14 @@ import ApesterKit
             tokens = ["5d6fc15d07d512002b67ecc6"]
         }
         self.tokens = tokens
-        return makeStripConfigurations(with: tokens, environment: env)
+        return makeStripConfigurations(with: tokens, environment: env, noApesterAds: noApesterAds)
     }
 
     /// transform all given channel toekns to [APEStripConfiguration]
     /// - Parameter channleTokens: the channelTokens to transform
-    static func makeStripConfigurations(with channleTokens: [String], environment: APEEnvironment) -> [APEStripConfiguration] {
+    static func makeStripConfigurations(with channleTokens: [String], environment: APEEnvironment, noApesterAds: Bool) -> [APEStripConfiguration] {
         channleTokens.compactMap {
-            try? APEStripConfiguration(channelToken: $0, style: style, bundle: Bundle.main, environment: environment)
+            try? APEStripConfiguration(channelToken: $0, style: style, bundle: Bundle.main, environment: environment, noApesterAds: noApesterAds)
         }
     }
 }
