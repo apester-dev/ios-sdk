@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Unit View Controller-->
+        <!--Single UnitView-->
         <scene sceneID="2y1-F3-cq2">
             <objects>
-                <viewController id="pma-5c-gKe" customClass="APEUnitViewController" customModule="Apester" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Single UnitView" id="pma-5c-gKe" customClass="APEUnitViewController" customModule="Apester" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Tha-vb-h2l"/>
                         <viewControllerLayoutGuide type="bottom" id="UCx-eN-l3Z"/>
@@ -32,7 +32,7 @@
                             <constraint firstAttribute="trailing" secondItem="VWw-u6-TLD" secondAttribute="trailing" constant="10" id="lMm-RA-Hcn"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="B81-fM-OCQ"/>
+                    <navigationItem key="navigationItem" title="Single UnitView" id="B81-fM-OCQ"/>
                     <connections>
                         <outlet property="unitContainerView" destination="VWw-u6-TLD" id="sfa-hM-DMk"/>
                     </connections>
@@ -353,7 +353,7 @@
                             <constraint firstItem="ufo-c7-YmU" firstAttribute="leading" secondItem="SZy-8Q-sQf" secondAttribute="leading" constant="20" id="kdt-js-YPp"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="El5-f6-wLb"/>
+                    <navigationItem key="navigationItem" title="Multiple UnitView" id="El5-f6-wLb"/>
                     <connections>
                         <outlet property="collectionView" destination="ufo-c7-YmU" id="zpt-bu-daI"/>
                     </connections>
