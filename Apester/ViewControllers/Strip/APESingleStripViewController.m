@@ -42,4 +42,7 @@
     self.containerViewHeightConstraint.constant = height;
 }
 
+- (void)stripView:(APEStripView * _Nonnull)stripView adsCompleted:(NSString * _Nonnull)token {
+}
+
 @end

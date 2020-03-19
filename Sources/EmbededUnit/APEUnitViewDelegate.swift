@@ -42,6 +42,12 @@ import WebKit
     ///   - height: the view new height
     func unitView(_ unitView: APEUnitView, didUpdateHeight height:CGFloat)
 
+    /// when ads completed and not try to get more ads.
+    /// - Parameters:
+    ///   - unitView: the view updater
+    ///   - unitId: The mediaId for regular unit or the channel token for playlist
+    func unitView(_ unitView: APEUnitView, adsCompleted token:String)
+    
     /// implement this function in order to handle the tapped link URL from the view
     /// - Parameters:
     ///   - unitView: the unit view
