@@ -37,7 +37,7 @@ import WebKit
     /// - Parameters:
     ///   - unitView: the view updater
     ///   - unitId: The mediaId for regular unit or the channel token for playlist
-    func unitView(_ unitView: APEUnitView, adsCompletedChannelToken unitId: String)
+    func unitView(_ unitView: APEUnitView, didCompleteAdsForUnit unitId: String)
     
     /// implement this function in order to handle the tapped link URL from the view
     /// - Parameters:

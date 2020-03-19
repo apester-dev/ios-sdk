@@ -31,7 +31,7 @@ import WebKit
     /// - Parameters:
     ///   - stripView: the strip view updater
     ///   - token: the channel token id
-    func stripView(_ stripView: APEStripView, adsCompletedChannelToken token:String)
+    func stripView(_ stripView: APEStripView, didCompleteAdsForChannelToken token:String)
     
     /// when the stripView height has been updated
     /// - Parameters:

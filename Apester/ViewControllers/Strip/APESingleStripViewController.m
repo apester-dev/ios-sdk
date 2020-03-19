@@ -42,7 +42,7 @@
     self.containerViewHeightConstraint.constant = height;
 }
 
-- (void)stripView:(APEStripView * _Nonnull)stripView adsCompletedChannelToken:(NSString * _Nonnull)token {
+- (void)stripView:(APEStripView * _Nonnull)stripView didCompleteAdsForChannelToken:(NSString * _Nonnull)token {
 }
 
 - (void)stripView:(APEStripView *)stripView shouldHandleURL:(NSURL *)url type:(enum APEViewNavigationType)type completion:(void (^)(BOOL))completion {

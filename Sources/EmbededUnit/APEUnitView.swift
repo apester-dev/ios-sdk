@@ -22,7 +22,7 @@ import WebKit
     public override var isDisplayed: Bool {
         didSet {
             self.messageDispatcher
-                .dispatchAsync(Constants.Unit.setViewVisibilityStatus(isDisplayed),
+                .dispatchAsync(Constants.WebView.setViewVisibilityStatus(isDisplayed),
                                to: self.unitWebView)
         }
     }
@@ -117,7 +117,7 @@ extension APEUnitView {
             if bodyString.contains(Constants.Unit.resize),
                 let dictionary = bodyString.dictionary {
                 let height = dictionary.floatValue(for: Constants.Unit.height)
-                // let width = dictionary.floatValue(for: Constants.Unit.width)
+                let _ = dictionary.floatValue(for: Constants.Unit.width)
                 if CGFloat(height) != self.loadingState.height {
                     self.loadingState.height = CGFloat(height)
                     if loadingState.isLoaded {
@@ -126,8 +126,8 @@ extension APEUnitView {
                 }
             }
 
-            if bodyString.contains(Constants.Unit.apesterAdsCompleted){
-                self.delegate?.unitView(self, adsCompletedChannelToken: self.configuration.unitParams.id)
+            if bodyString.contains(Constants.WebView.apesterAdsCompleted){
+                self.delegate?.unitView(self, didCompleteAdsForUnit: self.configuration.unitParams.id)
             }
         }
 

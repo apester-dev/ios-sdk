@@ -72,8 +72,8 @@ extension APEMultipleUnitsViewController: APEUnitViewDelegate {
 
     }
 
-    func unitView(_ unitView: APEUnitView, adsCompletedChannelToken unitId: String) {
-
+    func unitView(_ unitView: APEUnitView, didCompleteAdsForUnit unitId: String) {
+         print(unitId)
     }
 
     func unitView(_ unitView: APEUnitView, didUpdateHeight height: CGFloat) {

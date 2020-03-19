@@ -59,7 +59,7 @@ import SafariServices
             return .zero
         }
         var calculatedHeight: CGFloat = self.loadingState.height
-        self.messageDispatcher.dispatchSync(message: Constants.Strip.getHeight, to: self.stripWebView) { response in
+        self.messageDispatcher.dispatchSync(message: Constants.WebView.getHeight, to: self.stripWebView) { response in
             calculatedHeight = (response as? CGFloat) ?? calculatedHeight
         }
         return calculatedHeight
@@ -69,7 +69,7 @@ import SafariServices
     public override var isDisplayed: Bool {
         didSet {
             self.messageDispatcher
-                .dispatchAsync(Constants.Strip.setViewVisibilityStatus(isDisplayed),
+                .dispatchAsync(Constants.WebView.setViewVisibilityStatus(isDisplayed),
                                to: self.stripWebView)
         }
     }
@@ -120,7 +120,7 @@ import SafariServices
 
     /// Hide the story view
     public override func hideStory() {
-        self.messageDispatcher.dispatchAsync(Constants.Strip.close, to: self.storyWebView)
+        self.messageDispatcher.dispatchAsync(Constants.WebView.close, to: self.storyWebView)
     }
 
     /// subscribe to events in order to observe the events messages data.
@@ -293,10 +293,10 @@ private extension APEStripView {
             self.loadingState.isLoaded = false
             delegate?.stripView(self, didFailLoadingChannelToken: self.channelToken)
         }
-        else if bodyString.contains(StripConfig.apesterAdsCompleted) {
+        else if bodyString.contains(Constants.WebView.apesterAdsCompleted) {
             
             // update the delegate on all ads completed
-            self.delegate?.stripView(self, adsCompletedChannelToken: self.channelToken)
+            self.delegate?.stripView(self, didCompleteAdsForChannelToken: self.channelToken)
         }
         else if messageName == StripConfig.validateStripViewVisibity {
             guard let containerVC = self.containerViewConroller, let view = self.containerView else {

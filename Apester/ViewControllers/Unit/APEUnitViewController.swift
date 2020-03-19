@@ -42,15 +42,15 @@ class APEUnitViewController: UIViewController {
 }
 
 extension APEUnitViewController: APEUnitViewDelegate {
-    func unitView(_ unitView: APEUnitView, didFailLoadingUnit token: String) {
+    func unitView(_ unitView: APEUnitView, didFailLoadingUnit unitId: String) {
     }
     
     func unitView(_ unitView: APEUnitView, didFinishLoadingUnit unitId: String) {
-        
+
     }
-    
-    func unitView(_ unitView: APEUnitView, adsCompletedChannelToken unitId: String) {
-        
+
+    func unitView(_ unitView: APEUnitView, didCompleteAdsForUnit unitId: String) {
+
     }
     
     func unitView(_ unitView: APEUnitView, didUpdateHeight height: CGFloat) {

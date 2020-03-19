@@ -60,7 +60,7 @@ extension APEMultipleStripsViewController: UICollectionViewDelegateFlowLayout {
 
 extension APEMultipleStripsViewController: APEStripViewDelegate {
     
-    func stripView(_ stripView: APEStripView, adsCompletedChannelToken token: String) {
+    func stripView(_ stripView: APEStripView, didCompleteAdsForChannelToken token: String) {
     }
     
 
