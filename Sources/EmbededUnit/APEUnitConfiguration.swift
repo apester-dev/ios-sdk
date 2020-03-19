@@ -11,7 +11,8 @@ import UIKit
 public enum APEUnitParams {
     case unit(mediaId: String)
     case playlist(tags: [String], channelToken: String, context: Bool, fallback: Bool)
-    var id:String {
+
+    public var id: String {
         switch self {
         case .unit(let mediaId):
             return mediaId
@@ -21,7 +22,7 @@ public enum APEUnitParams {
     }
 }
 
-@objcMembers public class APEUnitConfiguration: NSObject {
+@objcMembers public class APEUnitConfiguration: APEConfiguration {
     
     private enum Keys: String {
         case mediaId = "mediaId"
@@ -33,50 +34,47 @@ public enum APEUnitParams {
     }
     
     public private(set) var unitParams: APEUnitParams
-    private(set) var bundleInfo: [String : String]
-    private(set) var environment: APEUnitEnvironment
-    private(set) var id: String = ""
-    private(set) var noApesterAds: Bool
     
-    private var parameters: [String: String] {
-        
-        var value = self.bundleInfo.merging([], uniquingKeysWith: { $1 })
+    private(set) var id: String = ""
+    private(set) var hideApesterAds: Bool
+    
+    override var parameters: [String: String] {
+        var value = super.parameters
         switch self.unitParams {
         case .unit(let mediaId):
             value[Keys.mediaId.rawValue] = mediaId
-            value[Keys.noApesterAds.rawValue] = String(self.noApesterAds)
+            value[Keys.noApesterAds.rawValue] = "\(self.hideApesterAds)"
         case .playlist(let tags, let channelToken, let context, let fallback):
             value[Keys.channelToken.rawValue] = channelToken
-            value[Keys.context.rawValue] = String(context)
-            value[Keys.fallback.rawValue] = String(fallback)
+            value[Keys.context.rawValue] = "\(context)"
+            value[Keys.fallback.rawValue] = "\(fallback)"
             value[Keys.tags.rawValue] = tags.joined(separator:",")
-            value[Keys.noApesterAds.rawValue] = String(self.noApesterAds)
+            value[Keys.noApesterAds.rawValue] = "\(self.hideApesterAds)"
         }
         return value
     }
     
     var unitURL: URL? {
-        return self.parameters.componentsURL(baseURL: (self.environment.baseUrl + Constants.Unit.unitPath))
+        return self.parameters.componentsURL(baseURL: (self.environment.unitBaseUrl + Constants.Unit.unitPath))
     }
     
-    public init(unitParams: APEUnitParams, bundle: Bundle, environment: APEUnitEnvironment, noApesterAds: Bool){
-        self.bundleInfo = BundleInfo.bundleInfoPayload(with: bundle)
-        self.environment = environment
+    public init(unitParams: APEUnitParams, bundle: Bundle, hideApesterAds: Bool, environment: APEEnvironment) {
         self.unitParams = unitParams
-        self.noApesterAds = noApesterAds
+        self.hideApesterAds = hideApesterAds
+        super.init(bundle: bundle, environment: environment)
     }
     
     public convenience init(unitParams: APEUnitParams, bundle: Bundle) {
-        self.init(unitParams: unitParams, bundle: bundle, environment: .production, noApesterAds: false)
+        self.init(unitParams: unitParams, bundle: bundle, hideApesterAds: false, environment: .production)
     }
     
     @objc public convenience init(mediaId: String, bundle: Bundle) {
         self.init(unitParams: .unit(mediaId: mediaId),
                   bundle: bundle)
     }
+
     @objc public convenience init(tags: [String], channelToken: String, context: Bool, fallback: Bool, bundle: Bundle) {
         self.init(unitParams: .playlist(tags: tags, channelToken: channelToken, context: context, fallback: fallback),
                   bundle: bundle)
     }
-    
 }

@@ -11,15 +11,6 @@ import WebKit
 #if os(iOS)
 @available(iOS 11.0, *)
 
-/// This enum describes the link type was activated.
-@objc public enum APEUnitViewNavigationType: Int {
-    /// Navigation is taking place for some other reason.
-    case other
-    /// A link with an href attribute was activated by the user.
-    case linkActivated
-    /// A link for a scoial media was activated by the user.
-    case shareLinkActivated
-}
 /// A ChannelToken Loading state update
 @objc public protocol APEUnitViewDelegate: NSObjectProtocol {
 
@@ -28,25 +19,25 @@ import WebKit
     /// - Parameters:
     ///   - unitView: the view updater
     ///   - unitId: The mediaId for regular unit or the channel token for playlist
-    func unitView(_ unitView: APEUnitView, didFinishLoadingUnit unitId:String)
+    func unitView(_ unitView: APEUnitView, didFinishLoadingUnit unitId: String)
 
     /// when the webview couldn't be loaded
     /// - Parameters:
     ///   - unitView: the view updater
     ///   - unitId: The mediaId for regular unit or the channel token for playlist
-    func unitView(_ unitView: APEUnitView, didFailLoadingUnit unitId:String)
+    func unitView(_ unitView: APEUnitView, didFailLoadingUnit unitId: String)
     
     /// when the unitView height has been updated
     /// - Parameters:
     ///   - unitView: the view updater
     ///   - height: the view new height
-    func unitView(_ unitView: APEUnitView, didUpdateHeight height:CGFloat)
+    func unitView(_ unitView: APEUnitView, didUpdateHeight height: CGFloat)
 
     /// when ads completed and not try to get more ads.
     /// - Parameters:
     ///   - unitView: the view updater
     ///   - unitId: The mediaId for regular unit or the channel token for playlist
-    func unitView(_ unitView: APEUnitView, adsCompleted token:String)
+    func unitView(_ unitView: APEUnitView, adsCompletedChannelToken unitId: String)
     
     /// implement this function in order to handle the tapped link URL from the view
     /// - Parameters:
@@ -54,6 +45,6 @@ import WebKit
     ///   - url: the url to handle
     ///   - completion: the handler callback, return true in case the delegate handles the URL, otherwise return false
     @objc optional
-    func unitView(_ unitView: APEUnitView, shouldHandleURL url: URL, type: APEUnitViewNavigationType, completion: @escaping ((Bool) -> Void))
+    func unitView(_ unitView: APEUnitView, shouldHandleURL url: URL, type: APEViewNavigationType, completion: @escaping ((Bool) -> Void))
 }
 #endif

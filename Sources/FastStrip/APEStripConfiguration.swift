@@ -12,47 +12,44 @@ public enum APEStripConfigurationError: Error {
     case invalidChannelToken
 }
 
-@objcMembers public class APEStripConfiguration: NSObject {
+@objcMembers public class APEStripConfiguration: APEConfiguration {
 
     private enum Keys: String {
         case channelToken = "token"
-        case noApesterAds = "noApesterAds"
+        case hideApesterAds = "noApesterAds"
     }
 
     public private(set) var channelToken: String
     public private(set) var style: APEStripStyle
-    private(set) var bundleInfo: [String : String]
-    private(set) var environment: APEEnvironment
-    private(set) var noApesterAds: Bool
+    private(set) var hideApesterAds: Bool
     
-    private var parameters: [String: String] {
-        var value = self.bundleInfo.merging(self.style.parameters, uniquingKeysWith: { $1 })
+    override var parameters: [String: String] {
+        var value = super.parameters
         value[Keys.channelToken.rawValue] = channelToken
-        value[Keys.noApesterAds.rawValue] = String(noApesterAds)
+        value[Keys.hideApesterAds.rawValue] = "\(hideApesterAds)"
         return value
     }
 
     var stripURL: URL? {
-        return self.parameters.componentsURL(baseURL: (self.environment.baseUrl + Constants.Strip.stripPath))
+        return self.parameters.componentsURL(baseURL: (self.environment.stripBaseUrl + Constants.Strip.stripPath))
     }
 
     var storyURL: URL? {
-        return self.parameters.componentsURL(baseURL: (self.environment.baseUrl + Constants.Strip.stripStoryPath))
+        return self.parameters.componentsURL(baseURL: (self.environment.stripBaseUrl + Constants.Strip.stripStoryPath))
     }
 
-    public init(channelToken: String, style: APEStripStyle, bundle: Bundle, environment: APEEnvironment, noApesterAds: Bool) throws {
+    public init(channelToken: String, style: APEStripStyle, bundle: Bundle, environment: APEEnvironment, hideApesterAds: Bool) throws {
         guard !channelToken.isEmpty else {
             throw APEStripConfigurationError.invalidChannelToken
         }
         self.channelToken = channelToken
         self.style = style
-        self.bundleInfo = BundleInfo.bundleInfoPayload(with: bundle)
-        self.environment = environment
-        self.noApesterAds = noApesterAds
+        self.hideApesterAds = hideApesterAds
+        super.init(bundle: bundle, environment: environment)
     }
 
     public convenience init(channelToken: String, style: APEStripStyle, bundle: Bundle) throws {
-        try self.init(channelToken: channelToken, style: style, bundle: bundle, environment: .production, noApesterAds: false)
+        try self.init(channelToken: channelToken, style: style, bundle: bundle, environment: .production, hideApesterAds: false)
     }
 }
 
