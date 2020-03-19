@@ -98,30 +98,6 @@ import SafariServices
         }
     }
 
-    deinit {
-        hide()
-        destroy()
-    }
-}
-
-// MARK:- Handle DEvice orientationDidChangeNotification
-extension APEView {
-    func orientationDidChangeNotification() {
-        fatalError("OVERRIDE ME")
-    }
-}
-
-// MARK:- Handle UserContentController Script Messages
-@available(iOS 11.0, *)
-extension APEView {
-    func handleUserContentController(message: WKScriptMessage) {
-        fatalError("OVERRIDE ME")
-    }
-
-    func destroy() {
-        fatalError("OVERRIDE ME")
-    }
-
     func open(_ url: URL) {
         DispatchQueue.main.async {
             if UIApplication.shared.canOpenURL(url) {
@@ -130,15 +106,37 @@ extension APEView {
         }
     }
 
+    deinit {
+        hide()
+        destroy()
+    }
+}
+
+// MARK:- Internal API's to override
+@available(iOS 11.0, *)
+extension APEView {
+
+    func orientationDidChangeNotification() {
+        fatalError("OVERRIDE ME")
+    }
+
     func open(url: URL, type: APEViewNavigationType) {
         fatalError("OVERRIDE ME")
     }
 
-    func didFailLoading() {
+    func didFailLoading(error: Error) {
         fatalError("OVERRIDE ME")
     }
 
-    func didFinishLoading(webView: WKWebView, didFinish navigation: WKNavigation) {
+    func didFinishLoading() {
+        fatalError("OVERRIDE ME")
+    }
+
+    func handleUserContentController(message: WKScriptMessage) {
+        fatalError("OVERRIDE ME")
+    }
+
+    func destroy() {
         fatalError("OVERRIDE ME")
     }
 }
@@ -209,11 +207,11 @@ extension APEView: WKNavigationDelegate {
     public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         self.destroy()
         self.loadingState.isLoaded = false
-        self.didFailLoading()
+        self.didFailLoading(error: error)
     }
 
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        self.didFinishLoading(webView: webView, didFinish: navigation)
+        self.didFinishLoading()
     }
 
     @available(iOS 13.0, *)

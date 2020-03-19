@@ -145,10 +145,74 @@ import SafariServices
         destroy()
     }
 }
-// MARK:- Setup
+
+// MARK: - Override internal APIs
+@available(iOS 11.0, *)
+extension APEStripView {
+
+    // MARK:- Handle Device orientationDidChangeNotification
+    override func orientationDidChangeNotification() {
+        guard let containerView = self.containerView, let viewConroller = self.containerViewConroller else { return }
+        // validate that when the stripStoryViewController is presented the orientation must be portrait mode
+        if self.storyViewController.presentingViewController != nil, !UIDevice.current.orientation.isPortrait {
+            self.setDeviceOrientation(UIInterfaceOrientation.portrait.rawValue)
+            return
+        }
+        self.lastDeviceOrientation = UIDevice.current.orientation
+        // reload stripWebView
+        self.stripWebView.removeFromSuperview()
+        self.display(in: containerView, containerViewConroller: viewConroller)
+    }
+
+    override func open(url: URL, type: APEViewNavigationType) {
+        // wait for shouldHandleURL callback
+        let shouldHandleURL: Void? = self.delegate?.stripView?(self, shouldHandleURL: url, type: type) {
+            if !$0 { self.open(url) }
+        }
+        // check if the shouldHandleURL is implemented
+        if shouldHandleURL == nil {
+            self.open(url)
+        }
+    }
+
+    override func didFailLoading(error: Error) {
+        self.delegate?.stripView(self, didFailLoadingChannelToken: self.channelToken)
+    }
+
+    override func didFinishLoading() {
+        if let initialMessage = self.loadingState.initialMessage {
+            self.messageDispatcher.dispatch(apesterEvent: initialMessage, to: self.storyWebView) { _ in
+                self.loadingState.initialMessage = nil
+            }
+        }
+    }
+
+    override func handleUserContentController(message: WKScriptMessage) {
+        if let bodyString = message.body as? String {
+            if message.webView?.hash == stripWebView.hash {
+                handleStripWebViewMessages(bodyString, messageName: message.name)
+            } else if message.webView?.hash == storyWebView.hash {
+                handleStoryWebViewMessages(bodyString)
+            }
+            self.publish(message: bodyString)
+        }
+    }
+
+    override func destroy() {
+        self.stripWebView.configuration.userContentController
+            .unregister(from: [StripConfig.proxy])
+        self.storyWebView.configuration.userContentController
+            .unregister(from: [StripConfig.proxy,
+                               StripConfig.showStripStory,
+                               StripConfig.hideStripStory])
+    }
+}
+
+// MARK:- Private
 @available(iOS 11.0, *)
 private extension APEStripView {
-
+    private var channelToken: String { self.configuration.channelToken }
+    // Setup
     func prepareStripView() {
         setupStripWebView()
         setupStoryWebView()
@@ -180,40 +244,8 @@ private extension APEStripView {
         storyVC.webView = self.storyWebView
         self.storyViewController = storyVC
     }
-}
 
-extension APEStripView {
-    override func orientationDidChangeNotification() {
-        guard let containerView = self.containerView, let viewConroller = self.containerViewConroller else { return }
-        // validate that when the stripStoryViewController is presented the orientation must be portrait mode
-        if self.storyViewController.presentingViewController != nil, !UIDevice.current.orientation.isPortrait {
-            self.setDeviceOrientation(UIInterfaceOrientation.portrait.rawValue)
-            return
-        }
-        self.lastDeviceOrientation = UIDevice.current.orientation
-        // reload stripWebView
-        self.stripWebView.removeFromSuperview()
-        self.display(in: containerView, containerViewConroller: viewConroller)
-    }
-}
-
-// MARK:- Handle UserContentController Script Messages
-@available(iOS 11.0, *)
-extension APEStripView {
-
-    var channelToken: String { self.configuration.channelToken }
-
-    override func handleUserContentController(message: WKScriptMessage) {
-        if let bodyString = message.body as? String {
-            if message.webView?.hash == stripWebView.hash {
-                handleStripWebViewMessages(bodyString, messageName: message.name)
-            } else if message.webView?.hash == storyWebView.hash {
-                handleStoryWebViewMessages(bodyString)
-            }
-            self.publish(message: bodyString)
-        }
-    }
-
+    // Handle UserContentController Script Messages
     func publish(message: String) {
         guard let event = self.subscribedEvents.first(where: { message.contains($0) }) else { return }
         if self.subscribedEvents.contains(event) {
@@ -353,67 +385,6 @@ extension APEStripView {
                 if self.lastDeviceOrientation.isLandscape {
                     self.setDeviceOrientation(self.lastDeviceOrientation.rawValue)
                 }
-            }
-        }
-    }
-
-    override func destroy() {
-        self.stripWebView.configuration.userContentController
-            .unregister(from: [StripConfig.proxy])
-        self.storyWebView.configuration.userContentController
-            .unregister(from: [StripConfig.proxy,
-                               StripConfig.showStripStory,
-                               StripConfig.hideStripStory])
-    }
-
-    override func open(url: URL, type: APEViewNavigationType) {
-        // wait for shouldHandleURL callback
-        let shouldHandleURL: Void? = self.delegate?.stripView?(self, shouldHandleURL: url, type: type) {
-            if !$0 { self.open(url) }
-        }
-        // check if the shouldHandleURL is implemented
-        if shouldHandleURL == nil {
-            self.open(url)
-        }
-    }
-
-    func decisionHandler(navigationAction: WKNavigationAction, webView: WKWebView, completion: (WKNavigationActionPolicy) -> Void) {
-        var policy = WKNavigationActionPolicy.cancel
-        // is valid URL
-        if let url = navigationAction.request.url {
-            switch navigationAction.navigationType {
-                case .other:
-                    // redirect when the target is a main frame and the strip has been loaded.
-                    if loadingState.isLoaded, let targetFrame = navigationAction.targetFrame, targetFrame.isMainFrame,
-                        url.absoluteString != webView.url?.absoluteString {
-                        open(url: url, type: .other)
-                    } else {
-                        policy = .allow // allow webview requests communication
-                }
-                case .linkActivated:
-                    // redirect when the main web view link got clickd.
-                    if let scheme = url.scheme, scheme.contains("http") {
-                        open(url: url, type: .linkActivated)
-                }
-                default: break
-            }
-        }
-        completion(policy)
-    }
-}
-
-// MARK:- WKNavigationDelegate
-@available(iOS 11.0, *)
-extension APEStripView {
-
-    override func didFailLoading() {
-        self.delegate?.stripView(self, didFailLoadingChannelToken: self.channelToken)
-    }
-
-    override func didFinishLoading(webView: WKWebView, didFinish navigation: WKNavigation) {
-        if let initialMessage = self.loadingState.initialMessage {
-            self.messageDispatcher.dispatch(apesterEvent: initialMessage, to: self.storyWebView) { _ in
-                self.loadingState.initialMessage = nil
             }
         }
     }

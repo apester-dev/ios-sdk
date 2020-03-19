@@ -63,7 +63,6 @@ import WebKit
         super.display(in: containerView, containerViewConroller: containerViewConroller)
     }
 
-
     /// Remove the unit web view
     public override func hide() {
         self.unitWebView.removeFromSuperview()
@@ -75,17 +74,11 @@ import WebKit
     }
 }
 
-// MARK: - override internal APIs
+// MARK: - Override internal APIs
+@available(iOS 11.0, *)
 extension APEUnitView {
 
-    override func orientationDidChangeNotification() {
-
-    }
-
-    override func destroy() {
-        self.unitWebView.configuration.userContentController
-            .unregister(from: [Constants.Unit.proxy, Constants.Unit.validateUnitViewVisibity])
-    }
+    override func orientationDidChangeNotification() {}
 
     override func open(url: URL, type: APEViewNavigationType) {
         // wait for shouldHandleURL callback
@@ -100,71 +93,17 @@ extension APEUnitView {
         }
     }
 
-    func decisionHandler(navigationAction: WKNavigationAction, webView: WKWebView, completion: (WKNavigationActionPolicy) -> Void) {
-        var policy = WKNavigationActionPolicy.cancel
-        // is valid URL
-        if let url = navigationAction.request.url {
-            switch navigationAction.navigationType {
-            case .other:
-                // redirect when the target is a main frame
-                if let targetFrame = navigationAction.targetFrame, targetFrame.isMainFrame,
-                    url.absoluteString != webView.url?.absoluteString {
-                    open(url: url, type: .other)
-                } else {
-                    policy = .allow // allow webview requests communication
-                }
-            case .linkActivated:
-                // redirect when the main web view link got clickd.
-                if let scheme = url.scheme, scheme.contains("http") {
-                    open(url: url, type: .linkActivated)
-                }
-            default: break
-            }
-        }
-        completion(policy)
-    }
-}
-
-// MARK:- WKNavigationDelegate
-extension APEUnitView {
-
-    override func didFailLoading() {
+    override func didFailLoading(error: Error) {
         self.destroy()
         self.delegate?.unitView(self, didFailLoadingUnit: self.configuration.unitParams.id)
     }
 
-    override func didFinishLoading(webView: WKWebView, didFinish navigation: WKNavigation) {
+    override func didFinishLoading() {
         self.unitWebView.appendAppNameToUserAgent(self.configuration.bundleInfo)
         self.delegate?.unitView(self, didFinishLoadingUnit: self.configuration.unitParams.id)
     }
-}
 
-
-private extension APEUnitView {
-    
-    func update(height: CGFloat) {
-        // 1 - update the stripWebView height constraint
-        self.unitWebViewHeightConstraint.flatMap { NSLayoutConstraint.deactivate([$0]) }
-        unitWebViewHeightConstraint = unitWebView.heightAnchor.constraint(equalToConstant: height)
-        unitWebViewHeightConstraint?.priority = .defaultHigh
-        unitWebViewHeightConstraint?.isActive = true
-
-        // 2 - update the strip containerView height constraint
-        self.containerView?.constraints
-            .first(where: { $0.firstAttribute == .height })
-            .flatMap { NSLayoutConstraint.deactivate([$0]) }
-        let unitWebViewHeightConstraint = self.containerView?.heightAnchor.constraint(equalToConstant: height)
-        unitWebViewHeightConstraint?.priority = .defaultHigh
-        unitWebViewHeightConstraint?.isActive = true
-
-        // 3 - update the delegate about the new height
-        self.delegate?.unitView(self, didUpdateHeight: height)
-    }
-}
-
-// MARK:- Handle UserContentController Script Messages
-@available(iOS 11.0, *)
-extension APEUnitView {
+    // Handle UserContentController Script Messages
     override func handleUserContentController(message: WKScriptMessage) {
         let messageName = message.name
         if message.webView?.hash == self.unitWebView.hash,
@@ -205,10 +144,30 @@ extension APEUnitView {
             }
         }
     }
+
+    override func destroy() {
+        self.unitWebView.configuration.userContentController
+            .unregister(from: [Constants.Unit.proxy, Constants.Unit.validateUnitViewVisibity])
+    }
 }
 
-private extension Dictionary {
-    func floatValue(for key: Key) -> CGFloat {
-        CGFloat(self[key] as? Double ?? 0)
+private extension APEUnitView {
+    func update(height: CGFloat) {
+        // 1 - update the stripWebView height constraint
+        self.unitWebViewHeightConstraint.flatMap { NSLayoutConstraint.deactivate([$0]) }
+        unitWebViewHeightConstraint = unitWebView.heightAnchor.constraint(equalToConstant: height)
+        unitWebViewHeightConstraint?.priority = .defaultHigh
+        unitWebViewHeightConstraint?.isActive = true
+
+        // 2 - update the strip containerView height constraint
+        self.containerView?.constraints
+            .first(where: { $0.firstAttribute == .height })
+            .flatMap { NSLayoutConstraint.deactivate([$0]) }
+        let unitWebViewHeightConstraint = self.containerView?.heightAnchor.constraint(equalToConstant: height)
+        unitWebViewHeightConstraint?.priority = .defaultHigh
+        unitWebViewHeightConstraint?.isActive = true
+
+        // 3 - update the delegate about the new height
+        self.delegate?.unitView(self, didUpdateHeight: height)
     }
 }
