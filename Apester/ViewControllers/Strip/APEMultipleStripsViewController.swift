@@ -60,6 +60,10 @@ extension APEMultipleStripsViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension APEMultipleStripsViewController: APEStripViewDelegate {
+    
+    func stripView(_ stripView: APEStripView, adsCompleted token: String) {
+    }
+    
 
     func stripView(_ stripView: APEStripView, didUpdateHeight height: CGFloat) {
         self.collectionView.reloadData()

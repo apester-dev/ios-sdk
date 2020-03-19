@@ -47,6 +47,9 @@ class APEUnitViewController: UIViewController {
 }
 
 extension APEUnitViewController: APEUnitViewDelegate {
+    func unitView(_ unitView: APEUnitView, adsCompleted token: String) {
+    }
+    
     func unitView(_ unitView: APEUnitView, didFinishLoadingUnit unitId: String) {
         
     }
@@ -58,5 +61,5 @@ extension APEUnitViewController: APEUnitViewDelegate {
     func unitView(_ unitView: APEUnitView, didUpdateHeight height: CGFloat) {
         
     }
-    
+
 }

@@ -36,6 +36,12 @@ import WebKit
     ///   - token: the channel token id
     func stripView(_ stripView: APEStripView, didFailLoadingChannelToken token:String)
 
+    /// when ads completed and not try to get more ads.
+    /// - Parameters:
+    ///   - stripView: the strip view updater
+    ///   - token: the channel token id
+    func stripView(_ stripView: APEStripView, adsCompleted token:String)
+    
     /// when the stripView height has been updated
     /// - Parameters:
     ///   - stripView: the strip view updater
@@ -59,5 +65,6 @@ import WebKit
     ///   - completion: the handler callback, return true in case the delegate handles the URL, otherwise return false
     @objc optional
     func stripView(_ stripView: APEStripView, shouldHandleURL url: URL, type: APEStripViewNavigationType, completion: @escaping ((Bool) -> Void))
+    
 }
 #endif

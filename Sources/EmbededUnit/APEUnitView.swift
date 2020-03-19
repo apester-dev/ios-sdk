@@ -239,7 +239,11 @@ extension APEUnitView: WKScriptMessageHandler {
                 let width = dictionary.floatValue(for: Constants.Unit.width)
                 self.update(size: CGSize(width: width, height: height));
             }
-
+            
+            if bodyString.contains(Constants.Unit.apesterAdsCompleted){
+                
+                self.delegate?.unitView(self, adsCompleted: self.configuration.unitParams.id)
+            }
         }
         
         if messageName == Constants.Unit.validateUnitViewVisibity {

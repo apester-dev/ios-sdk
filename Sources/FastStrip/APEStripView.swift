@@ -189,8 +189,7 @@ private extension APEStripView {
                                         contentBehavior: .never,
                                         delegate: self)
         self.stripWebView = WKWebView.make(with: options)
-        if let url = self.configuration?.stripURL {
-            self.stripWebView.load(URLRequest(url: url))
+        if let url = self.configuration?.stripURL {            self.stripWebView.load(URLRequest(url: url))
         }
     }
 
@@ -270,6 +269,11 @@ private extension APEStripView {
             self.destroy()
             self.loadingState.isLoaded = false
             delegate?.stripView(self, didFailLoadingChannelToken: self.configuration.channelToken)
+        }
+        else if bodyString.contains(StripConfig.apesterAdsCompleted) {
+            
+            // update the delegate on all ads completed
+            self.delegate?.stripView(self, adsCompleted: self.configuration.channelToken)
         }
         else if messageName == StripConfig.validateStripViewVisibity {
             guard let containerVC = self.containerViewConroller, let view = self.containerView else {

@@ -48,6 +48,7 @@ struct Constants {
         static let stripHeight = "mobileStripHeight"
         static let stripResizeHeight = "strip_resize"
         static let validateStripViewVisibity = "validateStripViewVisibity"
+        static let apesterAdsCompleted = "apester_ads_completed"
         // functions
         static let close = "window.__closeApesterStory()"
         //
@@ -69,6 +70,7 @@ struct Constants {
         static let height = "height"
         static let width = "width"
         static let validateUnitViewVisibity = "validateUnitViewVisibity"
+        static let apesterAdsCompleted = "apester_ads_completed"
         static func setViewVisibilityStatus(_ isVisible: Bool) -> String {
             return "window.__setApesterViewabiity(\(isVisible))"
         }
