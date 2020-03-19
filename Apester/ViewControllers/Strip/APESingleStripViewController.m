@@ -23,7 +23,7 @@
     // 1 - Get token form the ChannleTokens Service
     NSString *token = StripConfigurationsFactory.tokens.firstObject;
     // 2 - load cached stripView
-    self.stripView = [APEStripViewService.shared stripViewFor:token];
+    self.stripView = [APEViewService.shared stripViewFor:token];
     self.stripView.delegate = self;
     self.containerViewHeightConstraint.constant = self.stripView.height;
     [self.stripView displayIn:self.containerView containerViewConroller:self];
@@ -42,7 +42,11 @@
     self.containerViewHeightConstraint.constant = height;
 }
 
-- (void)stripView:(APEStripView * _Nonnull)stripView adsCompleted:(NSString * _Nonnull)token {
+- (void)stripView:(APEStripView * _Nonnull)stripView adsCompletedChannelToken:(NSString * _Nonnull)token {
+}
+
+- (void)stripView:(APEStripView *)stripView shouldHandleURL:(NSURL *)url type:(enum APEViewNavigationType)type completion:(void (^)(BOOL))completion {
+    completion(NO);
 }
 
 @end

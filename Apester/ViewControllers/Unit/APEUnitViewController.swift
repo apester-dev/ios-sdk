@@ -12,21 +12,19 @@ import ApesterKit
 class APEUnitViewController: UIViewController {
     
     var apesterUnitView: APEUnitView!
-//    let configuration = try? APEUnitConfiguration(unitParams: .unit(mediaId: "5e6fa2351d18fd8580776612"),
-//                                                  bundle: Bundle.main, environment: .stage)
-    
-    let configuration = APEUnitConfiguration(unitParams: .playlist(tags: ["yo", "bo", "ho"], channelToken: "5d6fc15d07d512002b67ecc6", context: false, fallback: false), bundle: Bundle.main, environment: .local, noApesterAds: false)
-    
-    private var unitsParams: [APEUnitParams] = UnitConfigurationsFactory.unitsParams
+
+    private var unitParams: APEUnitParams? = UnitConfigurationsFactory.unitsParams.first
     
     @IBOutlet weak var unitContainerView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if let unitParams = unitsParams.first {
+
+        let configuration = UnitConfigurationsFactory.configurations(for: .stage, hideApesterAds: false)[0]
+
+        if let unit = unitParams {
             // preLoad implemntation
-            apesterUnitView = APEUnitsViewService.shared.unitView(for: unitParams)
+            apesterUnitView = APEViewService.shared.unitView(for: unit.id)
         }
         
         if apesterUnitView == nil {
@@ -35,25 +33,23 @@ class APEUnitViewController: UIViewController {
 
         }
         
-        unitsParams.forEach {
-            APEUnitsViewService.shared.unitView(for: $0)?.delegate = self
-        }
-        
-        apesterUnitView.display(in: unitContainerView, containerViewConroller: self)
+        guard let unitParams = unitParams else { return }
 
+        APEViewService.shared.unitView(for: unitParams.id)?.delegate = self
+
+        apesterUnitView.display(in: unitContainerView, containerViewConroller: self)
     }
-    
 }
 
 extension APEUnitViewController: APEUnitViewDelegate {
-    func unitView(_ unitView: APEUnitView, adsCompleted token: String) {
+    func unitView(_ unitView: APEUnitView, didFailLoadingUnit token: String) {
     }
     
     func unitView(_ unitView: APEUnitView, didFinishLoadingUnit unitId: String) {
         
     }
     
-    func unitView(_ unitView: APEUnitView, didFailLoadingUnit unitId: String) {
+    func unitView(_ unitView: APEUnitView, adsCompletedChannelToken unitId: String) {
         
     }
     
