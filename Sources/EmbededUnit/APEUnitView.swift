@@ -17,6 +17,7 @@ import WebKit
     public weak var delegate: APEUnitViewDelegate?
 
     private var unitWebViewHeightConstraint: NSLayoutConstraint?
+    private var unitWebViewWidthConstraint: NSLayoutConstraint?
     
     /// The view visibility status, update this property either when the view is visible or not.
     public override var isDisplayed: Bool {
@@ -56,9 +57,14 @@ import WebKit
         unitWebView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
         unitWebView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
         unitWebView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
-        unitWebViewHeightConstraint = unitWebView.heightAnchor.constraint(equalTo: containerView.heightAnchor)
+
+        unitWebViewHeightConstraint = constraint(for: unitWebView.heightAnchor, equalTo: containerView.heightAnchor)
         unitWebViewHeightConstraint?.priority = .defaultLow
         unitWebViewHeightConstraint?.isActive = true
+
+        unitWebViewWidthConstraint = constraint(for: unitWebView.widthAnchor, equalTo: containerView.widthAnchor)
+        unitWebViewWidthConstraint?.priority = .defaultLow
+        unitWebViewWidthConstraint?.isActive = true
 
         super.display(in: containerView, containerViewConroller: containerViewConroller)
     }
@@ -117,11 +123,11 @@ extension APEUnitView {
             if bodyString.contains(Constants.Unit.resize),
                 let dictionary = bodyString.dictionary {
                 let height = dictionary.floatValue(for: Constants.Unit.height)
-                let _ = dictionary.floatValue(for: Constants.Unit.width)
+                let width = dictionary.floatValue(for: Constants.Unit.width)
                 if CGFloat(height) != self.loadingState.height {
                     self.loadingState.height = CGFloat(height)
                     if loadingState.isLoaded {
-                        self.update(height: height)
+                        self.update(height: height, width: width)
                     }
                 }
             }
@@ -152,22 +158,46 @@ extension APEUnitView {
 }
 
 private extension APEUnitView {
-    func update(height: CGFloat) {
+    func constraint(for anchor: NSLayoutDimension, equalTo: NSLayoutDimension) -> NSLayoutConstraint {
+        anchor.constraint(equalTo: equalTo)
+    }
+
+    func constraint(for anchor: NSLayoutDimension, equalToConstant constant: CGFloat) -> NSLayoutConstraint {
+        anchor.constraint(equalToConstant: constant)
+    }
+
+    func update(height: CGFloat, width: CGFloat) {
         // 1 - update the stripWebView height constraint
         self.unitWebViewHeightConstraint.flatMap { NSLayoutConstraint.deactivate([$0]) }
         unitWebViewHeightConstraint = unitWebView.heightAnchor.constraint(equalToConstant: height)
         unitWebViewHeightConstraint?.priority = .defaultHigh
         unitWebViewHeightConstraint?.isActive = true
 
-        // 2 - update the strip containerView height constraint
-        self.containerView?.constraints
-            .first(where: { $0.firstAttribute == .height })
-            .flatMap { NSLayoutConstraint.deactivate([$0]) }
-        let unitWebViewHeightConstraint = self.containerView?.heightAnchor.constraint(equalToConstant: height)
-        unitWebViewHeightConstraint?.priority = .defaultHigh
-        unitWebViewHeightConstraint?.isActive = true
+        // 2 - update the stripWebView width constraint
+        self.unitWebViewWidthConstraint.flatMap { NSLayoutConstraint.deactivate([$0]) }
+        unitWebViewWidthConstraint = unitWebView.widthAnchor.constraint(equalToConstant: height)
+        unitWebViewWidthConstraint?.priority = .defaultHigh
+        unitWebViewWidthConstraint?.isActive = true
 
-        // 3 - update the delegate about the new height
+        if let containerView = self.containerView {
+            // 3 - update the strip containerView height constraint
+            containerView.constraints
+                .first(where: { $0.firstAttribute == .height })
+                .flatMap { NSLayoutConstraint.deactivate([$0]) }
+            let unitWebViewHeightConstraint = constraint(for: containerView.heightAnchor, equalToConstant: height)
+            unitWebViewHeightConstraint.priority = .defaultHigh
+            unitWebViewHeightConstraint.isActive = true
+
+            // 4 - update the strip containerView width constraint
+            containerView.constraints
+                .first(where: { $0.firstAttribute == .height })
+                .flatMap { NSLayoutConstraint.deactivate([$0]) }
+            let unitWebViewWidthConstraint = constraint(for: containerView.widthAnchor, equalToConstant: width)
+            unitWebViewWidthConstraint.priority = .defaultHigh
+            unitWebViewWidthConstraint.isActive = true
+        }
+
+        // 5 - update the delegate about the new height
         self.delegate?.unitView(self, didUpdateHeight: height)
     }
 }
