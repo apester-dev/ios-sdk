@@ -47,6 +47,10 @@ public enum APEStripConfigurationError: Error {
         self.hideApesterAds = hideApesterAds
         super.init(bundle: bundle, environment: environment)
     }
+    
+    public convenience init(channelToken: String, style: APEStripStyle, bundle: Bundle, hideApesterAds: Bool) throws {
+        try self.init(channelToken: channelToken, style: style, bundle: bundle, environment: .production, hideApesterAds: hideApesterAds)
+    }
 
     public convenience init(channelToken: String, style: APEStripStyle, bundle: Bundle) throws {
         try self.init(channelToken: channelToken, style: style, bundle: bundle, environment: .production, hideApesterAds: false)
