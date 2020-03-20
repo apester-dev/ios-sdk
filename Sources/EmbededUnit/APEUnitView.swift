@@ -190,7 +190,7 @@ private extension APEUnitView {
 
             // 4 - update the strip containerView width constraint
             containerView.constraints
-                .first(where: { $0.firstAttribute == .height })
+                .first(where: { $0.firstAttribute == .width })
                 .flatMap { NSLayoutConstraint.deactivate([$0]) }
             let unitWebViewWidthConstraint = constraint(for: containerView.widthAnchor, equalToConstant: width)
             unitWebViewWidthConstraint.priority = .defaultHigh
