@@ -16,13 +16,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
-    APEStripViewService.shared.preloadStripViews(with: StripConfigurationsFactory.configurations(for: .production, noApesterAds: false))
+    APEViewService.shared.preloadStripViews(with:
+        StripConfigurationsFactory.configurations(for: .production, hideApesterAds: false)
+    )
 
-//     Override point for customization after application launch.
-//    APEUnitsViewService.shared.preloadUnitsView(with: UnitConfigurationsFactory.configuration(for: .stage, isPlaylist: false, noApesterAds: false))
-    
-//     APEUnitsViewService.shared.preloadUnitsView(with: UnitConfigurationsFactory.configuration(for: .stage, isPlaylist: true))
-
+    APEViewService.shared.preloadUnitViews(with:
+        UnitConfigurationsFactory.configurations(for: .stage, hideApesterAds: false)
+    )
     return true
   }
 

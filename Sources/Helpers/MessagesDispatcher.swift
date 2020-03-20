@@ -27,7 +27,7 @@ class MessageDispatcher {
 
     func dispatch(apesterEvent message: String, to webView: WKWebView, completion: ((Any?) -> Void)? = nil) {
         self.messages[webView.hash] = message
-        self.dispatch(message: Constants.Strip.sendApesterEvent(with: message), to: webView, completion: completion)
+        self.dispatch(message: Constants.WebView.sendApesterEvent(with: message), to: webView, completion: completion)
     }
 
     func dispatchAsync(_ message: String, to webView: WKWebView, completion: ((Any?) -> Void)? = nil) {

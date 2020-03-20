@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import WebKit
 import ApesterKit
 
 class APEMultipleStripsViewController: UIViewController {
@@ -25,7 +24,7 @@ class APEMultipleStripsViewController: UIViewController {
         super.viewDidLoad()
         // update stripView delegates
         channelTokens.forEach {
-            APEStripViewService.shared.stripView(for: $0)?.delegate = self
+            APEViewService.shared.stripView(for: $0)?.delegate = self
         }
     }
 }
@@ -61,7 +60,7 @@ extension APEMultipleStripsViewController: UICollectionViewDelegateFlowLayout {
 
 extension APEMultipleStripsViewController: APEStripViewDelegate {
     
-    func stripView(_ stripView: APEStripView, adsCompleted token: String) {
+    func stripView(_ stripView: APEStripView, didCompleteAdsForChannelToken token: String) {
     }
     
 
@@ -73,7 +72,7 @@ extension APEMultipleStripsViewController: APEStripViewDelegate {
 
     func stripView(_ stripView: APEStripView, didFailLoadingChannelToken token: String) {
         DispatchQueue.main.async {
-            APEStripViewService.shared.unloadStripViews(with: [stripView.configuration.channelToken])
+            APEViewService.shared.unloadStripViews(with: [token])
             self.collectionView.reloadData()
         }
     }

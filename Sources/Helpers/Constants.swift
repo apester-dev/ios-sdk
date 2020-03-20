@@ -20,13 +20,21 @@ struct Constants {
         static let sdkVersion = "sdkVersion"
     }
 
-    /// WebView Keys
+    /// WebView shared functions or keys
     struct WebView {
-        static let loadCallbackFileName = "loadCallbackJS.text"
-        static let initAdevrtisingParamsFunctionName = "initAdvertisingParams"
-        static let registerJSFileName = "registerJS.text"
-        static let callbackFunction = "apesterCallback"
-        static let callback = "apesterKitCallback"
+        static let apesterAdsCompleted = "apester_ads_completed"
+        // functions
+        static let close = "window.__closeApesterStory()"
+        //
+        static func sendApesterEvent(with message: String) -> String {
+            "window.__sendApesterEvent(\(message))"
+        }
+        //
+        static func setViewVisibilityStatus(_ isVisible: Bool) -> String {
+            "window.__setApesterViewabiity(\(isVisible))"
+        }
+        //
+        static let getHeight = "window.__getHeight()"
     }
 
     /// Strip Keys
@@ -48,19 +56,6 @@ struct Constants {
         static let stripHeight = "mobileStripHeight"
         static let stripResizeHeight = "strip_resize"
         static let validateStripViewVisibity = "validateStripViewVisibity"
-        static let apesterAdsCompleted = "apester_ads_completed"
-        // functions
-        static let close = "window.__closeApesterStory()"
-        //
-        static func sendApesterEvent(with message: String) -> String {
-            return "window.__sendApesterEvent(\(message))"
-        }
-        //
-        static func setViewVisibilityStatus(_ isVisible: Bool) -> String {
-            return "window.__setApesterViewabiity(\(isVisible))"
-        }
-        //
-        static let getHeight = "window.__getHeight()"
     }
     
     struct Unit {
@@ -70,9 +65,5 @@ struct Constants {
         static let height = "height"
         static let width = "width"
         static let validateUnitViewVisibity = "validateUnitViewVisibity"
-        static let apesterAdsCompleted = "apester_ads_completed"
-        static func setViewVisibilityStatus(_ isVisible: Bool) -> String {
-            return "window.__setApesterViewabiity(\(isVisible))"
-        }
     }
 }

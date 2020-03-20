@@ -10,14 +10,10 @@
 		3549BB501DA38A2000C63030 /* ApesterKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 3549BB181DA3890B00C63030 /* ApesterKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3549BB661DA38ADB00C63030 /* ApesterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3549BB211DA389CD00C63030 /* ApesterKit.framework */; };
 		361BF13F241EB9770079BFE3 /* APEUnitViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361BF13E241EB9770079BFE3 /* APEUnitViewDelegate.swift */; };
-		3697E8642417F77100B6AC79 /* APEUnitEnviorment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697E8632417F77100B6AC79 /* APEUnitEnviorment.swift */; };
 		3697E8672417FAF900B6AC79 /* APEUnitConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */; };
 		3697E8692418DD2D00B6AC79 /* UnitConfigurationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697E8682418DD2D00B6AC79 /* UnitConfigurationFactory.swift */; };
 		36B5DC1D2419549B000E46AF /* APEUnitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FC4E55241776BC00A25076 /* APEUnitView.swift */; };
-		36B5DC1E2419549E000E46AF /* APEUnitEnviorment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697E8632417F77100B6AC79 /* APEUnitEnviorment.swift */; };
 		36B5DC1F241954A1000E46AF /* APEUnitConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */; };
-		36B5DC212419586F000E46AF /* APEUnitsViewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B5DC202419586F000E46AF /* APEUnitsViewService.swift */; };
-		36B5DC22241A47AF000E46AF /* APEUnitsViewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B5DC202419586F000E46AF /* APEUnitsViewService.swift */; };
 		36FC4E5E24178CB800A25076 /* APEUnitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FC4E55241776BC00A25076 /* APEUnitView.swift */; };
 		36FC4E6E2417932000A25076 /* APEUnitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36795E7D2416531A00546AA5 /* APEUnitViewController.swift */; };
 		86120824233F74A9006608F1 /* UserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86120811233F74A9006608F1 /* UserAgent.swift */; };
@@ -28,6 +24,11 @@
 		8658F76C23832F9700C23BDA /* APEEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8658F76B23832F9700C23BDA /* APEEnvironment.swift */; };
 		8658F76D2383304800C23BDA /* APEEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8658F76B23832F9700C23BDA /* APEEnvironment.swift */; };
 		8658F76E2383305B00C23BDA /* APEStripViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8658F76923832E4500C23BDA /* APEStripViewDelegate.swift */; };
+		8679F3C12423E11F00AA4749 /* APEConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8679F3C02423E11F00AA4749 /* APEConfiguration.swift */; };
+		8679F3C22423E31900AA4749 /* APEView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8679F3BE2423E07300AA4749 /* APEView.swift */; };
+		8679F3C62423EE7D00AA4749 /* APEViewNavigationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8679F3C32423E36100AA4749 /* APEViewNavigationType.swift */; };
+		8679F3C9242402BF00AA4749 /* APEViewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8679F3C8242402BF00AA4749 /* APEViewService.swift */; };
+		8679F3CB24241C3700AA4749 /* APEMultipleUnitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8679F3CA24241C3700AA4749 /* APEMultipleUnitsViewController.swift */; };
 		867D559B23E4A0D600190D64 /* APEStripViewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867D559A23E4A0D600190D64 /* APEStripViewService.swift */; };
 		867D559D23E4A0DC00190D64 /* APEStripViewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867D559A23E4A0D600190D64 /* APEStripViewService.swift */; };
 		86AC3115240BA788003F4753 /* StripConfigurationsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86AC3114240BA788003F4753 /* StripConfigurationsFactory.swift */; };
@@ -39,7 +40,7 @@
 		86AFA1F6232C057E00E1720A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109C22D53BF300BB1DEC /* Extensions.swift */; };
 		86B2AA6D23830D40000F171D /* APEStripViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B2AA6C23830D40000F171D /* APEStripViewTests.swift */; };
 		86B735ED23380D9100949864 /* APEStripStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B735EC23380D9100949864 /* APEStripStyle.swift */; };
-		86B73602233871CF00949864 /* APEStripCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B73601233871CF00949864 /* APEStripCollectionViewCell.swift */; };
+		86B73602233871CF00949864 /* APECollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B73601233871CF00949864 /* APECollectionViewCell.swift */; };
 		86EAFF2D233E9D1000081AAB /* BundleInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EAFF2C233E9D1000081AAB /* BundleInfo.swift */; };
 		BB0BE33E2223169400542E3C /* APEStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0BE33D2223169400542E3C /* APEStripView.swift */; };
 		BB14A6F01F1F6BE5003E393D /* ApesterKit.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BB14A6EC1F1F6619003E393D /* ApesterKit.bundle */; };
@@ -107,15 +108,18 @@
 		3549BB611DA38ADB00C63030 /* ApesterKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ApesterKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		361BF13E241EB9770079BFE3 /* APEUnitViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitViewDelegate.swift; sourceTree = "<group>"; };
 		36795E7D2416531A00546AA5 /* APEUnitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitViewController.swift; sourceTree = "<group>"; };
-		3697E8632417F77100B6AC79 /* APEUnitEnviorment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitEnviorment.swift; sourceTree = "<group>"; };
 		3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitConfiguration.swift; sourceTree = "<group>"; };
 		3697E8682418DD2D00B6AC79 /* UnitConfigurationFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitConfigurationFactory.swift; sourceTree = "<group>"; };
-		36B5DC202419586F000E46AF /* APEUnitsViewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitsViewService.swift; sourceTree = "<group>"; };
 		36FC4E55241776BC00A25076 /* APEUnitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitView.swift; sourceTree = "<group>"; };
 		86120811233F74A9006608F1 /* UserAgent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAgent.swift; sourceTree = "<group>"; };
 		8652CB20233BF93B0092E309 /* SynchronizedScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynchronizedScript.swift; sourceTree = "<group>"; };
 		8658F76923832E4500C23BDA /* APEStripViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripViewDelegate.swift; sourceTree = "<group>"; };
 		8658F76B23832F9700C23BDA /* APEEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEEnvironment.swift; sourceTree = "<group>"; };
+		8679F3BE2423E07300AA4749 /* APEView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEView.swift; sourceTree = "<group>"; };
+		8679F3C02423E11F00AA4749 /* APEConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEConfiguration.swift; sourceTree = "<group>"; };
+		8679F3C32423E36100AA4749 /* APEViewNavigationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEViewNavigationType.swift; sourceTree = "<group>"; };
+		8679F3C8242402BF00AA4749 /* APEViewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEViewService.swift; sourceTree = "<group>"; };
+		8679F3CA24241C3700AA4749 /* APEMultipleUnitsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEMultipleUnitsViewController.swift; sourceTree = "<group>"; };
 		867D559A23E4A0D600190D64 /* APEStripViewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripViewService.swift; sourceTree = "<group>"; };
 		86AC3114240BA788003F4753 /* StripConfigurationsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripConfigurationsFactory.swift; sourceTree = "<group>"; };
 		86AFA1B8232BE99F00E1720A /* Apester-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Apester-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -123,7 +127,7 @@
 		86AFA1BA232BE99F00E1720A /* APESingleStripViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APESingleStripViewController.m; sourceTree = "<group>"; };
 		86B2AA6C23830D40000F171D /* APEStripViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripViewTests.swift; sourceTree = "<group>"; };
 		86B735EC23380D9100949864 /* APEStripStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripStyle.swift; sourceTree = "<group>"; };
-		86B73601233871CF00949864 /* APEStripCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripCollectionViewCell.swift; sourceTree = "<group>"; };
+		86B73601233871CF00949864 /* APECollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APECollectionViewCell.swift; sourceTree = "<group>"; };
 		86EAFF2C233E9D1000081AAB /* BundleInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleInfo.swift; sourceTree = "<group>"; };
 		BB0BE33D2223169400542E3C /* APEStripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripView.swift; sourceTree = "<group>"; };
 		BB14A6BA1F1F58F6003E393D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -233,9 +237,10 @@
 		3549BB5C1DA38AA500C63030 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				8679F3BD2423E00C00AA4749 /* Common */,
 				BB44109022D53AAB00BB1DEC /* FastStrip */,
-				BB44109B22D53BE500BB1DEC /* Helpers */,
 				BB44109422D53B2C00BB1DEC /* EmbededUnit */,
+				BB44109B22D53BE500BB1DEC /* Helpers */,
 			);
 			name = Core;
 			sourceTree = "<group>";
@@ -251,15 +256,28 @@
 			isa = PBXGroup;
 			children = (
 				36795E7D2416531A00546AA5 /* APEUnitViewController.swift */,
+				8679F3CA24241C3700AA4749 /* APEMultipleUnitsViewController.swift */,
 				3697E8682418DD2D00B6AC79 /* UnitConfigurationFactory.swift */,
 			);
 			path = Unit;
 			sourceTree = "<group>";
 		};
+		8679F3BD2423E00C00AA4749 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				8679F3C32423E36100AA4749 /* APEViewNavigationType.swift */,
+				8658F76B23832F9700C23BDA /* APEEnvironment.swift */,
+				8679F3C02423E11F00AA4749 /* APEConfiguration.swift */,
+				8679F3BE2423E07300AA4749 /* APEView.swift */,
+				8679F3C8242402BF00AA4749 /* APEViewService.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		86B73600233871B500949864 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				86B73601233871CF00949864 /* APEStripCollectionViewCell.swift */,
+				86B73601233871CF00949864 /* APECollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -276,7 +294,6 @@
 		BB44109022D53AAB00BB1DEC /* FastStrip */ = {
 			isa = PBXGroup;
 			children = (
-				8658F76B23832F9700C23BDA /* APEEnvironment.swift */,
 				86B735EC23380D9100949864 /* APEStripStyle.swift */,
 				BB44109E22D53D2F00BB1DEC /* APEStripConfiguration.swift */,
 				8658F76923832E4500C23BDA /* APEStripViewDelegate.swift */,
@@ -289,11 +306,9 @@
 		BB44109422D53B2C00BB1DEC /* EmbededUnit */ = {
 			isa = PBXGroup;
 			children = (
-				36FC4E55241776BC00A25076 /* APEUnitView.swift */,
-				3697E8632417F77100B6AC79 /* APEUnitEnviorment.swift */,
 				3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */,
-				36B5DC202419586F000E46AF /* APEUnitsViewService.swift */,
 				361BF13E241EB9770079BFE3 /* APEUnitViewDelegate.swift */,
+				36FC4E55241776BC00A25076 /* APEUnitView.swift */,
 			);
 			path = EmbededUnit;
 			sourceTree = "<group>";
@@ -511,12 +526,14 @@
 				8652CB21233BF93B0092E309 /* SynchronizedScript.swift in Sources */,
 				8658F76A23832E4500C23BDA /* APEStripViewDelegate.swift in Sources */,
 				86B735ED23380D9100949864 /* APEStripStyle.swift in Sources */,
+				8679F3C9242402BF00AA4749 /* APEViewService.swift in Sources */,
 				86120824233F74A9006608F1 /* UserAgent.swift in Sources */,
+				8679F3C62423EE7D00AA4749 /* APEViewNavigationType.swift in Sources */,
+				8679F3C22423E31900AA4749 /* APEView.swift in Sources */,
 				BB44109D22D53BF300BB1DEC /* Extensions.swift in Sources */,
+				8679F3C12423E11F00AA4749 /* APEConfiguration.swift in Sources */,
 				8658F76C23832F9700C23BDA /* APEEnvironment.swift in Sources */,
-				3697E8642417F77100B6AC79 /* APEUnitEnviorment.swift in Sources */,
 				361BF13F241EB9770079BFE3 /* APEUnitViewDelegate.swift in Sources */,
-				36B5DC212419586F000E46AF /* APEUnitsViewService.swift in Sources */,
 				867D559B23E4A0D600190D64 /* APEStripViewService.swift in Sources */,
 				BB44109F22D53D2F00BB1DEC /* APEStripConfiguration.swift in Sources */,
 				BB9709AB222322E000E1076B /* Constants.swift in Sources */,
@@ -541,10 +558,8 @@
 				86AFA1F5232C057900E1720A /* MessagesDispatcher.swift in Sources */,
 				36FC4E5E24178CB800A25076 /* APEUnitView.swift in Sources */,
 				8658F76D2383304800C23BDA /* APEEnvironment.swift in Sources */,
-				36B5DC22241A47AF000E46AF /* APEUnitsViewService.swift in Sources */,
 				86AFA1F1232C052700E1720A /* APEStripConfiguration.swift in Sources */,
 				3697E8672417FAF900B6AC79 /* APEUnitConfiguration.swift in Sources */,
-				36B5DC1E2419549E000E46AF /* APEUnitEnviorment.swift in Sources */,
 				8652CB23233C0F1D0092E309 /* APEStripStyle.swift in Sources */,
 				867D559D23E4A0DC00190D64 /* APEStripViewService.swift in Sources */,
 				BB532AB6235AEDFD00F326D3 /* UserAgent.swift in Sources */,
@@ -557,9 +572,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				86B73602233871CF00949864 /* APEStripCollectionViewCell.swift in Sources */,
+				86B73602233871CF00949864 /* APECollectionViewCell.swift in Sources */,
 				BBC96DD22227844F00EA7E6B /* APEMultipleStripsViewController.swift in Sources */,
 				3697E8692418DD2D00B6AC79 /* UnitConfigurationFactory.swift in Sources */,
+				8679F3CB24241C3700AA4749 /* APEMultipleUnitsViewController.swift in Sources */,
 				86AC3115240BA788003F4753 /* StripConfigurationsFactory.swift in Sources */,
 				36FC4E6E2417932000A25076 /* APEUnitViewController.swift in Sources */,
 				BBC96DA8222781F400EA7E6B /* AppDelegate.swift in Sources */,
@@ -733,7 +749,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.9.2;
+				MARKETING_VERSION = 3.0.0;
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apester.ApesterKit;
 				PRODUCT_NAME = ApesterKit;
@@ -764,7 +780,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.9.2;
+				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.apester.ApesterKit;
 				PRODUCT_NAME = ApesterKit;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -840,7 +856,7 @@
 				INFOPLIST_FILE = Apester/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.9.2;
+				MARKETING_VERSION = 3.0.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hasansa.Apester;
@@ -880,7 +896,7 @@
 				INFOPLIST_FILE = Apester/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.9.2;
+				MARKETING_VERSION = 3.0.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hasansa.Apester;
 				PRODUCT_NAME = "$(TARGET_NAME)";
