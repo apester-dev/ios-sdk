@@ -39,10 +39,6 @@ import SafariServices
             self.webView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
             self.webView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         }
-        
-        func destroy() {
-//            self.webView.removeFromSuperview()
-        }
     }
 
     public private(set) var configuration: APEStripConfiguration!
