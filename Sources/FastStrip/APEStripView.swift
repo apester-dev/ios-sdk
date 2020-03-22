@@ -39,6 +39,10 @@ import SafariServices
             self.webView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
             self.webView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         }
+        
+        func destroy() {
+//            self.webView.removeFromSuperview()
+        }
     }
 
     public private(set) var configuration: APEStripConfiguration!
@@ -148,7 +152,7 @@ import SafariServices
 
 // MARK: - Override internal APIs
 @available(iOS 11.0, *)
-extension APEStripView {
+@objc extension APEStripView {
 
     // MARK:- Handle Device orientationDidChangeNotification
     override func orientationDidChangeNotification() {
@@ -205,6 +209,18 @@ extension APEStripView {
             .unregister(from: [StripConfig.proxy,
                                StripConfig.showStripStory,
                                StripConfig.hideStripStory])
+    }
+    
+    public override func refreshContent() {
+
+        self.loadingState.isReady = false
+        self.storyWebView.removeFromSuperview()
+
+        setupStoryWebView()
+        setupStoryViewController()
+        self.messageDispatcher
+            .dispatchAsync(Constants.WebView.refreshContent,
+                                      to: self.stripWebView)
     }
 }
 

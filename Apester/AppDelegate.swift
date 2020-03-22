@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
     APEViewService.shared.preloadStripViews(with:
-        StripConfigurationsFactory.configurations(for: .production, hideApesterAds: false)
+        StripConfigurationsFactory.configurations(for: .stage, hideApesterAds: false)
     )
 
     APEViewService.shared.preloadUnitViews(with:

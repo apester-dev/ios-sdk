@@ -139,6 +139,10 @@ extension APEView {
     func destroy() {
         fatalError("OVERRIDE ME")
     }
+    
+    func refreshContent() {
+        fatalError("OVERRIDE ME")
+    }
 }
 
 // MARK:- Handle WebView Presentation

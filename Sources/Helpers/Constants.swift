@@ -35,6 +35,7 @@ struct Constants {
         }
         //
         static let getHeight = "window.__getHeight()"
+        static let refreshContent = "window.__refreshApesterContent()"
     }
 
     /// Strip Keys

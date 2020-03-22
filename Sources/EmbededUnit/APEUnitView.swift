@@ -155,6 +155,10 @@ extension APEUnitView {
         self.unitWebView.configuration.userContentController
             .unregister(from: [Constants.Unit.proxy, Constants.Unit.validateUnitViewVisibity])
     }
+    
+    public override func refreshContent() {
+        // should be implemented later.
+    }
 }
 
 private extension APEUnitView {
