@@ -27,14 +27,15 @@
     self.stripView.delegate = self;
     self.containerViewHeightConstraint.constant = self.stripView.height;
     
-    // to test refresh strip
-//    double delayInSeconds = 5; // set the time
-//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-//        printf("almog displatch refresh content");
-//        [self.stripView refreshContent];
-//      // do something here
-//    });
+    // test refresh strip content
+    // -------------------------------------------
+    //    double delayInSeconds = 5; // set the time
+    //    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    //    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+    //        [self.stripView refreshContent];
+    //      // do something here
+    //    });
+    // -------------------------------------------
     
     [self.stripView displayIn:self.containerView containerViewConroller:self];
 
