@@ -75,6 +75,11 @@ import SafariServices
     public func hide() {
         fatalError("OVERRIDE ME")
     }
+    
+    /// Refresh strip / unit content
+    func refreshContent() {
+        fatalError("OVERRIDE ME")
+    }
 
     /// Hide the story view
     public func hideStory() {
@@ -140,9 +145,6 @@ extension APEView {
         fatalError("OVERRIDE ME")
     }
     
-    func refreshContent() {
-        fatalError("OVERRIDE ME")
-    }
 }
 
 // MARK:- Handle WebView Presentation

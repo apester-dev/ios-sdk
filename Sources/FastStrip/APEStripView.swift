@@ -117,6 +117,19 @@ import SafariServices
         self.stripWebView.removeFromSuperview()
         self.storyWebView.removeFromSuperview()
     }
+    
+    /// Refresh the strip content
+    public override func refreshContent() {
+        
+        self.loadingState.isReady = false
+        self.storyWebView.removeFromSuperview()
+        
+        setupStoryWebView()
+        setupStoryViewController()
+        self.messageDispatcher
+            .dispatchAsync(Constants.WebView.refreshContent,
+                           to: self.stripWebView)
+    }
 
     /// Hide the story view
     public override func hideStory() {
@@ -148,7 +161,7 @@ import SafariServices
 
 // MARK: - Override internal APIs
 @available(iOS 11.0, *)
-@objc extension APEStripView {
+extension APEStripView {
 
     // MARK:- Handle Device orientationDidChangeNotification
     override func orientationDidChangeNotification() {
@@ -207,17 +220,6 @@ import SafariServices
                                StripConfig.hideStripStory])
     }
     
-    public override func refreshContent() {
-
-        self.loadingState.isReady = false
-        self.storyWebView.removeFromSuperview()
-
-        setupStoryWebView()
-        setupStoryViewController()
-        self.messageDispatcher
-            .dispatchAsync(Constants.WebView.refreshContent,
-                                      to: self.stripWebView)
-    }
 }
 
 // MARK:- Private

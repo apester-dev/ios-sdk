@@ -73,6 +73,11 @@ import WebKit
     public override func hide() {
         self.unitWebView.removeFromSuperview()
     }
+    
+    /// Refresh unit content
+    public override func refreshContent() {
+        // should be implemented later.
+    }
 
     deinit {
         hide()
@@ -156,9 +161,6 @@ extension APEUnitView {
             .unregister(from: [Constants.Unit.proxy, Constants.Unit.validateUnitViewVisibity])
     }
     
-    public override func refreshContent() {
-        // should be implemented later.
-    }
 }
 
 private extension APEUnitView {
