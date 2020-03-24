@@ -160,7 +160,6 @@ extension APEUnitView {
         self.unitWebView.configuration.userContentController
             .unregister(from: [Constants.Unit.proxy, Constants.Unit.validateUnitViewVisibity])
     }
-    
 }
 
 private extension APEUnitView {

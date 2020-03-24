@@ -219,7 +219,6 @@ extension APEStripView {
                                StripConfig.showStripStory,
                                StripConfig.hideStripStory])
     }
-    
 }
 
 // MARK:- Private

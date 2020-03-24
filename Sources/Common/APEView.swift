@@ -77,7 +77,7 @@ import SafariServices
     }
     
     /// Refresh strip / unit content
-    func refreshContent() {
+    public func refreshContent() {
         fatalError("OVERRIDE ME")
     }
 
@@ -144,7 +144,6 @@ extension APEView {
     func destroy() {
         fatalError("OVERRIDE ME")
     }
-    
 }
 
 // MARK:- Handle WebView Presentation
