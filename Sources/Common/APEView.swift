@@ -75,6 +75,11 @@ import SafariServices
     public func hide() {
         fatalError("OVERRIDE ME")
     }
+    
+    /// Refresh strip / unit content
+    public func refreshContent() {
+        fatalError("OVERRIDE ME")
+    }
 
     /// Hide the story view
     public func hideStory() {

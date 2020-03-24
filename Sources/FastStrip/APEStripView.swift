@@ -117,6 +117,19 @@ import SafariServices
         self.stripWebView.removeFromSuperview()
         self.storyWebView.removeFromSuperview()
     }
+    
+    /// Refresh the strip content
+    public override func refreshContent() {
+        
+        self.loadingState.isReady = false
+        self.storyWebView.removeFromSuperview()
+        
+        setupStoryWebView()
+        setupStoryViewController()
+        self.messageDispatcher
+            .dispatchAsync(Constants.WebView.refreshContent,
+                           to: self.stripWebView)
+    }
 
     /// Hide the story view
     public override func hideStory() {
