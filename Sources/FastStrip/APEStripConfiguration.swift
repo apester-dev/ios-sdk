@@ -24,7 +24,7 @@ public enum APEStripConfigurationError: Error {
     private(set) var hideApesterAds: Bool
     
     override var parameters: [String: String] {
-        var value = super.parameters
+        var value = super.parameters.merging(style.parameters, uniquingKeysWith: { $1 })
         value[Keys.channelToken.rawValue] = channelToken
         value[Keys.hideApesterAds.rawValue] = "\(hideApesterAds)"
         return value
