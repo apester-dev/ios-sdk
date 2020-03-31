@@ -143,7 +143,7 @@ let apePlaylistParams = .playlist(tags: [],
 ##### 3 - initiate a unit configuration `APEUnitConfiguration`. set the unit params and bundle
 ```ruby
 ## Swift
-let configuration = APEUnitConfiguration(unitParams: apeUnitParams, bundle:                                                   Bundle.main,)
+let configuration = APEUnitConfiguration(unitParams: apeUnitParams, bundle: Bundle.main,)
 ```
 ```ruby
 ## Objective C
