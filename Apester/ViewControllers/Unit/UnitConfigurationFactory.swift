@@ -19,8 +19,10 @@ import ApesterKit
         
         switch env {
             case .production:
-                unitsParams = [.playlist(tags: [], channelToken: "", context: false, fallback: false),
-                               .unit(mediaId: "")]
+                unitsParams = [
+                    .playlist(tags: [], channelToken: "56094150b0e393bb4b9f0615", context: false, fallback: false),
+                               .unit(mediaId: "5e035187675fcbc72ee47156"),
+                               .unit(mediaId: "5e03516573255b340854cbf8")]
             case .stage:
                 unitsParams = [.playlist(tags: ["news", "sport", "yoga"],
                                          channelToken: "5dcbc10016698427404a0f57",
