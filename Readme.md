@@ -109,7 +109,80 @@ self.stripView.hide()
 
 ##### 6 - Implemet The `APEStripViewDelegate` to observe the stripView updates when success, failure or height updates.
 
+## Apester Unit View
+A Unit or playlist component for publisher Apester media. These units were built with [Apester Platform](https://apester.com).
 
+##### 1 - declare variable of type `APEUnitView`:
+```ruby
+## Swift
+private var apesterUnitView: APEUnitView!
+```
+```ruby
+## Objective C
+@property (nonatomic, strong) APEUnitView *unitView;
+```
+
+##### 2 - initiate a unit params `APEUnitParams`. Set the media id or the channel token for playlist.
+
+```ruby
+## Swift
+
+let apeUnitParams = .unit(mediaId: mediaId)
+
+let apePlaylistParams = .playlist(tags: [],
+                                  channelToken: channelToken,
+                                  context: context,
+                                  fallback: fallback)
+```
+
+```ruby
+## Objective C
+
+```
+
+##### 3 - initiate a unit configuration `APEUnitConfiguration`. set the unit params and bundle
+```ruby
+## Swift
+let configuration = APEUnitConfiguration(unitParams: apeUnitParams, bundle:                                                   Bundle.main,)
+```
+```ruby
+## Objective C
+
+```
+
+##### 4 - initiate the unit view instance with the parameter value.
+```ruby
+## Swift
+self.apesterUnitView = APEUnitView(configuration: configuration)
+```
+```ruby
+## Objective C
+self.apesterUnitView = [[APEUnitView alloc] initWithConfiguration:config];
+```
+
+##### 5 - The Unit view in a container view
+###### 5.1 - display  (with a container view controller for navigation porposes).
+
+```ruby
+## Swift
+apesterUnitView?.display(in: self.containerView, containerViewConroller: self)
+```
+```ruby
+## Objective C
+[self.apesterUnitView displayIn:self.containerView containerViewConroller:self];
+```
+
+###### 5.2 - hide the unit view.
+```ruby
+## Swift
+self.apesterUnitView.hide()
+```
+```ruby
+## Objective C
+[self.apesterUnitView hide];
+```
+
+##### 6 - Implemet The `APEUnitViewDelegate` to observe the stripView updates when success, failure or height updates.
 
 #
 ## Installation
