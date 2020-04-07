@@ -115,7 +115,7 @@ A Unit or playlist component for publisher Apester media. These units were built
 ##### 1 - declare variable of type `APEUnitView`:
 ```ruby
 ## Swift
-private var apesterUnitView: APEUnitView!
+private var unitView: APEUnitView!
 ```
 ```ruby
 ## Objective C
@@ -127,37 +127,43 @@ private var apesterUnitView: APEUnitView!
 ```ruby
 ## Swift
 
-let apeUnitParams = .unit(mediaId: mediaId)
-
-let apePlaylistParams = .playlist(tags: [],
-                                  channelToken: channelToken,
-                                  context: context,
-                                  fallback: fallback)
-```
-
-```ruby
-## Objective C
-
+let unitParams = .unit(mediaId: mediaId)
+// OR
+let playlistParams = .playlist(tags: tags,
+                               channelToken: channelToken,
+                               context: isContext,
+                               fallback: isFallback)
 ```
 
 ##### 3 - initiate a unit configuration `APEUnitConfiguration`. set the unit params and bundle
 ```ruby
 ## Swift
-let configuration = APEUnitConfiguration(unitParams: apeUnitParams, bundle: Bundle.main,)
+let unitConfig = APEUnitConfiguration(unitParams: unitParams, bundle: Bundle.main)
+// OR
+let playlistConfig = APEUnitConfiguration(unitParams: playlistParams, bundle: Bundle.main)
 ```
 ```ruby
 ## Objective C
+APEUnitConfiguration *unitConfig = [[APEUnitConfiguration alloc] initWithMediaId:meidaId bundle: NSBundle.mainBundle];
+// OR
+APEUnitConfiguration *playlistConfig = [[APEUnitConfiguration alloc] initWithTags: mediaIds
+                                                                     channelToken: channelToken
+                                                                     context: isContext 
+                                                                     fallback: isFallback
+                                                                     bundle: NSBundle.mainBundle];
 
 ```
 
 ##### 4 - initiate the unit view instance with the parameter value.
 ```ruby
 ## Swift
-self.apesterUnitView = APEUnitView(configuration: configuration)
+self.unitView = APEUnitView(configuration: configuration)
 ```
 ```ruby
 ## Objective C
-self.apesterUnitView = [[APEUnitView alloc] initWithConfiguration:config];
+self.unitView = [[APEUnitView alloc] initWithConfiguration:unitConfig];
+// OR
+self.unitView = [[APEUnitView alloc] initWithConfiguration:playlistConfig];
 ```
 
 ##### 5 - The Unit view in a container view
@@ -165,24 +171,90 @@ self.apesterUnitView = [[APEUnitView alloc] initWithConfiguration:config];
 
 ```ruby
 ## Swift
-apesterUnitView?.display(in: self.containerView, containerViewConroller: self)
+unitView?.display(in: self.containerView, containerViewConroller: self)
 ```
 ```ruby
 ## Objective C
-[self.apesterUnitView displayIn:self.containerView containerViewConroller:self];
+[self.unitView displayIn:self.containerView containerViewConroller:self];
 ```
 
 ###### 5.2 - hide the unit view.
 ```ruby
 ## Swift
-self.apesterUnitView.hide()
+self.unitView.hide()
 ```
 ```ruby
 ## Objective C
-[self.apesterUnitView hide];
+[self.unitView hide];
 ```
 
 ##### 6 - Implemet The `APEUnitViewDelegate` to observe the stripView updates when success, failure or height updates.
+
+## APEViewService 
+A service that provides precaching Apester Units, either  `APEStripView` or  `APEUnitView` .
+
+### APEStripView
+
+##### 1 - Preload multiple strip views with `strip configurations`:
+```ruby
+## Swift
+APEViewService.shared.preloadStripViews(with: configurations)
+```
+```ruby
+## Objective C
+[APEViewService.shared preloadStripViewsWith: configurations];
+```
+
+##### 2 - Unload strip views so it can be Removed from cache with the given `channelTokens` if exists:
+```ruby
+## Swift
+APEViewService.shared.unloadStripViews(with: channelTokens)
+```
+```ruby
+## Objective C
+[APEViewService.shared unloadStripViewsWith: channelTokens];
+```
+
+##### 3 - Get Cached strip view for the given `channelToken` if exists..:
+```ruby
+## Swift
+APEViewService.shared.stripView(for: channelToken)
+```
+```ruby
+## Objective C
+[APEViewService.shared stripViewFor: channelToken];
+```
+### APEUnitView
+
+##### 1 - Preload multiple unit views with  `unit configurations`:
+```ruby
+## Swift
+APEViewService.shared.preloadUnitViews(with: configurations)
+```
+```ruby
+## Objective C
+[APEViewService.shared preloadUnitViewsWith: configurations];
+```
+
+##### 2 - Unload unit views so it can be Removed from cache with the given `unitIds` if exists:
+```ruby
+## Swift
+APEViewService.shared.unloadUnitViews(with: unitIds)
+```
+```ruby
+## Objective C
+[APEViewService.shared unloadUnitViewsWith: unitIds];
+```
+
+##### 3 - Get Cached unit view for the given `unitId` if exists..:
+```ruby
+## Swift
+APEViewService.shared.unitView(for: unitId)
+```
+```ruby
+## Objective C
+[APEViewService.shared unitViewFor: unitId];
+```
 
 #
 ## Installation
