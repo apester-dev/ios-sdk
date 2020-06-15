@@ -68,9 +68,18 @@ public enum APEUnitParams {
         self.init(unitParams: unitParams, bundle: bundle, hideApesterAds: false, environment: .production)
     }
     
+    public convenience init(unitParams: APEUnitParams, bundle: Bundle, hideApesterAds: Bool) {
+           self.init(unitParams: unitParams, bundle: bundle, hideApesterAds: hideApesterAds, environment: .production)
+       }
+    
     @objc public convenience init(mediaId: String, bundle: Bundle) {
         self.init(unitParams: .unit(mediaId: mediaId),
                   bundle: bundle)
+    }
+    
+    @objc public convenience init(mediaId: String, bundle: Bundle, hideApesterAds: Bool) {
+        self.init(unitParams: .unit(mediaId: mediaId),
+                  bundle: bundle, hideApesterAds: hideApesterAds)
     }
 
     @objc public convenience init(tags: [String], channelToken: String, context: Bool, fallback: Bool, bundle: Bundle) {
