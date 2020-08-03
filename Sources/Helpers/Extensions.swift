@@ -35,16 +35,6 @@ extension WKWebView {
 
     private static let navigatorUserAgent = "navigator.userAgent"
 
-    func appendAppNameToUserAgent(_ bundleInfo: [String: String]) {
-        var userAgent = ""
-        MessageDispatcher().dispatchSync(message: WKWebView.navigatorUserAgent, to: self) { response in
-            userAgent = (response as? String) ?? ""
-        }
-        self.customUserAgent = (userAgent + UserAgent.customized(with: bundleInfo))
-            .replacingOccurrences(of: "iPhone", with: "IPHONE")
-            .replacingOccurrences(of: "iPad", with: "IPAD")
-    }
-
     static func make(with options: Options) -> WKWebView {
         let delegate = options.delegate
         let configuration = WKWebViewConfiguration()
