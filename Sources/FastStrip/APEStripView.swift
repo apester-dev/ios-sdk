@@ -274,10 +274,6 @@ private extension APEStripView {
             if storyWebView.superview == nil {
                 self.storyViewController.viewDidLoad()
             }
-            //
-            stripWebView.appendAppNameToUserAgent(self.configuration.bundleInfo)
-            storyWebView.appendAppNameToUserAgent(self.configuration.bundleInfo)
-            //
             self.loadingState.isLoaded = true
             self.updateStripWebViewHeight()
             // update the delegate on success

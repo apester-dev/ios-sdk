@@ -110,7 +110,6 @@ extension APEUnitView {
     }
 
     override func didFinishLoading() {
-        self.unitWebView.appendAppNameToUserAgent(self.configuration.bundleInfo)
         self.delegate?.unitView(self, didFinishLoadingUnit: self.configuration.unitParams.id)
     }
 
