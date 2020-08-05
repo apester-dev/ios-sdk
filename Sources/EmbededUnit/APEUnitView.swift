@@ -74,6 +74,18 @@ import WebKit
         self.unitWebView.removeFromSuperview()
     }
     
+    public func setConsentString(consentString: String) {
+        
+        self.configuration.gdprString = consentString
+        if let unitUrl = configuration.unitURL {
+            self.messageDispatcher
+            .dispatchAsync("window.location = '\(unitUrl)';",
+                           to: self.unitWebView)
+
+        }
+        
+    }
+    
     /// Refresh unit content
     public override func refreshContent() {
         // should be implemented later.

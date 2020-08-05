@@ -20,7 +20,7 @@ class APEUnitViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let configuration = UnitConfigurationsFactory.configurations(for: .stage, hideApesterAds: false)[0]
+        let configuration = UnitConfigurationsFactory.configurations(for: .local, hideApesterAds: false, gdprString: nil)[0]
 
         if let unit = unitParams {
             // preLoad implemntation
@@ -38,6 +38,8 @@ class APEUnitViewController: UIViewController {
         APEViewService.shared.unitView(for: unitParams.id)?.delegate = self
 
         apesterUnitView.display(in: unitContainerView, containerViewConroller: self)
+        
+        apesterUnitView.setConsentString(consentString: "custom gdpr string")
     }
 }
 
