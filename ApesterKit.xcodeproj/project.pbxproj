@@ -15,8 +15,9 @@
 		36B5DC1D2419549B000E46AF /* APEUnitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FC4E55241776BC00A25076 /* APEUnitView.swift */; };
 		36B5DC1F241954A1000E46AF /* APEUnitConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */; };
 		36FC4E5E24178CB800A25076 /* APEUnitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FC4E55241776BC00A25076 /* APEUnitView.swift */; };
-		36FC4E6E2417932000A25076 /* APEUnitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36795E7D2416531A00546AA5 /* APEUnitViewController.swift */; };
 		86120824233F74A9006608F1 /* UserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86120811233F74A9006608F1 /* UserAgent.swift */; };
+		864E5A0424DB017400F5D70C /* APESingleUnitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 864E5A0324DB017400F5D70C /* APESingleUnitViewController.m */; };
+		864E5A0724DB0C1300F5D70C /* APEUnitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864E5A0524DB0C0100F5D70C /* APEUnitViewController.swift */; };
 		8652CB21233BF93B0092E309 /* SynchronizedScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8652CB20233BF93B0092E309 /* SynchronizedScript.swift */; };
 		8652CB22233C0B140092E309 /* SynchronizedScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8652CB20233BF93B0092E309 /* SynchronizedScript.swift */; };
 		8652CB23233C0F1D0092E309 /* APEStripStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B735EC23380D9100949864 /* APEStripStyle.swift */; };
@@ -106,11 +107,13 @@
 		3549BB581DA38A8800C63030 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3549BB611DA38ADB00C63030 /* ApesterKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ApesterKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		361BF13E241EB9770079BFE3 /* APEUnitViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitViewDelegate.swift; sourceTree = "<group>"; };
-		36795E7D2416531A00546AA5 /* APEUnitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitViewController.swift; sourceTree = "<group>"; };
 		3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitConfiguration.swift; sourceTree = "<group>"; };
 		3697E8682418DD2D00B6AC79 /* UnitConfigurationFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitConfigurationFactory.swift; sourceTree = "<group>"; };
 		36FC4E55241776BC00A25076 /* APEUnitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitView.swift; sourceTree = "<group>"; };
 		86120811233F74A9006608F1 /* UserAgent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAgent.swift; sourceTree = "<group>"; };
+		864E5A0224DB017400F5D70C /* APESingleUnitViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APESingleUnitViewController.h; sourceTree = "<group>"; };
+		864E5A0324DB017400F5D70C /* APESingleUnitViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APESingleUnitViewController.m; sourceTree = "<group>"; };
+		864E5A0524DB0C0100F5D70C /* APEUnitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APEUnitViewController.swift; sourceTree = "<group>"; };
 		8652CB20233BF93B0092E309 /* SynchronizedScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynchronizedScript.swift; sourceTree = "<group>"; };
 		8658F76923832E4500C23BDA /* APEStripViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripViewDelegate.swift; sourceTree = "<group>"; };
 		8658F76B23832F9700C23BDA /* APEEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEEnvironment.swift; sourceTree = "<group>"; };
@@ -252,7 +255,9 @@
 		36795E7A241652CF00546AA5 /* Unit */ = {
 			isa = PBXGroup;
 			children = (
-				36795E7D2416531A00546AA5 /* APEUnitViewController.swift */,
+				864E5A0524DB0C0100F5D70C /* APEUnitViewController.swift */,
+				864E5A0224DB017400F5D70C /* APESingleUnitViewController.h */,
+				864E5A0324DB017400F5D70C /* APESingleUnitViewController.m */,
 				8679F3CA24241C3700AA4749 /* APEMultipleUnitsViewController.swift */,
 				3697E8682418DD2D00B6AC79 /* UnitConfigurationFactory.swift */,
 			);
@@ -568,12 +573,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				864E5A0724DB0C1300F5D70C /* APEUnitViewController.swift in Sources */,
 				86B73602233871CF00949864 /* APECollectionViewCell.swift in Sources */,
 				BBC96DD22227844F00EA7E6B /* APEMultipleStripsViewController.swift in Sources */,
 				3697E8692418DD2D00B6AC79 /* UnitConfigurationFactory.swift in Sources */,
+				864E5A0424DB017400F5D70C /* APESingleUnitViewController.m in Sources */,
 				8679F3CB24241C3700AA4749 /* APEMultipleUnitsViewController.swift in Sources */,
 				86AC3115240BA788003F4753 /* StripConfigurationsFactory.swift in Sources */,
-				36FC4E6E2417932000A25076 /* APEUnitViewController.swift in Sources */,
 				BBC96DA8222781F400EA7E6B /* AppDelegate.swift in Sources */,
 				86AFA1BB232BE99F00E1720A /* APESingleStripViewController.m in Sources */,
 			);
@@ -745,7 +751,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 3.0.7;
+				MARKETING_VERSION = 3.1.0;
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apester.ApesterKit;
 				PRODUCT_NAME = ApesterKit;
@@ -776,7 +782,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 3.0.7;
+				MARKETING_VERSION = 3.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.apester.ApesterKit;
 				PRODUCT_NAME = ApesterKit;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -841,7 +847,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_STRICT_PROTOdTYPES = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
@@ -852,7 +858,7 @@
 				INFOPLIST_FILE = Apester/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 3.0.7;
+				MARKETING_VERSION = 3.1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hasansa.Apester;
@@ -892,7 +898,7 @@
 				INFOPLIST_FILE = Apester/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 3.0.7;
+				MARKETING_VERSION = 3.1.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hasansa.Apester;
 				PRODUCT_NAME = "$(TARGET_NAME)";

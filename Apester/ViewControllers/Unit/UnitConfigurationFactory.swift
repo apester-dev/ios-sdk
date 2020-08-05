@@ -12,8 +12,12 @@ import ApesterKit
 @objcMembers class UnitConfigurationsFactory: NSObject {
     
     static private(set) var unitsParams: [APEUnitParams] = []
-    
-    static func configurations(for env: APEEnvironment = .production, hideApesterAds: Bool) -> [APEUnitConfiguration]  {
+
+    static func unitsIds() -> [String] { unitsParams.map(\.id) }
+
+    static var gdprString = "COw4XqLOw4XqLAAAAAENAXCAAAAAAAAAAAAAAAAAAAAA.IFukWSQgAIQwgI0QEByFAAAAeIAACAIgSAAQAIAgEQACEABAAAgAQFAEAIAAAGBAAgAAAAQAIFAAMCQAAgAAQiRAEQAAAAANAAIAAggAIYQFAAARmggBC3ZCYzU2yIA.QFukWSQgAIQwgI0QEByFAAAAeIAACAIgSAAQAIAgEQACEABAAAgAQFAEAIAAAGBAAgAAAAQAIFAAMCQAAgAAQiRAEQAAAAANAAIAAggAIYQFAAARmggBC3ZCYzU2yIA.YAAAAAAAAAAAAAAAAAA"
+
+    static func configurations(for env: APEEnvironment = .production, hideApesterAds: Bool, gdprString: String?) -> [APEUnitConfiguration]  {
         
         var unitsParams: [APEUnitParams]!
         
@@ -24,11 +28,12 @@ import ApesterKit
                                .unit(mediaId: "5e035187675fcbc72ee47156"),
                                .unit(mediaId: "5e03516573255b340854cbf8")]
             case .stage:
-                unitsParams = [.playlist(tags: ["news", "sport", "yoga"],
+                unitsParams = [
+                               .unit(mediaId: "5defe53f4151fc87675e3ec5"),
+                               .playlist(tags: ["news", "sport", "yoga"],
                                          channelToken: "5dcbc10016698427404a0f57",
                                          context: false,
                                          fallback: false),
-                               .unit(mediaId: "5e6fa17f1d18fdc71077660e"),
                                .playlist(tags: ["yo", "bo", "ho"],
                                          channelToken: "5dde8f05694a5dc20a16f3c8",
                                          context: false,
@@ -43,7 +48,7 @@ import ApesterKit
                            .unit(mediaId: "5e67bd1c6abc6400725787ab")]
         }
         self.unitsParams = unitsParams
-        return makeUnitConfigurations(with: unitsParams, environment: env, hideApesterAds: hideApesterAds)
+        return makeUnitConfigurations(with: unitsParams, environment: env, hideApesterAds: hideApesterAds, gdprString: gdprString)
     }
     
     static private func getUnitParam(isPlaylist: Bool, mediaId: String?, channelToken: String?, tags: [String]?, context: Bool?, fallback: Bool?, noApesterAds: Bool) -> [APEUnitParams] {
@@ -52,10 +57,10 @@ import ApesterKit
         
     /// transform given media id to APEStripConfiguration
     /// - Parameter unitIds: the unitParams to transform
-    static func makeUnitConfigurations(with unitParams: [APEUnitParams], environment: APEEnvironment, hideApesterAds: Bool) -> [APEUnitConfiguration] {
+    static func makeUnitConfigurations(with unitParams: [APEUnitParams], environment: APEEnvironment, hideApesterAds: Bool, gdprString: String?) -> [APEUnitConfiguration] {
         
         unitParams.compactMap {
-            APEUnitConfiguration(unitParams: $0, bundle: Bundle.main, hideApesterAds: hideApesterAds, environment: environment)
+            APEUnitConfiguration(unitParams: $0, bundle: Bundle.main, hideApesterAds: hideApesterAds, gdprString: gdprString, environment: environment)
         }
         
     }

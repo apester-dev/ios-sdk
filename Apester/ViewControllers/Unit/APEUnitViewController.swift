@@ -20,7 +20,7 @@ class APEUnitViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let configuration = UnitConfigurationsFactory.configurations(for: .stage, hideApesterAds: false)[0]
+        let configuration = UnitConfigurationsFactory.configurations(for: .stage, hideApesterAds: false, gdprString: nil)[0]
 
         if let unit = unitParams {
             // preLoad implemntation
@@ -32,12 +32,12 @@ class APEUnitViewController: UIViewController {
             apesterUnitView = APEUnitView(configuration: configuration)
 
         }
-        
-        guard let unitParams = unitParams else { return }
 
-        APEViewService.shared.unitView(for: unitParams.id)?.delegate = self
+        apesterUnitView?.delegate = self
 
         apesterUnitView.display(in: unitContainerView, containerViewConroller: self)
+        
+        apesterUnitView.setGdprString(UnitConfigurationsFactory.gdprString)
     }
 }
 
