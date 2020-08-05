@@ -20,7 +20,7 @@ class APEUnitViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let configuration = UnitConfigurationsFactory.configurations(for: .local, hideApesterAds: false, gdprString: nil)[0]
+        let configuration = UnitConfigurationsFactory.configurations(for: .stage, hideApesterAds: false, gdprString: nil)[0]
 
         if let unit = unitParams {
             // preLoad implemntation
