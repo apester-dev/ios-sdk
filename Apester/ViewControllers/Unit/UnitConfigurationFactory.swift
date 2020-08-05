@@ -12,7 +12,11 @@ import ApesterKit
 @objcMembers class UnitConfigurationsFactory: NSObject {
     
     static private(set) var unitsParams: [APEUnitParams] = []
-    
+
+    static func unitsIds() -> [String] { unitsParams.map(\.id) }
+
+    static var gdprString = "COw4XqLOw4XqLAAAAAENAXCAAAAAAAAAAAAAAAAAAAAA.IFukWSQgAIQwgI0QEByFAAAAeIAACAIgSAAQAIAgEQACEABAAAgAQFAEAIAAAGBAAgAAAAQAIFAAMCQAAgAAQiRAEQAAAAANAAIAAggAIYQFAAARmggBC3ZCYzU2yIA.QFukWSQgAIQwgI0QEByFAAAAeIAACAIgSAAQAIAgEQACEABAAAgAQFAEAIAAAGBAAgAAAAQAIFAAMCQAAgAAQiRAEQAAAAANAAIAAggAIYQFAAARmggBC3ZCYzU2yIA.YAAAAAAAAAAAAAAAAAA"
+
     static func configurations(for env: APEEnvironment = .production, hideApesterAds: Bool, gdprString: String?) -> [APEUnitConfiguration]  {
         
         var unitsParams: [APEUnitParams]!

@@ -40,7 +40,7 @@ extension APEMultipleStripsViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ReuseCellIdentifier", for: indexPath) as! APEStripCollectionViewCell
         if indexPath.row % Self.emptyCellsCount == 0 {
             let token = self.channelTokens[indexPath.row / Self.emptyCellsCount]
-            let stripView = APEStripViewService.shared.stripView(for: token)
+            let stripView = APEViewService.shared.stripView(for: token)
             cell.show(stripView: stripView, containerViewConroller: self)
         }
         return cell
@@ -51,7 +51,7 @@ extension APEMultipleStripsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath.row % Self.emptyCellsCount == 0 {
             let token = self.channelTokens[indexPath.row / Self.emptyCellsCount]
-            let stripView = APEStripViewService.shared.stripView(for: token)
+            let stripView = APEViewService.shared.stripView(for: token)
             return CGSize(width: collectionView.bounds.width, height: stripView?.height ?? 0)
         }
         return CGSize(width: collectionView.bounds.width, height: 220)

@@ -33,7 +33,7 @@
 #pragma mark - APEStripViewDelegate
 
 - (void)stripView:(APEStripView * _Nonnull)stripView didFailLoadingChannelToken:(NSString * _Nonnull)token {
-    [APEStripViewService.shared unloadStripViewsWith: @[stripView.configuration.channelToken]];
+    [APEViewService.shared unloadStripViewsWith: @[stripView.configuration.channelToken]];
 }
 
 - (void)stripView:(APEStripView * _Nonnull)stripView didFinishLoadingChannelToken:(NSString * _Nonnull)token {}

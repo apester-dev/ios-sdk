@@ -32,14 +32,12 @@ class APEUnitViewController: UIViewController {
             apesterUnitView = APEUnitView(configuration: configuration)
 
         }
-        
-        guard let unitParams = unitParams else { return }
 
-        APEViewService.shared.unitView(for: unitParams.id)?.delegate = self
+        apesterUnitView?.delegate = self
 
         apesterUnitView.display(in: unitContainerView, containerViewConroller: self)
         
-        apesterUnitView.setGdprString(gdprString: "COw4XqLOw4XqLAAAAAENAXCAAAAAAAAAAAAAAAAAAAAA.IFukWSQgAIQwgI0QEByFAAAAeIAACAIgSAAQAIAgEQACEABAAAgAQFAEAIAAAGBAAgAAAAQAIFAAMCQAAgAAQiRAEQAAAAANAAIAAggAIYQFAAARmggBC3ZCYzU2yIA.QFukWSQgAIQwgI0QEByFAAAAeIAACAIgSAAQAIAgEQACEABAAAgAQFAEAIAAAGBAAgAAAAQAIFAAMCQAAgAAQiRAEQAAAAANAAIAAggAIYQFAAARmggBC3ZCYzU2yIA.YAAAAAAAAAAAAAAAAAA")
+        apesterUnitView.setGdprString(UnitConfigurationsFactory.gdprString)
     }
 }
 

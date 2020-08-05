@@ -74,7 +74,7 @@ import WebKit
         self.unitWebView.removeFromSuperview()
     }
     
-    public func setGdprString(gdprString: String) {
+    public func setGdprString(_ gdprString: String) {
         
         self.configuration.gdprString = gdprString
         if let unitUrl = configuration.unitURL {
