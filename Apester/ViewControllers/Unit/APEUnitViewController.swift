@@ -39,7 +39,7 @@ class APEUnitViewController: UIViewController {
 
         apesterUnitView.display(in: unitContainerView, containerViewConroller: self)
         
-        apesterUnitView.setConsentString(consentString: "custom gdpr string")
+        apesterUnitView.setGdprString(gdprString: "COw4XqLOw4XqLAAAAAENAXCAAAAAAAAAAAAAAAAAAAAA.IFukWSQgAIQwgI0QEByFAAAAeIAACAIgSAAQAIAgEQACEABAAAgAQFAEAIAAAGBAAgAAAAQAIFAAMCQAAgAAQiRAEQAAAAANAAIAAggAIYQFAAARmggBC3ZCYzU2yIA.QFukWSQgAIQwgI0QEByFAAAAeIAACAIgSAAQAIAgEQACEABAAAgAQFAEAIAAAGBAAgAAAAQAIFAAMCQAAgAAQiRAEQAAAAANAAIAAggAIYQFAAARmggBC3ZCYzU2yIA.YAAAAAAAAAAAAAAAAAA")
     }
 }
 
