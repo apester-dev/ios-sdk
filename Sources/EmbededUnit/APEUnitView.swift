@@ -78,10 +78,7 @@ import WebKit
         
         self.configuration.gdprString = gdprString
         if let unitUrl = configuration.unitURL {
-            self.messageDispatcher
-            .dispatchAsync("window.location = '\(unitUrl)';",
-                           to: self.unitWebView)
-
+            unitWebView.load(URLRequest(url:unitUrl))
         }
         
     }
