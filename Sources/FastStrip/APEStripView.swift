@@ -135,6 +135,11 @@ import SafariServices
     public override func hideStory() {
         self.messageDispatcher.dispatchAsync(Constants.WebView.close, to: self.storyWebView)
     }
+    
+    /// Reload webView
+    public override func reload() {
+        // should be implemented later.
+    }
 
     /// subscribe to events in order to observe the events messages data.
     /// for Example, subscribe to load and ready events by: `stripView.subscribe(["strip_loaded", "apester_strip_units"])`

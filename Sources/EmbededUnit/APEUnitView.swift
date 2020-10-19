@@ -87,6 +87,13 @@ import WebKit
     public override func refreshContent() {
         // should be implemented later.
     }
+    
+    /// Reload webView
+    public override func reload() {
+        if let unitUrl = configuration.unitURL {
+            self.unitWebView.load(URLRequest(url:unitUrl))
+        }
+    }
 
     deinit {
         hide()
