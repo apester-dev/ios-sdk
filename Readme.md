@@ -188,6 +188,16 @@ self.unitView.hide()
 [self.unitView hide];
 ```
 
+###### 5.3 - reload the unit view.
+```ruby
+## Swift
+self.unitView.reload()
+```
+```ruby
+## Objective C
+[self.unitView reload];
+```
+
 ##### 6 - Implemet The `APEUnitViewDelegate` to observe the stripView updates when success, failure or height updates.
 
 ## APEViewService 
