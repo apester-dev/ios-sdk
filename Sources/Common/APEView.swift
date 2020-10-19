@@ -85,11 +85,6 @@ import SafariServices
     public func hideStory() {
         fatalError("OVERRIDE ME")
     }
-    
-    /// Reload the webView
-    public func reload() {
-        fatalError("OVERRIDE ME")
-    }
 
     /// subscribe to events in order to observe the events messages data.
     /// for Example, subscribe to load and ready events by: `stripView.subscribe(["strip_loaded", "apester_strip_units"])`

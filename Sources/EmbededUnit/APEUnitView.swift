@@ -89,7 +89,7 @@ import WebKit
     }
     
     /// Reload webView
-    public override func reload() {
+    public func reload() {
         if let unitUrl = configuration.unitURL {
             self.unitWebView.load(URLRequest(url:unitUrl))
         }
