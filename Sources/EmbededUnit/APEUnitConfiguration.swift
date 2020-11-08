@@ -25,6 +25,7 @@ public enum APEUnitParams {
 @objcMembers public class APEUnitConfiguration: APEConfiguration {
     
     private enum Keys: String {
+        case v = "v"
         case tags = "tags"
         case baseUrl = "baseUrl"
         case mediaId = "mediaId"
@@ -40,6 +41,7 @@ public enum APEUnitParams {
     
     public var gdprString: String?
     
+    private(set) var v: String?
     private(set) var id: String = ""
     private(set) var baseUrl: String?
     private(set) var hideApesterAds: Bool
@@ -55,6 +57,7 @@ public enum APEUnitParams {
             value[Keys.fallback.rawValue] = "\(fallback)"
             value[Keys.tags.rawValue] = tags.joined(separator:",")
         }
+        value[Keys.v.rawValue] = self.v
         value[Keys.noApesterAds.rawValue] = "\(self.hideApesterAds)"
         if let gdprString = self.gdprString {
             value[Keys.gdprString.rawValue] = "\(gdprString)"
@@ -67,28 +70,23 @@ public enum APEUnitParams {
         return self.parameters.componentsURL(baseURL: baseUrl)
     }
     
-    public init(unitParams: APEUnitParams, bundle: Bundle, hideApesterAds: Bool, gdprString: String?, baseUrl: String?, environment: APEEnvironment) {
+    public init(unitParams: APEUnitParams, bundle: Bundle, hideApesterAds: Bool, gdprString: String?, environment: APEEnvironment) {
         self.unitParams = unitParams
         self.hideApesterAds = hideApesterAds
         self.gdprString = gdprString
-        self.baseUrl = baseUrl
         super.init(bundle: bundle, environment: environment)
     }
     
     public convenience init(unitParams: APEUnitParams, bundle: Bundle) {
-        self.init(unitParams: unitParams, bundle: bundle, hideApesterAds: false, gdprString: nil, baseUrl: nil, environment: .production)
+        self.init(unitParams: unitParams, bundle: bundle, hideApesterAds: false, gdprString: nil, environment: .production)
     }
     
     public convenience init(unitParams: APEUnitParams, bundle: Bundle, hideApesterAds: Bool) {
-           self.init(unitParams: unitParams, bundle: bundle, hideApesterAds: hideApesterAds, gdprString: nil, baseUrl: nil, environment: .production)
+           self.init(unitParams: unitParams, bundle: bundle, hideApesterAds: hideApesterAds, gdprString: nil, environment: .production)
     }
     
     public convenience init(unitParams: APEUnitParams, bundle: Bundle, gdprString: String) {
-        self.init(unitParams: unitParams, bundle: bundle, hideApesterAds: false, gdprString: gdprString, baseUrl: nil, environment: .production)
-    }
-    
-    public convenience init(unitParams: APEUnitParams, bundle: Bundle, baseUrl: String) {
-        self.init(unitParams: unitParams, bundle: bundle, hideApesterAds: false, gdprString: nil, baseUrl: baseUrl, environment: .production)
+        self.init(unitParams: unitParams, bundle: bundle, hideApesterAds: false, gdprString: gdprString, environment: .production)
     }
     
     @objc public convenience init(mediaId: String, bundle: Bundle) {
@@ -106,11 +104,6 @@ public enum APEUnitParams {
                   bundle: bundle, gdprString: gdprString)
     }
     
-    @objc public convenience init(mediaId: String, bundle: Bundle, baseUrl: String) {
-        self.init(unitParams: .unit(mediaId: mediaId),
-                  bundle: bundle, baseUrl: baseUrl)
-    }
-
     @objc public convenience init(tags: [String], channelToken: String, context: Bool, fallback: Bool, bundle: Bundle) {
         self.init(unitParams: .playlist(tags: tags, channelToken: channelToken, context: context, fallback: fallback),
                   bundle: bundle)
@@ -126,8 +119,11 @@ public enum APEUnitParams {
                   bundle: bundle, gdprString:  gdprString)
     }
     
-    @objc public convenience init(tags: [String], channelToken: String, context: Bool, fallback: Bool, bundle: Bundle, baseUrl: String) {
-        self.init(unitParams: .playlist(tags: tags, channelToken: channelToken, context: context, fallback: fallback),
-                  bundle: bundle, baseUrl:  baseUrl)
+    @objc public func setBaseUrl(baseUrl: String) {
+        self.baseUrl = baseUrl
+    }
+    
+    @objc public func setVersion(v: String) {
+        self.v = v
     }
 }
