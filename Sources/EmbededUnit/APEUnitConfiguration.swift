@@ -25,19 +25,23 @@ public enum APEUnitParams {
 @objcMembers public class APEUnitConfiguration: APEConfiguration {
     
     private enum Keys: String {
-        case mediaId = "mediaId"
-        case channelToken = "channelToken"
         case tags = "tags"
+        case baseUrl = "baseUrl"
+        case mediaId = "mediaId"
         case context = "context"
         case fallback = "fallback"
-        case noApesterAds = "noApesterAds"
         case gdprString = "gdprString"
+        case channelToken = "channelToken"
+        case noApesterAds = "noApesterAds"
+        case cachedVersion = "cachedVersion"
     }
     
     public private(set) var unitParams: APEUnitParams
     
-    private(set) var id: String = ""
     public var gdprString: String?
+    
+    private(set) var id: String = ""
+    private(set) var baseUrl: String?
     private(set) var hideApesterAds: Bool
     
     override var parameters: [String: String] {
@@ -59,26 +63,32 @@ public enum APEUnitParams {
     }
     
     var unitURL: URL? {
-        return self.parameters.componentsURL(baseURL: (self.environment.unitBaseUrl + Constants.Unit.unitPath))
+        let baseUrl = self.baseUrl ?? self.environment.unitBaseUrl + Constants.Unit.unitPath
+        return self.parameters.componentsURL(baseURL: baseUrl)
     }
     
-    public init(unitParams: APEUnitParams, bundle: Bundle, hideApesterAds: Bool, gdprString: String?, environment: APEEnvironment) {
+    public init(unitParams: APEUnitParams, bundle: Bundle, hideApesterAds: Bool, gdprString: String?, baseUrl: String?, environment: APEEnvironment) {
         self.unitParams = unitParams
         self.hideApesterAds = hideApesterAds
         self.gdprString = gdprString
+        self.baseUrl = baseUrl
         super.init(bundle: bundle, environment: environment)
     }
     
     public convenience init(unitParams: APEUnitParams, bundle: Bundle) {
-        self.init(unitParams: unitParams, bundle: bundle, hideApesterAds: false, gdprString: nil, environment: .production)
+        self.init(unitParams: unitParams, bundle: bundle, hideApesterAds: false, gdprString: nil, baseUrl: nil, environment: .production)
     }
     
     public convenience init(unitParams: APEUnitParams, bundle: Bundle, hideApesterAds: Bool) {
-           self.init(unitParams: unitParams, bundle: bundle, hideApesterAds: hideApesterAds, gdprString: nil, environment: .production)
-       }
+           self.init(unitParams: unitParams, bundle: bundle, hideApesterAds: hideApesterAds, gdprString: nil, baseUrl: nil, environment: .production)
+    }
     
     public convenience init(unitParams: APEUnitParams, bundle: Bundle, gdprString: String) {
-        self.init(unitParams: unitParams, bundle: bundle, hideApesterAds: false, gdprString: gdprString, environment: .production)
+        self.init(unitParams: unitParams, bundle: bundle, hideApesterAds: false, gdprString: gdprString, baseUrl: nil, environment: .production)
+    }
+    
+    public convenience init(unitParams: APEUnitParams, bundle: Bundle, baseUrl: String) {
+        self.init(unitParams: unitParams, bundle: bundle, hideApesterAds: false, gdprString: nil, baseUrl: baseUrl, environment: .production)
     }
     
     @objc public convenience init(mediaId: String, bundle: Bundle) {
@@ -95,6 +105,11 @@ public enum APEUnitParams {
         self.init(unitParams: .unit(mediaId: mediaId),
                   bundle: bundle, gdprString: gdprString)
     }
+    
+    @objc public convenience init(mediaId: String, bundle: Bundle, baseUrl: String) {
+        self.init(unitParams: .unit(mediaId: mediaId),
+                  bundle: bundle, baseUrl: baseUrl)
+    }
 
     @objc public convenience init(tags: [String], channelToken: String, context: Bool, fallback: Bool, bundle: Bundle) {
         self.init(unitParams: .playlist(tags: tags, channelToken: channelToken, context: context, fallback: fallback),
@@ -109,5 +124,10 @@ public enum APEUnitParams {
     @objc public convenience init(tags: [String], channelToken: String, context: Bool, fallback: Bool, bundle: Bundle, gdprString: String) {
         self.init(unitParams: .playlist(tags: tags, channelToken: channelToken, context: context, fallback: fallback),
                   bundle: bundle, gdprString:  gdprString)
+    }
+    
+    @objc public convenience init(tags: [String], channelToken: String, context: Bool, fallback: Bool, bundle: Bundle, baseUrl: String) {
+        self.init(unitParams: .playlist(tags: tags, channelToken: channelToken, context: context, fallback: fallback),
+                  bundle: bundle, baseUrl:  baseUrl)
     }
 }
