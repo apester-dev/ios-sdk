@@ -21,8 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     )
 
     APEViewService.shared.preloadUnitViews(with:
-        UnitConfigurationsFactory.configurations(for: .production, hideApesterAds: false, gdprString: nil)
+                                            UnitConfigurationsFactory.configurations(for: .production, hideApesterAds: false, gdprString: nil, baseUrl: nil, v: nil)
     )
+    
     return true
   }
 

@@ -17,7 +17,7 @@ import ApesterKit
 
     static var gdprString = "COw4XqLOw4XqLAAAAAENAXCAAAAAAAAAAAAAAAAAAAAA.IFukWSQgAIQwgI0QEByFAAAAeIAACAIgSAAQAIAgEQACEABAAAgAQFAEAIAAAGBAAgAAAAQAIFAAMCQAAgAAQiRAEQAAAAANAAIAAggAIYQFAAARmggBC3ZCYzU2yIA.QFukWSQgAIQwgI0QEByFAAAAeIAACAIgSAAQAIAgEQACEABAAAgAQFAEAIAAAGBAAgAAAAQAIFAAMCQAAgAAQiRAEQAAAAANAAIAAggAIYQFAAARmggBC3ZCYzU2yIA.YAAAAAAAAAAAAAAAAAA"
 
-    static func configurations(for env: APEEnvironment = .production, hideApesterAds: Bool, gdprString: String?, baseUrl: String?) -> [APEUnitConfiguration]  {
+    static func configurations(for env: APEEnvironment = .production, hideApesterAds: Bool, gdprString: String?, baseUrl: String?, v: String?) -> [APEUnitConfiguration]  {
         
         var unitsParams: [APEUnitParams]!
         
@@ -48,7 +48,7 @@ import ApesterKit
                            .unit(mediaId: "5e67bd1c6abc6400725787ab")]
         }
         self.unitsParams = unitsParams
-        return makeUnitConfigurations(with: unitsParams, environment: env, hideApesterAds: hideApesterAds, gdprString: gdprString, baseUrl: baseUrl)
+        return makeUnitConfigurations(with: unitsParams, environment: env, hideApesterAds: hideApesterAds, gdprString: gdprString, baseUrl: baseUrl, v: v)
     }
     
     static private func getUnitParam(isPlaylist: Bool, mediaId: String?, channelToken: String?, tags: [String]?, context: Bool?, fallback: Bool?, noApesterAds: Bool) -> [APEUnitParams] {
@@ -57,12 +57,15 @@ import ApesterKit
         
     /// transform given media id to APEStripConfiguration
     /// - Parameter unitIds: the unitParams to transform
-    static func makeUnitConfigurations(with unitParams: [APEUnitParams], environment: APEEnvironment, hideApesterAds: Bool, gdprString: String?, baseUrl: String?) -> [APEUnitConfiguration] {
+    static func makeUnitConfigurations(with unitParams: [APEUnitParams], environment: APEEnvironment, hideApesterAds: Bool, gdprString: String?, baseUrl: String?, v: String?) -> [APEUnitConfiguration] {
         
         unitParams.compactMap { unitParams in
             let config = APEUnitConfiguration(unitParams: unitParams, bundle: Bundle.main, hideApesterAds: hideApesterAds, gdprString: gdprString, environment: environment)
             if let baseUrl = baseUrl {
                 config.setBaseUrl(baseUrl: baseUrl)
+            }
+            if let v = v {
+                config.setVersion(version: v)
             }
             
             return config;
