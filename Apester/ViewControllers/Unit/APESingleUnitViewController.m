@@ -22,7 +22,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    APEUnitConfiguration *configuration = [UnitConfigurationsFactory configurationsFor:APEEnvironmentStage hideApesterAds:NO gdprString:nil baseUrl: nil v: nil].firstObject;
+    APEUnitConfiguration *configuration = [UnitConfigurationsFactory configurationsFor:APEEnvironmentStage hideApesterAds:NO gdprString:nil baseUrl: nil].firstObject;
     //.configurations(for: .stage, hideApesterAds: false, gdprString: nil)[0]
     NSString *unitId = [[UnitConfigurationsFactory unitsIds] firstObject];
 

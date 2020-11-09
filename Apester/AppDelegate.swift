@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     )
 
     APEViewService.shared.preloadUnitViews(with:
-                                            UnitConfigurationsFactory.configurations(for: .stage, hideApesterAds: false, gdprString: nil, baseUrl: "https://storage.googleapis.com/apester-static/tmp/in-app-unit-detached-stg.html", v: nil)
+                                            UnitConfigurationsFactory.configurations(for: .production, hideApesterAds: false, gdprString: nil, baseUrl: "")
     )
     
     return true
