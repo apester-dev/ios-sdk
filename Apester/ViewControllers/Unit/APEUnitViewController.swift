@@ -17,10 +17,14 @@ class APEUnitViewController: UIViewController {
     
     @IBOutlet weak var unitContainerView: UIView!
     
+    @IBAction func refreshBtn(_ sender: Any) {
+        self.apesterUnitView.reload()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let configuration = UnitConfigurationsFactory.configurations(for: .stage, hideApesterAds: false, gdprString: nil)[0]
+        let configuration = UnitConfigurationsFactory.configurations(for: .production, hideApesterAds: false, gdprString: nil, baseUrl: "")[0]
 
         if let unit = unitParams {
             // preLoad implemntation

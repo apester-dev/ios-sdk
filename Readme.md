@@ -150,7 +150,9 @@ APEUnitConfiguration *playlistConfig = [[APEUnitConfiguration alloc] initWithTag
                                                                      channelToken: channelToken
                                                                      context: isContext 
                                                                      fallback: isFallback
-                                                                     bundle: NSBundle.mainBundle];
+                                                                     bundle: NSBundle.mainBundle
+                                                                     gdprString: gdprString
+                                                                     baseUrl: baseUrl];
 
 ```
 
