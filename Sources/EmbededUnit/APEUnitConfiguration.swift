@@ -64,7 +64,6 @@ public enum APEUnitParams {
     
     var unitURL: URL? {
         let baseUrl = self.baseUrl ?? self.environment.unitBaseUrl + Constants.Unit.unitPath
-        print("almog baseUrl: \(baseUrl)")
         return self.parameters.componentsURL(baseURL: baseUrl)
     }
     
