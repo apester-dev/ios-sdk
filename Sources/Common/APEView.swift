@@ -155,9 +155,23 @@ private extension APEView {
         if let url = navigationAction.request.url {
             switch navigationAction.navigationType {
                 case .other:
+                    var requestUrlToCheck: String?, webViewUrlToCheck: String?
+                    if var requestUrlComponenets = URLComponents(string: url.absoluteString) {
+                        requestUrlComponenets.query = nil
+
+                        requestUrlToCheck = requestUrlComponenets.string
+                    }
+                    
+                    if var webViewUrlComponenets = URLComponents(string: webView.url?.absoluteString ?? "") {
+                        webViewUrlComponenets.query = nil
+
+                        webViewUrlToCheck = webViewUrlComponenets.string
+                    }
+                    
                     // redirect when the target is a main frame and the strip has been loaded.
                     if loadingState.isLoaded, let targetFrame = navigationAction.targetFrame, targetFrame.isMainFrame,
-                        url.absoluteString != webView.url?.absoluteString {
+                       requestUrlToCheck != webViewUrlToCheck
+                        {
                         open(url: url, type: .other)
                     } else {
                         policy = .allow // allow webview requests communication
