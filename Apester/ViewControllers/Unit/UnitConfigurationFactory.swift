@@ -59,16 +59,8 @@ import ApesterKit
     /// - Parameter unitIds: the unitParams to transform
     static func makeUnitConfigurations(with unitParams: [APEUnitParams], environment: APEEnvironment, hideApesterAds: Bool, gdprString: String?, baseUrl: String?, v: String?) -> [APEUnitConfiguration] {
         
-        unitParams.compactMap { unitParams in
-            let config = APEUnitConfiguration(unitParams: unitParams, bundle: Bundle.main, hideApesterAds: hideApesterAds, gdprString: gdprString, environment: environment)
-            if let baseUrl = baseUrl {
-                config.setBaseUrl(baseUrl: baseUrl)
-            }
-            if let v = v {
-                config.setVersion(version: v)
-            }
-            
-            return config;
+        unitParams.compactMap {
+            APEUnitConfiguration(unitParams: $0, bundle: Bundle.main, hideApesterAds: hideApesterAds, gdprString: gdprString, baseUrl: baseUrl, environment: environment)
         }
         
     }
