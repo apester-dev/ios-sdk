@@ -64,6 +64,7 @@ public enum APEUnitParams {
     
     var unitURL: URL? {
         let baseUrl = self.baseUrl ?? self.environment.unitBaseUrl + Constants.Unit.unitPath
+        print("almog baseUrl: \(baseUrl)")
         return self.parameters.componentsURL(baseURL: baseUrl)
     }
     
@@ -89,6 +90,10 @@ public enum APEUnitParams {
     
     public convenience init(unitParams: APEUnitParams, bundle: Bundle, baseUrl: String) {
         self.init(unitParams: unitParams, bundle: bundle, hideApesterAds: false, gdprString: nil, baseUrl: baseUrl, environment: .production)
+    }
+    
+    public convenience init(unitParams: APEUnitParams, bundle: Bundle, gdprString: String, baseUrl: String) {
+        self.init(unitParams: unitParams, bundle: bundle, hideApesterAds: false, gdprString: gdprString, baseUrl: baseUrl, environment: .production)
     }
     
     @objc public convenience init(mediaId: String, bundle: Bundle) {
@@ -129,5 +134,10 @@ public enum APEUnitParams {
     @objc public convenience init(tags: [String], channelToken: String, context: Bool, fallback: Bool, bundle: Bundle, baseUrl: String) {
         self.init(unitParams: .playlist(tags: tags, channelToken: channelToken, context: context, fallback: fallback),
                   bundle: bundle, baseUrl:  baseUrl)
+    }
+    
+    @objc public convenience init(tags: [String], channelToken: String, context: Bool, fallback: Bool, bundle: Bundle, gdprString: String, baseUrl: String) {
+        self.init(unitParams: .playlist(tags: tags, channelToken: channelToken, context: context, fallback: fallback),
+                  bundle: bundle, gdprString: gdprString, baseUrl:  baseUrl)
     }
 }
