@@ -39,5 +39,17 @@ extension WKUserContentController {
             self.removeScriptMessageHandler(forName: $0)
         })
     }
-
+    
+    func addScript(params: [String: String]) {
+        if let jsonParams = try? JSONSerialization.data(withJSONObject: params, options: .prettyPrinted) {
+         let paramsString = String(data: jsonParams, encoding: .utf8)!
+         let js = """
+                window.__getInitParams = () => {
+                 return \(paramsString);
+                };
+            """
+         let script = WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: false)
+         self.addUserScript(script)
+        }
+    }
 }
