@@ -40,8 +40,8 @@ extension WKWebView {
         let configuration = WKWebViewConfiguration()
         configuration.websiteDataStore = WKWebsiteDataStore.default()
         configuration.userContentController.register(to: options.events, delegate: delegate)
-        if params {
-            configuration.userContentController.addScript(params: params);
+        if let rawParams = params {
+            configuration.userContentController.addScript(params: rawParams);
         }
         configuration.allowsInlineMediaPlayback = true
         configuration.mediaTypesRequiringUserActionForPlayback = []
