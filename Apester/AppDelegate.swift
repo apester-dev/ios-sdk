@@ -16,12 +16,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
-    APEViewService.shared.preloadStripViews(with:
-        StripConfigurationsFactory.configurations(for: .production, hideApesterAds: false)
-    )
+//    APEViewService.shared.preloadStripViews(with:
+//        StripConfigurationsFactory.configurations(for: .production, hideApesterAds: false)
+//    )
 
+    
+//    APEViewService.shared.preloadUnitViews(with:
+//                                            UnitConfigurationsFactory.configurations(for: .local, hideApesterAds: false, gdprString: nil, baseUrl: nil)
+//    APEViewService.shared.preloadUnitViews(with:
+//                                            UnitConfigurationsFactory.configurations(for: .production, hideApesterAds: false, gdprString: nil, baseUrl: "https://www.kicker.de/apester-in-app-unit-detached")
     APEViewService.shared.preloadUnitViews(with:
-                                            UnitConfigurationsFactory.configurations(for: .production, hideApesterAds: false, gdprString: nil, baseUrl: "")
+                                            UnitConfigurationsFactory.configurations(for: .local, hideApesterAds: false, gdprString: nil, baseUrl: nil)
     )
     
     return true
