@@ -45,8 +45,12 @@ extension WKUserContentController {
          let paramsString = String(data: jsonParams, encoding: .utf8)!
          let js = """
                 window.__getInitParams = () => {
-                 return \(paramsString);
+                    return \(paramsString);
                 };
+                window.postMessage({
+                    type: \"\(Constants.Unit.initInappParams)\",
+                    params: \(paramsString)
+                }, '*');
             """
          let script = WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: false)
          self.addUserScript(script)

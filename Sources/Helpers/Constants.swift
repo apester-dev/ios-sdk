@@ -66,7 +66,6 @@ struct Constants {
         static let height = "height"
         static let width = "width"
         static let validateUnitViewVisibity = "validateUnitViewVisibity"
-        static let handleInitParams = "handle_init_params"
-        static let initParams = "init_params"
+        static let initInappParams = "init_inapp_params"
     }
 }

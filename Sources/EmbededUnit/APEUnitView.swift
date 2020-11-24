@@ -39,12 +39,11 @@ import WebKit
         super.init(configuration.environment)
         
         self.configuration = configuration
-        let options = WKWebView.Options(events: [Constants.Unit.proxy, Constants.Unit.validateUnitViewVisibity, Constants.Unit.handleInitParams], contentBehavior: .never, delegate: self)
+        let options = WKWebView.Options(events: [Constants.Unit.proxy, Constants.Unit.validateUnitViewVisibity], contentBehavior: .never, delegate: self)
         
         self.unitWebView = WKWebView.make(with: options, params: configuration.parameters)
         
         if let unitUrl = configuration.unitURL {
-            print("almog \(unitUrl)")
             unitWebView.load(URLRequest(url: unitUrl))
         }
         
@@ -142,19 +141,7 @@ extension APEUnitView {
             if !loadingState.isLoaded {
                 loadingState.isLoaded = true
             }
-            
-            if bodyString.contains(Constants.Unit.handleInitParams),
-               let jsonParams = try? JSONSerialization.data(withJSONObject: self.configuration.parameters, options: .prettyPrinted) {
-                let paramsString = String(data: jsonParams, encoding: .utf8)!
-                let script = "window.postMessage( {type: \"\(Constants.Unit.initParams)\", settings: \(paramsString)}, '*');"
-                self.unitWebView.evaluateJavaScript(script) { (result, error) in
-                    if let error = error {
-                        print("An error occurred when evaluateJavaScript: \(error)")
-                    }
-                }
-            }
                
-
             if bodyString.contains(Constants.Unit.resize),
                 let dictionary = bodyString.dictionary {
                 let height = dictionary.floatValue(for: Constants.Unit.height)
