@@ -17,7 +17,7 @@ import ApesterKit
 
     static var gdprString = "COw4XqLOw4XqLAAAAAENAXCAAAAAAAAAAAAAAAAAAAAA.IFukWSQgAIQwgI0QEByFAAAAeIAACAIgSAAQAIAgEQACEABAAAgAQFAEAIAAAGBAAgAAAAQAIFAAMCQAAgAAQiRAEQAAAAANAAIAAggAIYQFAAARmggBC3ZCYzU2yIA.QFukWSQgAIQwgI0QEByFAAAAeIAACAIgSAAQAIAgEQACEABAAAgAQFAEAIAAAGBAAgAAAAQAIFAAMCQAAgAAQiRAEQAAAAANAAIAAggAIYQFAAARmggBC3ZCYzU2yIA.YAAAAAAAAAAAAAAAAAA"
 
-    static func configurations(for env: APEEnvironment = .production, hideApesterAds: Bool, gdprString: String?, baseUrl: String) -> [APEUnitConfiguration]  {
+    static func configurations(for env: APEEnvironment = .production, hideApesterAds: Bool, gdprString: String?, baseUrl: String?) -> [APEUnitConfiguration]  {
         
         var unitsParams: [APEUnitParams]!
         
