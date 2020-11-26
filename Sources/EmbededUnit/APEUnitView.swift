@@ -78,7 +78,6 @@ import WebKit
         
         self.configuration.gdprString = gdprString
         if let unitUrl = configuration.unitURL {
-            print("almog gdpr \(unitUrl)")
             unitWebView.load(URLRequest(url:unitUrl))
         }
         
@@ -92,7 +91,6 @@ import WebKit
     /// Reload webView
     public func reload() {
         if let unitUrl = configuration.unitURL {
-            print("almog reload unitUrl: \(unitUrl)")
             self.unitWebView.load(URLRequest(url:unitUrl))
         }
     }
@@ -141,7 +139,7 @@ extension APEUnitView {
             if !loadingState.isLoaded {
                 loadingState.isLoaded = true
             }
-               
+
             if bodyString.contains(Constants.Unit.resize),
                 let dictionary = bodyString.dictionary {
                 let height = dictionary.floatValue(for: Constants.Unit.height)

@@ -42,14 +42,14 @@ extension WKUserContentController {
     
     func addScript(params: [String: String]) {
         if let jsonParams = try? JSONSerialization.data(withJSONObject: params, options: .prettyPrinted) {
-         let paramsString = String(data: jsonParams, encoding: .utf8)!
+         let parsedParams = String(data: jsonParams, encoding: .utf8)!
          let js = """
                 window.__getInitParams = () => {
-                    return \(paramsString);
+                    return \(parsedParams);
                 };
                 window.postMessage({
                     type: \"\(Constants.Unit.initInappParams)\",
-                    params: \(paramsString)
+                    params: \(parsedParams)
                 }, '*');
             """
          let script = WKUserScript(source: js, injectionTime: .atDocumentStart, forMainFrameOnly: false)
