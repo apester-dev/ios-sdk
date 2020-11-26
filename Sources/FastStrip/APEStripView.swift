@@ -236,7 +236,7 @@ private extension APEStripView {
         let options = WKWebView.Options(events: [StripConfig.proxy, StripConfig.validateStripViewVisibity],
                                         contentBehavior: .never,
                                         delegate: self)
-        self.stripWebView = WKWebView.make(with: options)
+        self.stripWebView = WKWebView.make(with: options, params: nil)
         if let url = self.configuration.stripURL {
             self.stripWebView.load(URLRequest(url: url))
         }
@@ -246,7 +246,7 @@ private extension APEStripView {
         let options = WKWebView.Options(events: [StripConfig.proxy, StripConfig.showStripStory, StripConfig.hideStripStory],
                                         contentBehavior: .always,
                                         delegate: self)
-        self.storyWebView = WKWebView.make(with: options)
+        self.storyWebView = WKWebView.make(with: options, params: nil)
         if let url = self.configuration.storyURL {
             self.storyWebView.load(URLRequest(url: url))
         }

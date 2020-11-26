@@ -35,11 +35,14 @@ extension WKWebView {
 
     private static let navigatorUserAgent = "navigator.userAgent"
 
-    static func make(with options: Options) -> WKWebView {
+    static func make(with options: Options, params: [String: String]?) -> WKWebView {
         let delegate = options.delegate
         let configuration = WKWebViewConfiguration()
         configuration.websiteDataStore = WKWebsiteDataStore.default()
         configuration.userContentController.register(to: options.events, delegate: delegate)
+        if let rawParams = params {
+            configuration.userContentController.addScript(params: rawParams);
+        }
         configuration.allowsInlineMediaPlayback = true
         configuration.mediaTypesRequiringUserActionForPlayback = []
         let webView = WKWebView(frame: .zero, configuration: configuration)
