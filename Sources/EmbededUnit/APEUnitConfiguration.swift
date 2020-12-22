@@ -64,7 +64,8 @@ public enum APEUnitParams {
     
     var unitURL: URL? {
         let baseUrl = self.baseUrl ?? self.environment.unitBaseUrl + Constants.Unit.unitPath
-        return self.parameters.componentsURL(baseURL: baseUrl)
+        let components = URLComponents(string: baseUrl)
+        return components?.url
     }
     
     public init(unitParams: APEUnitParams, bundle: Bundle, hideApesterAds: Bool, gdprString: String?, baseUrl: String?, environment: APEEnvironment) {

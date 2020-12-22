@@ -41,7 +41,7 @@ import WebKit
         self.configuration = configuration
         let options = WKWebView.Options(events: [Constants.Unit.proxy, Constants.Unit.validateUnitViewVisibity], contentBehavior: .never, delegate: self)
         
-        self.unitWebView = WKWebView.make(with: options)
+        self.unitWebView = WKWebView.make(with: options, params: configuration.parameters)
         
         if let unitUrl = configuration.unitURL {
             unitWebView.load(URLRequest(url: unitUrl))
