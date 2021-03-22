@@ -8,6 +8,7 @@
 
 import UIKit
 import ApesterKit
+import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,13 +21,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        StripConfigurationsFactory.configurations(for: .production, hideApesterAds: false)
 //    )
 
-    
 //    APEViewService.shared.preloadUnitViews(with:
 //                                            UnitConfigurationsFactory.configurations(for: .local, hideApesterAds: false, gdprString: nil, baseUrl: nil)
 //    APEViewService.shared.preloadUnitViews(with:
 //                                            UnitConfigurationsFactory.configurations(for: .production, hideApesterAds: false, gdprString: nil, baseUrl: "https://www.kicker.de/apester-in-app-unit-detached")
+    print("almog appdelegate")
+    GADMobileAds.sharedInstance().start(completionHandler: nil)
     APEViewService.shared.preloadUnitViews(with:
-                                            UnitConfigurationsFactory.configurations(for: .local, hideApesterAds: false, gdprString: nil, baseUrl: nil)
+                                            UnitConfigurationsFactory.configurations(for: .local, hideApesterAds: true, gdprString: nil, baseUrl: nil)
     )
     
     return true

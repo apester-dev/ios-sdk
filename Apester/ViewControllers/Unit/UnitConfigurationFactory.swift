@@ -24,9 +24,9 @@ import ApesterKit
         switch env {
             case .production:
                 unitsParams = [
-                    .playlist(tags: [], channelToken: "56094150b0e393bb4b9f0615", context: false, fallback: false),
-                               .unit(mediaId: "5e035187675fcbc72ee47156"),
-                               .unit(mediaId: "5e03516573255b340854cbf8")]
+//                    .playlist(tags: [], channelToken: "56094150b0e393bb4b9f0615", context: false, fallback: false),
+//                               .unit(mediaId: "5e035187675fcbc72ee47156"),
+                               .unit(mediaId: "5fb2a4b8a7c37765b3586bea")]
             case .stage:
                 unitsParams = [
                                .unit(mediaId: "5defe53f4151fc87675e3ec5"),
@@ -41,11 +41,12 @@ import ApesterKit
                                .unit(mediaId: "5e6fa2351d18fd8580776612"),
             ]
         case .local:
-            unitsParams = [.playlist(tags: ["news", "sport", "yoga"],
-                                     channelToken: "5d6fc15d07d512002b67ecc6",
-                                     context: false,
-                                     fallback: false),
-                           .unit(mediaId: "5e67bd1c6abc6400725787ab")]
+            unitsParams = [
+//                .playlist(tags: ["news", "sport", "yoga"],
+//                                     channelToken: "5f38fc0f74964a00728b4eea",
+//                                     context: false,
+//                                     fallback: false),
+                           .unit(mediaId: "5f38fc0f74964a00728b4eea")]
         }
         self.unitsParams = unitsParams
         return makeUnitConfigurations(with: unitsParams, environment: env, hideApesterAds: hideApesterAds, gdprString: gdprString, baseUrl: baseUrl)

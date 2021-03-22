@@ -36,6 +36,9 @@ import WebKit
     }
     
     public init(configuration: APEUnitConfiguration) {
+//        print("almog: \(GADMobileAds.sharedInstance())")
+//        GADMobileAds.sharedInstance().start(completionHandler: nil)
+        print("almog init")
         super.init(configuration.environment)
         
         self.configuration = configuration
@@ -187,6 +190,7 @@ private extension APEUnitView {
     }
 
     func update(height: CGFloat, width: CGFloat) {
+        print("almog height: \(height), width: \(width)")
         // 1 - update the stripWebView height constraint
         self.unitWebViewHeightConstraint.flatMap { NSLayoutConstraint.deactivate([$0]) }
         unitWebViewHeightConstraint = unitWebView.heightAnchor.constraint(equalToConstant: height)
