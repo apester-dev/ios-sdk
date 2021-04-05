@@ -8,6 +8,7 @@
 
 import Foundation
 import WebKit
+import GoogleMobileAds
 
 @objcMembers public class APEUnitView: APEView {
     
@@ -18,6 +19,8 @@ import WebKit
 
     private var unitWebViewHeightConstraint: NSLayoutConstraint?
     private var unitWebViewWidthConstraint: NSLayoutConstraint?
+    
+    var bannerView: GADBannerView!
     
     /// The view visibility status, update this property either when the view is visible or not.
     public override var isDisplayed: Bool {
@@ -36,9 +39,6 @@ import WebKit
     }
     
     public init(configuration: APEUnitConfiguration) {
-//        print("almog: \(GADMobileAds.sharedInstance())")
-//        GADMobileAds.sharedInstance().start(completionHandler: nil)
-        print("almog init")
         super.init(configuration.environment)
         
         self.configuration = configuration
@@ -70,6 +70,35 @@ import WebKit
         unitWebViewWidthConstraint?.isActive = true
 
         super.display(in: containerView, containerViewConroller: containerViewConroller)
+
+    }
+    
+    func initAdMob(_ adUnitId: String, _ isCompanionVariant: Bool) {
+        
+        if let containerView = self.containerView,
+           let containerViewController = self.containerViewConroller {
+            if bannerView == nil {
+                GADMobileAds.sharedInstance().start(completionHandler: nil)
+                self.messageDispatcher.sendAdMobEvent(to: self.unitWebView, Constants.Monetization.playerMonLoadingPass
+                )
+                bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+                bannerView.translatesAutoresizingMaskIntoConstraints = false
+                containerView.addSubview(bannerView)
+                if isCompanionVariant {
+                    bannerView.topAnchor.constraint(equalTo: unitWebView.bottomAnchor, constant: 0).isActive = true
+                } else {
+                    bannerView.bottomAnchor.constraint(equalTo: unitWebView.bottomAnchor, constant: 0).isActive = true
+                }
+                bannerView.leadingAnchor.constraint(equalTo: unitWebView.leadingAnchor).isActive = true
+                bannerView.trailingAnchor.constraint(equalTo: unitWebView.trailingAnchor).isActive = true
+                bannerView.delegate = self
+                bannerView.rootViewController = containerViewController
+            }
+            bannerView.adUnitID = adUnitId
+            bannerView.load(GADRequest())
+            self.messageDispatcher.sendAdMobEvent(to: self.unitWebView, Constants.Monetization.playerMonImpressionPending
+            )
+        }
     }
 
     /// Remove the unit web view
@@ -158,6 +187,14 @@ extension APEUnitView {
             if bodyString.contains(Constants.WebView.apesterAdsCompleted){
                 self.delegate?.unitView(self, didCompleteAdsForUnit: self.configuration.unitParams.id)
             }
+            
+            if bodyString.contains(Constants.WebView.initAdMob),
+                let dictionary = bodyString.dictionary {
+                if let adUnitId = dictionary[Constants.Unit.adUnitId] as? String,
+                   let isCompanionVariant = dictionary[Constants.Unit.isCompanionVariant] as? Bool {
+                    self.initAdMob(adUnitId, isCompanionVariant)
+                }
+            }
         }
 
         if messageName == Constants.Unit.validateUnitViewVisibity {
@@ -190,7 +227,6 @@ private extension APEUnitView {
     }
 
     func update(height: CGFloat, width: CGFloat) {
-        print("almog height: \(height), width: \(width)")
         // 1 - update the stripWebView height constraint
         self.unitWebViewHeightConstraint.flatMap { NSLayoutConstraint.deactivate([$0]) }
         unitWebViewHeightConstraint = unitWebView.heightAnchor.constraint(equalToConstant: height)
@@ -224,4 +260,41 @@ private extension APEUnitView {
         // 5 - update the delegate about the new height
         self.delegate?.unitView(self, didUpdateHeight: height)
     }
+}
+
+// MARK:- GADBannerViewDelegate
+@available(iOS 11.0, *)
+extension APEUnitView: GADBannerViewDelegate {
+    
+    /// Tells the delegate an ad request loaded an ad.
+    public func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
+        self.messageDispatcher.sendAdMobEvent(to: self.unitWebView, Constants.Monetization.playerMonImpression
+        )
+    }
+
+    /// Tells the delegate an ad request failed.
+    @nonobjc func bannerView(_ bannerView: GADBannerView,
+                           didFailToReceiveAdWithError error: NSError) {
+        self.messageDispatcher.sendAdMobEvent(to: self.unitWebView, Constants.Monetization.playerMonLoadingImpressionFailed
+        )
+    }
+
+    /// Tells the delegate that a full-screen view will be presented in response
+    /// to the user clicking on an ad.
+    public func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
+    }
+
+    /// Tells the delegate that the full-screen view will be dismissed.
+    public func bannerViewWillDismissScreen(_ bannerView: GADBannerView) {
+    }
+
+    /// Tells the delegate that the full-screen view has been dismissed.
+    public func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
+    }
+
+    /// Tells the delegate that a user click will open another app (such as
+    /// the App Store), backgrounding the current app.
+    func adViewWillLeaveApplication(_ bannerView: GADBannerView) {
+    }
+    
 }
