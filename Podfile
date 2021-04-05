@@ -5,13 +5,12 @@ target 'Apester' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
-  # Pods for Apester
-  pod 'Google-Mobile-Ads-SDK'
-
 end
 
 target 'ApesterKit' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
+  
+  pod 'Google-Mobile-Ads-SDK'
 
 end

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3549BB501DA38A2000C63030 /* ApesterKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 3549BB181DA3890B00C63030 /* ApesterKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3549BB661DA38ADB00C63030 /* ApesterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3549BB211DA389CD00C63030 /* ApesterKit.framework */; };
+		3605CD9E2613946B007D155B /* Pods_ApesterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBEEE1F78C877AA0DB61285C /* Pods_ApesterKit.framework */; };
+		3605CD9F2613946B007D155B /* Pods_ApesterKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CBEEE1F78C877AA0DB61285C /* Pods_ApesterKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		361BF13F241EB9770079BFE3 /* APEUnitViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361BF13E241EB9770079BFE3 /* APEUnitViewDelegate.swift */; };
 		3697E8672417FAF900B6AC79 /* APEUnitConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */; };
 		3697E8692418DD2D00B6AC79 /* UnitConfigurationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697E8682418DD2D00B6AC79 /* UnitConfigurationFactory.swift */; };
@@ -16,7 +18,6 @@
 		36B5DC1F241954A1000E46AF /* APEUnitConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */; };
 		36FC4E5E24178CB800A25076 /* APEUnitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FC4E55241776BC00A25076 /* APEUnitView.swift */; };
 		3852CB17A5673CEFCEC7C357 /* Pods_Apester.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D4D185EABE4D9AEDC49B7D7 /* Pods_Apester.framework */; };
-		8393DF9C74DA2F5CA96BD643 /* Pods_ApesterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBEEE1F78C877AA0DB61285C /* Pods_ApesterKit.framework */; };
 		86120824233F74A9006608F1 /* UserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86120811233F74A9006608F1 /* UserAgent.swift */; };
 		864E5A0424DB017400F5D70C /* APESingleUnitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 864E5A0324DB017400F5D70C /* APESingleUnitViewController.m */; };
 		864E5A0724DB0C1300F5D70C /* APEUnitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864E5A0524DB0C0100F5D70C /* APEUnitViewController.swift */; };
@@ -90,6 +91,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		3605CDA02613946B007D155B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				3605CD9F2613946B007D155B /* Pods_ApesterKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BBC96DDA2227847F00EA7E6B /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -162,7 +174,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8393DF9C74DA2F5CA96BD643 /* Pods_ApesterKit.framework in Frameworks */,
+				3605CD9E2613946B007D155B /* Pods_ApesterKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,6 +415,7 @@
 				3549BB1E1DA389CD00C63030 /* Headers */,
 				3549BB1F1DA389CD00C63030 /* Resources */,
 				BB5DAC5B1F20AD1E00C015E2 /* ShellScript */,
+				3605CDA02613946B007D155B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -441,7 +454,7 @@
 				BBC96DA2222781F400EA7E6B /* Frameworks */,
 				BBC96DA3222781F400EA7E6B /* Resources */,
 				BBC96DDA2227847F00EA7E6B /* Embed Frameworks */,
-				C2D200A50A1035D483410F91 /* [CP] Embed Pods Frameworks */,
+				D582A309BB0215F4FAB5A36A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -565,7 +578,7 @@
 			shellPath = /bin/sh;
 			shellScript = "# if which swiftlint >/dev/null; then\n# swiftlint\n# else\n#    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n# fi\n";
 		};
-		C2D200A50A1035D483410F91 /* [CP] Embed Pods Frameworks */ = {
+		D582A309BB0215F4FAB5A36A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -851,8 +864,11 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MARKETING_VERSION = 3.2.3;
-				OTHER_LDFLAGS = "${inhreted}";
-				"OTHER_LDFLAGS[arch=*]" = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				"OTHER_LDFLAGS[arch=*]" = (
+					"$(inherited)",
+					"-ObjC",
+				);
 				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apester.ApesterKit;
 				PRODUCT_NAME = ApesterKit;
@@ -885,8 +901,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MARKETING_VERSION = 3.2.3;
-				OTHER_LDFLAGS = "";
-				"OTHER_LDFLAGS[arch=*]" = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apester.ApesterKit;
 				PRODUCT_NAME = ApesterKit;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1065,7 +1080,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 3.2.3;
 				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "$(inherited)";
 				"OTHER_LDFLAGS[arch=*]" = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hasansa.Apester;
 				PRODUCT_NAME = "$(TARGET_NAME)";
