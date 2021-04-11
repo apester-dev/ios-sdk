@@ -36,6 +36,7 @@ struct Constants {
         //
         static let getHeight = "window.__getHeight()"
         static let refreshContent = "window.__refreshApesterContent()"
+        static let initAdMob = "apester_init_ad_mob"
     }
 
     /// Strip Keys
@@ -65,7 +66,16 @@ struct Constants {
         static let resize = "apester_resize_unit"
         static let height = "height"
         static let width = "width"
+        static let adUnitId = "adUnitId"
+        static let isCompanionVariant = "isCompanionVariant"
         static let validateUnitViewVisibity = "validateUnitViewVisibity"
         static let initInappParams = "init_inapp_params"
+    }
+    
+    struct Monetization {
+        static let playerMonImpression =  "player_mon_impression"
+        static let playerMonLoadingPass =  "player_mon_loading_pass"
+        static let playerMonImpressionPending = "player_mon_impression_pending"
+        static let playerMonLoadingImpressionFailed =  "player_mon_loading_impression_failed"
     }
 }

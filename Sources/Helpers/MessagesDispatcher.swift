@@ -44,5 +44,16 @@ class MessageDispatcher {
         }
         script.wait()
     }
+    
+    func sendAdMobEvent(to webView: WKWebView, _ event: String) {
+        self.dispatch(apesterEvent:
+            """
+                {
+                    type: \"admob_report\",
+                    adMobEvent: \"\(event)\"
+                }
+            """,
+        to: webView);
+    }
 
 }
