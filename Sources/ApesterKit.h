@@ -15,3 +15,4 @@ FOUNDATION_EXPORT double ApesterKitVersionNumber;
 FOUNDATION_EXPORT const unsigned char ApesterKitVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <ApesterKit/PublicHeader.h>
+#import <GoogleMobileAds/GoogleMobileAds.h>
