@@ -22,7 +22,7 @@ ApesterKit provides a light-weight framework that loads Apester Unit in a webVie
  
 ## Integration
 
-Update your app's Info.plist file to add Apester AdMob app ID. (contact us to get it).
+Update your app's Info.plist file to add Apester AdMob app ID. (contact Apester to get it).
 ```
 For testing please use this key:
 
