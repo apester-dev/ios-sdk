@@ -20,7 +20,16 @@ ApesterKit provides a light-weight framework that loads Apester Unit in a webVie
 - iOS 11.0+
 - Xcode 10.2+
  
-#
+## Integration
+
+Update your app's Info.plist file to add Apester AdMob app ID. (contact us to get it).
+```
+For testing please use this key:
+
+<key>GADApplicationIdentifier</key>
+<string>ca-app-pub-3940256099942544~1458002511</string>
+```
+
 ## Apester Strip View
 A Carousel component for a channel that contains an Apester units of the media publisher. These units were built with [Apester Platform](https://apester.com), The Carousel component design can be configured and displayed any where.
 Follow our guide step by step and setup. Follow our guide step by step and setup:
