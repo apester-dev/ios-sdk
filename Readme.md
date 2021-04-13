@@ -295,9 +295,12 @@ NSArray *events = @[@"apester_interaction_loaded"];
 
 Examples events to subscribed to: (to get more events information contact the Apester team)
 
-Event Name   | click_next  | picked_answer | unit_started | Unit was loaded | 
---- | --- | --- | --- |--- |--- |--- |--- |--- |--- |--- |---
-Meaning | Next was clicked | Answer was picked | unit_started | apester_interaction_loaded | 
+| Event Name                    | Meaning                                                                       |
+| ----------------------------- | ----------------------------------------------------------------------------- |
+| click_next                    | Next was clicked                                                              |
+| picked_answer                 | Answer was picked                                                             |
+| unit_started                  | First engagement                                                              |
+| apester_interaction_loaded    | Unit was loaded                                                               |
 
 #
 ## Installation
