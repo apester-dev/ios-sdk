@@ -46,5 +46,14 @@ import WebKit
     ///   - completion: the handler callback, return true in case the delegate handles the URL, otherwise return false
     @objc optional
     func unitView(_ unitView: APEUnitView, shouldHandleURL url: URL, type: APEViewNavigationType, completion: @escaping ((Bool) -> Void))
+    
+    /// when a subscribed event message has been recived
+    /// for Example, subscribe to load and ready events by: `stripView.subscribe(["apester_interaction_loaded", "click_next"])`
+    /// - Parameters:
+    ///   - unitView: the unit view
+    ///   - name: the subscribed event
+    ///   - message: the message data for that event
+    @objc optional
+    func unitView(_ unitView: APEUnitView, didReciveEvent name:String, message: String)
 }
 #endif

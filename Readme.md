@@ -277,6 +277,31 @@ APEViewService.shared.unitView(for: unitId)
 [APEViewService.shared unitViewFor: unitId];
 ```
 
+## Event subscription:
+
+#### Set event listener using the following api.
+
+```ruby
+## Swift
+apesterUnitView.subscribe(events: ["apester_interaction_loaded", "click_next"]) // example events
+```
+```ruby
+## Objective C
+NSArray *events = @[@"apester_interaction_loaded"];
+[_apesterUnitView subscribeWithEvents:(NSArray<NSString *> * _Nonnull)events];
+```
+
+##### Then Implemet The `APEStripViewDelegate` - `didReciveEvent`  to observe the unitView updates when event invoked.
+
+Examples events to subscribed to: (to get more events information contact the Apester team)
+
+| Event Name                    | Meaning                                                                       |
+| ----------------------------- | ----------------------------------------------------------------------------- |
+| click_next                    | Next was clicked                                                              |
+| picked_answer                 | Answer was picked                                                             |
+| unit_started                  | First engagement                                                              |
+| apester_interaction_loaded    | Unit was loaded                                                               |
+
 #
 ## Installation
 

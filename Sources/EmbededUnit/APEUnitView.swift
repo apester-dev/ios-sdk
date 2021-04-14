@@ -30,6 +30,23 @@ import GoogleMobileAds
                                to: self.unitWebView)
         }
     }
+    
+    /// subscribe to events in order to observe the events messages data.
+    /// for Example, subscribe to load and ready events by: `unitView.subscribe(["apester_interaction_loaded", "click_next"])`
+    /// - Parameter events: the event names.
+    public override func subscribe(events: [String]) {
+        DispatchQueue.main.async {
+            self.subscribedEvents = self.subscribedEvents.union(events)
+        }
+    }
+
+    /// unsubscribe from events.
+    /// - Parameter events: the event names.
+    public override func unsubscribe(events: [String]) {
+        DispatchQueue.main.async {
+            self.subscribedEvents = self.subscribedEvents.subtracting(events)
+        }
+    }
 
     public override var height: CGFloat {
         guard self.loadingState.isLoaded else {
@@ -160,6 +177,14 @@ extension APEUnitView {
     override func didFinishLoading() {
         self.delegate?.unitView(self, didFinishLoadingUnit: self.configuration.unitParams.id)
     }
+    
+    // Handle UserContentController Script Messages
+    func publish(message: String) {
+        guard let event = self.subscribedEvents.first(where: { message.contains($0) }) else { return }
+        if self.subscribedEvents.contains(event) {
+            self.delegate?.unitView?(self, didReciveEvent: event, message: message)
+        }
+    }
 
     // Handle UserContentController Script Messages
     override func handleUserContentController(message: WKScriptMessage) {
@@ -208,6 +233,9 @@ extension APEUnitView {
             } else {
                 self.isDisplayed = false
             }
+        }
+        if let bodyString = message.body as? String {
+            self.publish(message: bodyString)
         }
     }
 
