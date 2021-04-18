@@ -143,6 +143,18 @@ import GoogleMobileAds
             self.unitWebView.load(URLRequest(url:unitUrl))
         }
     }
+    
+    public func stop() {
+        self.messageDispatcher
+            .dispatchAsync(Constants.WebView.pause,
+                           to: self.unitWebView)
+    }
+    
+    public func resume() {
+        self.messageDispatcher
+            .dispatchAsync(Constants.WebView.resume,
+                           to: self.unitWebView)
+    }
 
     deinit {
         hide()
@@ -220,6 +232,18 @@ extension APEUnitView {
                     self.initAdMob(adUnitId, isCompanionVariant)
                 }
             }
+            
+            if bodyString.contains(Constants.Unit.isReady) &&
+                (configuration.autoFullscreen != nil) {
+                Timer.scheduledTimer(withTimeInterval: 0.400, repeats: false) { timer in
+                    self.stop()
+                }
+            }
+            
+            if bodyString.contains(Constants.WebView.fullscreenOff) {
+                configuration.setFullscreen(false)
+                self.stop()
+            }
         }
 
         if messageName == Constants.Unit.validateUnitViewVisibity {
@@ -255,20 +279,25 @@ private extension APEUnitView {
     }
 
     func update(height: CGFloat, width: CGFloat) {
-        // 1 - update the stripWebView height constraint
+        
+        if configuration.autoFullscreen != nil {
+           return
+        }
+        
+        // 1 - update the unitWebView height constraint
         self.unitWebViewHeightConstraint.flatMap { NSLayoutConstraint.deactivate([$0]) }
         unitWebViewHeightConstraint = unitWebView.heightAnchor.constraint(equalToConstant: height)
         unitWebViewHeightConstraint?.priority = .defaultHigh
         unitWebViewHeightConstraint?.isActive = true
 
-        // 2 - update the stripWebView width constraint
+        // 2 - update the unitWebView width constraint
         self.unitWebViewWidthConstraint.flatMap { NSLayoutConstraint.deactivate([$0]) }
-        unitWebViewWidthConstraint = unitWebView.widthAnchor.constraint(equalToConstant: height)
+        unitWebViewWidthConstraint = unitWebView.widthAnchor.constraint(equalToConstant: width)
         unitWebViewWidthConstraint?.priority = .defaultHigh
         unitWebViewWidthConstraint?.isActive = true
 
         if let containerView = self.containerView {
-            // 3 - update the strip containerView height constraint
+            // 3 - update the unit containerView height constraint
             containerView.constraints
                 .first(where: { $0.firstAttribute == .height })
                 .flatMap { NSLayoutConstraint.deactivate([$0]) }
@@ -276,7 +305,7 @@ private extension APEUnitView {
             unitWebViewHeightConstraint.priority = .defaultHigh
             unitWebViewHeightConstraint.isActive = true
 
-            // 4 - update the strip containerView width constraint
+            // 4 - update the unit containerView width constraint
             containerView.constraints
                 .first(where: { $0.firstAttribute == .width })
                 .flatMap { NSLayoutConstraint.deactivate([$0]) }

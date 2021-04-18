@@ -37,6 +37,9 @@ struct Constants {
         static let getHeight = "window.__getHeight()"
         static let refreshContent = "window.__refreshApesterContent()"
         static let initAdMob = "apester_init_ad_mob"
+        static let pause = "window.__storyPause()"
+        static let resume = "window.__storyResume()"
+        static let fullscreenOff = "fullscreen_off"
     }
 
     /// Strip Keys
@@ -61,6 +64,7 @@ struct Constants {
     }
     
     struct Unit {
+        static let isReady = "apester_interaction_loaded"
         static let unitPath = "/v2/static/in-app-unit-detached.html"
         static let proxy = "apesterUnitProxy"
         static let resize = "apester_resize_unit"
