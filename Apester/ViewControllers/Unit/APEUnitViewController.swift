@@ -26,6 +26,8 @@ class APEUnitViewController: UIViewController {
 
         let configuration = UnitConfigurationsFactory.configurations(for: .production, hideApesterAds: false, gdprString: nil, baseUrl: "")[0]
 
+//        configuration.setFullscreen(true);
+        
         if let unit = unitParams {
             // preLoad implemntation
             apesterUnitView = APEViewService.shared.unitView(for: unit.id)
@@ -37,11 +39,34 @@ class APEUnitViewController: UIViewController {
 
         }
 
+        apesterUnitView.subscribe(events: ["fullscreen_off"])
         apesterUnitView?.delegate = self
 
         apesterUnitView.display(in: unitContainerView, containerViewConroller: self)
         
-        apesterUnitView.setGdprString(UnitConfigurationsFactory.gdprString)
+        if #available(iOS 13.0, *) {
+            NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIScene.willDeactivateNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(willBackActive), name: UIScene.willEnterForegroundNotification, object: nil)
+        } else {
+            NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(willBackActive), name: UIApplication.willEnterForegroundNotification, object: nil)
+        }
+    }
+    
+    @objc func willResignActive(_ notification: Notification) {
+        apesterUnitView.stop()
+    }
+    
+    @objc func willBackActive(_ notification: Notification) {
+        apesterUnitView.resume()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        apesterUnitView.stop()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        apesterUnitView.resume()
     }
 }
 
@@ -59,6 +84,12 @@ extension APEUnitViewController: APEUnitViewDelegate {
     
     func unitView(_ unitView: APEUnitView, didUpdateHeight height: CGFloat) {
         
+    }
+    
+    func unitView(_ unitView: APEUnitView, didReciveEvent name: String, message: String) {
+        if name == "fullscreen_off" {
+            print("almog fullscreen_off")
+        }
     }
 
 }
