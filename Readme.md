@@ -165,6 +165,18 @@ APEUnitConfiguration *playlistConfig = [[APEUnitConfiguration alloc] initWithTag
 
 ```
 
+#### optional settings: 
+- if the unit will be in fullscreen mode (Availble only for story engine)
+
+```ruby
+## Swift
+configuration.setFullscreen(true)
+```
+```
+## Objective C
+[ configuration setFullscreen: true ];
+```
+
 ##### 4 - initiate the unit view instance with the parameter value.
 ```ruby
 ## Swift
@@ -301,6 +313,65 @@ Examples events to subscribed to: (to get more events information contact the Ap
 | picked_answer                 | Answer was picked                                                             |
 | unit_started                  | First engagement                                                              |
 | apester_interaction_loaded    | Unit was loaded                                                               |
+| fullscreen_off    | Unit full screen closed                                                               |
+
+### Handle fullscreen story:
+
+## Best practices:
+
+1. Preload units so they will open fast
+2. When Hosting activity is paused/resumed, signal it to the unit.
+3. Set a "close fullscreen event" so the activity will close itself on click.
+
+## Example:
+
+### On start up:
+```
+## Swift
+configuration.setFullscreen(true)
+APEViewService.shared.preloadStripViews(with: configurations)
+```
+### On the hosting activity:
+```
+apesterUnitView.subscribe(events: ["fullscreen_off"]) // add more events as needed
+apesterUnitView.delegate = self
+```
+### On the ApeUnitViewDelegate: 
+
+```
+func unitView(_ unitView: APEUnitView, didReciveEvent name: String, message: String) {
+    if name == "fullscreen_off" {
+        finish();
+    }
+}
+```
+
+### inisde the view controller resume or pause functions:
+```
+if #available(iOS 13.0, *) {
+    NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIScene.willDeactivateNotification, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(willBackActive), name: UIScene.willEnterForegroundNotification, object: nil)
+} else {
+    NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(willBackActive), name: UIApplication.willEnterForegroundNotification, object: nil)
+}
+
+@objc func willResignActive(_ notification: Notification) {
+    apesterUnitView.stop()
+}
+
+@objc func willBackActive(_ notification: Notification) {
+    apesterUnitView.resume()
+}
+
+override func viewDidDisappear(_ animated: Bool) {
+    apesterUnitView.stop()
+}
+
+override func viewDidAppear(_ animated: Bool) {
+    apesterUnitView.resume()
+}
+```
 
 #
 ## Installation
