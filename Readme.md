@@ -166,7 +166,7 @@ APEUnitConfiguration *playlistConfig = [[APEUnitConfiguration alloc] initWithTag
 ```
 
 #### optional settings: 
-- if the unit will be in fullscreen mode (Availble only for story engine)
+- set the unit in fullscreen mode (Availble only for story engine)
 
 ```ruby
 ## Swift
