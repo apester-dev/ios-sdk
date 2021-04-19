@@ -26,7 +26,10 @@ class APEUnitViewController: UIViewController {
 
         let configuration = UnitConfigurationsFactory.configurations(for: .production, hideApesterAds: false, gdprString: nil, baseUrl: "")[0]
 
-//        configuration.setFullscreen(true);
+        // For fullscreen mode set to true.
+        let fullscreen = false;
+
+        configuration.setFullscreen(fullscreen);
         
         if let unit = unitParams {
             // preLoad implemntation
@@ -44,12 +47,16 @@ class APEUnitViewController: UIViewController {
 
         apesterUnitView.display(in: unitContainerView, containerViewConroller: self)
         
-        if #available(iOS 13.0, *) {
-            NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIScene.willDeactivateNotification, object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(willBackActive), name: UIScene.willEnterForegroundNotification, object: nil)
-        } else {
-            NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(willBackActive), name: UIApplication.willEnterForegroundNotification, object: nil)
+        if fullscreen {
+            
+        // This to handle minmize app with full screen
+            if #available(iOS 13.0, *) {
+                NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIScene.willDeactivateNotification, object: nil)
+                NotificationCenter.default.addObserver(self, selector: #selector(willBackActive), name: UIScene.willEnterForegroundNotification, object: nil)
+            } else {
+                NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
+                NotificationCenter.default.addObserver(self, selector: #selector(willBackActive), name: UIApplication.willEnterForegroundNotification, object: nil)
+            }
         }
     }
     
