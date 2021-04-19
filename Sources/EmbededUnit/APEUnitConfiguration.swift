@@ -34,6 +34,7 @@ public enum APEUnitParams {
         case channelToken = "channelToken"
         case noApesterAds = "noApesterAds"
         case cachedVersion = "cachedVersion"
+        case autoFullscreen = "autoFullscreen"
     }
     
     public private(set) var unitParams: APEUnitParams
@@ -43,6 +44,7 @@ public enum APEUnitParams {
     private(set) var id: String = ""
     private(set) var baseUrl: String?
     private(set) var hideApesterAds: Bool
+    private(set) var autoFullscreen: Bool?
     
     override var parameters: [String: String] {
         var value = super.parameters
@@ -56,6 +58,9 @@ public enum APEUnitParams {
             value[Keys.tags.rawValue] = tags.joined(separator:",")
         }
         value[Keys.noApesterAds.rawValue] = "\(self.hideApesterAds)"
+        if let fullscreen = self.autoFullscreen {
+            value[Keys.autoFullscreen.rawValue] = "\(fullscreen)"
+        }
         if let gdprString = self.gdprString {
             value[Keys.gdprString.rawValue] = "\(gdprString)"
         }
@@ -153,5 +158,13 @@ public enum APEUnitParams {
     @objc public convenience init(tags: [String], channelToken: String, context: Bool, fallback: Bool, bundle: Bundle, hideApesterAds: Bool, baseUrl: String) {
         self.init(unitParams: .playlist(tags: tags, channelToken: channelToken, context: context, fallback: fallback),
                   bundle: bundle, hideApesterAds: hideApesterAds, baseUrl:  baseUrl)
+    }
+    
+    @objc public func setFullscreen(_ fullscreen: Bool) {
+        if fullscreen == true {
+            self.autoFullscreen = true
+        } else {
+            self.autoFullscreen = nil
+        }
     }
 }
