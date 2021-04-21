@@ -197,6 +197,19 @@ extension APEUnitView {
             self.delegate?.unitView?(self, didReciveEvent: event, message: message)
         }
     }
+    
+    func viewabillityAssigment() {
+        guard let containerVC = self.containerViewConroller, let view = self.containerView else {
+            self.isDisplayed = false
+            return
+        }
+        if containerVC.view.allSubviews.first(where: { $0 == view }) != nil {
+            let convertedCenterPoint = view.convert(view.center, to: containerVC.view)
+            self.isDisplayed = containerVC.view.bounds.contains(convertedCenterPoint)
+        } else {
+            self.isDisplayed = false
+        }
+    }
 
     // Handle UserContentController Script Messages
     override func handleUserContentController(message: WKScriptMessage) {
@@ -236,7 +249,10 @@ extension APEUnitView {
             if bodyString.contains(Constants.Unit.isReady) &&
                 (configuration.autoFullscreen != nil) {
                 Timer.scheduledTimer(withTimeInterval: 0.400, repeats: false) { timer in
-                    self.stop()
+                    self.viewabillityAssigment()
+                    if !self.isDisplayed {
+                        self.stop()
+                    }
                 }
             }
             
@@ -247,16 +263,7 @@ extension APEUnitView {
         }
 
         if messageName == Constants.Unit.validateUnitViewVisibity {
-            guard let containerVC = self.containerViewConroller, let view = self.containerView else {
-                self.isDisplayed = false
-                return
-            }
-            if containerVC.view.allSubviews.first(where: { $0 == view }) != nil {
-                let convertedCenterPoint = view.convert(view.center, to: containerVC.view)
-                self.isDisplayed = containerVC.view.bounds.contains(convertedCenterPoint)
-            } else {
-                self.isDisplayed = false
-            }
+            self.viewabillityAssigment()
         }
         if let bodyString = message.body as? String {
             self.publish(message: bodyString)
