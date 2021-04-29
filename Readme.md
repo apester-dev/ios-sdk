@@ -315,6 +315,15 @@ Examples events to subscribed to: (to get more events information contact the Ap
 | apester_interaction_loaded    | Unit was loaded                                                               |
 | fullscreen_off    | Unit full screen closed                                                               |
 
+#### Restart story
+
+```
+## Swift
+apesterUnitView.restart()
+## Objective C
+[_apesterUnitView restart];
+```
+
 ### Handle fullscreen story:
 
 ## Best practices:
