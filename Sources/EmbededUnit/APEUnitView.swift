@@ -155,6 +155,12 @@ import GoogleMobileAds
             .dispatchAsync(Constants.WebView.resume,
                            to: self.unitWebView)
     }
+    
+    public func restart() {
+        self.messageDispatcher
+            .dispatchAsync(Constants.WebView.restart,
+                           to: self.unitWebView)
+    }
 
     deinit {
         hide()

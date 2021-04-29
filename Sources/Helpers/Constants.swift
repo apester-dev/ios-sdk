@@ -39,6 +39,7 @@ struct Constants {
         static let initAdMob = "apester_init_ad_mob"
         static let pause = "window.__storyPause()"
         static let resume = "window.__storyResume()"
+        static let restart = "window.__storyRestart()"
         static let fullscreenOff = "fullscreen_off"
     }
 
