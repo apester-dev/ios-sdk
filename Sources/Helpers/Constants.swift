@@ -36,7 +36,6 @@ struct Constants {
         //
         static let getHeight = "window.__getHeight()"
         static let refreshContent = "window.__refreshApesterContent()"
-        static let initAdMob = "apester_init_ad_mob"
         static let pause = "window.__storyPause()"
         static let resume = "window.__storyResume()"
         static let restart = "window.__storyRestart()"
@@ -71,13 +70,21 @@ struct Constants {
         static let resize = "apester_resize_unit"
         static let height = "height"
         static let width = "width"
-        static let adUnitId = "adUnitId"
-        static let isCompanionVariant = "isCompanionVariant"
         static let validateUnitViewVisibity = "validateUnitViewVisibity"
         static let initInappParams = "init_inapp_params"
     }
     
     struct Monetization {
+        static let adMob = "pubMatic"
+        static let pubMatic = "pubMatic"
+        static let profileId = "iosProfileId"
+        static let adProvider = "provider"
+        static let adMobUnitId = "adUnitId"
+        static let publisherId = "publisherId"
+        static let appStoreUrl = "iosAppStoreUrl"
+        static let initNativeAd = "apester_init_native_ad"
+        static let pubMaticUnitId = "iosAdUnitId"
+        static let isCompanionVariant = "isCompanionVariant"
         static let playerMonImpression =  "player_mon_impression"
         static let playerMonLoadingPass =  "player_mon_loading_pass"
         static let playerMonImpressionPending = "player_mon_impression_pending"
