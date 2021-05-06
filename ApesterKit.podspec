@@ -14,6 +14,13 @@ Pod::Spec.new do |s|
  s.static_framework = true
  s.dependency 'Google-Mobile-Ads-SDK', '~> 8.2'
  s.dependency 'OpenWrapSDK', '~> 1.8.2'
+ s.pod_target_xcconfig = {
+    'SWIFT_INCLUDE_PATHS' => '$(PODS_TARGET_SRCROOT)/Sodium/libsodium',
+   'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64'
+ }
+ s.user_target_xcconfig = {
+   'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64'
+ }
 # s.resource_bundles = {
 #   'ApesterKit' => ['Sources/ApesterKit.bundle/*']
 #  }
