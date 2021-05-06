@@ -16,6 +16,8 @@
 		3697E8692418DD2D00B6AC79 /* UnitConfigurationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697E8682418DD2D00B6AC79 /* UnitConfigurationFactory.swift */; };
 		36B5DC1D2419549B000E46AF /* APEUnitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FC4E55241776BC00A25076 /* APEUnitView.swift */; };
 		36B5DC1F241954A1000E46AF /* APEUnitConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */; };
+		36E52A4126417CB2000A38C3 /* PubMaticDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E52A4026417CB2000A38C3 /* PubMaticDelegate.swift */; };
+		36E52A4226417CB2000A38C3 /* PubMaticDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36E52A4026417CB2000A38C3 /* PubMaticDelegate.swift */; };
 		36FC4E5E24178CB800A25076 /* APEUnitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FC4E55241776BC00A25076 /* APEUnitView.swift */; };
 		3852CB17A5673CEFCEC7C357 /* Pods_Apester.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D4D185EABE4D9AEDC49B7D7 /* Pods_Apester.framework */; };
 		86120824233F74A9006608F1 /* UserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86120811233F74A9006608F1 /* UserAgent.swift */; };
@@ -125,6 +127,7 @@
 		361BF13E241EB9770079BFE3 /* APEUnitViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitViewDelegate.swift; sourceTree = "<group>"; };
 		3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitConfiguration.swift; sourceTree = "<group>"; };
 		3697E8682418DD2D00B6AC79 /* UnitConfigurationFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitConfigurationFactory.swift; sourceTree = "<group>"; };
+		36E52A4026417CB2000A38C3 /* PubMaticDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PubMaticDelegate.swift; sourceTree = "<group>"; };
 		36FC4E55241776BC00A25076 /* APEUnitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitView.swift; sourceTree = "<group>"; };
 		374B416556F3A68B888D54DF /* Pods-ApesterKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ApesterKit.release.xcconfig"; path = "Target Support Files/Pods-ApesterKit/Pods-ApesterKit.release.xcconfig"; sourceTree = "<group>"; };
 		3D4D185EABE4D9AEDC49B7D7 /* Pods_Apester.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Apester.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -336,6 +339,7 @@
 				3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */,
 				361BF13E241EB9770079BFE3 /* APEUnitViewDelegate.swift */,
 				36FC4E55241776BC00A25076 /* APEUnitView.swift */,
+				36E52A4026417CB2000A38C3 /* PubMaticDelegate.swift */,
 			);
 			path = EmbededUnit;
 			sourceTree = "<group>";
@@ -416,6 +420,7 @@
 				3549BB1F1DA389CD00C63030 /* Resources */,
 				BB5DAC5B1F20AD1E00C015E2 /* ShellScript */,
 				3605CDA02613946B007D155B /* Embed Frameworks */,
+				F450515FFDDFBB37202ACC42 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -455,6 +460,7 @@
 				BBC96DA3222781F400EA7E6B /* Resources */,
 				BBC96DDA2227847F00EA7E6B /* Embed Frameworks */,
 				D582A309BB0215F4FAB5A36A /* [CP] Embed Pods Frameworks */,
+				0197A86CB8448E4BBAC447B5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -543,6 +549,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0197A86CB8448E4BBAC447B5 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Apester/Pods-Apester-resources.sh",
+				"${PODS_ROOT}/OpenWrapSDK/OpenWrapSDK/POBResources.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/POBResources.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Apester/Pods-Apester-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		5B9835DABF3802634560DF6C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -622,6 +646,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		F450515FFDDFBB37202ACC42 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ApesterKit/Pods-ApesterKit-resources.sh",
+				"${PODS_ROOT}/OpenWrapSDK/OpenWrapSDK/POBResources.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/POBResources.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ApesterKit/Pods-ApesterKit-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -643,6 +685,7 @@
 				361BF13F241EB9770079BFE3 /* APEUnitViewDelegate.swift in Sources */,
 				867D559B23E4A0D600190D64 /* APEStripViewService.swift in Sources */,
 				BB44109F22D53D2F00BB1DEC /* APEStripConfiguration.swift in Sources */,
+				36E52A4126417CB2000A38C3 /* PubMaticDelegate.swift in Sources */,
 				BB9709AB222322E000E1076B /* Constants.swift in Sources */,
 				36B5DC1F241954A1000E46AF /* APEUnitConfiguration.swift in Sources */,
 				86EAFF2D233E9D1000081AAB /* BundleInfo.swift in Sources */,
@@ -670,6 +713,7 @@
 				8652CB23233C0F1D0092E309 /* APEStripStyle.swift in Sources */,
 				867D559D23E4A0DC00190D64 /* APEStripViewService.swift in Sources */,
 				BB532AB6235AEDFD00F326D3 /* UserAgent.swift in Sources */,
+				36E52A4226417CB2000A38C3 /* PubMaticDelegate.swift in Sources */,
 				BB532AB5235AEDCF00F326D3 /* BundleInfo.swift in Sources */,
 				86AFA1F3232C057900E1720A /* ScriptMessageHandler.swift in Sources */,
 			);

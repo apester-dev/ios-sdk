@@ -12,5 +12,6 @@ target 'ApesterKit' do
   use_frameworks!
   
   pod 'Google-Mobile-Ads-SDK'
+  pod 'OpenWrapSDK'
 
 end
