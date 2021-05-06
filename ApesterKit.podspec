@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
  s.name = 'ApesterKit'
- s.version = '3.2.9'
+ s.version = '3.2.10'
  s.swift_version = '5.0'
  s.license = { :type => "MIT", :file => "LICENSE" }
  s.summary = 'ApesterKit provides a light-weight framework that loads Apester Unit in a webView'
@@ -13,6 +13,7 @@ Pod::Spec.new do |s|
  s.source_files = "ApesterKit", "Sources/*.{h,m,swift}", "Sources/*/*.{h,m,swift}"
  s.static_framework = true
  s.dependency 'Google-Mobile-Ads-SDK', '~> 8.2'
+ s.dependency 'OpenWrapSDK', '~> 1.8.2'
 # s.resource_bundles = {
 #   'ApesterKit' => ['Sources/ApesterKit.bundle/*']
 #  }
