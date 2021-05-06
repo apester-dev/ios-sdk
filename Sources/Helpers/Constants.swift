@@ -75,7 +75,7 @@ struct Constants {
     }
     
     struct Monetization {
-        static let adMob = "pubMatic"
+        static let adMob = "adMob"
         static let pubMatic = "pubMatic"
         static let profileId = "iosProfileId"
         static let adProvider = "provider"
