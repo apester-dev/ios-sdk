@@ -27,7 +27,14 @@ import OpenWrapSDK
     
     var pubMaticView: POBBannerView!
     
-    var pubMaticMargin: CGFloat = 0
+    private var lazyPubMatic: Bool = false
+    
+    private var lazyAdMob: Bool = false
+    
+    private var companionVariant: Bool = false;
+    
+    private let adWidth = CGFloat(320)
+    private let adHeight = CGFloat(50)
     
     /// The view visibility status, update this property either when the view is visible or not.
     public override var isDisplayed: Bool {
@@ -93,50 +100,61 @@ import OpenWrapSDK
         unitWebViewWidthConstraint?.priority = .defaultLow
         unitWebViewWidthConstraint?.isActive = true
 
+        if lazyPubMatic {
+            addPubMaticToView(containerView)
+        }
+        
+        if lazyAdMob {
+            addAdMobToView(containerView, containerViewConroller)
+        }
+        
         super.display(in: containerView, containerViewConroller: containerViewConroller)
 
     }
     
     func initAdMob(_ adUnitId: String, _ isCompanionVariant: Bool) {
+        self.companionVariant = isCompanionVariant
+        
+        if GADView == nil {
+            GADMobileAds.sharedInstance().start(completionHandler: nil)
+            self.messageDispatcher.sendNativeAdEvent(to: self.unitWebView, Constants.Monetization.playerMonLoadingPass)
+            GADView = GADBannerView(adSize: kGADAdSizeBanner)
+            GADView.translatesAutoresizingMaskIntoConstraints = false
+            GADView.delegate = self
+        }
+        
+        GADView.adUnitID = adUnitId
+        GADView.load(GADRequest())
+        self.messageDispatcher.sendNativeAdEvent(to: self.unitWebView, Constants.Monetization.playerMonImpressionPending)
         
         if let containerView = self.containerView,
            let containerViewController = self.containerViewConroller {
-            if GADView == nil {
-                GADMobileAds.sharedInstance().start(completionHandler: nil)
-                self.messageDispatcher.sendAdMobEvent(to: self.unitWebView, Constants.Monetization.playerMonLoadingPass
-                )
-                GADView = GADBannerView(adSize: kGADAdSizeBanner)
-                GADView.translatesAutoresizingMaskIntoConstraints = false
-                containerView.addSubview(GADView)
-                if isCompanionVariant {
-                    GADView.topAnchor.constraint(equalTo: unitWebView.bottomAnchor, constant: 0).isActive = true
-                } else {
-                    GADView.bottomAnchor.constraint(equalTo: unitWebView.bottomAnchor, constant: 0).isActive = true
-                }
-                GADView.leadingAnchor.constraint(equalTo: unitWebView.leadingAnchor).isActive = true
-                GADView.trailingAnchor.constraint(equalTo: unitWebView.trailingAnchor).isActive = true
-                GADView.delegate = self
-                GADView.rootViewController = containerViewController
-            }
-            GADView.adUnitID = adUnitId
-            GADView.load(GADRequest())
-            self.messageDispatcher.sendAdMobEvent(to: self.unitWebView, Constants.Monetization.playerMonImpressionPending
-            )
+            addAdMobToView(containerView, containerViewController)
+        } else {
+            self.lazyAdMob = true;
         }
     }
     
+    func addAdMobToView(_ containerView: UIView, _ containerViewController: UIViewController) {
+        containerView.addSubview(GADView)
+        GADView.rootViewController = containerViewController
+        GADView.translatesAutoresizingMaskIntoConstraints = false
+        if self.companionVariant {
+            GADView.topAnchor.constraint(equalTo: unitWebView.bottomAnchor, constant: 0).isActive = true
+        } else {
+            GADView.bottomAnchor.constraint(equalTo: unitWebView.bottomAnchor, constant: 0).isActive = true
+        }
+        GADView.leadingAnchor.constraint(equalTo: unitWebView.leadingAnchor).isActive = true
+        GADView.trailingAnchor.constraint(equalTo: unitWebView.trailingAnchor).isActive = true
+    }
+    
     func initPubMatic(_ adUnitId: String, _ profileId: String, _ publisherId: String, _ appStoreUrl: String, _ isCompanionVariant: Bool) {
-        if let containerView = self.containerView,
-           let _ = self.containerViewConroller {
             if pubMaticView == nil {
                 let appInfo = POBApplicationInfo()
                 appInfo.storeURL = URL(string: appStoreUrl)!
                 OpenWrapSDK.setApplicationInfo(appInfo)
                 
-                self.messageDispatcher.sendAdMobEvent(to: self.unitWebView, Constants.Monetization.playerMonLoadingPass)
-                
-                let adWidth = CGFloat(320)
-                let adHeight = CGFloat(50)
+                self.messageDispatcher.sendNativeAdEvent(to: self.unitWebView, Constants.Monetization.playerMonLoadingPass)
                 
                 let adSizes = [POBAdSizeMake(adWidth, adHeight)!]
                 
@@ -148,20 +166,33 @@ import OpenWrapSDK
                                                adSizes: adSizes)
                 }
            
-                pubMaticDelegate = PubMaticDelegate(apeUnitView: self);
                 pubMaticView.delegate = pubMaticDelegate
 
-                containerView.addSubview(pubMaticView)
-                self.pubMaticView.frame = CGRect(x: 0, y: 0, width: adWidth, height: adHeight)
+                alignPubMatic()
                 pubMaticView.loadAd()
             } else {
                 pubMaticView.forceRefresh()
             }
+            pubMaticView.request.testModeEnabled = true
+            OpenWrapSDK.setLogLevel(.info)
 
-            self.pubMaticMargin = isCompanionVariant ? -25 : 25
-            
-            pubMaticView.center = CGPoint(x: containerView.frame.size.width  / 2,
-                                          y: self.unitWebView.frame.minY + height + pubMaticMargin)
+        if let containerView = self.containerView {
+            addPubMaticToView(containerView)
+        } else {
+            lazyPubMatic = true
+        }
+
+    }
+    
+    func addPubMaticToView(_ containerView: UIView) {
+        pubMaticDelegate = PubMaticDelegate(apeUnitView: self)
+        containerView.addSubview(pubMaticView)
+    }
+    
+    func alignPubMatic() {
+        
+        if let unitWebViewHeightConstraint = self.unitWebViewHeightConstraint {
+            self.pubMaticView.frame = CGRect(x: self.unitWebView.frame.size.width  / 2 - (adWidth / 2), y: self.unitWebView.frame.minY + unitWebViewHeightConstraint.constant - adHeight, width: adWidth, height: adHeight)
         }
     }
 
@@ -385,9 +416,8 @@ private extension APEUnitView {
             unitWebViewWidthConstraint.isActive = true
         }
         
-        if pubMaticView != nil, let containerView = self.containerView {
-            pubMaticView.center = CGPoint(x: containerView.frame.size.width  / 2,
-                                          y: self.unitWebView.frame.minY + height + self.pubMaticMargin)
+        if pubMaticView != nil {
+            self.alignPubMatic()
         }
 
         // 5 - update the delegate about the new height
@@ -401,14 +431,14 @@ extension APEUnitView: GADBannerViewDelegate {
     
     /// Tells the delegate an ad request loaded an ad.
     public func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
-        self.messageDispatcher.sendAdMobEvent(to: self.unitWebView, Constants.Monetization.playerMonImpression
+        self.messageDispatcher.sendNativeAdEvent(to: self.unitWebView, Constants.Monetization.playerMonImpression
         )
     }
 
     /// Tells the delegate an ad request failed.
     @nonobjc func bannerView(_ bannerView: GADBannerView,
                            didFailToReceiveAdWithError error: NSError) {
-        self.messageDispatcher.sendAdMobEvent(to: self.unitWebView, Constants.Monetization.playerMonLoadingImpressionFailed
+        self.messageDispatcher.sendNativeAdEvent(to: self.unitWebView, Constants.Monetization.playerMonLoadingImpressionFailed
         )
     }
 
