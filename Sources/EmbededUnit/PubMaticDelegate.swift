@@ -27,13 +27,13 @@ public class PubMaticDelegate: NSObject, POBBannerViewDelegate {
     
         // Notifies the delegate that an ad has been successfully loaded and rendered.
         public func bannerViewDidReceiveAd(_ bannerView: POBBannerView) {
-            self.apeUnitView.messageDispatcher.sendAdMobEvent(to: self.apeUnitView.unitWebView, Constants.Monetization.playerMonImpression)
+            self.apeUnitView.messageDispatcher.sendNativeAdEvent(to: self.apeUnitView.unitWebView, Constants.Monetization.playerMonImpression)
         }
     
     // Notifies the delegate an error occurred while loading or rendering an ad.
     public func bannerView(_ bannerView: POBBannerView,
                                didFailToReceiveAdWithError error: Error?) {
-        self.apeUnitView.messageDispatcher.sendAdMobEvent(to: self.apeUnitView.unitWebView, Constants.Monetization.playerMonLoadingImpressionFailed)
+        self.apeUnitView.messageDispatcher.sendNativeAdEvent(to: self.apeUnitView.unitWebView, Constants.Monetization.playerMonLoadingImpressionFailed)
     }
          
     // Notifies the delegate whenever current app goes in the background due to user click

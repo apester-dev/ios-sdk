@@ -45,12 +45,12 @@ class MessageDispatcher {
         script.wait()
     }
     
-    func sendAdMobEvent(to webView: WKWebView, _ event: String) {
+    func sendNativeAdEvent(to webView: WKWebView, _ event: String) {
         self.dispatch(apesterEvent:
             """
                 {
-                    type: \"admob_report\",
-                    adMobEvent: \"\(event)\"
+                    type: \"native_ad_report\",
+                    nativeAdEvent: \"\(event)\"
                 }
             """,
         to: webView);
