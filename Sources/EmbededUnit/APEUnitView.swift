@@ -6,10 +6,10 @@
 //  Copyright © 2020 Apester. All rights reserved.
 //
 
-import Foundation
 import WebKit
-import GoogleMobileAds
+import Foundation
 import OpenWrapSDK
+import GoogleMobileAds
 
 @objcMembers public class APEUnitView: APEView {
     
@@ -149,39 +149,35 @@ import OpenWrapSDK
     }
     
     func initPubMatic(_ adUnitId: String, _ profileId: String, _ publisherId: String, _ appStoreUrl: String, _ isCompanionVariant: Bool) {
-            if pubMaticView == nil {
-                let appInfo = POBApplicationInfo()
-                appInfo.storeURL = URL(string: appStoreUrl)!
-                OpenWrapSDK.setApplicationInfo(appInfo)
+        if pubMaticView == nil {
+            let appInfo = POBApplicationInfo()
+            appInfo.storeURL = URL(string: appStoreUrl)!
+            OpenWrapSDK.setApplicationInfo(appInfo)
                 
-                self.messageDispatcher.sendNativeAdEvent(to: self.unitWebView, Constants.Monetization.playerMonLoadingPass)
+            self.messageDispatcher.sendNativeAdEvent(to: self.unitWebView, Constants.Monetization.playerMonLoadingPass)
+            let adSizes = [POBAdSizeMake(adWidth, adHeight)!]
                 
-                let adSizes = [POBAdSizeMake(adWidth, adHeight)!]
-                
-                if let profileIdInteger = Int(profileId) {
-                    let profileIdNumber = NSNumber(value: profileIdInteger)
-                    pubMaticView = POBBannerView(publisherId: publisherId,
+            if let profileIdInteger = Int(profileId) {
+                let profileIdNumber = NSNumber(value: profileIdInteger)
+                pubMaticView = POBBannerView(publisherId: publisherId,
                                                  profileId: profileIdNumber,
-                                               adUnitId: adUnitId,
-                                               adSizes: adSizes)
-                }
-           
-                pubMaticView.delegate = pubMaticDelegate
-
-                alignPubMatic()
-                pubMaticView.loadAd()
-            } else {
-                pubMaticView.forceRefresh()
+                                                 adUnitId: adUnitId,
+                                                 adSizes: adSizes)
             }
-            pubMaticView.request.testModeEnabled = true
-            OpenWrapSDK.setLogLevel(.info)
+           
+            pubMaticView.delegate = pubMaticDelegate
+            alignPubMatic()
+            pubMaticView.loadAd()
+            
+        } else {
+            pubMaticView.forceRefresh()
+        }
 
         if let containerView = self.containerView {
             addPubMaticToView(containerView)
         } else {
             lazyPubMatic = true
         }
-
     }
     
     func addPubMaticToView(_ containerView: UIView) {
