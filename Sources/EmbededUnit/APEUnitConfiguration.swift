@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import OpenWrapSDK
 
 public enum APEUnitParams {
     case unit(mediaId: String)
@@ -39,7 +40,12 @@ public enum APEUnitParams {
     
     public private(set) var unitParams: APEUnitParams
     
-    public var gdprString: String?
+    public var gdprString: String? {
+        didSet {
+            OpenWrapSDK.setGDPREnabled(true)
+            OpenWrapSDK.setGDPRConsent(gdprString)
+        }
+    }
     
     private(set) var id: String = ""
     private(set) var baseUrl: String?
