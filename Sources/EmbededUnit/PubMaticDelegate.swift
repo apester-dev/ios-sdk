@@ -22,7 +22,11 @@ public class PubMaticDelegate: NSObject, POBBannerViewDelegate {
         self.apeUnitView = apeUnitView
     }
     public func bannerViewPresentationController() -> UIViewController {
-        return self.apeUnitView.containerViewConroller!
+        if let containerViewController = self.apeUnitView.containerViewConroller {
+            return containerViewController
+        } else {
+            return UIApplication.shared.windows.first!.rootViewController!
+        }
     }
     
         // Notifies the delegate that an ad has been successfully loaded and rendered.
