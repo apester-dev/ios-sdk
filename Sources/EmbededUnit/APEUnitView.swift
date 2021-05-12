@@ -165,7 +165,6 @@ import GoogleMobileAds
                                                  adSizes: adSizes)
             }
            
-            pubMaticView.delegate = pubMaticDelegate
             alignPubMatic()
             pubMaticView.loadAd()
             
@@ -173,7 +172,8 @@ import GoogleMobileAds
             pubMaticView.forceRefresh()
         }
 
-        if let containerView = self.containerView {
+        if let containerView = self.containerView,
+           let _ = self.containerViewConroller {
             addPubMaticToView(containerView)
         } else {
             lazyPubMatic = true
@@ -182,6 +182,7 @@ import GoogleMobileAds
     
     func addPubMaticToView(_ containerView: UIView) {
         pubMaticDelegate = PubMaticDelegate(apeUnitView: self)
+        pubMaticView.delegate = pubMaticDelegate
         containerView.addSubview(pubMaticView)
     }
     
