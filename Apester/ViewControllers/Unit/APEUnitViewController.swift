@@ -11,6 +11,10 @@ import ApesterKit
 
 class APEUnitViewController: UIViewController {
     
+    @IBAction func refreshButton(_ sender: Any) {
+        apesterUnitView.reload()
+    }
+    
     var apesterUnitView: APEUnitView!
 
     private var unitParams: APEUnitParams? = UnitConfigurationsFactory.unitsParams.first
@@ -24,7 +28,7 @@ class APEUnitViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let configuration = UnitConfigurationsFactory.configurations(for: .production, hideApesterAds: false, gdprString: nil, baseUrl: "")[0]
+        let configuration = UnitConfigurationsFactory.configurations(for: .production, hideApesterAds: false, gdprString: nil, baseUrl: nil)[0]
 
         // For fullscreen mode set to true.
         let fullscreen = false;
@@ -41,7 +45,7 @@ class APEUnitViewController: UIViewController {
             apesterUnitView = APEUnitView(configuration: configuration)
 
         }
-
+//        apesterUnitView.setGdprString("new consent")
         apesterUnitView.subscribe(events: ["fullscreen_off"])
         apesterUnitView?.delegate = self
 
