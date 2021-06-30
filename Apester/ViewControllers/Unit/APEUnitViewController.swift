@@ -28,7 +28,7 @@ class APEUnitViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let configuration = UnitConfigurationsFactory.configurations(for: .local, hideApesterAds: false, gdprString: nil, baseUrl: nil)[0]
+        let configuration = UnitConfigurationsFactory.configurations(for: .production, hideApesterAds: false, gdprString: nil, baseUrl: nil)[0]
 
         // For fullscreen mode set to true.
         let fullscreen = false;
