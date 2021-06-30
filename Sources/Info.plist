@@ -20,5 +20,7 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>NSPrincipalClass</key>
 	<string></string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>The Advertising Identifier helps deliver ads that are relevant to your interests.</string>
 </dict>
 </plist>
