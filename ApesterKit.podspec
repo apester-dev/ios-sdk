@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
  s.requires_arc = true
  s.source_files = "ApesterKit", "Sources/*.{h,m,swift}", "Sources/*/*.{h,m,swift}"
  s.static_framework = true
- s.dependency 'Google-Mobile-Ads-SDK', '~> 8.2'
+ s.dependency 'Google-Mobile-Ads-SDK', '~> 8.7'
  s.dependency 'OpenWrapSDK', '~> 1.8.2'
  s.pod_target_xcconfig = {
     'SWIFT_INCLUDE_PATHS' => '$(PODS_TARGET_SRCROOT)/Sodium/libsodium',
