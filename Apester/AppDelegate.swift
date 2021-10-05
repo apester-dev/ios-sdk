@@ -15,15 +15,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    // Override point for customization after application launch.
-    APEViewService.shared.preloadStripViews(with:
-        StripConfigurationsFactory.configurations(for: .production, hideApesterAds: false)
-    )
-
-    APEViewService.shared.preloadUnitViews(with:
-                                            UnitConfigurationsFactory.configurations(for: .production, hideApesterAds: false, gdprString: nil, baseUrl: nil)
-    )
-    
+    // initiate StripConfigurationsFactory environment
+    StripConfigurationsFactory.environment = .production
+    // preloadStripViews
+    APEViewService.shared.preloadStripViews(with: StripConfigurationsFactory.configurations(hideApesterAds: false))
+    // initiate UnitConfigurationsFactory environment
+    UnitConfigurationsFactory.environment = .stage
+    // preloadUnitViews
+    APEViewService.shared.preloadUnitViews(with: UnitConfigurationsFactory.configurations(hideApesterAds: false))
     return true
   }
 

@@ -22,9 +22,9 @@ class APEStripCollectionViewCell: UICollectionViewCell {
         stripView = nil
     }
 
-    func show(stripView: APEStripView?, containerViewConroller: UIViewController) {
+    func show(stripView: APEStripView?, containerViewController: UIViewController) {
         self.stripView = stripView
-        stripView?.display(in: self.containerView, containerViewConroller: containerViewConroller)
+        stripView?.display(in: self.containerView, containerViewController: containerViewController)
     }
 }
 
@@ -41,8 +41,8 @@ class APEUnitCollectionViewCell: UICollectionViewCell {
         unitView = nil
     }
 
-    func show(unitView: APEUnitView?, containerViewConroller: UIViewController) {
+    func show(unitView: APEUnitView?, containerViewController: UIViewController) {
         self.unitView = unitView
-        unitView?.display(in: self.containerView, containerViewConroller: containerViewConroller)
+        unitView?.display(in: self.containerView, containerViewController: containerViewController)
     }
 }

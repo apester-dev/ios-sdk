@@ -26,7 +26,7 @@
     self.stripView = [APEViewService.shared stripViewFor:token];
     self.stripView.delegate = self;
     self.containerViewHeightConstraint.constant = self.stripView.height;
-    [self.stripView displayIn:self.containerView containerViewConroller:self];
+    [self.stripView displayIn:self.containerView containerViewController:self];
 
 }
 

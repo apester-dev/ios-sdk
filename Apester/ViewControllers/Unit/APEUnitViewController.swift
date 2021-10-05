@@ -20,15 +20,12 @@ class APEUnitViewController: UIViewController {
     private var unitParams: APEUnitParams? = UnitConfigurationsFactory.unitsParams.first
     
     @IBOutlet weak var unitContainerView: UIView!
-    
-    @IBAction func refreshBtn(_ sender: Any) {
-        self.apesterUnitView.reload()
-    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let configuration = UnitConfigurationsFactory.configurations(for: .production, hideApesterAds: false, gdprString: nil, baseUrl: nil)[0]
+        let configuration = UnitConfigurationsFactory.configurations(hideApesterAds: false, gdprString: nil, baseUrl: nil)[0]
 
         // For fullscreen mode set to true.
         let fullscreen = false;
@@ -49,19 +46,13 @@ class APEUnitViewController: UIViewController {
         apesterUnitView.subscribe(events: ["fullscreen_off"])
         apesterUnitView?.delegate = self
 
-        apesterUnitView.display(in: unitContainerView, containerViewConroller: self)
+        apesterUnitView.display(in: unitContainerView, containerViewController: self)
         
-        if fullscreen {
-            
-        // This to handle minmize app with full screen
-            if #available(iOS 13.0, *) {
-                NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIScene.willDeactivateNotification, object: nil)
-                NotificationCenter.default.addObserver(self, selector: #selector(willBackActive), name: UIScene.willEnterForegroundNotification, object: nil)
-            } else {
-                NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
-                NotificationCenter.default.addObserver(self, selector: #selector(willBackActive), name: UIApplication.willEnterForegroundNotification, object: nil)
-            }
-        }
+        // This to handle minimize app with full screen
+        NotificationCenter.default.addObserver(self, selector: #selector(willResignActive),
+                                               name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(willBackActive),
+                                               name: UIApplication.willEnterForegroundNotification, object: nil)
     }
     
     @objc func willResignActive(_ notification: Notification) {
