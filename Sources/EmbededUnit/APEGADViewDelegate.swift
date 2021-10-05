@@ -13,7 +13,7 @@ import WebKit
 @available(iOS 11.0, *)
 extension APEUnitView {
     
-    struct AdMobProviderParams {
+    struct AdMobProviderParams: Hashable {
         let adUnitId: String
         let isCompanionVariant: Bool
         
@@ -30,33 +30,25 @@ extension APEUnitView {
     }
     
     class GADViewDelegate: NSObject, GADBannerViewDelegate {
-        let messageDispatcher: MessageDispatcher
-        let unitWebView: WKWebView
         let containerViewController: UIViewController?
-        
-        var isCompanionVariant: Bool = false
+        private let receiveAdSuccessCompletion: (() -> Void)
+        private let receiveAdErrorCompletion: ((Error?) -> Void)
         
         init(
-            messageDispatcher: MessageDispatcher,
-            unitWebView: WKWebView,
-            containerViewController: UIViewController?
+            containerViewController: UIViewController?,
+            receiveAdSuccessCompletion: @escaping (() -> Void),
+            receiveAdErrorCompletion: @escaping ((Error?) -> Void)
         ) {
-            self.messageDispatcher = messageDispatcher
-            self.unitWebView = unitWebView
             self.containerViewController = containerViewController
+            self.receiveAdSuccessCompletion = receiveAdSuccessCompletion
+            self.receiveAdErrorCompletion = receiveAdErrorCompletion
         }
         func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
-            unitWebView.subviews.forEach({ subview in
-                unitWebView.bringSubviewToFront(subview)
-            })
-            unitWebView.layoutIfNeeded()
-            messageDispatcher.sendNativeAdEvent(to: unitWebView,
-                                                Constants.Monetization.playerMonImpression)
+            receiveAdSuccessCompletion()
         }
         
         @nonobjc func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: NSError) {
-            messageDispatcher.sendNativeAdEvent(to: unitWebView,
-                                                Constants.Monetization.playerMonLoadingImpressionFailed)
+            receiveAdErrorCompletion(error)
         }
 
         func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {}

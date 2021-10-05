@@ -11,7 +11,7 @@ import WebKit
 
 extension APEUnitView {
     
-    struct PubMaticProviderParams {
+    struct PubMaticProviderParams: Hashable {
         enum AdType: String {
             case bottom
             case inUnit
@@ -55,28 +55,28 @@ extension APEUnitView {
             self.isCompanionVariant = isCompanionVariant
             self.adType             = adType
             self.appDomain          = dictionary[Constants.Monetization.appDomain] as? String ?? ""
-            self.testMode           = Bool(dictionary[Constants.Monetization.testMode] as? String ?? "false") ?? false
-            self.debugLogs          = Bool(dictionary[Constants.Monetization.debugLogs] as? String ?? "false") ?? false
-            self.bidSummaryLogs     = Bool(dictionary[Constants.Monetization.bidSummaryLogs] as? String ?? "false") ?? false
+            self.testMode           = dictionary[Constants.Monetization.testMode] as? Bool ?? false
+            self.debugLogs          = dictionary[Constants.Monetization.debugLogs] as? Bool ?? false
+            self.bidSummaryLogs     = dictionary[Constants.Monetization.bidSummaryLogs] as? Bool ?? false
             self.timeInView         = dictionary[Constants.Monetization.timeInView] as? Int
         }
     }
     
     class PubMaticViewDelegate: NSObject, POBBannerViewDelegate {
-        let messageDispatcher: MessageDispatcher
-        let unitWebView: WKWebView
         let containerViewController: UIViewController?
+        private let receiveAdSuccessCompletion: ((PubMaticProviderParams.AdType) -> Void)
+        private let receiveAdErrorCompletion: ((PubMaticProviderParams.AdType, Error?) -> Void)
+        private let adType: PubMaticProviderParams.AdType
         
-        var timeInView: Int?
-        
-        init(
-            messageDispatcher: MessageDispatcher,
-            unitWebView: WKWebView,
-            containerViewController: UIViewController?
+        init(adType: PubMaticProviderParams.AdType,
+            containerViewController: UIViewController?,
+            receiveAdSuccessCompletion: @escaping ((PubMaticProviderParams.AdType) -> Void),
+            receiveAdErrorCompletion: @escaping ((PubMaticProviderParams.AdType, Error?) -> Void)
         ) {
-            self.messageDispatcher = messageDispatcher
-            self.unitWebView = unitWebView
+            self.adType = adType
             self.containerViewController = containerViewController
+            self.receiveAdSuccessCompletion = receiveAdSuccessCompletion
+            self.receiveAdErrorCompletion = receiveAdErrorCompletion
         }
         
         func bannerViewPresentationController() -> UIViewController {
@@ -84,17 +84,11 @@ extension APEUnitView {
         }
 
         func bannerViewDidReceiveAd(_ bannerView: POBBannerView) {
-            unitWebView.subviews.forEach({ subview in
-                unitWebView.bringSubviewToFront(subview)
-            })
-            unitWebView.layoutIfNeeded()
-            messageDispatcher.sendNativeAdEvent(to: unitWebView,
-                                                Constants.Monetization.playerMonImpression)
+            receiveAdSuccessCompletion(adType)
         }
         
         func bannerView(_ bannerView: POBBannerView, didFailToReceiveAdWithError error: Error?) {
-            messageDispatcher.sendNativeAdEvent(to: unitWebView,
-                                                Constants.Monetization.playerMonLoadingImpressionFailed)
+            receiveAdErrorCompletion(adType, error)
         }
         
         func bannerViewWillLeaveApplication(_ bannerView: POBBannerView) {}

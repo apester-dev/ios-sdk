@@ -342,8 +342,8 @@
 				3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */,
 				361BF13E241EB9770079BFE3 /* APEUnitViewDelegate.swift */,
 				36FC4E55241776BC00A25076 /* APEUnitView.swift */,
-				86A5032C270A4663003CA642 /* APEGADViewDelegate.swift */,
 				86A5032F270A4721003CA642 /* APEPubMaticViewDelegate.swift */,
+				86A5032C270A4663003CA642 /* APEGADViewDelegate.swift */,
 			);
 			path = EmbededUnit;
 			sourceTree = "<group>";
