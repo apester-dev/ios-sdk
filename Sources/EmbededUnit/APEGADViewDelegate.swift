@@ -13,7 +13,12 @@ import WebKit
 @available(iOS 11.0, *)
 extension APEUnitView {
     
-    struct AdMobProviderParams: Hashable {
+    struct GADViewProvider {
+        var view: GADBannerView?
+        var delegate: GADViewDelegate?
+    }
+    
+    struct GADViewProviderParams: Hashable {
         let adUnitId: String
         let isCompanionVariant: Bool
         

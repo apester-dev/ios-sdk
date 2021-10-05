@@ -11,6 +11,11 @@ import WebKit
 
 extension APEUnitView {
     
+    struct PubMaticViewProvider {
+        var view: POBBannerView?
+        var delegate: PubMaticViewDelegate?
+    }
+    
     struct PubMaticProviderParams: Hashable {
         enum AdType: String {
             case bottom
@@ -63,7 +68,7 @@ extension APEUnitView {
     }
     
     class PubMaticViewDelegate: NSObject, POBBannerViewDelegate {
-        let containerViewController: UIViewController?
+        weak var containerViewController: UIViewController?
         private let receiveAdSuccessCompletion: ((PubMaticProviderParams.AdType) -> Void)
         private let receiveAdErrorCompletion: ((PubMaticProviderParams.AdType, Error?) -> Void)
         private let adType: PubMaticProviderParams.AdType

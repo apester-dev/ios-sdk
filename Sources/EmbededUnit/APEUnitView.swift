@@ -14,6 +14,9 @@ import GoogleMobileAds
 @objcMembers public class APEUnitView: APEView {
     
     // POBBannerViews
+    private var pubMaticViewProviders: [PubMaticProviderParams.AdType: PubMaticViewProvider] = [:]
+    private var pubMaticViewTimer: Timer?
+    
     private lazy var pubMaticViewCloseButton: UIButton = {
         var button: UIButton!
         button = UIButton(type: .custom)
@@ -26,14 +29,10 @@ import GoogleMobileAds
         return button
     }()
     
-    private var pubMaticViews: [PubMaticProviderParams.AdType: POBBannerView] = [:]
-    private var pubMaticViewDelegates: [PubMaticProviderParams.AdType: PubMaticViewDelegate] = [:]
-    private var pubMaticViewTimer: Timer?
-    
     // GADBannerView
-    private var gADViews: [AdMobProviderParams: GADBannerView] = [:]
-    private var gADViewDelegates: [AdMobProviderParams: GADViewDelegate] = [:]
+    private var gADViewProviders: [GADViewProviderParams: GADViewProvider] = [:]
     
+    // unitWebView Constraints
     private var unitWebViewHeightConstraint: NSLayoutConstraint?
     private var unitWebViewWidthConstraint: NSLayoutConstraint?
     
@@ -239,8 +238,8 @@ extension APEUnitView {
             
             if bodyString.contains(Constants.Monetization.initNativeAd),
                let dictionary = bodyString.dictionary {
-                if let adMobProviderParams = AdMobProviderParams(from: dictionary) {
-                    setupAdMobView(params: adMobProviderParams)
+                if let GADViewProviderParams = GADViewProviderParams(from: dictionary) {
+                    setupAdMobView(params: GADViewProviderParams)
                 }
                 if let pubMaticProviderParams = PubMaticProviderParams(from: dictionary) {
                     setupPubMaticView(params: pubMaticProviderParams)
@@ -342,7 +341,8 @@ private extension APEUnitView {
 private extension APEUnitView {
     
     private func makePubMaticViewDelegate(adType: PubMaticProviderParams.AdType) -> PubMaticViewDelegate {
-        PubMaticViewDelegate(adType: adType, containerViewController: containerViewController,
+        PubMaticViewDelegate(adType: adType,
+                             containerViewController: containerViewController,
                              receiveAdSuccessCompletion: { [weak self] adType in
                                 guard let self = self else { return }
                                 if case .inUnit = adType {
@@ -367,7 +367,7 @@ private extension APEUnitView {
         defer {
             showPubMaticViews()
         }
-        var pubMaticView = self.pubMaticViews[params.adType]
+        var pubMaticView = self.pubMaticViewProviders[params.adType]?.view
         guard pubMaticView == nil else {
             pubMaticView?.forceRefresh()
             return
@@ -389,12 +389,11 @@ private extension APEUnitView {
         pubMaticView?.request.debug = params.debugLogs
         pubMaticView?.request.bidSummaryEnabled = params.bidSummaryLogs
         
-        let pubMaticViewDelegate = pubMaticViewDelegates[params.adType] ?? makePubMaticViewDelegate(adType: params.adType)
-        pubMaticView?.delegate = pubMaticViewDelegate
+        let delegate = pubMaticViewProviders[params.adType]?.delegate ?? makePubMaticViewDelegate(adType: params.adType)
+        pubMaticView?.delegate = delegate
         pubMaticView?.loadAd()
         
-        self.pubMaticViewDelegates[params.adType] = pubMaticViewDelegate
-        self.pubMaticViews[params.adType] = pubMaticView
+        self.pubMaticViewProviders[params.adType] = PubMaticViewProvider(view: pubMaticView, delegate: delegate)
         
         guard  let timeInView = params.timeInView, pubMaticViewTimer == nil else { return }
         pubMaticViewTimer = Timer.scheduledTimer(withTimeInterval: Double(timeInView), repeats: false) { _ in
@@ -403,8 +402,8 @@ private extension APEUnitView {
     }
     
     func removePubMaticView(of adType: PubMaticProviderParams.AdType) {
-        pubMaticViews[adType]?.removeFromSuperview()
-        pubMaticViews[adType] = nil
+        pubMaticViewProviders[adType]?.view?.removeFromSuperview()
+        pubMaticViewProviders[adType] = nil
         guard pubMaticViewTimer != nil else { return }
         pubMaticViewCloseButton.removeFromSuperview()
         pubMaticViewTimer?.invalidate()
@@ -416,14 +415,14 @@ private extension APEUnitView {
     }
     
     func showPubMaticViews() {
-        self.pubMaticViews
-            .forEach({ type, pubMaticView in
-                guard let containerView = unitWebView else { return }
+        self.pubMaticViewProviders
+            .forEach({ type, provider in
+                guard let containerView = unitWebView, let pubMaticView = provider.view else { return }
                 containerView.addSubview(pubMaticView)
                 containerView.bringSubviewToFront(pubMaticView)
                 
                 if case .inUnit = type {
-                    if let bottomView = self.pubMaticViews[.bottom] {
+                    if let bottomView = self.pubMaticViewProviders[.bottom]?.view {
                         containerView.bringSubviewToFront(bottomView)
                     }
                     self.pubMaticViewCloseButton.isHidden = true
@@ -473,17 +472,16 @@ private extension APEUnitView {
                         })
     }
     
-    func setupAdMobView(params: AdMobProviderParams) {
-        var gADView = gADViews[params]
+    func setupAdMobView(params: GADViewProviderParams) {
+        var gADView = gADViewProviders[params]?.view
         if gADView == nil {
             GADMobileAds.sharedInstance().start(completionHandler: nil)
             self.messageDispatcher.sendNativeAdEvent(to: self.unitWebView, Constants.Monetization.playerMonLoadingPass)
             gADView = GADBannerView(adSize: kGADAdSizeBanner)
             gADView?.translatesAutoresizingMaskIntoConstraints = false
-            let gADViewDelegate = gADViewDelegates[params] ?? self.makeGADViewDelegate()
-            gADView?.delegate = gADViewDelegate
-            self.gADViewDelegates[params] = gADViewDelegate
-            self.gADViews[params] = gADView
+            let delegate = gADViewProviders[params]?.delegate ?? self.makeGADViewDelegate()
+            gADView?.delegate = delegate
+            self.gADViewProviders[params] = .init(view: gADView, delegate: delegate)
         }
         gADView?.adUnitID = params.adUnitId
         gADView?.load(GADRequest())
@@ -493,7 +491,8 @@ private extension APEUnitView {
     
     func showGADView() {
         guard let containerView = unitWebView, let containerViewController = self.containerViewController else { return }
-        gADViews.forEach { params, gADView in
+        gADViewProviders.forEach { params, provider in
+            guard let gADView = provider.view else { return }
             containerView.addSubview(gADView)
             gADView.rootViewController = containerViewController
             gADView.translatesAutoresizingMaskIntoConstraints = false

@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // preloadStripViews
     APEViewService.shared.preloadStripViews(with: StripConfigurationsFactory.configurations(hideApesterAds: false))
     // initiate UnitConfigurationsFactory environment
-    UnitConfigurationsFactory.environment = .stage
+    UnitConfigurationsFactory.environment = .production
     // preloadUnitViews
     APEViewService.shared.preloadUnitViews(with: UnitConfigurationsFactory.configurations(hideApesterAds: false))
     return true
