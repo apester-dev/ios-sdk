@@ -1,5 +1,5 @@
 //
-//  APEGADBannerViewDelegate.swift
+//  APEGADViewDelegate.swift
 //  ApesterKit
 //
 //  Created by Hasan Sawaed Tabash on 03/10/2021.
@@ -12,27 +12,6 @@ import WebKit
 // MARK:- GADBannerViewDelegate
 @available(iOS 11.0, *)
 extension APEUnitView {
-    
-    struct GADViewProvider {
-        var view: GADBannerView?
-        var delegate: GADViewDelegate?
-    }
-    
-    struct GADViewProviderParams: Hashable {
-        let adUnitId: String
-        let isCompanionVariant: Bool
-        
-        init?(from dictionary: [String: Any]) {
-            guard let provider = dictionary[Constants.Monetization.adProvider] as? String,
-                  provider == Constants.Monetization.adMob,
-                  let adUnitId = dictionary[Constants.Monetization.adMobUnitId] as? String,
-                  let isCompanionVariant = dictionary[Constants.Monetization.isCompanionVariant] as? Bool else {
-                return nil
-            }
-            self.adUnitId = adUnitId
-            self.isCompanionVariant = isCompanionVariant
-        }
-    }
     
     class GADViewDelegate: NSObject, GADBannerViewDelegate {
         let containerViewController: UIViewController?
