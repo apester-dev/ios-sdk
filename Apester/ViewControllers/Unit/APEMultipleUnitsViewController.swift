@@ -43,7 +43,7 @@ extension APEMultipleUnitsViewController: UICollectionViewDataSource {
         if indexPath.row % Self.emptyCellsCount == 0 {
             let unit = self.unitsParams[indexPath.row / Self.emptyCellsCount]
             let stripView = APEViewService.shared.unitView(for: unit.id)
-            cell.show(unitView: stripView, containerViewConroller: self)
+            cell.show(unitView: stripView, containerViewController: self)
         }
         return cell
     }

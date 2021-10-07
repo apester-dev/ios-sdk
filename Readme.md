@@ -99,11 +99,11 @@ self.stripView = [[APEStripView alloc] initWithConfiguration:config];
 
 ```ruby
 ## Swift
-stripView?.display(in: self.containerView, containerViewConroller: self)
+stripView?.display(in: self.containerView, containerViewController: self)
 ```
 ```ruby
 ## Objective C
-[self.stripView displayIn:self.containerView containerViewConroller:self];
+[self.stripView displayIn:self.containerView containerViewController:self];
 ```
 
 ###### 5.2 - hide the channel strip view.
@@ -194,11 +194,11 @@ self.unitView = [[APEUnitView alloc] initWithConfiguration:playlistConfig];
 
 ```ruby
 ## Swift
-unitView?.display(in: self.containerView, containerViewConroller: self)
+unitView?.display(in: self.containerView, containerViewController: self)
 ```
 ```ruby
 ## Objective C
-[self.unitView displayIn:self.containerView containerViewConroller:self];
+[self.unitView displayIn:self.containerView containerViewController:self];
 ```
 
 ###### 5.2 - hide the unit view.

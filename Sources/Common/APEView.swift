@@ -31,7 +31,7 @@ import SafariServices
     let setDeviceOrientation: ((Int) -> Void) = { UIDevice.current.setValue($0, forKey: "orientation") }
 
     var containerView: UIView?
-    weak var containerViewConroller: UIViewController?
+    weak var containerViewController: UIViewController?
 
     // MARK:- Private Properties
     private let environment: APEEnvironment!
@@ -61,16 +61,19 @@ import SafariServices
         }
     }
 
+    @available(*, deprecated, renamed: "display(in:containerViewController:)")
+    public func display(in containerView: UIView, containerViewConroller: UIViewController) {}
+    
     /// Display the channel carousel units view
     ///
     /// - Parameters:
     ///   - containerView: the channel strip view superview
-    ///   - containerViewConroller: the container view ViewController
-    public func display(in containerView: UIView, containerViewConroller: UIViewController) {
+    ///   - containerViewController: the container view ViewController
+    public func display(in containerView: UIView, containerViewController: UIViewController) {
         self.containerView = containerView
-        self.containerViewConroller = containerViewConroller
+        self.containerViewController = containerViewController
     }
-
+    
     /// Remove the channel carousel units view
     public func hide() {
         fatalError("OVERRIDE ME")
@@ -156,16 +159,16 @@ private extension APEView {
             switch navigationAction.navigationType {
                 case .other:
                     var requestUrlToCheck: String?, webViewUrlToCheck: String?
-                    if var requestUrlComponenets = URLComponents(string: url.absoluteString) {
-                        requestUrlComponenets.query = nil
+                    if var requestUrlComponents = URLComponents(string: url.absoluteString) {
+                        requestUrlComponents.query = nil
 
-                        requestUrlToCheck = requestUrlComponenets.string
+                        requestUrlToCheck = requestUrlComponents.string
                     }
                     
-                    if var webViewUrlComponenets = URLComponents(string: webView.url?.absoluteString ?? "") {
-                        webViewUrlComponenets.query = nil
+                    if var webViewUrlComponents = URLComponents(string: webView.url?.absoluteString ?? "") {
+                        webViewUrlComponents.query = nil
 
-                        webViewUrlToCheck = webViewUrlComponenets.string
+                        webViewUrlToCheck = webViewUrlComponents.string
                     }
                     
                     // redirect when the target is a main frame and the strip has been loaded.

@@ -25,15 +25,13 @@ import Foundation
     }
 
     var unitBaseUrl: String {
-        var env: String
         switch self {
             case .production:
-                env = ""
+                return "https://renderer.apester.com"
             case .stage:
-                env = "stg."
+                return "https://renderer.stg.apester.dev"
             case .local:
                 return "https://player.apester.local.com"
         }
-        return "https://renderer.\(env)apester.com"
     }
 }

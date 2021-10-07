@@ -41,7 +41,7 @@ extension APEMultipleStripsViewController: UICollectionViewDataSource {
         if indexPath.row % Self.emptyCellsCount == 0 {
             let token = self.channelTokens[indexPath.row / Self.emptyCellsCount]
             let stripView = APEViewService.shared.stripView(for: token)
-            cell.show(stripView: stripView, containerViewConroller: self)
+            cell.show(stripView: stripView, containerViewController: self)
         }
         return cell
     }

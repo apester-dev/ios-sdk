@@ -97,8 +97,9 @@ import SafariServices
     ///
     /// - Parameters:
     ///   - containerView: the channel strip view superview
-    ///   - containerViewConroller: the container view ViewController
-    public override func display(in containerView: UIView, containerViewConroller: UIViewController) {
+    ///   - containerViewController: the container view ViewController
+    public override func display(in containerView: UIView, containerViewController: UIViewController) {
+        super.display(in: containerView, containerViewController: containerViewController)
         // update stripWebView frame according to containerView bounds
         containerView.layoutIfNeeded()
         containerView.addSubview(self.stripWebView)
@@ -109,7 +110,6 @@ import SafariServices
         stripWebViewHeightConstraint = stripWebView.heightAnchor.constraint(equalTo: containerView.heightAnchor)
         stripWebViewHeightConstraint?.priority = .defaultLow
         stripWebViewHeightConstraint?.isActive = true
-        super.display(in: containerView, containerViewConroller: containerViewConroller)
     }
 
     /// Remove the channel carousel units view
@@ -165,7 +165,7 @@ extension APEStripView {
 
     // MARK:- Handle Device orientationDidChangeNotification
     override func orientationDidChangeNotification() {
-        guard let containerView = self.containerView, let viewConroller = self.containerViewConroller else { return }
+        guard let containerView = self.containerView, let viewController = self.containerViewController else { return }
         // validate that when the stripStoryViewController is presented the orientation must be portrait mode
         if self.storyViewController.presentingViewController != nil, !UIDevice.current.orientation.isPortrait {
             self.setDeviceOrientation(UIInterfaceOrientation.portrait.rawValue)
@@ -174,7 +174,7 @@ extension APEStripView {
         self.lastDeviceOrientation = UIDevice.current.orientation
         // reload stripWebView
         self.stripWebView.removeFromSuperview()
-        self.display(in: containerView, containerViewConroller: viewConroller)
+        self.display(in: containerView, containerViewController: viewController)
     }
 
     override func open(url: URL, type: APEViewNavigationType) {
@@ -308,7 +308,7 @@ private extension APEStripView {
             self.delegate?.stripView(self, didCompleteAdsForChannelToken: self.channelToken)
         }
         else if messageName == StripConfig.validateStripViewVisibity {
-            guard let containerVC = self.containerViewConroller, let view = self.containerView else {
+            guard let containerVC = self.containerViewController, let view = self.containerView else {
                 self.isDisplayed = false
                 return
             }
@@ -381,10 +381,10 @@ extension APEStripView {
             if self.lastDeviceOrientation.isLandscape {
                 self.setDeviceOrientation(UIInterfaceOrientation.portrait.rawValue)
             }
-            guard let containerViewConroller = self.containerViewConroller, self.storyViewController.presentingViewController == nil else { return }
+            guard let containerViewController = self.containerViewController, self.storyViewController.presentingViewController == nil else { return }
             self.storyViewController.dismiss(animated: false, completion: nil)
             self.storyViewController.presentationController?.delegate = self
-            (containerViewConroller.presentingViewController ?? containerViewConroller).present(self.storyViewController, animated: true) {}
+            (containerViewController.presentingViewController ?? containerViewController).present(self.storyViewController, animated: true) {}
         }
     }
 

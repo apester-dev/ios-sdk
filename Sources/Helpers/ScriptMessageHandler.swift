@@ -48,7 +48,7 @@ extension WKUserContentController {
                     return \(parsedParams);
                 };
                 window.postMessage({
-                    type: \"\(Constants.Unit.initInappParams)\",
+                    type: \"\(Constants.Unit.initInAppParams)\",
                     params: \(parsedParams)
                 }, '*');
             """

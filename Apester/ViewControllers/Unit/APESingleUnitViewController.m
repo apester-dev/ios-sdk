@@ -22,7 +22,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    APEUnitConfiguration *configuration = [UnitConfigurationsFactory configurationsFor:APEEnvironmentStage hideApesterAds:NO gdprString:nil baseUrl: nil].firstObject;
+    APEUnitConfiguration *configuration = [UnitConfigurationsFactory configurationsWithHideApesterAds:NO
+                                                                                           gdprString:nil
+                                                                                              baseUrl: nil
+                                           ].firstObject;
     //.configurations(for: .stage, hideApesterAds: false, gdprString: nil)[0]
     NSString *unitId = [[UnitConfigurationsFactory unitsIds] firstObject];
 
@@ -43,9 +46,13 @@
 
     _apesterUnitView.delegate = self;
 
-    [_apesterUnitView displayIn:_containerView containerViewConroller:self];
+    [_apesterUnitView displayIn:_containerView containerViewController:self];
 
     [_apesterUnitView setGdprString:UnitConfigurationsFactory.gdprString];
+}
+
+- (IBAction)refreshButton:(id)sender {
+    [_apesterUnitView reload];
 }
 
 - (void)unitView:(APEUnitView * _Nonnull)unitView didCompleteAdsForUnit:(NSString * _Nonnull)unitId {
