@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
  s.source = { :git => "https://github.com/apester-dev/ios-sdk.git", :tag => "v"+s.version.to_s }
  s.platforms     = { :ios => "11.0" }
  s.requires_arc = true
- s.source_files = "ApesterKit", "Sources/*.{h,m,swift}", "Sources/*/*.{h,m,swift}"
+ s.source_files = "ApesterKit", "Sources/*.{h,m,swift}", "Sources/*/*.{h,m,swift}", "Sources/*/*/*.{h,m,swift}", "Sources/*/*/*/*.{h,m,swift}"
  s.static_framework = true
  s.dependency 'Google-Mobile-Ads-SDK', '~> 8.7'
  s.dependency 'OpenWrapSDK', '~> 1.8.2'
