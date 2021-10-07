@@ -134,6 +134,7 @@ import GoogleMobileAds
         if let unitUrl = configuration.unitURL {
             self.unitWebView.load(URLRequest(url:unitUrl))
         }
+        pubMaticViewProviders.keys.forEach(removePubMaticView)
     }
     
     public func stop() {
@@ -248,8 +249,8 @@ extension APEUnitView {
             
             if bodyString.contains(Constants.Monetization.initInUnit),
                let dictionary = bodyString.dictionary {
-                if let pubMaticProviderParams = PubMaticViewProvider.Params(from: dictionary) {
-                    setupPubMaticView(params: pubMaticProviderParams)
+                if let params = PubMaticViewProvider.Params(from: dictionary) {
+                    setupPubMaticView(params: params)
                 }
             }
             
