@@ -14,7 +14,7 @@ import GoogleMobileAds
 @objcMembers public class APEUnitView: APEView {
     
     // POBBannerViews
-    var pubMaticViewProviders: [PubMaticViewProvider.Params.AdType: PubMaticViewProvider] = [:]
+    var pubMaticViewProviders: [APEUnitView.PubMaticViewProvider.Params.AdType: APEUnitView.PubMaticViewProvider] = [:]
     var pubMaticViewTimer: Timer?
     
     lazy var pubMaticViewCloseButton: UIButton = {
@@ -30,7 +30,7 @@ import GoogleMobileAds
     }()
     
     // GADBannerView
-    var gADViewProviders: [GADViewProvider.Params: GADViewProvider] = [:]
+    var gADViewProviders: [APEUnitView.GADViewProvider.Params: APEUnitView.GADViewProvider] = [:]
     
     // unitWebView Constraints
     private var unitWebViewHeightConstraint: NSLayoutConstraint?
@@ -239,24 +239,24 @@ extension APEUnitView {
             
             if bodyString.contains(Constants.Monetization.initNativeAd),
                let dictionary = bodyString.dictionary {
-                if let params = GADViewProvider.Params(from: dictionary) {
+                if let params = APEUnitView.GADViewProvider.Params(from: dictionary) {
                     setupGADView(params: params)
                 }
-                if let params = PubMaticViewProvider.Params(from: dictionary) {
+                if let params = APEUnitView.PubMaticViewProvider.Params(from: dictionary) {
                     setupPubMaticView(params: params)
                 }
             }
             
             if bodyString.contains(Constants.Monetization.initInUnit),
                let dictionary = bodyString.dictionary {
-                if let params = PubMaticViewProvider.Params(from: dictionary) {
+                if let params = APEUnitView.PubMaticViewProvider.Params(from: dictionary) {
                     setupPubMaticView(params: params)
                 }
             }
             
             if bodyString.contains(Constants.Monetization.killInUnit),
                let adTypeStr = bodyString.dictionary?[Constants.Monetization.adType] as? String,
-               let adType = PubMaticViewProvider.Params.AdType(rawValue: adTypeStr) {
+               let adType = APEUnitView.PubMaticViewProvider.Params.AdType(rawValue: adTypeStr) {
                 removePubMaticView(of: adType)
             }
             
