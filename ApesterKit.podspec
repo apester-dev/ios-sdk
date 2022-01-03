@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
  s.name = 'ApesterKit'
- s.version = '3.3.0'
+ s.version = '3.3.1'
  s.swift_version = '5.0'
  s.license = { :type => "MIT", :file => "LICENSE" }
  s.summary = 'ApesterKit provides a light-weight framework that loads Apester Unit in a webView'
@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
  s.source_files = "ApesterKit", "Sources/*.{h,m,swift}", "Sources/*/*.{h,m,swift}", "Sources/*/*/*.{h,m,swift}", "Sources/*/*/*/*.{h,m,swift}"
  s.static_framework = true
  s.dependency 'Google-Mobile-Ads-SDK', '~> 8.7'
- s.dependency 'OpenWrapSDK', '~> 1.8.2'
+ s.dependency 'OpenWrapSDK', '~> 2.3.1'
  s.pod_target_xcconfig = {
     'SWIFT_INCLUDE_PATHS' => '$(PODS_TARGET_SRCROOT)/Sodium/libsodium',
    'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64'
