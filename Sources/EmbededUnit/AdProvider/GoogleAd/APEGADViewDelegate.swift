@@ -14,7 +14,7 @@ import WebKit
 extension APEUnitView {
     
     class GADViewDelegate: NSObject, GADBannerViewDelegate {
-        let containerViewController: UIViewController?
+        weak var containerViewController: UIViewController?
         private let receiveAdSuccessCompletion: (() -> Void)
         private let receiveAdErrorCompletion: ((Error?) -> Void)
         
