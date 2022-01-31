@@ -47,14 +47,14 @@
 		8682A1F327A8024700A40F88 /* Pods_Apester.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8682A1F227A8024700A40F88 /* Pods_Apester.framework */; };
 		8682A1F527A8024700A40F88 /* Pods_ApesterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8682A1F427A8024700A40F88 /* Pods_ApesterKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8682A1F727A8024700A40F88 /* UserMessagingPlatform.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8682A1F627A8024700A40F88 /* UserMessagingPlatform.xcframework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		8682A1F827A802DC00A40F88 /* APEGADViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A50338270DC237003CA642 /* APEGADViewProvider.swift */; };
-		8682A1F927A802DC00A40F88 /* APEPubMaticViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A5033F270DC689003CA642 /* APEPubMaticViewProvider.swift */; };
-		8682A1FA27A802DC00A40F88 /* APEPubMaticViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A50342270DC6C0003CA642 /* APEPubMaticViewDelegate.swift */; };
-		8682A1FB27A802DC00A40F88 /* APEGADViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A5032C270A4663003CA642 /* APEGADViewDelegate.swift */; };
-		8682A1FC27A802DC00A40F88 /* APEGADViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A50338270DC237003CA642 /* APEGADViewProvider.swift */; };
-		8682A1FD27A802DC00A40F88 /* APEPubMaticViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A5033F270DC689003CA642 /* APEPubMaticViewProvider.swift */; };
-		8682A1FE27A802DC00A40F88 /* APEPubMaticViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A50342270DC6C0003CA642 /* APEPubMaticViewDelegate.swift */; };
-		8682A1FF27A802DC00A40F88 /* APEGADViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A5032C270A4663003CA642 /* APEGADViewDelegate.swift */; };
+		8682A20027A804EC00A40F88 /* APEGADViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A5032C270A4663003CA642 /* APEGADViewDelegate.swift */; };
+		8682A20127A804EC00A40F88 /* APEGADViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A5032C270A4663003CA642 /* APEGADViewDelegate.swift */; };
+		8682A20227A804F300A40F88 /* APEPubMaticViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A5033F270DC689003CA642 /* APEPubMaticViewProvider.swift */; };
+		8682A20327A804F300A40F88 /* APEPubMaticViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A50342270DC6C0003CA642 /* APEPubMaticViewDelegate.swift */; };
+		8682A20427A804F400A40F88 /* APEPubMaticViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A5033F270DC689003CA642 /* APEPubMaticViewProvider.swift */; };
+		8682A20527A804F400A40F88 /* APEPubMaticViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A50342270DC6C0003CA642 /* APEPubMaticViewDelegate.swift */; };
+		8682A20627A8051F00A40F88 /* APEGADViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A50338270DC237003CA642 /* APEGADViewProvider.swift */; };
+		8682A20827A8052100A40F88 /* APEGADViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A50338270DC237003CA642 /* APEGADViewProvider.swift */; };
 		86AC3115240BA788003F4753 /* StripConfigurationsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86AC3114240BA788003F4753 /* StripConfigurationsFactory.swift */; };
 		86AFA1BB232BE99F00E1720A /* APESingleStripViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86AFA1BA232BE99F00E1720A /* APESingleStripViewController.m */; };
 		86AFA1F0232C052500E1720A /* APEStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0BE33D2223169400542E3C /* APEStripView.swift */; };
@@ -739,26 +739,26 @@
 			files = (
 				BB44109A22D53B9500BB1DEC /* MessagesDispatcher.swift in Sources */,
 				8652CB21233BF93B0092E309 /* SynchronizedScript.swift in Sources */,
+				8682A20327A804F300A40F88 /* APEPubMaticViewDelegate.swift in Sources */,
 				8658F76A23832E4500C23BDA /* APEStripViewDelegate.swift in Sources */,
 				86B735ED23380D9100949864 /* APEStripStyle.swift in Sources */,
 				8679F3C9242402BF00AA4749 /* APEViewService.swift in Sources */,
 				86120824233F74A9006608F1 /* UserAgent.swift in Sources */,
 				8679F3C62423EE7D00AA4749 /* APEViewNavigationType.swift in Sources */,
 				8679F3C22423E31900AA4749 /* APEView.swift in Sources */,
-				86A50340270DC689003CA642 /* APEPubMaticViewProvider.swift in Sources */,
 				BB44109D22D53BF300BB1DEC /* Extensions.swift in Sources */,
 				8679F3C12423E11F00AA4749 /* APEConfiguration.swift in Sources */,
-				86A50343270DC6C0003CA642 /* APEPubMaticViewDelegate.swift in Sources */,
 				8658F76C23832F9700C23BDA /* APEEnvironment.swift in Sources */,
-				86A50339270DC237003CA642 /* APEGADViewProvider.swift in Sources */,
 				361BF13F241EB9770079BFE3 /* APEUnitViewDelegate.swift in Sources */,
 				867D559B23E4A0D600190D64 /* APEStripViewService.swift in Sources */,
 				BB44109F22D53D2F00BB1DEC /* APEStripConfiguration.swift in Sources */,
-				86A5032D270A4663003CA642 /* APEGADViewDelegate.swift in Sources */,
+				8682A20027A804EC00A40F88 /* APEGADViewDelegate.swift in Sources */,
 				BB9709AB222322E000E1076B /* Constants.swift in Sources */,
 				36B5DC1F241954A1000E46AF /* APEUnitConfiguration.swift in Sources */,
 				86EAFF2D233E9D1000081AAB /* BundleInfo.swift in Sources */,
+				8682A20627A8051F00A40F88 /* APEGADViewProvider.swift in Sources */,
 				36B5DC1D2419549B000E46AF /* APEUnitView.swift in Sources */,
+				8682A20227A804F300A40F88 /* APEPubMaticViewProvider.swift in Sources */,
 				BB44109222D53AAB00BB1DEC /* ScriptMessageHandler.swift in Sources */,
 				BB0BE33E2223169400542E3C /* APEStripView.swift in Sources */,
 			);
@@ -769,25 +769,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				86B2AA6D23830D40000F171D /* APEStripViewTests.swift in Sources */,
-				86A5032E270A4663003CA642 /* APEGADViewDelegate.swift in Sources */,
 				8652CB22233C0B140092E309 /* SynchronizedScript.swift in Sources */,
 				8658F76E2383305B00C23BDA /* APEStripViewDelegate.swift in Sources */,
+				8682A20427A804F400A40F88 /* APEPubMaticViewProvider.swift in Sources */,
 				86AFA1F6232C057E00E1720A /* Extensions.swift in Sources */,
-				86A5033A270DC237003CA642 /* APEGADViewProvider.swift in Sources */,
 				86AFA1F0232C052500E1720A /* APEStripView.swift in Sources */,
 				BBC96DE1222785F400EA7E6B /* Constants.swift in Sources */,
+				8682A20527A804F400A40F88 /* APEPubMaticViewDelegate.swift in Sources */,
 				86AFA1F5232C057900E1720A /* MessagesDispatcher.swift in Sources */,
 				36FC4E5E24178CB800A25076 /* APEUnitView.swift in Sources */,
-				86A50344270DC6C0003CA642 /* APEPubMaticViewDelegate.swift in Sources */,
 				8658F76D2383304800C23BDA /* APEEnvironment.swift in Sources */,
 				86AFA1F1232C052700E1720A /* APEStripConfiguration.swift in Sources */,
 				3697E8672417FAF900B6AC79 /* APEUnitConfiguration.swift in Sources */,
 				8652CB23233C0F1D0092E309 /* APEStripStyle.swift in Sources */,
 				867D559D23E4A0DC00190D64 /* APEStripViewService.swift in Sources */,
 				BB532AB6235AEDFD00F326D3 /* UserAgent.swift in Sources */,
-				86A50341270DC689003CA642 /* APEPubMaticViewProvider.swift in Sources */,
+				8682A20127A804EC00A40F88 /* APEGADViewDelegate.swift in Sources */,
 				BB532AB5235AEDCF00F326D3 /* BundleInfo.swift in Sources */,
 				86AFA1F3232C057900E1720A /* ScriptMessageHandler.swift in Sources */,
+				8682A20827A8052100A40F88 /* APEGADViewProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
