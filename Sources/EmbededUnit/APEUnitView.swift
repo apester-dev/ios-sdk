@@ -17,6 +17,12 @@ import GoogleMobileAds
     var pubMaticViewProviders: [PubMaticViewProvider.Params.AdType: PubMaticViewProvider] = [:]
     var pubMaticViewTimer: Timer?
     
+    lazy var pubMaticViewTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Anzieige"
+        return label
+    }()
+    
     lazy var pubMaticViewCloseButton: UIButton = {
         var button: UIButton!
         button = UIButton(type: .custom)
