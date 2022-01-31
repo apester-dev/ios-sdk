@@ -14,14 +14,14 @@ import WebKit
 /// A ChannelToken Loading state update
 @objc public protocol APEUnitViewDelegate: NSObjectProtocol {
 
-    /// when the unitId loaded successfuly
+    /// when the unitId loaded successfully
     ///
     /// - Parameters:
     ///   - unitView: the view updater
     ///   - unitId: The mediaId for regular unit or the channel token for playlist
     func unitView(_ unitView: APEUnitView, didFinishLoadingUnit unitId: String)
 
-    /// when the webview couldn't be loaded
+    /// when the webView couldn't be loaded
     /// - Parameters:
     ///   - unitView: the view updater
     ///   - unitId: The mediaId for regular unit or the channel token for playlist
@@ -47,7 +47,7 @@ import WebKit
     @objc optional
     func unitView(_ unitView: APEUnitView, shouldHandleURL url: URL, type: APEViewNavigationType, completion: @escaping ((Bool) -> Void))
     
-    /// when a subscribed event message has been recived
+    /// when a subscribed event message has been received
     /// for Example, subscribe to load and ready events by: `stripView.subscribe(["apester_interaction_loaded", "click_next"])`
     /// - Parameters:
     ///   - unitView: the unit view

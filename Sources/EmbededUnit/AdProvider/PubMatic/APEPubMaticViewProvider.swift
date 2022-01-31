@@ -103,7 +103,8 @@ extension APEUnitView {
         defer {
             showPubMaticViews()
         }
-        var pubMaticView = self.pubMaticViewProviders[params.adType]?.view
+        let adType: PubMaticViewProvider.Params.AdType = params.adType
+        var pubMaticView = self.pubMaticViewProviders[adType]?.view
         guard pubMaticView == nil else {
             pubMaticView?.forceRefresh()
             return
@@ -114,7 +115,7 @@ extension APEUnitView {
         OpenWrapSDK.setApplicationInfo(appInfo)
         
         self.messageDispatcher.sendNativeAdEvent(to: self.unitWebView, Constants.Monetization.playerMonLoadingPass)
-        let adSizes = [POBAdSizeMake(params.adType.size.width, params.adType.size.height)].compactMap({ $0 })
+        let adSizes = [POBAdSizeMake(adType.size.width, adType.size.height)].compactMap({ $0 })
         
         pubMaticView = POBBannerView(publisherId: params.publisherId,
                                      profileId: .init(value: params.profileId),
@@ -125,11 +126,11 @@ extension APEUnitView {
         pubMaticView?.request.debug = params.debugLogs
         pubMaticView?.request.bidSummaryEnabled = params.bidSummaryLogs
         
-        let delegate = pubMaticViewProviders[params.adType]?.delegate ?? makePubMaticViewDelegate(adType: params.adType)
+        let delegate = pubMaticViewProviders[adType]?.delegate ?? makePubMaticViewDelegate(adType: adType)
         pubMaticView?.delegate = delegate
         pubMaticView?.loadAd()
         
-        self.pubMaticViewProviders[params.adType] = PubMaticViewProvider(view: pubMaticView, delegate: delegate)
+        self.pubMaticViewProviders[adType] = PubMaticViewProvider(view: pubMaticView, delegate: delegate)
         
         guard  let timeInView = params.timeInView, pubMaticViewTimer == nil else { return }
         pubMaticViewTimer = Timer.scheduledTimer(withTimeInterval: Double(timeInView), repeats: false) { _ in

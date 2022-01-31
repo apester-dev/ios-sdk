@@ -19,7 +19,10 @@ import GoogleMobileAds
     
     lazy var pubMaticViewTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Anzieige"
+        label.text = "\(configuration.pubMaticBottomAdTitle) "
+        label.backgroundColor = .darkText.withAlphaComponent(0.25)
+        label.font = .boldSystemFont(ofSize: 12)
+         label.textColor = .lightText
         return label
     }()
     
