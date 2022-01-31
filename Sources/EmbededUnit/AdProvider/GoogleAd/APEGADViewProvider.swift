@@ -57,7 +57,7 @@ extension APEUnitView {
         if gADView == nil {
             GADMobileAds.sharedInstance().start(completionHandler: nil)
             self.messageDispatcher.sendNativeAdEvent(to: self.unitWebView, Constants.Monetization.playerMonLoadingPass)
-            gADView = GADBannerView(adSize: kGADAdSizeBanner)
+            gADView = GADBannerView(adSize: GADAdSizeBanner)
             gADView?.translatesAutoresizingMaskIntoConstraints = false
             let delegate = gADViewProviders[params]?.delegate ?? self.makeGADViewDelegate()
             gADView?.delegate = delegate

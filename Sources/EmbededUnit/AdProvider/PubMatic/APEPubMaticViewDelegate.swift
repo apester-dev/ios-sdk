@@ -36,7 +36,7 @@ extension APEUnitView {
             receiveAdSuccessCompletion(adType)
         }
         
-        func bannerView(_ bannerView: POBBannerView, didFailToReceiveAdWithError error: Error?) {
+        func bannerView(_ bannerView: POBBannerView, didFailToReceiveAdWithError error: Error) {
             receiveAdErrorCompletion(adType, error)
         }
         

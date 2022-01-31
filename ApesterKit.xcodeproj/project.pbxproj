@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -35,14 +35,26 @@
 		8679F3CB24241C3700AA4749 /* APEMultipleUnitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8679F3CA24241C3700AA4749 /* APEMultipleUnitsViewController.swift */; };
 		867D559B23E4A0D600190D64 /* APEStripViewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867D559A23E4A0D600190D64 /* APEStripViewService.swift */; };
 		867D559D23E4A0DC00190D64 /* APEStripViewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867D559A23E4A0D600190D64 /* APEStripViewService.swift */; };
-		86A5032D270A4663003CA642 /* APEGADViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A5032C270A4663003CA642 /* APEGADViewDelegate.swift */; };
-		86A5032E270A4663003CA642 /* APEGADViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A5032C270A4663003CA642 /* APEGADViewDelegate.swift */; };
-		86A50339270DC237003CA642 /* APEGADViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A50338270DC237003CA642 /* APEGADViewProvider.swift */; };
-		86A5033A270DC237003CA642 /* APEGADViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A50338270DC237003CA642 /* APEGADViewProvider.swift */; };
-		86A50340270DC689003CA642 /* APEPubMaticViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A5033F270DC689003CA642 /* APEPubMaticViewProvider.swift */; };
-		86A50341270DC689003CA642 /* APEPubMaticViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A5033F270DC689003CA642 /* APEPubMaticViewProvider.swift */; };
-		86A50343270DC6C0003CA642 /* APEPubMaticViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A50342270DC6C0003CA642 /* APEPubMaticViewDelegate.swift */; };
-		86A50344270DC6C0003CA642 /* APEPubMaticViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A50342270DC6C0003CA642 /* APEPubMaticViewDelegate.swift */; };
+		8682A1E127A8024700A40F88 /* FBLPromises.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8682A1E027A8024700A40F88 /* FBLPromises.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		8682A1E327A8024700A40F88 /* GoogleAppMeasurement.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8682A1E227A8024700A40F88 /* GoogleAppMeasurement.xcframework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		8682A1E527A8024700A40F88 /* GoogleAppMeasurementIdentitySupport.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8682A1E427A8024700A40F88 /* GoogleAppMeasurementIdentitySupport.xcframework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		8682A1E727A8024700A40F88 /* GoogleMobileAds.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8682A1E627A8024700A40F88 /* GoogleMobileAds.xcframework */; };
+		8682A1E927A8024700A40F88 /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8682A1E827A8024700A40F88 /* GoogleUtilities.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		8682A1EB27A8024700A40F88 /* nanopb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8682A1EA27A8024700A40F88 /* nanopb.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		8682A1ED27A8024700A40F88 /* OMSDK_Pubmatic.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8682A1EC27A8024700A40F88 /* OMSDK_Pubmatic.xcframework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		8682A1EF27A8024700A40F88 /* OpenWrapMeasurement.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8682A1EE27A8024700A40F88 /* OpenWrapMeasurement.xcframework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		8682A1F127A8024700A40F88 /* OpenWrapSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8682A1F027A8024700A40F88 /* OpenWrapSDK.xcframework */; };
+		8682A1F327A8024700A40F88 /* Pods_Apester.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8682A1F227A8024700A40F88 /* Pods_Apester.framework */; };
+		8682A1F527A8024700A40F88 /* Pods_ApesterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8682A1F427A8024700A40F88 /* Pods_ApesterKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		8682A1F727A8024700A40F88 /* UserMessagingPlatform.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8682A1F627A8024700A40F88 /* UserMessagingPlatform.xcframework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		8682A1F827A802DC00A40F88 /* APEGADViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A50338270DC237003CA642 /* APEGADViewProvider.swift */; };
+		8682A1F927A802DC00A40F88 /* APEPubMaticViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A5033F270DC689003CA642 /* APEPubMaticViewProvider.swift */; };
+		8682A1FA27A802DC00A40F88 /* APEPubMaticViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A50342270DC6C0003CA642 /* APEPubMaticViewDelegate.swift */; };
+		8682A1FB27A802DC00A40F88 /* APEGADViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A5032C270A4663003CA642 /* APEGADViewDelegate.swift */; };
+		8682A1FC27A802DC00A40F88 /* APEGADViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A50338270DC237003CA642 /* APEGADViewProvider.swift */; };
+		8682A1FD27A802DC00A40F88 /* APEPubMaticViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A5033F270DC689003CA642 /* APEPubMaticViewProvider.swift */; };
+		8682A1FE27A802DC00A40F88 /* APEPubMaticViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A50342270DC6C0003CA642 /* APEPubMaticViewDelegate.swift */; };
+		8682A1FF27A802DC00A40F88 /* APEGADViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A5032C270A4663003CA642 /* APEGADViewDelegate.swift */; };
 		86AC3115240BA788003F4753 /* StripConfigurationsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86AC3114240BA788003F4753 /* StripConfigurationsFactory.swift */; };
 		86AFA1BB232BE99F00E1720A /* APESingleStripViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86AFA1BA232BE99F00E1720A /* APESingleStripViewController.m */; };
 		86AFA1F0232C052500E1720A /* APEStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0BE33D2223169400542E3C /* APEStripView.swift */; };
@@ -149,6 +161,18 @@
 		8679F3C8242402BF00AA4749 /* APEViewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEViewService.swift; sourceTree = "<group>"; };
 		8679F3CA24241C3700AA4749 /* APEMultipleUnitsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEMultipleUnitsViewController.swift; sourceTree = "<group>"; };
 		867D559A23E4A0D600190D64 /* APEStripViewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripViewService.swift; sourceTree = "<group>"; };
+		8682A1E027A8024700A40F88 /* FBLPromises.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FBLPromises.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8682A1E227A8024700A40F88 /* GoogleAppMeasurement.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleAppMeasurement.xcframework; path = Pods/GoogleAppMeasurement/Frameworks/GoogleAppMeasurement.xcframework; sourceTree = "<group>"; };
+		8682A1E427A8024700A40F88 /* GoogleAppMeasurementIdentitySupport.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleAppMeasurementIdentitySupport.xcframework; path = Pods/GoogleAppMeasurement/Frameworks/GoogleAppMeasurementIdentitySupport.xcframework; sourceTree = "<group>"; };
+		8682A1E627A8024700A40F88 /* GoogleMobileAds.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleMobileAds.xcframework; path = "Pods/Google-Mobile-Ads-SDK/Frameworks/GoogleMobileAdsFramework-Current/GoogleMobileAds.xcframework"; sourceTree = "<group>"; };
+		8682A1E827A8024700A40F88 /* GoogleUtilities.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GoogleUtilities.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8682A1EA27A8024700A40F88 /* nanopb.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = nanopb.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8682A1EC27A8024700A40F88 /* OMSDK_Pubmatic.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OMSDK_Pubmatic.xcframework; path = Pods/OpenWrapSDK/OpenWrapSDK/OMSDK_Pubmatic.xcframework; sourceTree = "<group>"; };
+		8682A1EE27A8024700A40F88 /* OpenWrapMeasurement.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OpenWrapMeasurement.xcframework; path = Pods/OpenWrapSDK/OpenWrapSDK/OpenWrapMeasurement.xcframework; sourceTree = "<group>"; };
+		8682A1F027A8024700A40F88 /* OpenWrapSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OpenWrapSDK.xcframework; path = Pods/OpenWrapSDK/OpenWrapSDK/OpenWrapSDK.xcframework; sourceTree = "<group>"; };
+		8682A1F227A8024700A40F88 /* Pods_Apester.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Apester.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8682A1F427A8024700A40F88 /* Pods_ApesterKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_ApesterKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8682A1F627A8024700A40F88 /* UserMessagingPlatform.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = UserMessagingPlatform.xcframework; path = Pods/GoogleUserMessagingPlatform/Frameworks/Release/UserMessagingPlatform.xcframework; sourceTree = "<group>"; };
 		86A5032C270A4663003CA642 /* APEGADViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEGADViewDelegate.swift; sourceTree = "<group>"; };
 		86A50338270DC237003CA642 /* APEGADViewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEGADViewProvider.swift; sourceTree = "<group>"; };
 		86A5033F270DC689003CA642 /* APEPubMaticViewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEPubMaticViewProvider.swift; sourceTree = "<group>"; };
@@ -186,7 +210,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8682A1E127A8024700A40F88 /* FBLPromises.framework in Frameworks */,
+				8682A1E327A8024700A40F88 /* GoogleAppMeasurement.xcframework in Frameworks */,
+				8682A1E527A8024700A40F88 /* GoogleAppMeasurementIdentitySupport.xcframework in Frameworks */,
+				8682A1E727A8024700A40F88 /* GoogleMobileAds.xcframework in Frameworks */,
+				8682A1E927A8024700A40F88 /* GoogleUtilities.framework in Frameworks */,
+				8682A1EB27A8024700A40F88 /* nanopb.framework in Frameworks */,
+				8682A1ED27A8024700A40F88 /* OMSDK_Pubmatic.xcframework in Frameworks */,
+				8682A1EF27A8024700A40F88 /* OpenWrapMeasurement.xcframework in Frameworks */,
 				3605CD9E2613946B007D155B /* Pods_ApesterKit.framework in Frameworks */,
+				8682A1F727A8024700A40F88 /* UserMessagingPlatform.xcframework in Frameworks */,
+				8682A1F327A8024700A40F88 /* Pods_Apester.framework in Frameworks */,
+				8682A1F127A8024700A40F88 /* OpenWrapSDK.xcframework in Frameworks */,
+				8682A1F527A8024700A40F88 /* Pods_ApesterKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,6 +331,18 @@
 		6EF3402A682CD3A2CD069BF8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8682A1E027A8024700A40F88 /* FBLPromises.framework */,
+				8682A1E227A8024700A40F88 /* GoogleAppMeasurement.xcframework */,
+				8682A1E427A8024700A40F88 /* GoogleAppMeasurementIdentitySupport.xcframework */,
+				8682A1E627A8024700A40F88 /* GoogleMobileAds.xcframework */,
+				8682A1E827A8024700A40F88 /* GoogleUtilities.framework */,
+				8682A1EA27A8024700A40F88 /* nanopb.framework */,
+				8682A1EC27A8024700A40F88 /* OMSDK_Pubmatic.xcframework */,
+				8682A1EE27A8024700A40F88 /* OpenWrapMeasurement.xcframework */,
+				8682A1F027A8024700A40F88 /* OpenWrapSDK.xcframework */,
+				8682A1F227A8024700A40F88 /* Pods_Apester.framework */,
+				8682A1F427A8024700A40F88 /* Pods_ApesterKit.framework */,
+				8682A1F627A8024700A40F88 /* UserMessagingPlatform.xcframework */,
 				3D4D185EABE4D9AEDC49B7D7 /* Pods_Apester.framework */,
 				CBEEE1F78C877AA0DB61285C /* Pods_ApesterKit.framework */,
 			);
@@ -496,7 +544,6 @@
 				BBC96DA3222781F400EA7E6B /* Resources */,
 				BBC96DDA2227847F00EA7E6B /* Embed Frameworks */,
 				D582A309BB0215F4FAB5A36A /* [CP] Embed Pods Frameworks */,
-				0197A86CB8448E4BBAC447B5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -530,8 +577,9 @@
 					};
 					BBC96DA4222781F400EA7E6B = {
 						CreatedOnToolsVersion = 10.1;
+						DevelopmentTeam = 33Y76XNPZ4;
 						LastSwiftMigration = 1030;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -585,24 +633,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0197A86CB8448E4BBAC447B5 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Apester/Pods-Apester-resources.sh",
-				"${PODS_ROOT}/OpenWrapSDK/OpenWrapSDK/POBResources.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/POBResources.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Apester/Pods-Apester-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		5B9835DABF3802634560DF6C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -924,7 +954,8 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				"OTHER_LDFLAGS[arch=*]" = "";
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -937,7 +968,7 @@
 			baseConfigurationReference = 30F69B3AE3A2E15982E645A9 /* Pods-ApesterKit.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1000;
 				DEFINES_MODULE = YES;
@@ -950,7 +981,11 @@
 				"INFOPLIST_OTHER_PREPROCESSOR_FLAGS[sdk=*]" = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MARKETING_VERSION = 3.3.1;
 				OTHER_LDFLAGS = "$(inherited)";
 				"OTHER_LDFLAGS[arch=*]" = (
@@ -975,7 +1010,7 @@
 			baseConfigurationReference = 374B416556F3A68B888D54DF /* Pods-ApesterKit.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1000;
 				DEFINES_MODULE = YES;
@@ -987,7 +1022,11 @@
 				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MARKETING_VERSION = 3.3.1;
 				OTHER_LDFLAGS = "$(inherited)";
 				"OTHER_LDFLAGS[arch=*]" = (
@@ -1014,7 +1053,11 @@
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apester.ApesterKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1034,7 +1077,11 @@
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				OTHER_LDFLAGS = "";
 				"OTHER_LDFLAGS[arch=*]" = (
 					"-l\"c++\"",
@@ -1119,14 +1166,17 @@
 				CLANG_WARN_STRICT_PROTOdTYPES = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1000;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 33Y76XNPZ4;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Apester/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 3.3.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -1169,7 +1219,10 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Apester/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 3.3.1;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = "$(inherited)";
