@@ -26,11 +26,10 @@
                                                                                            gdprString:nil
                                                                                               baseUrl: nil
                                            ].firstObject;
-    //.configurations(for: .stage, hideApesterAds: false, gdprString: nil)[0]
-    NSString *unitId = [[UnitConfigurationsFactory unitsIds] firstObject];
+    NSString *unitId = [[UnitConfigurationsFactory unitsIds] lastObject];
 
     if (unitId != nil) {
-        // preLoad implemntation
+        // preLoad implementation
         _apesterUnitView = [APEViewService.shared unitViewFor:unitId];
     }
 
