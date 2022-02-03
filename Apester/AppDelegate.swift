@@ -18,11 +18,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // initiate StripConfigurationsFactory environment
     StripConfigurationsFactory.environment = .production
     // preloadStripViews
-    APEViewService.shared.preloadStripViews(with: StripConfigurationsFactory.configurations(hideApesterAds: false))
+//    APEViewService.shared.preloadStripViews(with: StripConfigurationsFactory.configurations(hideApesterAds: false))
     // initiate UnitConfigurationsFactory environment
     UnitConfigurationsFactory.environment = .production
     // preloadUnitViews
-    APEViewService.shared.preloadUnitViews(with: UnitConfigurationsFactory.configurations(hideApesterAds: false))
+//    APEViewService.shared.preloadUnitViews(with: UnitConfigurationsFactory.configurations(hideApesterAds: false))
     return true
   }
 

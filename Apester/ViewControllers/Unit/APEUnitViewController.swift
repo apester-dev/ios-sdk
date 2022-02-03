@@ -15,7 +15,7 @@ class APEUnitViewController: UIViewController {
         apesterUnitView.reload()
     }
     
-    var apesterUnitView: APEUnitView!
+    private var apesterUnitView: APEUnitView!
 
     private var unitParams: APEUnitParams? = UnitConfigurationsFactory.unitsParams.first
     
@@ -25,15 +25,19 @@ class APEUnitViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let configuration = UnitConfigurationsFactory.configurations(hideApesterAds: false, gdprString: nil, baseUrl: nil)[0]
+        guard let configuration = UnitConfigurationsFactory.configurations(
+            hideApesterAds: false,
+            gdprString: nil,
+            baseUrl: nil
+        ).first else { return }
 
-        // For fullscreen mode set to true.
+        // For fullscreen mode set to be true.
         let fullscreen = false;
 
         configuration.setFullscreen(fullscreen);
         
         if let unit = unitParams {
-            // preLoad implemntation
+            // preLoad implementation
             apesterUnitView = APEViewService.shared.unitView(for: unit.id)
         }
         

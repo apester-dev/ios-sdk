@@ -8,6 +8,7 @@
 //
 
 import Foundation
+import UIKit
 
 
 extension APEUnitView {
@@ -79,30 +80,31 @@ extension APEUnitView {
         PubMaticViewDelegate(adType: adType,
                              containerViewController: containerViewController,
                              receiveAdSuccessCompletion: { [weak self] adType in
-                                guard let self = self else { return }
-                                if case .inUnit = adType {
-                                    self.pubMaticViewCloseButton.isHidden = false
-                                }
-                                self.messageDispatcher.sendNativeAdEvent(to: self.unitWebView,
-                                                                         Constants.Monetization.playerMonImpression)
-                             },
+            guard let self = self else { return }
+            switch adType {
+            case .bottom:
+                self.pubMaticViewTitleLabel.isHidden = false
+            case .inUnit:
+                self.pubMaticViewCloseButton.isHidden = false
+            }
+            self.messageDispatcher.sendNativeAdEvent(to: self.unitWebView,
+                                                     Constants.Monetization.playerMonImpression)
+        },
                              receiveAdErrorCompletion: { [weak self] adType, error in
-                                guard let self = self else { return }
-                                self.messageDispatcher.sendNativeAdEvent(to: self.unitWebView,
-                                                                         Constants.Monetization.playerMonLoadingImpressionFailed)
-                                print(error?.localizedDescription ?? "")
-                                if case .inUnit = adType {
-                                    self.pubMaticViewCloseButton.isHidden = false
-                                }
-                                self.hidePubMaticView()
-                             })
+            guard let self = self else { return }
+            self.messageDispatcher.sendNativeAdEvent(to: self.unitWebView,
+                                                     Constants.Monetization.playerMonLoadingImpressionFailed)
+            print(error?.localizedDescription ?? "")
+            self.hidePubMaticView()
+        })
     }
     
     func setupPubMaticView(params: PubMaticViewProvider.Params) {
         defer {
             showPubMaticViews()
         }
-        var pubMaticView = self.pubMaticViewProviders[params.adType]?.view
+        let adType: PubMaticViewProvider.Params.AdType = params.adType
+        var pubMaticView = self.pubMaticViewProviders[adType]?.view
         guard pubMaticView == nil else {
             pubMaticView?.forceRefresh()
             return
@@ -113,7 +115,7 @@ extension APEUnitView {
         OpenWrapSDK.setApplicationInfo(appInfo)
         
         self.messageDispatcher.sendNativeAdEvent(to: self.unitWebView, Constants.Monetization.playerMonLoadingPass)
-        let adSizes = [POBAdSizeMake(params.adType.size.width, params.adType.size.height)].compactMap({ $0 })
+        let adSizes = [POBAdSizeMake(adType.size.width, adType.size.height)].compactMap({ $0 })
         
         pubMaticView = POBBannerView(publisherId: params.publisherId,
                                      profileId: .init(value: params.profileId),
@@ -124,11 +126,11 @@ extension APEUnitView {
         pubMaticView?.request.debug = params.debugLogs
         pubMaticView?.request.bidSummaryEnabled = params.bidSummaryLogs
         
-        let delegate = pubMaticViewProviders[params.adType]?.delegate ?? makePubMaticViewDelegate(adType: params.adType)
+        let delegate = pubMaticViewProviders[adType]?.delegate ?? makePubMaticViewDelegate(adType: adType)
         pubMaticView?.delegate = delegate
         pubMaticView?.loadAd()
         
-        self.pubMaticViewProviders[params.adType] = PubMaticViewProvider(view: pubMaticView, delegate: delegate)
+        self.pubMaticViewProviders[adType] = PubMaticViewProvider(view: pubMaticView, delegate: delegate)
         
         guard  let timeInView = params.timeInView, pubMaticViewTimer == nil else { return }
         pubMaticViewTimer = Timer.scheduledTimer(withTimeInterval: Double(timeInView), repeats: false) { _ in
@@ -152,17 +154,28 @@ extension APEUnitView {
     func showPubMaticViews() {
         self.pubMaticViewProviders
             .forEach({ type, provider in
-                guard let containerView = unitWebView, let pubMaticView = provider.view else { return }
+                guard let containerView = unitWebView, let pubMaticView = provider.view, pubMaticView.superview == nil else {
+                    return
+                }
                 containerView.addSubview(pubMaticView)
                 containerView.bringSubviewToFront(pubMaticView)
                 
-                if case .inUnit = type {
-                    if let bottomView = self.pubMaticViewProviders[.bottom]?.view {
-                        containerView.bringSubviewToFront(bottomView)
-                    }
+                switch type {
+                case .inUnit:
                     self.pubMaticViewCloseButton.isHidden = true
                     containerView.addSubview(self.pubMaticViewCloseButton)
                     containerView.bringSubviewToFront(self.pubMaticViewCloseButton)
+                case .bottom:
+                    if let bottomView = self.pubMaticViewProviders[type]?.view {
+                        containerView.addSubview(self.pubMaticViewTitleLabel)
+                        self.pubMaticViewTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+                        NSLayoutConstraint.activate([
+                            self.pubMaticViewTitleLabel.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor),
+                            self.pubMaticViewTitleLabel.bottomAnchor.constraint(equalTo: bottomView.topAnchor)
+                        ])
+                        self.pubMaticViewTitleLabel.isHidden = true
+                        containerView.bringSubviewToFront(bottomView)
+                    }
                 }
                 pubMaticView.translatesAutoresizingMaskIntoConstraints = false
                 pubMaticView.removeConstraints(pubMaticView.constraints)

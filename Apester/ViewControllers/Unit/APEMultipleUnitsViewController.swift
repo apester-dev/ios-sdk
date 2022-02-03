@@ -20,12 +20,18 @@ class APEMultipleUnitsViewController: UIViewController {
         }
     }
 
-    private var unitsParams: [APEUnitParams] = UnitConfigurationsFactory.unitsParams
+    private let configurations = UnitConfigurationsFactory.configurations(hideApesterAds: false)
+    
+    private lazy var unitsParams: [APEUnitParams] = { configurations.map(\.unitParams) }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // update stripView delegates
         unitsParams.forEach { unitParams in
+            if APEViewService.shared.unitView(for: unitParams.id) == nil {
+                // not preload!
+                APEViewService.shared.preloadUnitViews(with: UnitConfigurationsFactory.configurations(hideApesterAds: false))
+            }
             APEViewService.shared.unitView(for: unitParams.id)?.delegate = self
         }
     }

@@ -42,6 +42,7 @@ public enum APEUnitParams {
     
     public var gdprString: String? {
         didSet {
+            guard let gdprString = gdprString else { return }
             OpenWrapSDK.setGDPREnabled(true)
             OpenWrapSDK.setGDPRConsent(gdprString)
         }
@@ -51,6 +52,8 @@ public enum APEUnitParams {
     private(set) var baseUrl: String?
     private(set) var hideApesterAds: Bool
     private(set) var autoFullscreen: Bool?
+    
+    public var pubMaticBottomAdTitle: String = "Anzeige"
     
     override var parameters: [String: String] {
         var value = super.parameters

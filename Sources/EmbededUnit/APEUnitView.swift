@@ -17,6 +17,15 @@ import GoogleMobileAds
     var pubMaticViewProviders: [PubMaticViewProvider.Params.AdType: PubMaticViewProvider] = [:]
     var pubMaticViewTimer: Timer?
     
+    lazy var pubMaticViewTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "\(configuration.pubMaticBottomAdTitle) "
+        label.backgroundColor = .darkText.withAlphaComponent(0.25)
+        label.font = .boldSystemFont(ofSize: 12)
+         label.textColor = .lightText
+        return label
+    }()
+    
     lazy var pubMaticViewCloseButton: UIButton = {
         var button: UIButton!
         button = UIButton(type: .custom)
