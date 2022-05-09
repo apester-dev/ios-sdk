@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		3549BB501DA38A2000C63030 /* ApesterKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 3549BB181DA3890B00C63030 /* ApesterKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3549BB661DA38ADB00C63030 /* ApesterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3549BB211DA389CD00C63030 /* ApesterKit.framework */; };
-		3605CD9E2613946B007D155B /* Pods_ApesterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBEEE1F78C877AA0DB61285C /* Pods_ApesterKit.framework */; };
 		3605CD9F2613946B007D155B /* Pods_ApesterKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CBEEE1F78C877AA0DB61285C /* Pods_ApesterKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		361BF13F241EB9770079BFE3 /* APEUnitViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361BF13E241EB9770079BFE3 /* APEUnitViewDelegate.swift */; };
 		3697E8672417FAF900B6AC79 /* APEUnitConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */; };
@@ -44,7 +43,6 @@
 		8682A1ED27A8024700A40F88 /* OMSDK_Pubmatic.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8682A1EC27A8024700A40F88 /* OMSDK_Pubmatic.xcframework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8682A1EF27A8024700A40F88 /* OpenWrapMeasurement.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8682A1EE27A8024700A40F88 /* OpenWrapMeasurement.xcframework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8682A1F127A8024700A40F88 /* OpenWrapSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8682A1F027A8024700A40F88 /* OpenWrapSDK.xcframework */; };
-		8682A1F327A8024700A40F88 /* Pods_Apester.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8682A1F227A8024700A40F88 /* Pods_Apester.framework */; };
 		8682A1F527A8024700A40F88 /* Pods_ApesterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8682A1F427A8024700A40F88 /* Pods_ApesterKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8682A1F727A8024700A40F88 /* UserMessagingPlatform.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8682A1F627A8024700A40F88 /* UserMessagingPlatform.xcframework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8682A20027A804EC00A40F88 /* APEGADViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A5032C270A4663003CA642 /* APEGADViewDelegate.swift */; };
@@ -66,6 +64,7 @@
 		86B735ED23380D9100949864 /* APEStripStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B735EC23380D9100949864 /* APEStripStyle.swift */; };
 		86B73602233871CF00949864 /* APECollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B73601233871CF00949864 /* APECollectionViewCell.swift */; };
 		86EAFF2D233E9D1000081AAB /* BundleInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EAFF2C233E9D1000081AAB /* BundleInfo.swift */; };
+		A6033FD1830457164C46133C /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		BB0BE33E2223169400542E3C /* APEStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0BE33D2223169400542E3C /* APEStripView.swift */; };
 		BB44109222D53AAB00BB1DEC /* ScriptMessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109122D53AAB00BB1DEC /* ScriptMessageHandler.swift */; };
 		BB44109A22D53B9500BB1DEC /* MessagesDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109922D53B9500BB1DEC /* MessagesDispatcher.swift */; };
@@ -170,7 +169,6 @@
 		8682A1EC27A8024700A40F88 /* OMSDK_Pubmatic.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OMSDK_Pubmatic.xcframework; path = Pods/OpenWrapSDK/OpenWrapSDK/OMSDK_Pubmatic.xcframework; sourceTree = "<group>"; };
 		8682A1EE27A8024700A40F88 /* OpenWrapMeasurement.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OpenWrapMeasurement.xcframework; path = Pods/OpenWrapSDK/OpenWrapSDK/OpenWrapMeasurement.xcframework; sourceTree = "<group>"; };
 		8682A1F027A8024700A40F88 /* OpenWrapSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = OpenWrapSDK.xcframework; path = Pods/OpenWrapSDK/OpenWrapSDK/OpenWrapSDK.xcframework; sourceTree = "<group>"; };
-		8682A1F227A8024700A40F88 /* Pods_Apester.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Apester.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8682A1F427A8024700A40F88 /* Pods_ApesterKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_ApesterKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8682A1F627A8024700A40F88 /* UserMessagingPlatform.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = UserMessagingPlatform.xcframework; path = Pods/GoogleUserMessagingPlatform/Frameworks/Release/UserMessagingPlatform.xcframework; sourceTree = "<group>"; };
 		86A5032C270A4663003CA642 /* APEGADViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEGADViewDelegate.swift; sourceTree = "<group>"; };
@@ -218,9 +216,7 @@
 				8682A1EB27A8024700A40F88 /* nanopb.framework in Frameworks */,
 				8682A1ED27A8024700A40F88 /* OMSDK_Pubmatic.xcframework in Frameworks */,
 				8682A1EF27A8024700A40F88 /* OpenWrapMeasurement.xcframework in Frameworks */,
-				3605CD9E2613946B007D155B /* Pods_ApesterKit.framework in Frameworks */,
 				8682A1F727A8024700A40F88 /* UserMessagingPlatform.xcframework in Frameworks */,
-				8682A1F327A8024700A40F88 /* Pods_Apester.framework in Frameworks */,
 				8682A1F127A8024700A40F88 /* OpenWrapSDK.xcframework in Frameworks */,
 				8682A1F527A8024700A40F88 /* Pods_ApesterKit.framework in Frameworks */,
 			);
@@ -340,7 +336,6 @@
 				8682A1EC27A8024700A40F88 /* OMSDK_Pubmatic.xcframework */,
 				8682A1EE27A8024700A40F88 /* OpenWrapMeasurement.xcframework */,
 				8682A1F027A8024700A40F88 /* OpenWrapSDK.xcframework */,
-				8682A1F227A8024700A40F88 /* Pods_Apester.framework */,
 				8682A1F427A8024700A40F88 /* Pods_ApesterKit.framework */,
 				8682A1F627A8024700A40F88 /* UserMessagingPlatform.xcframework */,
 				3D4D185EABE4D9AEDC49B7D7 /* Pods_Apester.framework */,
