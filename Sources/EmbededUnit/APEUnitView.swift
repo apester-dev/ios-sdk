@@ -13,33 +13,7 @@ import GoogleMobileAds
 
 @objcMembers public class APEUnitView: APEView {
     
-    // POBBannerViews
-    var pubMaticViewProviders: [PubMaticViewProvider.Params.AdType: PubMaticViewProvider] = [:]
-    var pubMaticViewTimer: Timer?
-    
-    lazy var pubMaticViewTitleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "\(configuration.pubMaticBottomAdTitle) "
-        label.backgroundColor = .darkText.withAlphaComponent(0.25)
-        label.font = .boldSystemFont(ofSize: 12)
-         label.textColor = .lightText
-        return label
-    }()
-    
-    lazy var pubMaticViewCloseButton: UIButton = {
-        var button: UIButton!
-        button = UIButton(type: .custom)
-        button.setTitle("🅧", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        button.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        button.addTarget(self, action: #selector(hidePubMaticView), for: .touchUpInside)
-        return button
-    }()
-    
-    // GADBannerView
-    var gADViewProviders: [GADViewProvider.Params: GADViewProvider] = [:]
+    var bannerViews: [BannerViewProvider] = []
     
     // unitWebView Constraints
     private var unitWebViewHeightConstraint: NSLayoutConstraint?
@@ -115,8 +89,16 @@ import GoogleMobileAds
         unitWebViewWidthConstraint?.priority = .defaultLow
         unitWebViewWidthConstraint?.isActive = true
         // show AD Views
-        showPubMaticViews()
-        showGADView()
+        showAdViews()
+    }
+    
+    func showAdViews() {
+        bannerViews
+            .forEach({ bannerView in
+                if let containerView = unitWebView, bannerView.banner().superview == nil {
+                    bannerView.show(containerView)
+                }
+        })
     }
     
     /// Remove the unit web view
@@ -143,7 +125,7 @@ import GoogleMobileAds
         if let unitUrl = configuration.unitURL {
             self.unitWebView.load(URLRequest(url:unitUrl))
         }
-        pubMaticViewProviders.keys.forEach(removePubMaticView)
+        bannerViews.forEach({ $0.hide() })
     }
     
     public func stop() {
@@ -248,24 +230,24 @@ extension APEUnitView {
             
             if bodyString.contains(Constants.Monetization.initNativeAd),
                let dictionary = bodyString.dictionary {
-                if let params = GADViewProvider.Params(from: dictionary) {
+                if let params = GADParams(from: dictionary) {
                     setupGADView(params: params)
                 }
-                if let params = PubMaticViewProvider.Params(from: dictionary) {
+                if let params = PubMaticParams(from: dictionary) {
                     setupPubMaticView(params: params)
                 }
             }
             
             if bodyString.contains(Constants.Monetization.initInUnit),
                let dictionary = bodyString.dictionary {
-                if let params = PubMaticViewProvider.Params(from: dictionary) {
+                if let params = PubMaticParams(from: dictionary) {
                     setupPubMaticView(params: params)
                 }
             }
             
             if bodyString.contains(Constants.Monetization.killInUnit),
                let adTypeStr = bodyString.dictionary?[Constants.Monetization.adType] as? String,
-               let adType = PubMaticViewProvider.Params.AdType(rawValue: adTypeStr) {
+               let adType = PubMaticParams.AdType(rawValue: adTypeStr) {
                 removePubMaticView(of: adType)
             }
             
@@ -340,9 +322,47 @@ private extension APEUnitView {
             unitWebViewWidthConstraint.priority = .defaultHigh
             unitWebViewWidthConstraint.isActive = true
         }
-        showPubMaticViews()
+        showAdViews()
         
         // 5 - update the delegate about the new height
         self.delegate?.unitView(self, didUpdateHeight: height)
+    }
+}
+
+extension APEUnitView {
+    
+    struct BannerViewProvider: Equatable {
+        
+        var type: () -> Monetization
+        
+        var banner: () -> UIView
+        
+        var refresh: () -> Void
+        
+        var show: (_ containerView: UIView) -> Void
+        
+        var hide: () -> Void
+        
+        init() {
+            self.type = {
+                fatalError()
+            }
+            self.banner = {
+                fatalError()
+            }
+            self.refresh = {
+                fatalError()
+            }
+            self.show = { _ in
+                fatalError()
+            }
+            self.hide = {
+                fatalError()
+            }
+        }
+        
+        static func == (lhs: APEUnitView.BannerViewProvider, rhs: APEUnitView.BannerViewProvider) -> Bool {
+            lhs.type() == rhs.type()
+        }
     }
 }

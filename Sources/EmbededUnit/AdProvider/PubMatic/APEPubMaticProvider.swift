@@ -1,30 +1,36 @@
 //
-//  APEGADViewProvider.swift
+//  APEPubMaticProvider.swift
 //  ApesterKit
 //
-//  Created by Hasan Sawaed Tabash on 06/10/2021.
-//  Copyright © 2021 Apester. All rights reserved.
+//  Created by Hasan Sawaed Tabash on 09/05/2022.
+//  Copyright © 2022 Apester. All rights reserved.
 //
 
 import Foundation
 
 extension APEUnitView.BannerViewProvider {
     
-    static func gadProvider(
-        params: APEUnitView.GADParams,
+    static func pubMaticProvider(
+        params: APEUnitView.PubMaticParams,
+        adTitleLabelText: String,
+        inUnitBackgroundColor: UIColor,
         containerViewController: UIViewController,
+        onAdRemovalCompletion: @escaping ((APEUnitView.PubMaticParams.AdType) -> Void),
         receiveAdSuccessCompletion: @escaping (() -> Void),
         receiveAdErrorCompletion: @escaping ((Error?) -> Void)
     ) -> APEUnitView.BannerViewProvider {
         var provider = APEUnitView.BannerViewProvider()
-        let banner = APEGADBannerView(
+        let banner = APEPubMaticBannerView(
             params: params,
+            adTitleLabelText: adTitleLabelText,
+            inUnitBackgroundColor: inUnitBackgroundColor,
             containerViewController: containerViewController,
+            onAdRemovalCompletion: onAdRemovalCompletion,
             receiveAdSuccessCompletion: receiveAdSuccessCompletion,
             receiveAdErrorCompletion: receiveAdErrorCompletion
         )
         provider.type = {
-            .gad(params: params)
+            .pubMatic(param: params)
         }
         provider.banner = {
             banner
@@ -43,34 +49,40 @@ extension APEUnitView.BannerViewProvider {
     }
 }
 
-// MARK:- Google ADs
+    // MARK:- PubMatic ADs
 extension APEUnitView {
     
-    func setupGADView(params: GADParams) {
-        let adUnitId = params.adUnitId
+    func setupPubMaticView(params: PubMaticParams) {
+        let adType: PubMaticParams.AdType = params.adType
         var bannerView = self.bannerViews.first(where: {
             switch $0.type() {
-            case .gad(let params):
-                return params.adUnitId == adUnitId
-            case .pubMatic:
+            case .pubMatic(let params):
+                return params.adType == adType
+            case .gad:
                 return false
             }
         })
-        if let gadView = bannerView {
-            if let containerView = unitWebView, gadView.banner().superview == nil {
-                gadView.show(containerView)
+        if let pubMaticView = bannerView {
+            pubMaticView.refresh()
+            if let containerView = unitWebView, pubMaticView.banner().superview == nil {
+                pubMaticView.show(containerView)
             }
             return
         }
+        
         guard let containerViewController = self.containerViewController else {
             self.messageDispatcher.sendNativeAdEvent(to: self.unitWebView,
                                                      Constants.Monetization.playerMonLoadingImpressionFailed)
             return
         }
-        
-        bannerView = .gadProvider(
+        bannerView = .pubMaticProvider(
             params: params,
+            adTitleLabelText: configuration.adTitleLabelText,
+            inUnitBackgroundColor: configuration.adInUnitBackgroundColor,
             containerViewController: containerViewController,
+            onAdRemovalCompletion: {  [weak self] adType in
+                self?.removePubMaticView(of: adType)
+            },
             receiveAdSuccessCompletion: { [weak self] in
                 guard let self = self else { return }
                 self.messageDispatcher.sendNativeAdEvent(to: self.unitWebView,
@@ -82,15 +94,27 @@ extension APEUnitView {
                                                          Constants.Monetization.playerMonLoadingImpressionFailed)
             })
         
-            // showGADView
         if let bannerView = bannerView {
             self.bannerViews.append(bannerView)
             if let containerView = unitWebView, bannerView.banner().superview == nil {
                 bannerView.show(containerView)
             }
         }
-        self.messageDispatcher.sendNativeAdEvent(
-            to: self.unitWebView, Constants.Monetization.playerMonLoadingPass
-        )
+        self.messageDispatcher.sendNativeAdEvent(to: self.unitWebView, Constants.Monetization.playerMonLoadingPass)
+    }
+    
+    func removePubMaticView(of adType: PubMaticParams.AdType) {
+        guard let view = bannerViews.first(where: {
+            switch $0.type() {
+            case .pubMatic(let params):
+                return params.adType == adType
+            case .gad:
+                return false
+            }
+        }) else { return }
+        if let index = bannerViews.firstIndex(of: view) {
+            bannerViews.remove(at: index)
+        }
+        view.hide()
     }
 }

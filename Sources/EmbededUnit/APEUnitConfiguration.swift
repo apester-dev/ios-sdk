@@ -53,7 +53,8 @@ public enum APEUnitParams {
     private(set) var hideApesterAds: Bool
     private(set) var autoFullscreen: Bool?
     
-    public var pubMaticBottomAdTitle: String = "Anzeige"
+    public var adTitleLabelText: String = "Anzeige "
+    public var adInUnitBackgroundColor: UIColor = .darkGray.withAlphaComponent(0.975)
     
     override var parameters: [String: String] {
         var value = super.parameters

@@ -65,7 +65,8 @@ struct Constants {
     
     struct Unit {
         static let isReady = "apester_interaction_loaded"
-        static let unitPath = "/v2/static/in-app-unit-detached.html"
+        static let inAppUnitDetached = "in-app-unit-detached"
+        static let unitPath = "/v2/static/\(inAppUnitDetached).html"
         static let proxy = "apesterUnitProxy"
         static let resize = "apester_resize_unit"
         static let height = "height"

@@ -9,14 +9,10 @@
 /* Begin PBXBuildFile section */
 		3549BB501DA38A2000C63030 /* ApesterKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 3549BB181DA3890B00C63030 /* ApesterKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3549BB661DA38ADB00C63030 /* ApesterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3549BB211DA389CD00C63030 /* ApesterKit.framework */; };
-		3605CD9F2613946B007D155B /* Pods_ApesterKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CBEEE1F78C877AA0DB61285C /* Pods_ApesterKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		361BF13F241EB9770079BFE3 /* APEUnitViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 361BF13E241EB9770079BFE3 /* APEUnitViewDelegate.swift */; };
-		3697E8672417FAF900B6AC79 /* APEUnitConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */; };
 		3697E8692418DD2D00B6AC79 /* UnitConfigurationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697E8682418DD2D00B6AC79 /* UnitConfigurationFactory.swift */; };
 		36B5DC1D2419549B000E46AF /* APEUnitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FC4E55241776BC00A25076 /* APEUnitView.swift */; };
 		36B5DC1F241954A1000E46AF /* APEUnitConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */; };
-		36FC4E5E24178CB800A25076 /* APEUnitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FC4E55241776BC00A25076 /* APEUnitView.swift */; };
-		3852CB17A5673CEFCEC7C357 /* Pods_Apester.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D4D185EABE4D9AEDC49B7D7 /* Pods_Apester.framework */; };
 		86120824233F74A9006608F1 /* UserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86120811233F74A9006608F1 /* UserAgent.swift */; };
 		864E5A0424DB017400F5D70C /* APESingleUnitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 864E5A0324DB017400F5D70C /* APESingleUnitViewController.m */; };
 		864E5A0724DB0C1300F5D70C /* APEUnitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864E5A0524DB0C0100F5D70C /* APEUnitViewController.swift */; };
@@ -32,6 +28,10 @@
 		8679F3C62423EE7D00AA4749 /* APEViewNavigationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8679F3C32423E36100AA4749 /* APEViewNavigationType.swift */; };
 		8679F3C9242402BF00AA4749 /* APEViewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8679F3C8242402BF00AA4749 /* APEViewService.swift */; };
 		8679F3CB24241C3700AA4749 /* APEMultipleUnitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8679F3CA24241C3700AA4749 /* APEMultipleUnitsViewController.swift */; };
+		867BF0CA282910DA009BF1DB /* APEGADBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C3FB202828C2D700E9CAAC /* APEGADBannerView.swift */; };
+		867BF0CC282910E7009BF1DB /* APEPubMaticProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C3FB1B2828B5CB00E9CAAC /* APEPubMaticProvider.swift */; };
+		867BF0CE282910EB009BF1DB /* APEMonetizationParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8666004A282872EB00EB5EE6 /* APEMonetizationParams.swift */; };
+		867BF0D028291102009BF1DB /* APEView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8679F3BE2423E07300AA4749 /* APEView.swift */; };
 		867D559B23E4A0D600190D64 /* APEStripViewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867D559A23E4A0D600190D64 /* APEStripViewService.swift */; };
 		867D559D23E4A0DC00190D64 /* APEStripViewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867D559A23E4A0D600190D64 /* APEStripViewService.swift */; };
 		8682A1E127A8024700A40F88 /* FBLPromises.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8682A1E027A8024700A40F88 /* FBLPromises.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -46,13 +46,9 @@
 		8682A1F527A8024700A40F88 /* Pods_ApesterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8682A1F427A8024700A40F88 /* Pods_ApesterKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8682A1F727A8024700A40F88 /* UserMessagingPlatform.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8682A1F627A8024700A40F88 /* UserMessagingPlatform.xcframework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		8682A20027A804EC00A40F88 /* APEGADViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A5032C270A4663003CA642 /* APEGADViewDelegate.swift */; };
-		8682A20127A804EC00A40F88 /* APEGADViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A5032C270A4663003CA642 /* APEGADViewDelegate.swift */; };
-		8682A20227A804F300A40F88 /* APEPubMaticViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A5033F270DC689003CA642 /* APEPubMaticViewProvider.swift */; };
+		8682A20227A804F300A40F88 /* APEPubMaticBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A5033F270DC689003CA642 /* APEPubMaticBannerView.swift */; };
 		8682A20327A804F300A40F88 /* APEPubMaticViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A50342270DC6C0003CA642 /* APEPubMaticViewDelegate.swift */; };
-		8682A20427A804F400A40F88 /* APEPubMaticViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A5033F270DC689003CA642 /* APEPubMaticViewProvider.swift */; };
-		8682A20527A804F400A40F88 /* APEPubMaticViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A50342270DC6C0003CA642 /* APEPubMaticViewDelegate.swift */; };
 		8682A20627A8051F00A40F88 /* APEGADViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A50338270DC237003CA642 /* APEGADViewProvider.swift */; };
-		8682A20827A8052100A40F88 /* APEGADViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A50338270DC237003CA642 /* APEGADViewProvider.swift */; };
 		86AC3115240BA788003F4753 /* StripConfigurationsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86AC3114240BA788003F4753 /* StripConfigurationsFactory.swift */; };
 		86AFA1BB232BE99F00E1720A /* APESingleStripViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86AFA1BA232BE99F00E1720A /* APESingleStripViewController.m */; };
 		86AFA1F0232C052500E1720A /* APEStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0BE33D2223169400542E3C /* APEStripView.swift */; };
@@ -63,8 +59,11 @@
 		86B2AA6D23830D40000F171D /* APEStripViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B2AA6C23830D40000F171D /* APEStripViewTests.swift */; };
 		86B735ED23380D9100949864 /* APEStripStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B735EC23380D9100949864 /* APEStripStyle.swift */; };
 		86B73602233871CF00949864 /* APECollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B73601233871CF00949864 /* APECollectionViewCell.swift */; };
+		86C4853C28291ED300765E36 /* ApesterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3549BB211DA389CD00C63030 /* ApesterKit.framework */; };
+		86C4853D28291ED300765E36 /* ApesterKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3549BB211DA389CD00C63030 /* ApesterKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		86C4853E28291ED500765E36 /* Pods_Apester.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D4D185EABE4D9AEDC49B7D7 /* Pods_Apester.framework */; };
+		86C4853F28291ED500765E36 /* Pods_Apester.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3D4D185EABE4D9AEDC49B7D7 /* Pods_Apester.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		86EAFF2D233E9D1000081AAB /* BundleInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86EAFF2C233E9D1000081AAB /* BundleInfo.swift */; };
-		A6033FD1830457164C46133C /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		BB0BE33E2223169400542E3C /* APEStripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0BE33D2223169400542E3C /* APEStripView.swift */; };
 		BB44109222D53AAB00BB1DEC /* ScriptMessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109122D53AAB00BB1DEC /* ScriptMessageHandler.swift */; };
 		BB44109A22D53B9500BB1DEC /* MessagesDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB44109922D53B9500BB1DEC /* MessagesDispatcher.swift */; };
@@ -80,8 +79,6 @@
 		BBC96DCB2227843100EA7E6B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB3DD3781FDF47E70094A773 /* Main.storyboard */; };
 		BBC96DCC2227843400EA7E6B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB14A6BA1F1F58F6003E393D /* Assets.xcassets */; };
 		BBC96DD22227844F00EA7E6B /* APEMultipleStripsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9709BE22232BED00E1076B /* APEMultipleStripsViewController.swift */; };
-		BBC96DD62227847F00EA7E6B /* ApesterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3549BB211DA389CD00C63030 /* ApesterKit.framework */; };
-		BBC96DD72227847F00EA7E6B /* ApesterKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3549BB211DA389CD00C63030 /* ApesterKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BBC96DE1222785F400EA7E6B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB9709AA222322E000E1076B /* Constants.swift */; };
 /* End PBXBuildFile section */
 
@@ -116,7 +113,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				3605CD9F2613946B007D155B /* Pods_ApesterKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -127,7 +123,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				BBC96DD72227847F00EA7E6B /* ApesterKit.framework in Embed Frameworks */,
+				86C4853D28291ED300765E36 /* ApesterKit.framework in Embed Frameworks */,
+				86C4853F28291ED500765E36 /* Pods_Apester.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -154,6 +151,7 @@
 		8652CB20233BF93B0092E309 /* SynchronizedScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SynchronizedScript.swift; sourceTree = "<group>"; };
 		8658F76923832E4500C23BDA /* APEStripViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripViewDelegate.swift; sourceTree = "<group>"; };
 		8658F76B23832F9700C23BDA /* APEEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEEnvironment.swift; sourceTree = "<group>"; };
+		8666004A282872EB00EB5EE6 /* APEMonetizationParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEMonetizationParams.swift; sourceTree = "<group>"; };
 		8679F3BE2423E07300AA4749 /* APEView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEView.swift; sourceTree = "<group>"; };
 		8679F3C02423E11F00AA4749 /* APEConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEConfiguration.swift; sourceTree = "<group>"; };
 		8679F3C32423E36100AA4749 /* APEViewNavigationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEViewNavigationType.swift; sourceTree = "<group>"; };
@@ -173,7 +171,7 @@
 		8682A1F627A8024700A40F88 /* UserMessagingPlatform.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = UserMessagingPlatform.xcframework; path = Pods/GoogleUserMessagingPlatform/Frameworks/Release/UserMessagingPlatform.xcframework; sourceTree = "<group>"; };
 		86A5032C270A4663003CA642 /* APEGADViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEGADViewDelegate.swift; sourceTree = "<group>"; };
 		86A50338270DC237003CA642 /* APEGADViewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEGADViewProvider.swift; sourceTree = "<group>"; };
-		86A5033F270DC689003CA642 /* APEPubMaticViewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEPubMaticViewProvider.swift; sourceTree = "<group>"; };
+		86A5033F270DC689003CA642 /* APEPubMaticBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEPubMaticBannerView.swift; sourceTree = "<group>"; };
 		86A50342270DC6C0003CA642 /* APEPubMaticViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APEPubMaticViewDelegate.swift; sourceTree = "<group>"; };
 		86AC3114240BA788003F4753 /* StripConfigurationsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripConfigurationsFactory.swift; sourceTree = "<group>"; };
 		86AFA1B8232BE99F00E1720A /* Apester-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Apester-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -182,6 +180,8 @@
 		86B2AA6C23830D40000F171D /* APEStripViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripViewTests.swift; sourceTree = "<group>"; };
 		86B735EC23380D9100949864 /* APEStripStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripStyle.swift; sourceTree = "<group>"; };
 		86B73601233871CF00949864 /* APECollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APECollectionViewCell.swift; sourceTree = "<group>"; };
+		86C3FB1B2828B5CB00E9CAAC /* APEPubMaticProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEPubMaticProvider.swift; sourceTree = "<group>"; };
+		86C3FB202828C2D700E9CAAC /* APEGADBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEGADBannerView.swift; sourceTree = "<group>"; };
 		86EAFF2C233E9D1000081AAB /* BundleInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleInfo.swift; sourceTree = "<group>"; };
 		BB0BE33D2223169400542E3C /* APEStripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEStripView.swift; sourceTree = "<group>"; };
 		BB14A6BA1F1F58F6003E393D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -234,8 +234,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BBC96DD62227847F00EA7E6B /* ApesterKit.framework in Frameworks */,
-				3852CB17A5673CEFCEC7C357 /* Pods_Apester.framework in Frameworks */,
+				86C4853C28291ED300765E36 /* ApesterKit.framework in Frameworks */,
+				86C4853E28291ED500765E36 /* Pods_Apester.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,7 +360,7 @@
 			isa = PBXGroup;
 			children = (
 				86A50342270DC6C0003CA642 /* APEPubMaticViewDelegate.swift */,
-				86A5033F270DC689003CA642 /* APEPubMaticViewProvider.swift */,
+				86C3FB1B2828B5CB00E9CAAC /* APEPubMaticProvider.swift */,
 			);
 			path = PubMatic;
 			sourceTree = "<group>";
@@ -377,6 +377,7 @@
 		86A5033B270DC249003CA642 /* AdProvider */ = {
 			isa = PBXGroup;
 			children = (
+				86C3FB1E2828B8D800E9CAAC /* APEBannerView */,
 				86A50337270DBDDF003CA642 /* GoogleAd */,
 				86A50336270DBDD3003CA642 /* PubMatic */,
 			);
@@ -389,6 +390,16 @@
 				86B73601233871CF00949864 /* APECollectionViewCell.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		86C3FB1E2828B8D800E9CAAC /* APEBannerView */ = {
+			isa = PBXGroup;
+			children = (
+				8666004A282872EB00EB5EE6 /* APEMonetizationParams.swift */,
+				86A5033F270DC689003CA642 /* APEPubMaticBannerView.swift */,
+				86C3FB202828C2D700E9CAAC /* APEGADBannerView.swift */,
+			);
+			path = APEBannerView;
 			sourceTree = "<group>";
 		};
 		BB328DEE1FDFF3EB00A0A159 /* ViewControllers */ = {
@@ -741,11 +752,14 @@
 				86120824233F74A9006608F1 /* UserAgent.swift in Sources */,
 				8679F3C62423EE7D00AA4749 /* APEViewNavigationType.swift in Sources */,
 				8679F3C22423E31900AA4749 /* APEView.swift in Sources */,
+				867BF0CA282910DA009BF1DB /* APEGADBannerView.swift in Sources */,
 				BB44109D22D53BF300BB1DEC /* Extensions.swift in Sources */,
 				8679F3C12423E11F00AA4749 /* APEConfiguration.swift in Sources */,
 				8658F76C23832F9700C23BDA /* APEEnvironment.swift in Sources */,
 				361BF13F241EB9770079BFE3 /* APEUnitViewDelegate.swift in Sources */,
+				867BF0CC282910E7009BF1DB /* APEPubMaticProvider.swift in Sources */,
 				867D559B23E4A0D600190D64 /* APEStripViewService.swift in Sources */,
+				867BF0CE282910EB009BF1DB /* APEMonetizationParams.swift in Sources */,
 				BB44109F22D53D2F00BB1DEC /* APEStripConfiguration.swift in Sources */,
 				8682A20027A804EC00A40F88 /* APEGADViewDelegate.swift in Sources */,
 				BB9709AB222322E000E1076B /* Constants.swift in Sources */,
@@ -753,7 +767,7 @@
 				86EAFF2D233E9D1000081AAB /* BundleInfo.swift in Sources */,
 				8682A20627A8051F00A40F88 /* APEGADViewProvider.swift in Sources */,
 				36B5DC1D2419549B000E46AF /* APEUnitView.swift in Sources */,
-				8682A20227A804F300A40F88 /* APEPubMaticViewProvider.swift in Sources */,
+				8682A20227A804F300A40F88 /* APEPubMaticBannerView.swift in Sources */,
 				BB44109222D53AAB00BB1DEC /* ScriptMessageHandler.swift in Sources */,
 				BB0BE33E2223169400542E3C /* APEStripView.swift in Sources */,
 			);
@@ -766,23 +780,18 @@
 				86B2AA6D23830D40000F171D /* APEStripViewTests.swift in Sources */,
 				8652CB22233C0B140092E309 /* SynchronizedScript.swift in Sources */,
 				8658F76E2383305B00C23BDA /* APEStripViewDelegate.swift in Sources */,
-				8682A20427A804F400A40F88 /* APEPubMaticViewProvider.swift in Sources */,
 				86AFA1F6232C057E00E1720A /* Extensions.swift in Sources */,
 				86AFA1F0232C052500E1720A /* APEStripView.swift in Sources */,
 				BBC96DE1222785F400EA7E6B /* Constants.swift in Sources */,
-				8682A20527A804F400A40F88 /* APEPubMaticViewDelegate.swift in Sources */,
 				86AFA1F5232C057900E1720A /* MessagesDispatcher.swift in Sources */,
-				36FC4E5E24178CB800A25076 /* APEUnitView.swift in Sources */,
 				8658F76D2383304800C23BDA /* APEEnvironment.swift in Sources */,
 				86AFA1F1232C052700E1720A /* APEStripConfiguration.swift in Sources */,
-				3697E8672417FAF900B6AC79 /* APEUnitConfiguration.swift in Sources */,
 				8652CB23233C0F1D0092E309 /* APEStripStyle.swift in Sources */,
+				867BF0D028291102009BF1DB /* APEView.swift in Sources */,
 				867D559D23E4A0DC00190D64 /* APEStripViewService.swift in Sources */,
 				BB532AB6235AEDFD00F326D3 /* UserAgent.swift in Sources */,
-				8682A20127A804EC00A40F88 /* APEGADViewDelegate.swift in Sources */,
 				BB532AB5235AEDCF00F326D3 /* BundleInfo.swift in Sources */,
 				86AFA1F3232C057900E1720A /* ScriptMessageHandler.swift in Sources */,
-				8682A20827A8052100A40F88 /* APEGADViewProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -963,7 +972,7 @@
 			baseConfigurationReference = 30F69B3AE3A2E15982E645A9 /* Pods-ApesterKit.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1000;
 				DEFINES_MODULE = YES;
@@ -1005,7 +1014,7 @@
 			baseConfigurationReference = 374B416556F3A68B888D54DF /* Pods-ApesterKit.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1000;
 				DEFINES_MODULE = YES;
@@ -1145,7 +1154,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DE1947B5E968C36D8370E18E /* Pods-Apester.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1191,7 +1199,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 27A2198E88CA46D77AE75206 /* Pods-Apester.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
