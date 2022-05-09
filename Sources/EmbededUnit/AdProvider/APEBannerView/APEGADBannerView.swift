@@ -32,7 +32,7 @@ class APEGADBannerView: UIView {
     ) {
         super.init(frame: .zero)
         GADMobileAds.sharedInstance().start(completionHandler: nil)
-        let delegate = self.delegate ?? self.makeGADViewDelegate(
+        let delegate = self.makeGADViewDelegate(
             containerViewController: containerViewController,
             receiveAdSuccessCompletion: receiveAdSuccessCompletion,
             receiveAdErrorCompletion:  receiveAdErrorCompletion
@@ -44,6 +44,11 @@ class APEGADBannerView: UIView {
         gADView.load(GADRequest())
         self.bannerView = gADView
         self.isCompanionVariant = params.isCompanionVariant
+    }
+    
+    deinit {
+        self.bannerView = nil
+        self.delegate = nil
     }
     
     func show(in containerView: UIView) {
@@ -67,6 +72,7 @@ class APEGADBannerView: UIView {
     }
     
     @objc func hide() {
+        bannerView?.removeFromSuperview()
         removeFromSuperview()
     }
     
@@ -81,25 +87,25 @@ private extension APEGADBannerView {
         receiveAdErrorCompletion: @escaping ((Error?) -> Void)
     ) -> APEUnitView.GADViewDelegate {
         .init(containerViewController: containerViewController,
-                        receiveAdSuccessCompletion: {
-            if let containerView = self.containerView {
+              receiveAdSuccessCompletion: {
+            if let containerView = self.containerView, let bannerView  = self.bannerView {
                 self.removeConstraints(self.containerViewConstraints)
                 self.containerViewConstraints = [
                     self.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
                     self.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-                    self.topAnchor.constraint(equalTo: containerView.topAnchor),
-                    self.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+                    self.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+                    self.heightAnchor.constraint(equalTo: bannerView.heightAnchor)
                 ]
                 self.translatesAutoresizingMaskIntoConstraints = false
                 NSLayoutConstraint.activate(self.containerViewConstraints)
             }
             self.bannerView?.isHidden = false
             receiveAdSuccessCompletion()
-                        },
-                        receiveAdErrorCompletion: { error in
+        },
+              receiveAdErrorCompletion: { error in
             receiveAdErrorCompletion(error)
             print(error?.localizedDescription ?? "")
-                        })
+        })
     }
     
     private func gADViewLayoutConstraints(_ gADView: GADBannerView,

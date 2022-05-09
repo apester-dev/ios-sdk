@@ -81,10 +81,10 @@ class APEPubMaticBannerView: UIView {
         
         pubMaticView?.loadAd()
         self.bannerView = pubMaticView
-        let delegate = self.delegate ?? makePubMaticViewDelegate(adType: adType,
-                                                                 containerViewController: containerViewController,
-                                                                 receiveAdSuccessCompletion: receiveAdSuccessCompletion,
-                                                                 receiveAdErrorCompletion: receiveAdErrorCompletion)
+        let delegate = makePubMaticViewDelegate(adType: adType,
+                                                containerViewController: containerViewController,
+                                                receiveAdSuccessCompletion: receiveAdSuccessCompletion,
+                                                receiveAdErrorCompletion: receiveAdErrorCompletion)
         self.delegate = delegate
         self.bannerView?.delegate = delegate
         self.adType = adType
@@ -92,6 +92,12 @@ class APEPubMaticBannerView: UIView {
         self.inUnitBackgroundColor = inUnitBackgroundColor
         self.onAdRemovalCompletion = onAdRemovalCompletion
         self.timeInView = params.timeInView
+    }
+    
+    deinit {
+        self.bannerView = nil
+        self.delegate = nil
+        self.onAdRemovalCompletion = nil
     }
     
     func show(in containerView: UIView) {
@@ -133,6 +139,7 @@ class APEPubMaticBannerView: UIView {
             pubMaticViewTimer?.invalidate()
             pubMaticViewTimer = nil
         }
+        bannerView?.removeFromSuperview()
         removeFromSuperview()
     }
     
@@ -153,14 +160,27 @@ private extension APEPubMaticBannerView {
             containerViewController: containerViewController,
             receiveAdSuccessCompletion: { [weak self] in
                 guard let self = self else { return }
-                if let containerView = self.containerView {
+                if let containerView = self.containerView, let bannerView = self.bannerView {
                     self.removeConstraints(self.containerViewConstraints)
-                    self.containerViewConstraints = [
-                        self.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-                        self.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-                        self.topAnchor.constraint(equalTo: containerView.topAnchor),
-                        self.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
-                    ]
+                    var constraints: [NSLayoutConstraint] = []
+                    switch adType {
+                    case .inUnit:
+                        constraints  = [
+                            self.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+                            self.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+                            self.topAnchor.constraint(equalTo: containerView.topAnchor),
+                            self.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+                        ]
+                    case .bottom:
+                        constraints = [
+                            self.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+                            self.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+                            self.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+                            self.heightAnchor.constraint(equalTo: bannerView.heightAnchor,
+                                                         constant: self.titleLabel?.bounds.height ?? 0)
+                        ]
+                    }
+                    self.containerViewConstraints = constraints
                     self.translatesAutoresizingMaskIntoConstraints = false
                     NSLayoutConstraint.activate(self.containerViewConstraints)
                 }
