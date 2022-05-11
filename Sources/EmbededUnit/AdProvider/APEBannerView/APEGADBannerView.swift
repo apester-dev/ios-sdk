@@ -42,6 +42,7 @@ class APEGADBannerView: UIView {
         gADView.delegate = delegate
         gADView.adUnitID = params.adUnitId
         gADView.load(GADRequest())
+        self.delegate = delegate
         self.bannerView = gADView
         self.isCompanionVariant = params.isCompanionVariant
     }
@@ -60,6 +61,9 @@ class APEGADBannerView: UIView {
         }
         self.bannerView?.isHidden = true
         containerView.addSubview(self)
+        addSubview(gADView)
+        bringSubviewToFront(gADView)
+        
         self.containerView = containerView
         
         gADView.rootViewController = containerViewController
