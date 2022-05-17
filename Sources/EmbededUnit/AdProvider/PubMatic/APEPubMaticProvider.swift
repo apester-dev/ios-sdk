@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import OpenWrapSDK
 
 extension APEUnitView.BannerViewProvider {
     
@@ -15,50 +16,95 @@ extension APEUnitView.BannerViewProvider {
         adTitleLabelText: String,
         inUnitBackgroundColor: UIColor,
         containerViewController: UIViewController,
-        onAdRemovalCompletion: @escaping ((APEUnitView.PubMaticParams.AdType) -> Void),
+        onAdRemovalCompletion: @escaping ((APEUnitView.Monetization.AdType) -> Void),
         receiveAdSuccessCompletion: @escaping (() -> Void),
         receiveAdErrorCompletion: @escaping ((Error?) -> Void)
     ) -> APEUnitView.BannerViewProvider {
         var provider = APEUnitView.BannerViewProvider()
-        let banner = APEPubMaticBannerView(
-            params: params,
+        let banner = APEBannerView(
             adTitleLabelText: adTitleLabelText,
+            monetizationType: .pubMatic(params: params),
             inUnitBackgroundColor: inUnitBackgroundColor,
+            timeInView: params.timeInView,
             containerViewController: containerViewController,
-            onAdRemovalCompletion: onAdRemovalCompletion,
-            receiveAdSuccessCompletion: receiveAdSuccessCompletion,
-            receiveAdErrorCompletion: receiveAdErrorCompletion
+            onAdRemovalCompletion: onAdRemovalCompletion
         )
-        provider.type = {
-            .pubMatic(param: params)
+        let adType: APEUnitView.Monetization.AdType = params.adType
+        
+        let adSizes = [POBAdSizeMake(adType.size.width, adType.size.height)].compactMap({ $0 })
+        
+        let appInfo = POBApplicationInfo()
+        appInfo.domain = params.appDomain
+        appInfo.storeURL = URL(string: params.appStoreUrl)!
+        OpenWrapSDK.setApplicationInfo(appInfo)
+        
+        let pubMaticView = POBBannerView(publisherId: params.publisherId,
+                                         profileId: .init(value: params.profileId),
+                                         adUnitId: params.adUnitId,
+                                         adSizes: adSizes)
+        
+        pubMaticView?.request.testModeEnabled = params.testMode
+        pubMaticView?.request.debug = params.debugLogs
+        pubMaticView?.request.bidSummaryEnabled = params.bidSummaryLogs
+        pubMaticView?.loadAd()
+        banner.delegate = makePubMaticViewDelegate(
+            adType: adType,
+            containerViewController: containerViewController,
+            receiveAdSuccessCompletion: {
+                banner.onReceiveAdSuccess?()
+                receiveAdSuccessCompletion()
+            },
+            receiveAdErrorCompletion: { [banner] error in
+                banner.onReceiveAdError?(error)
+                receiveAdErrorCompletion(error)
+            }
+        )
+        pubMaticView?.delegate = banner.delegate as? POBBannerViewDelegate
+        banner.adView = pubMaticView
+        
+        provider.type = { [banner] in
+            banner.monetizationType
         }
-        provider.banner = {
+        provider.banner = { [banner] in
             banner
         }
-        provider.hide = {
+        provider.hide = { [banner] in
             banner.hide()
         }
-        
-        provider.show = { containerView in
+        provider.show = { [banner] containerView in
             banner.show(in: containerView)
         }
-        provider.refresh = {
-            banner.refresh()
+        provider.refresh = { [pubMaticView] in
+            pubMaticView?.forceRefresh()
         }
         return provider
     }
+    
+    static func makePubMaticViewDelegate(
+        adType: APEUnitView.Monetization.AdType,
+        containerViewController: UIViewController,
+        receiveAdSuccessCompletion: @escaping (() -> Void),
+        receiveAdErrorCompletion: @escaping ((Error?) -> Void)
+    ) -> APEUnitView.PubMaticViewDelegate {
+        .init(
+            containerViewController: containerViewController,
+            receiveAdSuccessCompletion: receiveAdSuccessCompletion,
+            receiveAdErrorCompletion: receiveAdErrorCompletion
+        )
+    }
+    
 }
 
     // MARK:- PubMatic ADs
 extension APEUnitView {
     
     func setupPubMaticView(params: PubMaticParams) {
-        let adType: PubMaticParams.AdType = params.adType
+        let adType: Monetization.AdType = params.adType
         var bannerView = self.bannerViews.first(where: {
             switch $0.type() {
             case .pubMatic(let params):
                 return params.adType == adType
-            case .gad:
+            case .adMob, .none:
                 return false
             }
         })
@@ -103,12 +149,12 @@ extension APEUnitView {
         self.messageDispatcher.sendNativeAdEvent(to: self.unitWebView, Constants.Monetization.playerMonLoadingPass)
     }
     
-    func removePubMaticView(of adType: PubMaticParams.AdType) {
+    func removePubMaticView(of adType: Monetization.AdType) {
         guard let view = bannerViews.first(where: {
             switch $0.type() {
             case .pubMatic(let params):
                 return params.adType == adType
-            case .gad:
+            case .adMob, .none:
                 return false
             }
         }) else { return }

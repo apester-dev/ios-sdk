@@ -11,37 +11,26 @@ import Foundation
 extension APEUnitView {
     
     enum Monetization: Equatable {
-        case pubMatic(param: PubMaticParams)
-        case gad(params: GADParams)
+        case pubMatic(params: PubMaticParams)
+        case adMob(params: AdMobParams)
         
         static func == (lhs: Monetization, rhs: Monetization) -> Bool {
             switch (lhs, rhs) {
             case (.pubMatic(let lhsParams), .pubMatic(let rhsParams)):
                 return lhsParams.adType == rhsParams.adType
-            case (.gad(let lhsParams), .gad(let rhsParams)):
+            case (.adMob(let lhsParams), .adMob(let rhsParams)):
                 return lhsParams.adUnitId == rhsParams.adUnitId
             default: return false
             }
         }
-    }
         
-    struct GADParams: Hashable {
-        let adUnitId: String
-        let isCompanionVariant: Bool
-        
-        init?(from dictionary: [String: Any]) {
-            guard let provider = dictionary[Constants.Monetization.adProvider] as? String,
-                  provider == Constants.Monetization.adMob,
-                  let adUnitId = dictionary[Constants.Monetization.adMobUnitId] as? String,
-                  let isCompanionVariant = dictionary[Constants.Monetization.isCompanionVariant] as? Bool else {
-                return nil
+        var adType: AdType {
+            switch self {
+            case .pubMatic(let params):  return params.adType
+            case .adMob(let params):      return params.adType
             }
-            self.adUnitId = adUnitId
-            self.isCompanionVariant = isCompanionVariant
         }
-    }
-    
-    struct PubMaticParams: Hashable {
+        
         enum AdType: String {
             case bottom
             case inUnit
@@ -53,12 +42,40 @@ extension APEUnitView {
                 }
             }
         }
+    }
+        
+    struct AdMobParams: Hashable {
+        let adUnitId: String
+        let isCompanionVariant: Bool
+        
+        var adType: Monetization.AdType {
+            isCompanionVariant ? .inUnit : .bottom
+        }
+        
+        init?(from dictionary: [String: Any]) {
+            guard let provider = dictionary[Constants.Monetization.adProvider] as? String,
+                  provider == Constants.Monetization.adMob,
+                  let adUnitId = dictionary[Constants.Monetization.adMobUnitId] as? String,
+                  let isCompanionVariant = dictionary[Constants.Monetization.isCompanionVariant] as? Bool else {
+                return nil
+            }
+            self.adUnitId = adUnitId
+            self.isCompanionVariant = isCompanionVariant
+        }
+        
+        init(adUnitId: String, isCompanionVariant: Bool) {
+            self.adUnitId = adUnitId
+            self.isCompanionVariant = isCompanionVariant
+        }
+    }
+    
+    struct PubMaticParams: Hashable {
         let adUnitId: String
         let profileId: Int
         let publisherId: String
         let appStoreUrl: String
         let isCompanionVariant: Bool
-        let adType: AdType
+        let adType: Monetization.AdType
         let appDomain: String
         let testMode: Bool
         let debugLogs: Bool
@@ -75,7 +92,7 @@ extension APEUnitView {
                   let publisherId = dictionary[Constants.Monetization.publisherId] as? String,
                   let adUnitId = dictionary[Constants.Monetization.pubMaticUnitId] as? String,
                   let adTypeStr = dictionary[Constants.Monetization.adType] as? String,
-                  let adType = AdType(rawValue: adTypeStr) else {
+                  let adType = Monetization.AdType(rawValue: adTypeStr) else {
                 return nil
             }
             self.adUnitId           = adUnitId

@@ -228,8 +228,8 @@ extension APEUnitView {
             
             if bodyString.contains(Constants.Monetization.initNativeAd),
                let dictionary = bodyString.dictionary {
-                if let params = GADParams(from: dictionary) {
-                    setupGADView(params: params)
+                if let params = AdMobParams(from: dictionary) {
+                    setupAdMobView(params: params)
                 }
                 if let params = PubMaticParams(from: dictionary) {
                     setupPubMaticView(params: params)
@@ -245,7 +245,7 @@ extension APEUnitView {
             
             if bodyString.contains(Constants.Monetization.killInUnit),
                let adTypeStr = bodyString.dictionary?[Constants.Monetization.adType] as? String,
-               let adType = PubMaticParams.AdType(rawValue: adTypeStr) {
+               let adType = Monetization.AdType(rawValue: adTypeStr) {
                 removePubMaticView(of: adType)
             }
             
@@ -331,7 +331,7 @@ extension APEUnitView {
     
     struct BannerViewProvider: Equatable {
         
-        var type: () -> Monetization
+        var type: () -> Monetization?
         
         var banner: () -> UIView
         

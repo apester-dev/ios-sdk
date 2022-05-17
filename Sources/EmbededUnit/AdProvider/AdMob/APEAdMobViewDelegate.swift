@@ -1,5 +1,5 @@
 //
-//  APEGADViewDelegate.swift
+//  APEAdMobViewDelegate.swift
 //  ApesterKit
 //
 //  Created by Hasan Sawaed Tabash on 03/10/2021.
@@ -13,7 +13,7 @@ import WebKit
 @available(iOS 11.0, *)
 extension APEUnitView {
     
-    class GADViewDelegate: NSObject, GADBannerViewDelegate {
+    class AdMobViewDelegate: NSObject, GADBannerViewDelegate {
         weak var containerViewController: UIViewController?
         private let receiveAdSuccessCompletion: (() -> Void)
         private let receiveAdErrorCompletion: ((Error?) -> Void)

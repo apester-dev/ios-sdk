@@ -7,52 +7,85 @@
 //
 
 import Foundation
+import GoogleMobileAds
 
 extension APEUnitView.BannerViewProvider {
     
-    static func gadProvider(
-        params: APEUnitView.GADParams,
+    static func adMobProvider(
+        params: APEUnitView.AdMobParams,
+        adTitleLabelText: String,
+        inUnitBackgroundColor: UIColor,
         containerViewController: UIViewController,
         receiveAdSuccessCompletion: @escaping (() -> Void),
         receiveAdErrorCompletion: @escaping ((Error?) -> Void)
     ) -> APEUnitView.BannerViewProvider {
         var provider = APEUnitView.BannerViewProvider()
-        let banner = APEGADBannerView(
-            params: params,
+        let banner = APEBannerView(
+            adTitleLabelText: adTitleLabelText,
+            monetizationType: .adMob(params: params),
+            inUnitBackgroundColor: inUnitBackgroundColor,
+            timeInView: nil,
             containerViewController: containerViewController,
-            receiveAdSuccessCompletion: receiveAdSuccessCompletion,
-            receiveAdErrorCompletion: receiveAdErrorCompletion
+            onAdRemovalCompletion: nil
         )
-        provider.type = {
-            .gad(params: params)
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
+        let gADView = GADBannerView(adSize: GADAdSizeBanner)
+        gADView.translatesAutoresizingMaskIntoConstraints = false
+        gADView.adUnitID = params.adUnitId
+        gADView.load(GADRequest())
+        
+        banner.delegate = makeGADViewDelegate(
+            containerViewController: containerViewController,
+            receiveAdSuccessCompletion: {
+                banner.onReceiveAdSuccess?()
+                receiveAdSuccessCompletion()
+            },
+            receiveAdErrorCompletion: { [banner] error in
+                banner.onReceiveAdError?(error)
+                receiveAdErrorCompletion(error)
+            }
+        )
+        gADView.delegate = banner.delegate as? GADBannerViewDelegate
+        gADView.rootViewController = containerViewController
+        banner.adView = gADView
+        
+        provider.type = { [banner] in
+            banner.monetizationType
         }
-        provider.banner = {
+        provider.banner = { [banner] in
             banner
         }
-        provider.hide = {
+        provider.hide = { [banner] in
             banner.hide()
         }
-        
-        provider.show = { containerView in
+        provider.show = { [banner] containerView in
             banner.show(in: containerView)
         }
-        provider.refresh = {
-            banner.refresh()
-        }
+        provider.refresh = {}
         return provider
+    }
+    
+    static func makeGADViewDelegate(
+        containerViewController: UIViewController,
+        receiveAdSuccessCompletion: @escaping (() -> Void),
+        receiveAdErrorCompletion: @escaping ((Error?) -> Void)
+    ) -> APEUnitView.AdMobViewDelegate {
+        .init(containerViewController: containerViewController,
+              receiveAdSuccessCompletion: receiveAdSuccessCompletion,
+              receiveAdErrorCompletion: receiveAdErrorCompletion)
     }
 }
 
 // MARK:- Google ADs
 extension APEUnitView {
     
-    func setupGADView(params: GADParams) {
+    func setupAdMobView(params: AdMobParams) {
         let adUnitId = params.adUnitId
         var bannerView = self.bannerViews.first(where: {
             switch $0.type() {
-            case .gad(let params):
+            case .adMob(let params):
                 return params.adUnitId == adUnitId
-            case .pubMatic:
+            case .pubMatic, .none:
                 return false
             }
         })
@@ -68,8 +101,10 @@ extension APEUnitView {
             return
         }
         
-        bannerView = .gadProvider(
+        bannerView = .adMobProvider(
             params: params,
+            adTitleLabelText: configuration.adTitleLabelText,
+            inUnitBackgroundColor: configuration.adInUnitBackgroundColor,
             containerViewController: containerViewController,
             receiveAdSuccessCompletion: { [weak self] in
                 guard let self = self else { return }
