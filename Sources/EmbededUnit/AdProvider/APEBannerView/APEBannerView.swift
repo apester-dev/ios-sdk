@@ -80,7 +80,6 @@ class APEBannerView: UIView {
                                                  constant: self.titleLabel?.bounds.height ?? 0)
                 ]
                 if let monetizationType = self.monetizationType,
-                   case .pubMatic = monetizationType,
                    case .inUnit = monetizationType.adType {
                     constraints  = [
                         self.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
@@ -96,7 +95,6 @@ class APEBannerView: UIView {
                 // Display a background is ad is pubMatic
             var timeInView = self.timeInView
             if let monetizationType = self.monetizationType,
-               case .pubMatic = monetizationType,
                case .inUnit = monetizationType.adType {
                 timeInView = timeInView ?? 7
                 self.backgroundColor = self.inUnitBackgroundColor
@@ -151,7 +149,7 @@ class APEBannerView: UIView {
         }
         
         
-        if case .pubMatic = monetizationType, case .inUnit = monetizationType.adType {
+        if case .inUnit = monetizationType.adType {
             closeButton.isHidden = true
             addSubview(closeButton)
             closeButton.translatesAutoresizingMaskIntoConstraints = false
@@ -175,8 +173,13 @@ class APEBannerView: UIView {
         }
         adView?.removeFromSuperview()
         self.adView = nil
-        removeFromSuperview()
+        self.removeFromSuperview()
         self.delegate = nil
+        
+        if let adType = self.monetizationType?.adType {
+            onAdRemovalCompletion?(adType)
+            onAdRemovalCompletion = nil
+        }
     }
 }
 
@@ -187,12 +190,12 @@ private extension APEBannerView {
         var constraints: [NSLayoutConstraint] = []
         
         switch monetizationType {
-        case .pubMatic(params: let param):
+        case .pubMatic(params: let params):
             constraints = [adView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor, constant: 0),
                            adView.widthAnchor.constraint(equalToConstant: type.size.width),
                            adView.heightAnchor.constraint(equalToConstant: type.size.height)]
             
-            switch param.adType {
+            switch params.adType {
             case .bottom:
                 constraints += [adView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 0)]
             case .inUnit:
@@ -201,10 +204,19 @@ private extension APEBannerView {
         case .adMob(params: let params):
             constraints = [adView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
                            adView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor)]
-            if params.isCompanionVariant {
-                constraints += [adView.topAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 0)]
-            } else {
+            switch params.adType {
+            case .bottom:
                 constraints += [adView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 0)]
+                if params.isCompanionVariant {
+                    constraints += [adView.topAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 0)]
+                } else {
+                    constraints += [adView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 0)]
+                }
+            case .inUnit:
+                constraints = [adView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor, constant: 0),
+                               adView.widthAnchor.constraint(equalToConstant: type.size.width),
+                               adView.heightAnchor.constraint(equalToConstant: type.size.height),
+                               adView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor, constant: 0)]
             }
         }
         return constraints

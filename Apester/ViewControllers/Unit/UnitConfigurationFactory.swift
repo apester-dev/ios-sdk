@@ -26,6 +26,7 @@ import ApesterKit
         switch environment {
         case .production:
             unitsParams = [
+                // .unit(mediaId: "6231aab6b6a111002a435a45"), // ADMob Test
                 .unit(mediaId: "61ee7ff6a5e14a002b6c044a"), //.unit(mediaId: "60eeda29b54b6f002448ba79"),
                 .playlist(tags: [], channelToken: "5f85919d44959d32decd9d31", context: false, fallback: false),
             ]

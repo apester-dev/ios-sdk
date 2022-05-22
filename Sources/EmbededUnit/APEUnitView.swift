@@ -93,7 +93,7 @@ import Foundation
     func showAdViews() {
         bannerViews
             .forEach({ bannerView in
-                if let containerView = unitWebView, bannerView.banner().superview == nil {
+                if let containerView = unitWebView, let banner = bannerView.banner(), banner.superview == nil {
                     bannerView.show(containerView)
                 }
         })
@@ -124,6 +124,7 @@ import Foundation
             self.unitWebView.load(URLRequest(url:unitUrl))
         }
         bannerViews.forEach({ $0.hide() })
+        bannerViews.removeAll()
     }
     
     public func stop() {
@@ -241,12 +242,15 @@ extension APEUnitView {
                 if let params = PubMaticParams(from: dictionary) {
                     setupPubMaticView(params: params)
                 }
+                if let params = AdMobParams(from: dictionary) {
+                    setupAdMobView(params: params)
+                }
             }
             
             if bodyString.contains(Constants.Monetization.killInUnit),
                let adTypeStr = bodyString.dictionary?[Constants.Monetization.adType] as? String,
                let adType = Monetization.AdType(rawValue: adTypeStr) {
-                removePubMaticView(of: adType)
+                removeAdView(of: adType)
             }
             
             if bodyString.contains(Constants.Unit.isReady), (configuration.autoFullscreen != nil) {
@@ -333,7 +337,7 @@ extension APEUnitView {
         
         var type: () -> Monetization?
         
-        var banner: () -> UIView
+        var banner: () -> UIView?
         
         var refresh: () -> Void
         
@@ -361,6 +365,24 @@ extension APEUnitView {
         
         static func == (lhs: APEUnitView.BannerViewProvider, rhs: APEUnitView.BannerViewProvider) -> Bool {
             lhs.type() == rhs.type()
+        }
+    }
+    
+    func removeAdView(of adType: Monetization.AdType) {
+        var viewProvider = bannerViews.first(where: {
+            switch $0.type() {
+            case .pubMatic(let params):
+                return params.adType == adType
+            case .adMob(let params):
+                return params.adType == adType
+            case .none:
+                return false
+            }
+        })
+        if let bannerView = viewProvider, let index = bannerViews.firstIndex(of: bannerView) {
+            bannerViews.remove(at: index)
+            bannerView.hide()
+            viewProvider = nil
         }
     }
 }

@@ -16,6 +16,7 @@ extension APEUnitView.BannerViewProvider {
         adTitleLabelText: String,
         inUnitBackgroundColor: UIColor,
         containerViewController: UIViewController,
+        onAdRemovalCompletion: @escaping ((APEUnitView.Monetization.AdType) -> Void),
         receiveAdSuccessCompletion: @escaping (() -> Void),
         receiveAdErrorCompletion: @escaping ((Error?) -> Void)
     ) -> APEUnitView.BannerViewProvider {
@@ -26,10 +27,11 @@ extension APEUnitView.BannerViewProvider {
             inUnitBackgroundColor: inUnitBackgroundColor,
             timeInView: nil,
             containerViewController: containerViewController,
-            onAdRemovalCompletion: nil
+            onAdRemovalCompletion: onAdRemovalCompletion
         )
         GADMobileAds.sharedInstance().start(completionHandler: nil)
-        let gADView = GADBannerView(adSize: GADAdSizeBanner)
+        
+        let gADView = GADBannerView(adSize: (params.adType == .inUnit) ? GADAdSizeBanner : GADAdSizeMediumRectangle)
         gADView.translatesAutoresizingMaskIntoConstraints = false
         gADView.adUnitID = params.adUnitId
         gADView.load(GADRequest())
@@ -53,7 +55,7 @@ extension APEUnitView.BannerViewProvider {
             banner.monetizationType
         }
         provider.banner = { [banner] in
-            banner
+            banner.adView
         }
         provider.hide = { [banner] in
             banner.hide()
@@ -89,9 +91,9 @@ extension APEUnitView {
                 return false
             }
         })
-        if let gadView = bannerView {
-            if let containerView = unitWebView, gadView.banner().superview == nil {
-                gadView.show(containerView)
+        if let bannerView = bannerView {
+            if let containerView = unitWebView, let banner = bannerView.banner(), banner.superview == nil {
+                bannerView.show(containerView)
             }
             return
         }
@@ -105,7 +107,9 @@ extension APEUnitView {
             params: params,
             adTitleLabelText: configuration.adTitleLabelText,
             inUnitBackgroundColor: configuration.adInUnitBackgroundColor,
-            containerViewController: containerViewController,
+            containerViewController: containerViewController, onAdRemovalCompletion: { [weak self] adType in
+                self?.removeAdView(of: adType)
+            },
             receiveAdSuccessCompletion: { [weak self] in
                 guard let self = self else { return }
                 self.messageDispatcher.sendNativeAdEvent(to: self.unitWebView,
@@ -120,7 +124,7 @@ extension APEUnitView {
             // showGADView
         if let bannerView = bannerView {
             self.bannerViews.append(bannerView)
-            if let containerView = unitWebView, bannerView.banner().superview == nil {
+            if let containerView = unitWebView, let banner = bannerView.banner(), banner.superview == nil {
                 bannerView.show(containerView)
             }
         }

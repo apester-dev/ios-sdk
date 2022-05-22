@@ -66,7 +66,7 @@ extension APEUnitView.BannerViewProvider {
             banner.monetizationType
         }
         provider.banner = { [banner] in
-            banner
+            banner.adView
         }
         provider.hide = { [banner] in
             banner.hide()
@@ -108,12 +108,12 @@ extension APEUnitView {
                 return false
             }
         })
-        if let pubMaticView = bannerView {
-            pubMaticView.refresh()
-            if let containerView = unitWebView, pubMaticView.banner().superview == nil {
-                pubMaticView.show(containerView)
+        if let bannerView = bannerView {
+            bannerView.refresh()
+            if let containerView = unitWebView, let banner = bannerView.banner(), banner.superview == nil {
+                bannerView.show(containerView)
+                return
             }
-            return
         }
         
         guard let containerViewController = self.containerViewController else {
@@ -127,7 +127,7 @@ extension APEUnitView {
             inUnitBackgroundColor: configuration.adInUnitBackgroundColor,
             containerViewController: containerViewController,
             onAdRemovalCompletion: {  [weak self] adType in
-                self?.removePubMaticView(of: adType)
+                self?.removeAdView(of: adType)
             },
             receiveAdSuccessCompletion: { [weak self] in
                 guard let self = self else { return }
@@ -142,25 +142,10 @@ extension APEUnitView {
         
         if let bannerView = bannerView {
             self.bannerViews.append(bannerView)
-            if let containerView = unitWebView, bannerView.banner().superview == nil {
+            if let containerView = unitWebView, let banner = bannerView.banner(), banner.superview == nil {
                 bannerView.show(containerView)
             }
         }
         self.messageDispatcher.sendNativeAdEvent(to: self.unitWebView, Constants.Monetization.playerMonLoadingPass)
-    }
-    
-    func removePubMaticView(of adType: Monetization.AdType) {
-        guard let view = bannerViews.first(where: {
-            switch $0.type() {
-            case .pubMatic(let params):
-                return params.adType == adType
-            case .adMob, .none:
-                return false
-            }
-        }) else { return }
-        if let index = bannerViews.firstIndex(of: view) {
-            bannerViews.remove(at: index)
-        }
-        view.hide()
     }
 }

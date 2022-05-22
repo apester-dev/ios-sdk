@@ -47,25 +47,24 @@ extension APEUnitView {
     struct AdMobParams: Hashable {
         let adUnitId: String
         let isCompanionVariant: Bool
-        
-        var adType: Monetization.AdType {
-            isCompanionVariant ? .inUnit : .bottom
-        }
+        let adType: Monetization.AdType
         
         init?(from dictionary: [String: Any]) {
             guard let provider = dictionary[Constants.Monetization.adProvider] as? String,
                   provider == Constants.Monetization.adMob,
-                  let adUnitId = dictionary[Constants.Monetization.adMobUnitId] as? String,
-                  let isCompanionVariant = dictionary[Constants.Monetization.isCompanionVariant] as? Bool else {
+                  let adUnitId = dictionary[Constants.Monetization.adUnitId] as? String,
+                  let isCompanionVariant = dictionary[Constants.Monetization.isCompanionVariant] as? Bool,
+                  let adTypeStr = dictionary[Constants.Monetization.adType] as? String,
+                  let adType = Monetization.AdType(rawValue: adTypeStr) else {
                 return nil
             }
-            self.adUnitId = adUnitId
-            self.isCompanionVariant = isCompanionVariant
+            self.init(adUnitId: adUnitId, isCompanionVariant: isCompanionVariant, adType: adType)
         }
         
-        init(adUnitId: String, isCompanionVariant: Bool) {
+        init(adUnitId: String, isCompanionVariant: Bool, adType: Monetization.AdType) {
             self.adUnitId = adUnitId
             self.isCompanionVariant = isCompanionVariant
+            self.adType = adType
         }
     }
     
@@ -90,7 +89,7 @@ extension APEUnitView {
                   let profileId = Int(profileIdStr),
                   let isCompanionVariant = dictionary[Constants.Monetization.isCompanionVariant] as? Bool,
                   let publisherId = dictionary[Constants.Monetization.publisherId] as? String,
-                  let adUnitId = dictionary[Constants.Monetization.pubMaticUnitId] as? String,
+                  let adUnitId = dictionary[Constants.Monetization.adUnitId] as? String,
                   let adTypeStr = dictionary[Constants.Monetization.adType] as? String,
                   let adType = Monetization.AdType(rawValue: adTypeStr) else {
                 return nil

@@ -7,10 +7,10 @@
 //
 
 import UIKit
-import OpenWrapSDK
+import OpenWrapSDK // TODO: redundant SDK dependency
 
 public enum APEUnitParams {
-    case unit(mediaId: String)
+    case unit(mediaId: String) // Consider unit Environment 
     case playlist(tags: [String], channelToken: String, context: Bool, fallback: Bool)
 
     public var id: String {
