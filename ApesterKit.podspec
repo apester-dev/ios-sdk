@@ -1,12 +1,11 @@
 Pod::Spec.new do |s|
  s.name = 'ApesterKit'
- s.version = '3.3.2'
+ s.version = '3.3.3'
  s.swift_version = '5.0'
  s.license = { :type => "MIT", :file => "LICENSE" }
  s.summary = 'ApesterKit provides a light-weight framework that loads Apester Unit in a webView'
  s.homepage = 'https://github.com/Qmerce/ios-sdk.git'
- s.social_media_url = 'https://twitter.com/hasan_w_sa'
- s.authors = { "Hasan Sa" => "hasan@apester.com" }
+ s.authors = { "Hasan Sa" => "hasansa007@gmail.com" }
  s.source = { :git => "https://github.com/apester-dev/ios-sdk.git", :tag => "v"+s.version.to_s }
  s.platforms     = { :ios => "11.0" }
  s.requires_arc = true
