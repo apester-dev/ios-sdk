@@ -172,10 +172,12 @@ private extension APEView {
                     }
                     
                     // redirect when the target is a main frame and the strip has been loaded.
-                    if loadingState.isLoaded, let targetFrame = navigationAction.targetFrame, targetFrame.isMainFrame,
-                       requestUrlToCheck != webViewUrlToCheck
-                        {
-                        open(url: url, type: .other)
+                    if loadingState.isLoaded,
+                        let targetFrame = navigationAction.targetFrame, targetFrame.isMainFrame,
+                        requestUrlToCheck != webViewUrlToCheck,
+                        let requestUrlToCheck = requestUrlToCheck,
+                        !requestUrlToCheck.contains(Constants.Unit.inAppUnitDetached) {
+                            open(url: url, type: .other)
                     } else {
                         policy = .allow // allow webview requests communication
                 }

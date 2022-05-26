@@ -13,16 +13,14 @@ extension APEUnitView {
     
     class PubMaticViewDelegate: NSObject, POBBannerViewDelegate {
         weak var containerViewController: UIViewController?
-        private let receiveAdSuccessCompletion: ((PubMaticViewProvider.Params.AdType) -> Void)
-        private let receiveAdErrorCompletion: ((PubMaticViewProvider.Params.AdType, Error?) -> Void)
-        private let adType: PubMaticViewProvider.Params.AdType
+        private let receiveAdSuccessCompletion: (() -> Void)
+        private let receiveAdErrorCompletion: ((Error?) -> Void)
         
-        init(adType: PubMaticViewProvider.Params.AdType,
+        init(
             containerViewController: UIViewController?,
-            receiveAdSuccessCompletion: @escaping ((PubMaticViewProvider.Params.AdType) -> Void),
-            receiveAdErrorCompletion: @escaping ((PubMaticViewProvider.Params.AdType, Error?) -> Void)
+             receiveAdSuccessCompletion: @escaping (() -> Void),
+             receiveAdErrorCompletion: @escaping ((Error?) -> Void)
         ) {
-            self.adType = adType
             self.containerViewController = containerViewController
             self.receiveAdSuccessCompletion = receiveAdSuccessCompletion
             self.receiveAdErrorCompletion = receiveAdErrorCompletion
@@ -33,11 +31,11 @@ extension APEUnitView {
         }
 
         func bannerViewDidReceiveAd(_ bannerView: POBBannerView) {
-            receiveAdSuccessCompletion(adType)
+            receiveAdSuccessCompletion()
         }
         
         func bannerView(_ bannerView: POBBannerView, didFailToReceiveAdWithError error: Error) {
-            receiveAdErrorCompletion(adType, error)
+            receiveAdErrorCompletion(error)
         }
         
         func bannerViewWillLeaveApplication(_ bannerView: POBBannerView) {}
