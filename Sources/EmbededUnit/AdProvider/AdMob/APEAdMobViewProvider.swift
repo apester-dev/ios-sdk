@@ -31,7 +31,7 @@ extension APEUnitView.BannerViewProvider {
         )
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         
-        let gADView = GADBannerView(adSize: (params.adType == .inUnit) ? GADAdSizeBanner : GADAdSizeMediumRectangle)
+        let gADView = GADBannerView(adSize: (params.adType == .bottom) ? GADAdSizeBanner : GADAdSizeMediumRectangle)
         gADView.translatesAutoresizingMaskIntoConstraints = false
         gADView.adUnitID = params.adUnitId
         gADView.load(GADRequest())
