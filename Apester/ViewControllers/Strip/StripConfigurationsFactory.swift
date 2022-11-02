@@ -33,6 +33,8 @@ import ApesterKit
             tokens = ["58c551f76a67357e3b4aa943"]
         case .local:
             tokens = ["5d6fc15d07d512002b67ecc6"]
+        case .dev:
+            tokens = []
         }
         self.tokens = tokens
         return makeStripConfigurations(with: tokens, hideApesterAds: hideApesterAds)
