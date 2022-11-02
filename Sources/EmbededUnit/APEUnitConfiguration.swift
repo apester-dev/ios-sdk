@@ -43,8 +43,9 @@ public enum APEUnitParams {
     public var gdprString: String? {
         didSet {
             guard let gdprString = gdprString else { return }
-            OpenWrapSDK.setGDPREnabled(true)
-            OpenWrapSDK.setGDPRConsent(gdprString)
+            // TODO: Test the SDK with & without GDPR consent
+            OpenWrapSDK.setGDPREnabled(false)//true)
+            OpenWrapSDK.setGDPRConsent(nil)//gdprString)
         }
     }
     
