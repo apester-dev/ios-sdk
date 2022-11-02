@@ -65,7 +65,7 @@ import UIKit
     fileprivate var parameters: [String: String] {
         var value = [String: String]()
         value[Keys.text.rawValue]       = self.text
-        value[Keys.padding.rawValue]     = "\(self.horizontalPadding)"
+        value[Keys.padding.rawValue]    = "\(self.horizontalPadding)"
         value[Keys.size.rawValue]       = "\(self.size)"
         value[Keys.isLTR.rawValue]      = "\(self.isLTR)"
         value[Keys.weight.rawValue]     = "\(self.weight)"
@@ -135,7 +135,7 @@ import UIKit
         self.padding = padding
         self.shadow = shadow
         self.textColor = textColor
-        self.backgroundColor  = background
+        self.backgroundColor = background
         self.header = header
     }
 

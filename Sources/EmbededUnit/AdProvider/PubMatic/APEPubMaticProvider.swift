@@ -20,7 +20,9 @@ extension APEUnitView.BannerViewProvider {
         receiveAdSuccessCompletion: @escaping (() -> Void),
         receiveAdErrorCompletion: @escaping ((Error?) -> Void)
     ) -> APEUnitView.BannerViewProvider {
+        
         var provider = APEUnitView.BannerViewProvider()
+        
         let banner = APEBannerView(
             adTitleLabelText: adTitleLabelText,
             monetizationType: .pubMatic(params: params),
@@ -29,6 +31,7 @@ extension APEUnitView.BannerViewProvider {
             containerViewController: containerViewController,
             onAdRemovalCompletion: onAdRemovalCompletion
         )
+        
         let adType: APEUnitView.Monetization.AdType = params.adType
         
         let adSizes = [POBAdSizeMake(adType.size.width, adType.size.height)].compactMap({ $0 })

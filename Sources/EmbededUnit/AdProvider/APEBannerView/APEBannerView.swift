@@ -1,10 +1,10 @@
-    //
-    //  APEBannerView.swift
-    //  ApesterKit
-    //
-    //  Created by Hasan Sawaed Tabash on 16/05/2022.
-    //  Copyright © 2022 Apester. All rights reserved.
-    //
+//
+//  APEBannerView.swift
+//  ApesterKit
+//
+//  Created by Hasan Sawaed Tabash on 16/05/2022.
+//  Copyright © 2022 Apester. All rights reserved.
+//
 
 import UIKit
 
@@ -12,6 +12,7 @@ class APEBannerView: UIView {
     
     var containerView: UIView?
     var containerViewConstraints: [NSLayoutConstraint] = []
+    
     var titleLabel: UILabel?
     var inUnitBackgroundColor: UIColor = .clear
     var monetizationType: APEUnitView.Monetization?
@@ -19,6 +20,7 @@ class APEBannerView: UIView {
     var adViewTimer: Timer?
     var delegate: AnyObject?
     var timeInView: Int?
+    
     var onAdRemovalCompletion: ((APEUnitView.Monetization.AdType) -> Void)?
     var onReceiveAdSuccess: (() -> Void)?
     var onReceiveAdError: ((Error?) -> Void)?
@@ -92,7 +94,7 @@ class APEBannerView: UIView {
                 NSLayoutConstraint.activate(constraints)
                 self.containerViewConstraints = constraints
             }
-                // Display a background is ad is pubMatic
+            // Display a background is ad is pubMatic
             var timeInView = self.timeInView
             if let monetizationType = self.monetizationType,
                case .inUnit = monetizationType.adType {
@@ -102,7 +104,7 @@ class APEBannerView: UIView {
             self.adView?.isHidden = false
             self.titleLabel?.isHidden = false
             self.closeButton.isHidden = false
-                // Run Timer with timeInView interval or 7 sec
+            // Run Timer with timeInView interval or 7 sec
             guard self.adViewTimer == nil, let timeInView = timeInView else { return }
             self.adViewTimer = Timer.scheduledTimer(withTimeInterval: Double(timeInView), repeats: false) { _ in
                 self.onAdRemovalCompletion?(monetizationType.adType)

@@ -16,18 +16,16 @@ extension APEUnitView {
         
         static func == (lhs: Monetization, rhs: Monetization) -> Bool {
             switch (lhs, rhs) {
-            case (.pubMatic(let lhsParams), .pubMatic(let rhsParams)):
-                return lhsParams.adType == rhsParams.adType
-            case (.adMob(let lhsParams), .adMob(let rhsParams)):
-                return lhsParams.adUnitId == rhsParams.adUnitId
+            case (.pubMatic (let lhsParams), .pubMatic  (let rhsParams)): return lhsParams.adType   == rhsParams.adType
+            case (.adMob    (let lhsParams), .adMob     (let rhsParams)): return lhsParams.adUnitId == rhsParams.adUnitId
             default: return false
             }
         }
         
         var adType: AdType {
             switch self {
-            case .pubMatic(let params):  return params.adType
-            case .adMob(let params):      return params.adType
+            case .pubMatic(let params): return params.adType
+            case .adMob   (let params): return params.adType
             }
         }
         
@@ -70,11 +68,11 @@ extension APEUnitView {
     
     struct PubMaticParams: Hashable {
         let adUnitId: String
+        let isCompanionVariant: Bool
+        let adType: Monetization.AdType
         let profileId: Int
         let publisherId: String
         let appStoreUrl: String
-        let isCompanionVariant: Bool
-        let adType: Monetization.AdType
         let appDomain: String
         let testMode: Bool
         let debugLogs: Bool

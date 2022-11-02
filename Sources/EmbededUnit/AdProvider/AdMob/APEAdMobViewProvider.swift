@@ -20,7 +20,9 @@ extension APEUnitView.BannerViewProvider {
         receiveAdSuccessCompletion: @escaping (() -> Void),
         receiveAdErrorCompletion: @escaping ((Error?) -> Void)
     ) -> APEUnitView.BannerViewProvider {
+        
         var provider = APEUnitView.BannerViewProvider()
+        
         let banner = APEBannerView(
             adTitleLabelText: adTitleLabelText,
             monetizationType: .adMob(params: params),
@@ -29,6 +31,7 @@ extension APEUnitView.BannerViewProvider {
             containerViewController: containerViewController,
             onAdRemovalCompletion: onAdRemovalCompletion
         )
+        
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         
         let gADView = GADBannerView(adSize: (params.adType == .bottom) ? GADAdSizeBanner : GADAdSizeMediumRectangle)

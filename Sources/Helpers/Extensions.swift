@@ -45,6 +45,7 @@ extension WKWebView {
         }
         configuration.allowsInlineMediaPlayback = true
         configuration.mediaTypesRequiringUserActionForPlayback = []
+        
         let webView = WKWebView(frame: .zero, configuration: configuration)
         webView.navigationDelegate = delegate
         webView.insetsLayoutMarginsFromSafeArea = true
