@@ -32,11 +32,13 @@ extension APEUnitView {
         enum AdType: String {
             case bottom
             case inUnit
+            case companion
             
             var size: CGSize {
                 switch self {
                 case .bottom: return .init(width: 320, height: 50)
                 case .inUnit: return .init(width: 300, height: 250)
+                case .companion: return .init(width: 300, height: 250)
                 }
             }
         }
