@@ -52,10 +52,14 @@ import SafariServices
 
 
     init(_ environment: APEEnvironment) {
+        
         self.environment = environment
         super.init()
+        
         // prefetch channel data...
-        NotificationCenter.default.addObserver(forName: UIDevice.orientationDidChangeNotification, object: nil, queue: .main) { [weak self] _ in
+        let name = UIDevice.orientationDidChangeNotification
+        NotificationCenter.default.addObserver(forName: name, object: nil, queue: .main) { [weak self] _ in
+            
             guard let strongSelf = self else { return }
             strongSelf.orientationDidChangeNotification()
         }

@@ -49,6 +49,15 @@ import ApesterKit
                                      context: false,
                                      fallback: false),
                            .unit(mediaId: "5e67bd1c6abc6400725787ab")]
+        case .dev:
+//            unitsParams = [
+//                .playlist(tags: [], channelToken: "601a9c857e7e58b7a8e6f78e", context: false, fallback: false)
+//            ]
+            unitsParams = [
+                // 610a3f7dabe1d5003c662f3b
+                // 62a5c51e7c1ce9002a94941f
+                .playlist(tags: [], channelToken: "610a3f7dabe1d5003c662f3b", context: false, fallback: false)
+            ]
         }
         self.unitsParams = unitsParams
         return makeUnitConfigurations(with: unitsParams, environment: environment, hideApesterAds: hideApesterAds, gdprString: gdprString, baseUrl: baseUrl)

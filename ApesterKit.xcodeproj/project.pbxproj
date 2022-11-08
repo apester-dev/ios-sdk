@@ -192,7 +192,7 @@
 		BB9700E12223EFEA0072E1F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BB9709AA222322E000E1076B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		BB9709BE22232BED00E1076B /* APEMultipleStripsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEMultipleStripsViewController.swift; sourceTree = "<group>"; };
-		BB9726272229BA54008C7440 /* ApesterKit.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ApesterKit.podspec; sourceTree = SOURCE_ROOT; };
+		BB9726272229BA54008C7440 /* ApesterKit.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; path = ApesterKit.podspec; sourceTree = SOURCE_ROOT; };
 		BBC96DA5222781F400EA7E6B /* Apester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Apester.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBC96DA7222781F400EA7E6B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BBC96DB1222781F500EA7E6B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };

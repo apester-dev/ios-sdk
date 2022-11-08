@@ -38,11 +38,17 @@ extension APEUnitView {
             receiveAdErrorCompletion(error)
         }
         
-        func bannerViewWillLeaveApplication(_ bannerView: POBBannerView) {}
+        func bannerViewWillLeaveApplication(_ bannerView: POBBannerView) {
+            
+        }
         
-        func bannerViewWillPresentModal(_ bannerView: POBBannerView) {}
+        func bannerViewWillPresentModal(_ bannerView: POBBannerView) {
+            
+        }
         
-        func bannerViewDidDismissModal(_ bannerView: POBBannerView) {}
+        func bannerViewDidDismissModal(_ bannerView: POBBannerView) {
+            
+        }
     }
     
 }

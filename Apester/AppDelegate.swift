@@ -16,13 +16,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     // initiate StripConfigurationsFactory environment
-    StripConfigurationsFactory.environment = .production
+    StripConfigurationsFactory.environment = .stage
     // preloadStripViews
-//    APEViewService.shared.preloadStripViews(with: StripConfigurationsFactory.configurations(hideApesterAds: false))
+    // APEViewService.shared.preloadStripViews(with: StripConfigurationsFactory.configurations(hideApesterAds: false))
     // initiate UnitConfigurationsFactory environment
-    UnitConfigurationsFactory.environment = .production
+    UnitConfigurationsFactory.environment = .dev
     // preloadUnitViews
-//    APEViewService.shared.preloadUnitViews(with: UnitConfigurationsFactory.configurations(hideApesterAds: false))
+    // APEViewService.shared.preloadUnitViews(with: UnitConfigurationsFactory.configurations(hideApesterAds: false))
     return true
   }
 
