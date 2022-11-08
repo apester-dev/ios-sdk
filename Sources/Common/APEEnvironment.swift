@@ -31,11 +31,11 @@ import Foundation
         case .production:
             return "https://renderer.apester.com"
         case .stage:
-            return "https://renderer.stg.apester.dev"
+            // return "https://renderer.stg.apester.dev"
+            return "https://renderer.stg.apester.com"
         case .local:
             return "https://player.apester.local.com"
         case .dev:
-//            return "https://renderer.stg.apester.com"
             return "https://renderer.dayagi.apester.dev"
         }
     }
