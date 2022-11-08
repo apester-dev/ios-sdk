@@ -14,7 +14,6 @@ class MessageDispatcher {
 
     private var messages: [Int: String] = [:]
 
-
     private func dispatch(message: String, to webView: WKWebView, completion: ((Any?) -> Void)? = nil) {
         webView.evaluateJavaScript(message) { (response, error) in
             completion?(response)
