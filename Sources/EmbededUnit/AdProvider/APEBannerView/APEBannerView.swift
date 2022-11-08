@@ -216,12 +216,6 @@ fileprivate extension APEBannerView {
                 equalValue(\.widthAnchor , to: monetization.adType.width),
                 equalValue(\.heightAnchor, to: monetization.adType.height)
             ])
-            //constraints = [
-            //    adView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor, constant: 0),
-            //    adView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 0),
-            //    adView.heightAnchor.constraint(equalToConstant: type.size.height),
-            //    adView.widthAnchor.constraint(equalToConstant: type.size.width)
-            //]
             break
             
         case (.pubMatic, .inUnit):
@@ -233,12 +227,6 @@ fileprivate extension APEBannerView {
                 equalValue(\.widthAnchor , to: monetization.adType.width),
                 equalValue(\.heightAnchor, to: monetization.adType.height)
             ])
-            //constraints = [
-            //    adView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor, constant: 0),
-            //    adView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor, constant: 0),
-            //    adView.heightAnchor.constraint(equalToConstant: type.size.height),
-            //    adView.widthAnchor.constraint(equalToConstant: type.size.width)
-            //]
             break
             
         case (.pubMatic, .companion):
@@ -250,12 +238,6 @@ fileprivate extension APEBannerView {
                 equalValue(\.widthAnchor , to: monetization.adType.width),
                 equalValue(\.heightAnchor, to: monetization.adType.height)
             ])
-            //constraints = [
-            //    adView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor, constant: 0),
-            //    adView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor, constant: 0),
-            //    adView.heightAnchor.constraint(equalToConstant: type.size.height),
-            //    adView.widthAnchor.constraint(equalToConstant: type.size.width)
-            //]
             break
         }
     }

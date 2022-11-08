@@ -16,19 +16,19 @@ import Foundation
         return view == self ? nil : view
     }
 }
-@objcMembers public class APEDisplayView            : APEContainerView {}
-@objcMembers public class APEContainerViewCPM       : APEContainerView {}
-@objcMembers public class APEContainerViewBottom    : APEContainerView {}
-@objcMembers public class APEContainerViewCompanion : APEContainerView {}
+@objcMembers public   class APEDisplayView            : APEContainerView {}
+@objcMembers internal class APEContainerViewInUnit    : APEContainerView {}
+@objcMembers internal class APEContainerViewBottom    : APEContainerView {}
+@objcMembers internal class APEContainerViewCompanion : APEContainerView {}
 
 @objcMembers public class APEUnitView: APEView {
     
     // MARK: - API - Display
-    public private(set) var   displayView: APEDisplayView!
-    public private(set) var    webContent: WKWebView!
-    public private(set) var adMainContent: APEContainerViewCPM!
-    public private(set) var adMainBottom : APEContainerViewBottom!
-    public private(set) var adCompanion  : APEContainerViewCompanion!
+    public   private(set) var   displayView: APEDisplayView!
+    internal private(set) var    webContent: WKWebView!
+    internal private(set) var adMainContent: APEContainerViewInUnit!
+    internal private(set) var adMainBottom : APEContainerViewBottom!
+    internal private(set) var adCompanion  : APEContainerViewCompanion!
     
     private var displayViewConstraintHeight: NSLayoutConstraint?
     private var displayViewConstraintWidth : NSLayoutConstraint?
@@ -86,7 +86,7 @@ import Foundation
         
         self.displayView   = APEDisplayView(frame: .zero)
         self.webContent    = WKWebView.make(with: options, params: configuration.parameters)
-        self.adMainContent = APEContainerViewCPM(frame: .zero)
+        self.adMainContent = APEContainerViewInUnit(frame: .zero)
         self.adMainBottom  = APEContainerViewBottom(frame: .zero)
         self.adCompanion   = APEContainerViewCompanion(frame: .zero)
         
@@ -367,20 +367,6 @@ private extension APEUnitView {
         webContentConstraintWidth?.priority = .defaultHigh
         webContentConstraintWidth?.isActive = true
         
-        if let container = containerView {
-            
-            // // 3 - update the unit containerView height constraint
-            // containerView.constraints.first(where: { $0.firstAttribute == .height }).flatMap { NSLayoutConstraint.deactivate([$0]) }
-            // let heightConstraint = constraint(for: container.heightAnchor, equalToConstant: height)
-            // heightConstraint.priority = .defaultHigh
-            // heightConstraint.isActive = true
-            
-            // // 4 - update the unit containerView width constraint
-            // containerView.constraints.first(where: { $0.firstAttribute == .width }).flatMap { NSLayoutConstraint.deactivate([$0]) }
-            // let widthConstraint = constraint(for: container.widthAnchor, equalToConstant: width)
-            // widthConstraint.priority = .defaultHigh
-            // widthConstraint.isActive = true
-        }
         showAdViews()
         
         displayView.setNeedsLayout()
