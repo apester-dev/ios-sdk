@@ -16,7 +16,7 @@ extension APEUnitView.BannerViewProvider {
         adTitleLabelText: String,
         inUnitBackgroundColor: UIColor,
         containerViewController: UIViewController,
-        onAdRemovalCompletion: @escaping ((APEUnitView.Monetization.AdType) -> Void),
+        onAdRemovalCompletion: @escaping ((APEUnitView.Monetization) -> Void),
         receiveAdSuccessCompletion: @escaping (() -> Void),
         receiveAdErrorCompletion: @escaping ((Error?) -> Void)
     ) -> APEUnitView.BannerViewProvider {
@@ -52,13 +52,13 @@ extension APEUnitView.BannerViewProvider {
         )
         gADView.delegate = banner.delegate as? GADBannerViewDelegate
         gADView.rootViewController = containerViewController
-        banner.adView = gADView
+        banner.adContent = gADView
         
         provider.type = { [banner] in
-            banner.monetizationType
+            banner.monetization
         }
         provider.banner = { [banner] in
-            banner.adView
+            banner.adContent
         }
         provider.hide = { [banner] in
             banner.hide()
@@ -85,54 +85,52 @@ extension APEUnitView.BannerViewProvider {
 extension APEUnitView {
     
     func setupAdMobView(params: AdMobParams) {
+        
+        let adType   = params.adType
         let adUnitId = params.adUnitId
-        var bannerView = self.bannerViews.first(where: {
+        
+        var viewProvider = bannerViewProviders.first(where: {
             switch $0.type() {
-            case .adMob(let params):
-                return params.adUnitId == adUnitId
             case .pubMatic, .none:
                 return false
+            case .adMob(let params):
+                return params.adUnitId == adUnitId && params.adType == adType
             }
         })
-        if let bannerView = bannerView {
-            if let containerView = unitWebView, let banner = bannerView.banner(), banner.superview == nil {
-                bannerView.show(containerView)
-            }
-            return
-        }
-        guard let containerViewController = self.containerViewController else {
-            self.messageDispatcher.sendNativeAdEvent(to: self.unitWebView,
-                                                     Constants.Monetization.playerMonLoadingImpressionFailed)
+        
+        if let provider = viewProvider {
+            
+            display(banner: provider, forAdType: params.adType)
             return
         }
         
-        bannerView = .adMobProvider(
+        guard let containerVC = containerViewController else {
+            dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingImpressionFailed)
+            return
+        }
+        
+        viewProvider = .adMobProvider(
             params: params,
             adTitleLabelText: configuration.adTitleLabelText,
             inUnitBackgroundColor: configuration.adInUnitBackgroundColor,
-            containerViewController: containerViewController, onAdRemovalCompletion: { [weak self] adType in
+            containerViewController: containerVC, onAdRemovalCompletion: { [weak self] adType in
                 self?.removeAdView(of: adType)
             },
             receiveAdSuccessCompletion: { [weak self] in
-                guard let self = self else { return }
-                self.messageDispatcher.sendNativeAdEvent(to: self.unitWebView,
-                                                         Constants.Monetization.playerMonImpression)
+                guard let strongSelf = self else { return }
+                strongSelf.dispatchNativeAdEvent(named: Constants.Monetization.playerMonImpression)
             },
             receiveAdErrorCompletion: { [weak self] error in
-                guard let self = self else { return }
-                self.messageDispatcher.sendNativeAdEvent(to: self.unitWebView,
-                                                         Constants.Monetization.playerMonLoadingImpressionFailed)
+                guard let strongSelf = self else { return }
+                strongSelf.dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingImpressionFailed)
             })
         
-            // showGADView
-        if let bannerView = bannerView {
-            self.bannerViews.append(bannerView)
-            if let containerView = unitWebView, let banner = bannerView.banner(), banner.superview == nil {
-                bannerView.show(containerView)
-            }
+        // showGADView
+        if let provider = viewProvider {
+            
+            bannerViewProviders.append(provider)
+            display(banner: provider, forAdType: params.adType)
         }
-        self.messageDispatcher.sendNativeAdEvent(
-            to: self.unitWebView, Constants.Monetization.playerMonLoadingPass
-        )
+        dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingPass)
     }
 }
