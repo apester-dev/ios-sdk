@@ -76,3 +76,115 @@ extension UIView {
         return subviews + subviews.flatMap { $0.allSubviews }
     }
 }
+
+
+// Convenience tuple to handle constraint application
+internal typealias APEConstraint = (_ child: UIView, _ parent: UIView) -> NSLayoutConstraint
+
+// Convenience functions to enable simple code based constraints, works with the view anchor keypaths
+// ================================================================================================================== //
+
+// These methods return an inactive constraint of the form thisAnchor = otherAnchor + constant.
+internal func          equal<L, Axis>(_ to: KeyPath<UIView, L>, constant c: CGFloat = .zero) -> APEConstraint where L: NSLayoutAnchor<Axis> {
+    return equal(to, to, constant: c)
+}
+internal func greaterOrEqual<L, Axis>(_ to: KeyPath<UIView, L>, constant c: CGFloat = .zero) -> APEConstraint where L: NSLayoutAnchor<Axis> {
+    return greaterOrEqual(to, to, constant: c)
+}
+internal func    lessOrEqual<L, Axis>(_ to: KeyPath<UIView, L>, constant c: CGFloat = .zero) -> APEConstraint where L: NSLayoutAnchor<Axis> {
+    return lessOrEqual(to, to, constant: c)
+}
+
+// These methods return an inactive constraint of the form thisAnchor = otherAnchor + constant.
+internal func          equal<L, Axis>(_ from: KeyPath<UIView, L>, _ to: KeyPath<UIView, L>, constant c: CGFloat = .zero) -> APEConstraint where L: NSLayoutAnchor<Axis> {
+    return { view, parent in view[keyPath: from].constraint(equalTo: parent[keyPath: to], constant: c) }
+}
+internal func greaterOrEqual<L, Axis>(_ from: KeyPath<UIView, L>, _ to: KeyPath<UIView, L>, constant c: CGFloat = .zero) -> APEConstraint where L: NSLayoutAnchor<Axis> {
+    return { view, parent in view[keyPath: from].constraint(greaterThanOrEqualTo: parent[keyPath: to], constant: c) }
+}
+internal func    lessOrEqual<L, Axis>(_ from: KeyPath<UIView, L>, _ to: KeyPath<UIView, L>, constant c: CGFloat = .zero) -> APEConstraint where L: NSLayoutAnchor<Axis> {
+    return { view, parent in view[keyPath: from].constraint(lessThanOrEqualTo: parent[keyPath: to], constant: c) }
+}
+
+// ================================================================================================================== //
+
+// These methods return an inactive constraint of the form thisVariable = constant.
+internal func          equalValue<L>(_ from: KeyPath<UIView, L>, to constant: CGFloat) -> APEConstraint where L: NSLayoutDimension {
+    return { view, parent in view[keyPath: from].constraint(             equalToConstant: constant) }
+}
+internal func greaterOrEqualValue<L>(_ from: KeyPath<UIView, L>, to constant: CGFloat) -> APEConstraint where L: NSLayoutDimension {
+    return { view, parent in view[keyPath: from].constraint(greaterThanOrEqualToConstant: constant) }
+}
+internal func    lessOrEqualValue<L>(_ from: KeyPath<UIView, L>, to constant: CGFloat) -> APEConstraint where L: NSLayoutDimension {
+    return { view, parent in view[keyPath: from].constraint(   lessThanOrEqualToConstant: constant) }
+}
+
+// These methods return an inactive constraint of the form thisAnchor = otherAnchor * multiplier + constant.
+internal func          equalValue<L>(_ from: KeyPath<UIView, L>, _ to: KeyPath<UIView, L>, multiplier m: CGFloat = CGFloat(1.0), constant c: CGFloat = .zero) -> APEConstraint where L: NSLayoutDimension {
+    return { view, parent in view[keyPath: from].constraint(             equalTo: parent[keyPath: to], multiplier: m, constant: c) }
+}
+internal func greaterOrEqualValue<L>(_ from: KeyPath<UIView, L>, _ to: KeyPath<UIView, L>, multiplier m: CGFloat = CGFloat(1.0), constant c: CGFloat = .zero) -> APEConstraint where L: NSLayoutDimension {
+    return { view, parent in view[keyPath: from].constraint(greaterThanOrEqualTo: parent[keyPath: to], multiplier: m, constant: c) }
+}
+internal func    lessOrEqualValue<L>(_ from: KeyPath<UIView, L>, _ to: KeyPath<UIView, L>, multiplier m: CGFloat = CGFloat(1.0), constant c: CGFloat = .zero) -> APEConstraint where L: NSLayoutDimension {
+    return { view, parent in view[keyPath: from].constraint(   lessThanOrEqualTo: parent[keyPath: to], multiplier: m, constant: c) }
+}
+// ================================================================================================================== //
+// These methods return an inactive constraint of the form thisAnchor = otherAnchor * multiplier + constant.
+internal func          equalValue<L>(to: KeyPath<UIView, L>, multiplier m: CGFloat = CGFloat(1.0), constant c: CGFloat = .zero) -> APEConstraint where L: NSLayoutDimension {
+    return          equalValue(to, to, multiplier: m, constant: c)
+}
+internal func greaterOrEqualValue<L>(to: KeyPath<UIView, L>, multiplier m: CGFloat = CGFloat(1.0), constant c: CGFloat = .zero) -> APEConstraint where L: NSLayoutDimension {
+    return greaterOrEqualValue(to, to, multiplier: m, constant: c)
+}
+internal func    lessOrEqualValue<L>(to: KeyPath<UIView, L>, multiplier m: CGFloat = CGFloat(1.0), constant c: CGFloat = .zero) -> APEConstraint where L: NSLayoutDimension {
+    return    lessOrEqualValue(to, to, multiplier: m, constant: c)
+}
+// ================================================================================================================== //
+
+internal extension UIView {
+    
+    static var anchorToContainer : [APEConstraint]
+    {
+        return [
+            equal(\.topAnchor)   , equal(\.leadingAnchor),
+            equal(\.bottomAnchor), equal(\.trailingAnchor)
+        ]
+    }
+    
+    @discardableResult
+    func ape_addSubview(
+        _ other: UIView,
+        with constraints: [APEConstraint] ,
+        priority : UILayoutPriority = UILayoutPriority.required
+    ) -> [NSLayoutConstraint] {
+        addSubview(other)
+        return ape_anchor(view: other, with: constraints, priority: priority)
+    }
+    
+    @discardableResult
+    func ape_anchor(
+        view other: UIView,
+        with constraints: [APEConstraint],
+        priority : UILayoutPriority = UILayoutPriority.required
+    ) -> [NSLayoutConstraint] {
+        other.translatesAutoresizingMaskIntoConstraints = false
+        let c = ape_constraints(view: other, with: constraints, priority: priority)
+        NSLayoutConstraint.activate(c)
+        return c
+    }
+    
+    @discardableResult
+    func ape_constraints(
+        view other: UIView,
+        with constraints: [APEConstraint],
+        priority : UILayoutPriority
+    ) -> [NSLayoutConstraint] {
+        return constraints.compactMap {
+             $0(other, self)
+        } .map {
+            $0.priority = priority;
+            return $0
+        }
+    }
+}
