@@ -1,28 +1,28 @@
 PODS:
-  - Google-Mobile-Ads-SDK (8.13.0):
-    - GoogleAppMeasurement (< 9.0, >= 7.0)
+  - Google-Mobile-Ads-SDK (9.11.0):
+    - GoogleAppMeasurement (< 10.0, >= 7.0)
     - GoogleUserMessagingPlatform (>= 1.1)
-  - GoogleAppMeasurement (8.11.0):
-    - GoogleAppMeasurement/AdIdSupport (= 8.11.0)
+  - GoogleAppMeasurement (9.3.0):
+    - GoogleAppMeasurement/AdIdSupport (= 9.3.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
     - GoogleUtilities/MethodSwizzler (~> 7.7)
     - GoogleUtilities/Network (~> 7.7)
     - "GoogleUtilities/NSData+zlib (~> 7.7)"
-    - nanopb (~> 2.30908.0)
-  - GoogleAppMeasurement/AdIdSupport (8.11.0):
-    - GoogleAppMeasurement/WithoutAdIdSupport (= 8.11.0)
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - GoogleAppMeasurement/AdIdSupport (9.3.0):
+    - GoogleAppMeasurement/WithoutAdIdSupport (= 9.3.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
     - GoogleUtilities/MethodSwizzler (~> 7.7)
     - GoogleUtilities/Network (~> 7.7)
     - "GoogleUtilities/NSData+zlib (~> 7.7)"
-    - nanopb (~> 2.30908.0)
-  - GoogleAppMeasurement/WithoutAdIdSupport (8.11.0):
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - GoogleAppMeasurement/WithoutAdIdSupport (9.3.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
     - GoogleUtilities/MethodSwizzler (~> 7.7)
     - GoogleUtilities/Network (~> 7.7)
     - "GoogleUtilities/NSData+zlib (~> 7.7)"
-    - nanopb (~> 2.30908.0)
-  - GoogleUserMessagingPlatform (2.0.0)
+    - nanopb (< 2.30910.0, >= 2.30908.0)
+  - GoogleUserMessagingPlatform (2.0.1)
   - GoogleUtilities/AppDelegateSwizzler (7.7.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -40,15 +40,15 @@ PODS:
   - "GoogleUtilities/NSData+zlib (7.7.0)"
   - GoogleUtilities/Reachability (7.7.0):
     - GoogleUtilities/Logger
-  - nanopb (2.30908.0):
-    - nanopb/decode (= 2.30908.0)
-    - nanopb/encode (= 2.30908.0)
-  - nanopb/decode (2.30908.0)
-  - nanopb/encode (2.30908.0)
-  - OpenWrapSDK (2.3.1):
-    - OpenWrapSDK/OpenWrap (= 2.3.1)
-  - OpenWrapSDK/OpenWrap (2.3.1)
-  - PromisesObjC (2.0.0)
+  - nanopb (2.30909.0):
+    - nanopb/decode (= 2.30909.0)
+    - nanopb/encode (= 2.30909.0)
+  - nanopb/decode (2.30909.0)
+  - nanopb/encode (2.30909.0)
+  - OpenWrapSDK (2.6.2):
+    - OpenWrapSDK/OpenWrap (= 2.6.2)
+  - OpenWrapSDK/OpenWrap (2.6.2)
+  - PromisesObjC (2.1.1)
 
 DEPENDENCIES:
   - Google-Mobile-Ads-SDK
@@ -65,14 +65,14 @@ SPEC REPOS:
     - PromisesObjC
 
 SPEC CHECKSUMS:
-  Google-Mobile-Ads-SDK: 05e5d68bb42a61b2e5bef336a52789785605aa22
-  GoogleAppMeasurement: aa3cb422fab2b05d2efac543a5720d1a85b9dea5
-  GoogleUserMessagingPlatform: ab890ce5f6620f293a21b6bdd82e416a2c73aeca
+  Google-Mobile-Ads-SDK: e0322ce0f304126547185fa254dfe66ac66153d8
+  GoogleAppMeasurement: b907bdad775b6975a8108762345b2cfbf1a93c37
+  GoogleUserMessagingPlatform: 5f8b30daf181805317b6b985bb51c1ff3beca054
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
-  nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
-  OpenWrapSDK: 328d065ae1e7624e728117e138c079294e5c7b05
-  PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
+  nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
+  OpenWrapSDK: 17a18b2c4d1ad9b366e2db782d17ea27480e3422
+  PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
 
-PODFILE CHECKSUM: d28ba8787782ae06907b3a1e8f7140ed29f53542
+PODFILE CHECKSUM: f40f41dbdce65df8ff134cfd3da2ff9d9cf71848
 
-COCOAPODS: 1.10.2
+COCOAPODS: 1.11.3
