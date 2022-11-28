@@ -82,7 +82,7 @@ class APEBannerView : UIView
         inUnitBackgroundColor color: UIColor,
         timeInView: Int?,
         containerViewController: UIViewController,
-        onAdRemovalCompletion: ((APEUnitView.Monetization) -> Void)?
+        onAdRemovalCompletion: HandlerAdType?
     ) {
         self.monetization = type
         self.titleLabel   = makeTitleLabel(adTitleLabelText)
@@ -121,7 +121,6 @@ class APEBannerView : UIView
         
         containerView = container
         
-        // TODO: -
         container.ape_addSubview(self, with: UIView.anchorToContainer)
         
         [adView,titleLabel].forEach {
@@ -208,8 +207,6 @@ fileprivate extension APEBannerView {
         case (.pubMatic, .bottom):
             ape_anchor(view: adView, with: [
                 equal(\.centerXAnchor, constant: 0),
-                equal(\.leadingAnchor ),
-                equal(\.trailingAnchor),
                 equal(\.bottomAnchor  )
             ])
             adView.ape_anchor(view: adView, with: [

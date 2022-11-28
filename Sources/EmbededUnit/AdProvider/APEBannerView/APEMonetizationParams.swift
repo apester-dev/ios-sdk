@@ -44,7 +44,12 @@ extension APEUnitView {
             case .adMob   (let params): return params.adUnitId
             }
         }
-        
+        var isCompanionVariant: Bool {
+            switch self {
+            case .pubMatic(let params): return params.isCompanionVariant
+            case .adMob   (let params): return params.isCompanionVariant
+            }
+        }
         var adType: AdType {
             switch self {
             case .pubMatic(let params): return params.adType
