@@ -36,7 +36,8 @@ import Foundation
     private var webContentConstraintHeight : NSLayoutConstraint?
     private var webContentConstraintWidth  : NSLayoutConstraint?
     
-    private var adCompanionConstraintHeight: NSLayoutConstraint?
+    private var adMainBottomConstraintHeight: NSLayoutConstraint?
+    private var  adCompanionConstraintHeight: NSLayoutConstraint?
     
     // MARK: - Data
     internal var bannerViewProviders: [BannerViewProvider]
@@ -103,6 +104,11 @@ import Foundation
     public override func display(in containerView: UIView, containerViewController: UIViewController) {
         super.display(in: containerView, containerViewController: containerViewController)
         
+        // webContent.backgroundColor = .red
+        // adMainContent.backgroundColor = .green.withAlphaComponent(CGFloat(0.3))
+        // adMainBottom.backgroundColor = .brown
+        // adCompanion.backgroundColor = .cyan
+        
         displayViewConstraintHeight = displayView.heightAnchor.constraint(equalTo: containerView.heightAnchor)
         displayViewConstraintHeight?.priority = .defaultLow
         
@@ -132,14 +138,13 @@ import Foundation
         webContent.ape_anchor(view: adMainContent, with: UIView.anchorToContainer)
         
         // bottom
-        webContent.ape_anchor(view: adMainBottom  , with: [ equal(\.leadingAnchor), equal(\.trailingAnchor), equal(\.bottomAnchor) ])
+        webContent.ape_anchor(view: adMainBottom  , with: [ equal(\.leadingAnchor), equal(\.trailingAnchor)])
+        adMainBottomConstraintHeight = webContent.ape_anchor(view: adMainBottom   , with: [ equal(\.bottomAnchor) ]).first
         
         // companion
-        adCompanion.ape_anchor(view: webContent , with: [
-            equal(\.leadingAnchor), equal(\.trailingAnchor),
-            equal(\.bottomAnchor, \.topAnchor, constant: 0)
-        ])
-        displayView.ape_anchor(view: adCompanion, with: [ equal(\.bottomAnchor) ] , priority: .defaultLow  )
+        adCompanion.ape_anchor(view: webContent   , with: [ equal(\.leadingAnchor), equal(\.trailingAnchor) ])
+        adCompanion.ape_anchor(view: adMainBottom , with: [ equal(\.bottomAnchor, \.topAnchor, constant: 0) ])
+        displayView.ape_anchor(view: adCompanion  , with: [ equal(\.bottomAnchor) ] , priority: .defaultLow  )
         
         adCompanionConstraintHeight = adCompanion.heightAnchor.constraint(equalToConstant: adCompanion.intrinsicContentSize.height)
         adCompanionConstraintHeight?.priority = .defaultLow
@@ -272,10 +277,10 @@ extension APEUnitView {
                 loadingState.isLoaded = true
             }
             
-            if bodyString.contains(Constants.Unit.resize), let dictionary = bodyString.dictionary {
+            if bodyString.contains(Constants.Unit.resize), let dictionary = bodyString.ape_dictionary {
                 
-                let height = dictionary.floatValue(for: Constants.Unit.height)
-                let width  = dictionary.floatValue(for: Constants.Unit.width)
+                let height = dictionary.ape_floatValue(for: Constants.Unit.height)
+                let width  = dictionary.ape_floatValue(for: Constants.Unit.width)
                 
                 if CGFloat(height) != loadingState.height {
                     loadingState.height = CGFloat(height)
@@ -290,7 +295,7 @@ extension APEUnitView {
                 delegate?.unitView(self, didCompleteAdsForUnit: self.configuration.unitParams.id)
             }
             
-            if bodyString.contains(Constants.Monetization.initNativeAd) , let dictionary = bodyString.dictionary {
+            if bodyString.contains(Constants.Monetization.initNativeAd) , let dictionary = bodyString.ape_dictionary {
                 
                 if let params = AdMobParams   (from: dictionary) {
                     setupAdMobView(params: params)
@@ -300,7 +305,7 @@ extension APEUnitView {
                 }
             }
             
-            if bodyString.contains(Constants.Monetization.initInUnit)  , let dictionary = bodyString.dictionary {
+            if bodyString.contains(Constants.Monetization.initInUnit)  , let dictionary = bodyString.ape_dictionary {
                 
                 if let params = AdMobParams   (from: dictionary) {
                     setupAdMobView(params: params)
@@ -360,7 +365,6 @@ private extension APEUnitView {
         webContentConstraintHeight?.priority = .defaultHigh
         webContentConstraintHeight?.isActive = true
         
-        
         // 2 - update the unitWebView width constraint
         self.webContentConstraintWidth.flatMap { NSLayoutConstraint.deactivate([$0]) }
         webContentConstraintWidth = webContent.widthAnchor.constraint(equalToConstant: width)
@@ -369,11 +373,18 @@ private extension APEUnitView {
         
         showAdViews()
         
+        if containerView.ape_isExist, let p = provider(for: .bottom), p.type()?.isCompanionVariant == true {
+            
+            self.adMainBottomConstraintHeight.flatMap { NSLayoutConstraint.deactivate([$0]) }
+            adMainBottomConstraintHeight = webContent.ape_anchor(view: adMainBottom, with: [
+                equal(\.topAnchor, \.bottomAnchor, constant: 0)
+            ]).first
+        }
+        
         displayView.setNeedsLayout()
         displayView.layoutIfNeeded()
         
-        // 5 - update the delegate about the new height
-        delegate?.unitView(self, didUpdateHeight: displayView.bounds.height)
+        manualPostActionResize()
     }
 }
 
@@ -381,8 +392,13 @@ extension APEUnitView {
     
     struct BannerViewProvider : Equatable {
         
+        typealias HandlerAdType     = (APEUnitView.Monetization) -> Void
+        typealias HandlerVoidType   = () -> Void
+        typealias HandlerErrorType  = (Error?) -> Void
+        
         var type    : () -> Monetization?
-        var banner  : () -> UIView?
+        var banner  : () -> APEBannerView?
+        var content : () -> UIView?
         var refresh : () -> Void
         var show    : (_ contentView: UIView) -> Void
         var hide    : () -> Void
@@ -390,6 +406,7 @@ extension APEUnitView {
         init() {
             self.type    = { fatalError() }
             self.banner  = { fatalError() }
+            self.content = { fatalError() }
             self.refresh = { fatalError() }
             self.show    = { _ in fatalError() }
             self.hide    = { fatalError() }
@@ -411,24 +428,48 @@ extension APEUnitView {
         })
     }
     
-    func containerViewBased(on adType: APEUnitView.Monetization.AdType?) -> UIView? {
-        
-        var containerView: UIView? = nil
+    func container(for adType: APEUnitView.Monetization.AdType?) -> UIView? {
         
         switch adType {
-        case .inUnit    : containerView = adMainContent
-        case .bottom    : containerView = adMainBottom
-        case .companion : containerView = adCompanion
-        case .none      : containerView = nil
+        case .inUnit    : return adMainContent
+        case .bottom    : return adMainBottom
+        case .companion : return adCompanion
+        case .none      : return nil
         }
-        return containerView
+    }
+    
+    func provider(for adType: APEUnitView.Monetization.AdType?) -> APEUnitView.BannerViewProvider? {
+        return bannerViewProviders.first(where: { $0.type()?.adType == adType })
     }
     
     func display(banner bannerView: APEUnitView.BannerViewProvider, forAdType type: APEUnitView.Monetization.AdType?) {
         
-        guard let containerView = containerViewBased(on: type)          else { return }
-        guard let banner = bannerView.banner(), banner.superview == nil else { return }
+        guard let containerView = container(for: type)         else { return }
+        guard let b = bannerView.content(), b.superview == nil else { return }
         bannerView.show(containerView)
+    }
+    
+    func manualPostActionResize() {
+        
+        var computedHeight = CGFloat(0.0)
+        
+        if containerView.ape_isExist {
+            
+            if let c = webContentConstraintHeight , c.isActive {
+                computedHeight += c.constant
+            }
+            
+            if let p = provider(for: .bottom), p.type()?.isCompanionVariant == true, let b = p.banner() {
+                // add .bottom view isCompanionVariant == true into calculation
+                computedHeight += b.intrinsicContentSize.height
+            }
+            if let p = provider(for: .companion), let b = p.banner() {
+                // add .companion view into calculation
+                computedHeight += b.intrinsicContentSize.height
+            }
+        }
+        loadingState.height = CGFloat(computedHeight)
+        delegate?.unitView(self, didUpdateHeight: computedHeight)
     }
     
     func dispatchNativeAdEvent(named eventName: String) {

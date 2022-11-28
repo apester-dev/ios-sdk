@@ -6,25 +6,57 @@
 //  Copyright © 2019 Apester. All rights reserved.
 //
 import Foundation
+import UIKit
 import WebKit
-
-// MARK:- String
-extension String {
-    var dictionary: [String: Any]? {
+import OSLog
+///
+///
+///
+internal extension OSLog {
+    
+    private static var subsystem = Bundle.main.bundleIdentifier!
+    /// Logs Apster content
+    static let ApesterSDK = OSLog(subsystem: subsystem, category: "Apster")
+}
+///
+///
+///
+internal extension Optional
+{
+    ///
+    ///
+    ///
+    var ape_isExist: Bool {
+        guard case .some = self else { return false }
+        return true
+    }
+}
+///
+///
+///
+internal extension String {
+    
+    var ape_dictionary: [String: Any]? {
+        
         if let data = self.data(using: .utf8) {
             return try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
         }
         return nil
     }
 }
-
-extension Dictionary {
-    func floatValue(for key: Key) -> CGFloat {
+///
+///
+///
+internal extension Dictionary {
+    
+    func ape_floatValue(for key: Key) -> CGFloat {
         CGFloat(self[key] as? Double ?? 0)
     }
 }
-
-extension WKWebView {
+///
+///
+///
+internal extension WKWebView {
 
     struct Options {
         typealias Delegate = WKNavigationDelegate & UIScrollViewDelegate & WKScriptMessageHandler & WKUIDelegate
@@ -56,10 +88,12 @@ extension WKWebView {
         webView.scrollView.contentInsetAdjustmentBehavior = options.contentBehavior
         return webView
     }
-    
 }
-
-extension UIColor {
+///
+///
+///
+internal extension UIColor {
+    
     var rgba: String {
         var r: CGFloat = 0
         var g: CGFloat = 0
@@ -71,7 +105,8 @@ extension UIColor {
     }
 }
 
-extension UIView {    
+internal extension UIView {
+    
     var allSubviews: [UIView] {
         return subviews + subviews.flatMap { $0.allSubviews }
     }

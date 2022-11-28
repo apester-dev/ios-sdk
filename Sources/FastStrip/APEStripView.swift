@@ -280,7 +280,7 @@ private extension APEStripView {
             self.delegate?.stripView(self, didFinishLoadingChannelToken: self.channelToken)
 
         } else if bodyString.contains(StripConfig.stripResizeHeight),
-            let dictioanry = bodyString.dictionary, let height = dictioanry[StripConfig.stripHeight] as? CFloat {
+            let dictioanry = bodyString.ape_dictionary, let height = dictioanry[StripConfig.stripHeight] as? CFloat {
             if CGFloat(height) != self.loadingState.height {
                 self.loadingState.height = CGFloat(height)
                 if loadingState.isLoaded {

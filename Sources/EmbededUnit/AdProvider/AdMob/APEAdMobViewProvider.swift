@@ -12,13 +12,13 @@ import GoogleMobileAds
 extension APEUnitView.BannerViewProvider {
     
     static func adMobProvider(
-        params: APEUnitView.AdMobParams,
-        adTitleLabelText: String,
-        inUnitBackgroundColor: UIColor,
-        containerViewController: UIViewController,
-        onAdRemovalCompletion: @escaping ((APEUnitView.Monetization) -> Void),
-        receiveAdSuccessCompletion: @escaping (() -> Void),
-        receiveAdErrorCompletion: @escaping ((Error?) -> Void)
+        params                      : APEUnitView.AdMobParams,
+        adTitleLabelText            : String,
+        inUnitBackgroundColor       : UIColor,
+        containerViewController     : UIViewController,
+        onAdRemovalCompletion       : @escaping HandlerAdType,
+        receiveAdSuccessCompletion  : @escaping HandlerVoidType,
+        receiveAdErrorCompletion    : @escaping HandlerErrorType
     ) -> APEUnitView.BannerViewProvider {
         
         var provider = APEUnitView.BannerViewProvider()
@@ -32,13 +32,6 @@ extension APEUnitView.BannerViewProvider {
             onAdRemovalCompletion: onAdRemovalCompletion
         )
         
-        GADMobileAds.sharedInstance().start(completionHandler: nil)
-        
-        let gADView = GADBannerView(adSize: (params.adType == .bottom) ? GADAdSizeBanner : GADAdSizeMediumRectangle)
-        gADView.translatesAutoresizingMaskIntoConstraints = false
-        gADView.adUnitID = params.adUnitId
-        gADView.load(GADRequest())
-        
         banner.delegate = makeGADViewDelegate(
             containerViewController: containerViewController,
             receiveAdSuccessCompletion: {
@@ -50,14 +43,25 @@ extension APEUnitView.BannerViewProvider {
                 receiveAdErrorCompletion(error)
             }
         )
-        gADView.delegate = banner.delegate as? GADBannerViewDelegate
+        
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
+        
+        let adSize  = params.adType == .bottom ? GADAdSizeBanner : GADAdSizeMediumRectangle
+        
+        let gADView = GADBannerView(adSize: adSize)
+        gADView.translatesAutoresizingMaskIntoConstraints = false
         gADView.rootViewController = containerViewController
+        gADView.adUnitID = params.adUnitId
+        gADView.delegate = banner.delegate as? GADBannerViewDelegate
+        gADView.load(GADRequest())
+        
         banner.adContent = gADView
         
-        provider.type = { [banner] in
+        provider.banner = { [banner] in banner }
+        provider.type   = { [banner] in
             banner.monetization
         }
-        provider.banner = { [banner] in
+        provider.content = { [banner] in
             banner.adContent
         }
         provider.hide = { [banner] in
@@ -119,10 +123,12 @@ extension APEUnitView {
             receiveAdSuccessCompletion: { [weak self] in
                 guard let strongSelf = self else { return }
                 strongSelf.dispatchNativeAdEvent(named: Constants.Monetization.playerMonImpression)
+                strongSelf.manualPostActionResize()
             },
             receiveAdErrorCompletion: { [weak self] error in
                 guard let strongSelf = self else { return }
                 strongSelf.dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingImpressionFailed)
+                strongSelf.manualPostActionResize()
             })
         
         // showGADView
