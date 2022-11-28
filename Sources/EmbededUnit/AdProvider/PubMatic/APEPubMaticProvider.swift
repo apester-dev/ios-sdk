@@ -155,6 +155,16 @@ extension APEUnitView {
                 strongSelf.manualPostActionResize()
             })
         
+        // Added to enable debug mode handling
+        if params.testMode && params.debugLogs {
+            
+            OpenWrapSDK.setLogLevel(POBSDKLogLevel.all)
+            
+            if let gdpr = configuration.gdprString {
+                os_log("ApeSterSDK::-GDPR-String-: %{public}@", log: OSLog.ApesterSDK, type: .debug, gdpr)
+            }
+        }
+        
         if let provider = viewProvider {
             
             bannerViewProviders.append(provider)
