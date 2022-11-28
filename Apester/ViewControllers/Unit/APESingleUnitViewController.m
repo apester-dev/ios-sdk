@@ -15,6 +15,7 @@
 @property (nonatomic, strong) APEUnitView* apesterUnitView;
 
 @property (weak, nonatomic) IBOutlet UIView *containerView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightConstraint;
 
 @end
 
@@ -67,6 +68,7 @@
 }
 
 - (void)unitView:(APEUnitView * _Nonnull)unitView didUpdateHeight:(CGFloat)height {
-
+    [[self heightConstraint] setConstant:height];
+    NSLog(@"## unitView.didUpdateHeight: %f", height);
 }
 @end
