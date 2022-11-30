@@ -31,7 +31,7 @@ class APEStripCollectionViewCell: UICollectionViewCell {
 class APEUnitCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet private weak var containerView: UIView!
-    private var unitView: APEUnitView?
+    internal var unitView: APEUnitView?
 
     override func awakeFromNib() {
         super.awakeFromNib()

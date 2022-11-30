@@ -8,17 +8,18 @@
 
 import Foundation
 import OpenWrapSDK
+import OSLog
 
 extension APEUnitView.BannerViewProvider {
     
     static func pubMaticProvider(
-        params: APEUnitView.PubMaticParams,
-        adTitleLabelText: String,
-        inUnitBackgroundColor: UIColor,
-        containerViewController: UIViewController,
-        onAdRemovalCompletion: @escaping ((APEUnitView.Monetization) -> Void),
-        receiveAdSuccessCompletion: @escaping (() -> Void),
-        receiveAdErrorCompletion: @escaping ((Error?) -> Void)
+        params	                    : APEUnitView.PubMaticParams,
+        adTitleLabelText	        : String,
+        inUnitBackgroundColor       : UIColor,
+        containerViewController     : UIViewController,
+        onAdRemovalCompletion       : @escaping HandlerAdType,
+        receiveAdSuccessCompletion  : @escaping HandlerVoidType,
+        receiveAdErrorCompletion    : @escaping HandlerErrorType
     ) -> APEUnitView.BannerViewProvider {
         
         var provider = APEUnitView.BannerViewProvider()
@@ -32,26 +33,15 @@ extension APEUnitView.BannerViewProvider {
             onAdRemovalCompletion: onAdRemovalCompletion
         )
         
-        let adType: APEUnitView.Monetization.AdType = params.adType
-        
-        let adSizes = [POBAdSizeMake(adType.size.width, adType.size.height)].compactMap({ $0 })
+        let adType  = params.adType
+        let adSizes = [POBAdSizeMake(adType.width, adType.height)].compactMap({ $0 })
         
         let appInfo = POBApplicationInfo()
-        appInfo.domain = params.appDomain
-        appInfo.storeURL = URL(string: params.appStoreUrl)!
+        appInfo.domain      = params.appDomain
+        appInfo.storeURL    = URL(string: params.appStoreUrl)!
+        
         OpenWrapSDK.setApplicationInfo(appInfo)
         
-        OpenWrapSDK.setLogLevel(POBSDKLogLevel.all)
-        
-        let pubMaticView = POBBannerView(publisherId: params.publisherId,
-                                         profileId: .init(value: params.profileId),
-                                         adUnitId: params.adUnitId,
-                                         adSizes: adSizes)
-        
-        pubMaticView?.request.testModeEnabled = params.testMode
-        pubMaticView?.request.debug = params.debugLogs
-        pubMaticView?.request.bidSummaryEnabled = params.bidSummaryLogs
-        pubMaticView?.loadAd()
         banner.delegate = makePubMaticViewDelegate(
             adType: adType,
             containerViewController: containerViewController,
@@ -64,13 +54,27 @@ extension APEUnitView.BannerViewProvider {
                 receiveAdErrorCompletion(error)
             }
         )
-        pubMaticView?.delegate = banner.delegate as? POBBannerViewDelegate
-        banner.adContent = pubMaticView
         
-        provider.type = { [banner] in
+        let pubMaticView = POBBannerView(
+            publisherId: params.publisherId,
+            profileId: .init(value: params.profileId),
+            adUnitId: params.adUnitId,
+            adSizes: adSizes
+        )
+        
+        pubMaticView?.request.debug             = params.debugLogs
+        pubMaticView?.request.testModeEnabled   = params.testMode
+        pubMaticView?.request.bidSummaryEnabled = params.bidSummaryLogs
+        pubMaticView?.delegate = banner.delegate as? POBBannerViewDelegate
+        pubMaticView?.loadAd()
+        
+        banner.adContent = pubMaticView
+
+        provider.banner = { [banner] in banner }
+        provider.type   = { [banner] in
             banner.monetization
         }
-        provider.banner = { [banner] in
+        provider.content = { [banner] in
             banner.adContent
         }
         provider.hide = { [banner] in
@@ -130,27 +134,43 @@ extension APEUnitView {
         }
         
         viewProvider = .pubMaticProvider(
-            params: params,
-            adTitleLabelText: configuration.adTitleLabelText,
-            inUnitBackgroundColor: configuration.adInUnitBackgroundColor,
-            containerViewController: containerVC,
-            onAdRemovalCompletion: {  [weak self] adType in
+            params                  : params,
+            adTitleLabelText        : configuration.adTitleLabelText,
+            inUnitBackgroundColor   : configuration.adInUnitBackgroundColor,
+            containerViewController : containerVC,
+            onAdRemovalCompletion   : {  [weak self] adType in
+                
                 self?.removeAdView(of: adType)
             },
-            receiveAdSuccessCompletion: { [weak self] in
+            receiveAdSuccessCompletion  : { [weak self] in
+                
                 guard let strongSelf = self else { return }
                 strongSelf.dispatchNativeAdEvent(named: Constants.Monetization.playerMonImpression)
+                strongSelf.manualPostActionResize()
             },
-            receiveAdErrorCompletion: { [weak self] error in
+            receiveAdErrorCompletion    : { [weak self] error in
+                
                 guard let strongSelf = self else { return }
                 strongSelf.dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingImpressionFailed)
+                strongSelf.manualPostActionResize()
             })
+        
+        // Added to enable debug mode handling
+        if params.testMode && params.debugLogs {
+            
+            OpenWrapSDK.setLogLevel(POBSDKLogLevel.all)
+            
+            if let gdpr = configuration.gdprString {
+                os_log("ApeSterSDK::-GDPR-String-: %{public}@", log: OSLog.ApesterSDK, type: .debug, gdpr)
+            }
+        }
         
         if let provider = viewProvider {
             
             bannerViewProviders.append(provider)
             display(banner: provider, forAdType: params.adType)
         }
+        
         dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingPass)
     }
 }

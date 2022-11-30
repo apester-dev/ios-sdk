@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oXn-ea-6sv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oXn-ea-6sv">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -295,7 +295,7 @@
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ReuseCellIdentifier" id="qQW-xh-D3X" customClass="APEUnitCollectionViewCell" customModule="Apester" customModuleProvider="target">
                                         <rect key="frame" x="-20" y="0.0" width="375" height="200"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
                                             <autoresizingMask key="autoresizingMask"/>
@@ -360,18 +360,17 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VgY-aI-Drh">
                                 <rect key="frame" x="10" y="54" width="355" height="554"/>
                                 <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" priority="999" constant="300" id="f6h-IK-d8y"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="VgY-aI-Drh" secondAttribute="trailing" constant="10" id="3eU-GU-P9F"/>
-                            <constraint firstItem="VBD-gN-7hp" firstAttribute="top" secondItem="VgY-aI-Drh" secondAttribute="bottom" constant="10" id="4Pf-TS-CG6"/>
-                            <constraint firstAttribute="trailing" secondItem="VgY-aI-Drh" secondAttribute="trailing" constant="10" id="7AK-rQ-imx"/>
-                            <constraint firstItem="VgY-aI-Drh" firstAttribute="leading" secondItem="siT-9e-Nu7" secondAttribute="leading" constant="10" id="9aI-ns-7dE"/>
-                            <constraint firstItem="VgY-aI-Drh" firstAttribute="top" secondItem="lGv-cv-cbE" secondAttribute="bottom" constant="10" id="F9y-P5-8oN"/>
-                            <constraint firstItem="VgY-aI-Drh" firstAttribute="leading" secondItem="siT-9e-Nu7" secondAttribute="leading" constant="10" id="XaQ-IP-m9O"/>
-                            <constraint firstItem="VgY-aI-Drh" firstAttribute="top" secondItem="lGv-cv-cbE" secondAttribute="bottom" constant="10" id="mVq-XT-0d4"/>
-                            <constraint firstItem="VBD-gN-7hp" firstAttribute="top" secondItem="VgY-aI-Drh" secondAttribute="bottom" constant="10" id="rJf-NN-bQg"/>
+                            <constraint firstItem="VBD-gN-7hp" firstAttribute="top" secondItem="VgY-aI-Drh" secondAttribute="bottom" constant="10" id="05r-m7-cob"/>
+                            <constraint firstItem="VgY-aI-Drh" firstAttribute="leading" secondItem="siT-9e-Nu7" secondAttribute="leading" constant="10" id="27h-Px-K4d"/>
+                            <constraint firstAttribute="trailing" secondItem="VgY-aI-Drh" secondAttribute="trailing" constant="10" id="3Yq-6A-VIb"/>
+                            <constraint firstItem="VgY-aI-Drh" firstAttribute="top" secondItem="lGv-cv-cbE" secondAttribute="bottom" constant="10" id="Bfd-uX-Ucs"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -385,6 +384,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="containerView" destination="VgY-aI-Drh" id="g7h-ST-lAV"/>
+                        <outlet property="heightConstraint" destination="f6h-IK-d8y" id="luB-yp-WPd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gUv-0h-WN1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
