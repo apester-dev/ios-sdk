@@ -86,6 +86,7 @@ internal extension WKWebView {
         webView.scrollView.delegate = delegate
         webView.uiDelegate = delegate
         webView.scrollView.contentInsetAdjustmentBehavior = options.contentBehavior
+        webView.accessibilityIdentifier = "apesterWebContainer"
         return webView
     }
 }

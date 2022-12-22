@@ -48,7 +48,10 @@
 
     [_apesterUnitView displayIn:_containerView containerViewController:self];
 
-    [_apesterUnitView setGdprString:UnitConfigurationsFactory.gdprString];
+    NSString *gdpr = [UnitConfigurationsFactory gdprString];
+    if (gdpr && [gdpr length] > 0) {
+        [_apesterUnitView setGdprString:UnitConfigurationsFactory.gdprString];
+    }
 }
 
 - (IBAction)refreshButton:(id)sender {
