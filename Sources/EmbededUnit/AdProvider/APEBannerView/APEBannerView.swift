@@ -33,6 +33,8 @@ class APEBannerView : UIView
         button.widthAnchor.constraint(equalToConstant: 30).isActive = true
         button.heightAnchor.constraint(equalToConstant: 30).isActive = true
         button.addTarget(self, action: #selector(hide), for: .touchUpInside)
+        button.accessibilityIdentifier = "apesterInUnitBunnerCloseButton"
+        button.accessibilityHint = "Tap Apester In Unit Close Button to dismiss In Unit ad"
         return button
     }()
     

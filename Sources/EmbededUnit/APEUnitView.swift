@@ -144,7 +144,7 @@ import Foundation
         // companion
         adCompanion.ape_anchor(view: webContent   , with: [ equal(\.leadingAnchor), equal(\.trailingAnchor) ])
         adCompanion.ape_anchor(view: adMainBottom , with: [ equal(\.bottomAnchor, \.topAnchor, constant: 0) ])
-        displayView.ape_anchor(view: adCompanion  , with: [ equal(\.bottomAnchor) ] , priority: .defaultLow  )
+        displayView.ape_anchor(view: adCompanion  , with: [ equal(\.bottomAnchor) ] , priority: .required    )
         
         adCompanionConstraintHeight = adCompanion.heightAnchor.constraint(equalToConstant: adCompanion.intrinsicContentSize.height)
         adCompanionConstraintHeight?.priority = .defaultLow
@@ -384,7 +384,7 @@ private extension APEUnitView {
         displayView.setNeedsLayout()
         displayView.layoutIfNeeded()
         
-        manualPostActionResize()
+        self.manualPostActionResize()
     }
 }
 
