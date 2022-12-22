@@ -295,7 +295,7 @@
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ReuseCellIdentifier" id="qQW-xh-D3X" customClass="APEUnitCollectionViewCell" customModule="Apester" customModuleProvider="target">
                                         <rect key="frame" x="-20" y="0.0" width="375" height="200"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
+                                        <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
                                             <autoresizingMask key="autoresizingMask"/>

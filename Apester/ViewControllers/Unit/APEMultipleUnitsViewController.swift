@@ -56,12 +56,15 @@ extension APEMultipleUnitsViewController: UICollectionViewDataSource {
             let unit = self.unitsParams[indexPath.row / Self.emptyCellsCount]
             let stripView = APEViewService.shared.unitView(for: unit.id)
             cell.show(unitView: stripView, containerViewController: self)
+        } else {
+            cell.backgroundColor = .red
         }
         return cell
     }
 }
 
 extension APEMultipleUnitsViewController: APEUnitViewDelegate {
+    
     func unitView(_ unitView: APEUnitView, didFailLoadingUnit unitId: String) {
         DispatchQueue.main.async {
             APEViewService.shared.unloadUnitViews(with: [unitId])
