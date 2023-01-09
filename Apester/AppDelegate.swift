@@ -32,11 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             APELogger.Writers.standard,
             DemoLogWriter()
         ])
-        
-        APELoggerService.shared.info { "something logged 1" }
-        
-        APELoggerService.shared.debug { "something logged 2" }
-        
         return true
     }
     
