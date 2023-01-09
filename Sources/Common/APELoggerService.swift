@@ -26,8 +26,8 @@ public final class APELoggerService : NSObject {
     
     // MARK: - Initialization
     private override init() {
-        let enabled = true;
-        let writer = APELogger.Writers.standard;
+        let enabled = true
+        let writer = APELogger.Writers.standard
         let formatter = APELogger.Formatters.standard
         self.enabled = enabled
         self.writer    = writer
