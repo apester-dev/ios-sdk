@@ -145,6 +145,14 @@ public extension APELogger {
         private var _writer    : APELogWriter
         private var _formatter : APELogFormatter
         
+        public convenience init(
+            _ enabled  : Bool              ,
+            _ severity : APELogger.Severity,
+            _ writer   : APELogWriter      ,
+            _ formatter: APELogFormatter
+        ) {
+            self.init(enabled: enabled, severity: severity, writer: writer, formatter: formatter)
+        }
         public init(
             enabled  : Bool              ,
             severity : APELogger.Severity,

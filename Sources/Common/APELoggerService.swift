@@ -26,15 +26,17 @@ public final class APELoggerService : NSObject {
     
     // MARK: - Initialization
     private override init() {
-        let e = true; let w = APELogger.Writers.standard; let f = APELogger.Formatters.standard
-        self.enabled = e
-        self.writer    = w
-        self.formatter = f
-        self.verbose = APELogger.Channel(enabled: e, severity: .verbose, writer: w, formatter: f)
-        self.debug   = APELogger.Channel(enabled: e, severity: .debug  , writer: w, formatter: f)
-        self.info    = APELogger.Channel(enabled: e, severity: .info   , writer: w, formatter: f)
-        self.warning = APELogger.Channel(enabled: e, severity: .warning, writer: w, formatter: f)
-        self.fatal   = APELogger.Channel(enabled: e, severity: .fatal  , writer: w, formatter: f)
+        let enabled = true;
+        let writer = APELogger.Writers.standard;
+        let formatter = APELogger.Formatters.standard
+        self.enabled = enabled
+        self.writer    = writer
+        self.formatter = formatter
+        self.verbose = APELogger.Channel(enabled, .verbose, writer, formatter)
+        self.debug   = APELogger.Channel(enabled, .debug  , writer, formatter)
+        self.info    = APELogger.Channel(enabled, .info   , writer, formatter)
+        self.warning = APELogger.Channel(enabled, .warning, writer, formatter)
+        self.fatal   = APELogger.Channel(enabled, .fatal  , writer, formatter)
     }
     
     private var channels: [APELogChannel] {
