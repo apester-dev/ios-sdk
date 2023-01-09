@@ -54,6 +54,7 @@ extension APEUnitView.BannerViewProvider {
         gADView.adUnitID = params.adUnitId
         gADView.delegate = banner.delegate as? GADBannerViewDelegate
         gADView.load(GADRequest())
+        APELoggerService.shared.info("gADView::loadAd() - adType:\(params.adType), unitID: \(params.adUnitId)")
         
         banner.adContent = gADView
         

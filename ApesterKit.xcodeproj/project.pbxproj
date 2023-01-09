@@ -13,6 +13,16 @@
 		3697E8692418DD2D00B6AC79 /* UnitConfigurationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697E8682418DD2D00B6AC79 /* UnitConfigurationFactory.swift */; };
 		36B5DC1D2419549B000E46AF /* APEUnitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36FC4E55241776BC00A25076 /* APEUnitView.swift */; };
 		36B5DC1F241954A1000E46AF /* APEUnitConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */; };
+		5D9615862962CA3200DE70C4 /* APELoggerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9615852962CA3200DE70C4 /* APELoggerService.swift */; };
+		5D96158D2962D8B300DE70C4 /* APELogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D96158C2962D8B300DE70C4 /* APELogger.swift */; };
+		5D96158F2962D96B00DE70C4 /* APEThreadMutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D96158E2962D96B00DE70C4 /* APEThreadMutex.swift */; };
+		5D9615912962DB0500DE70C4 /* APEProcessInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9615902962DB0500DE70C4 /* APEProcessInfo.swift */; };
+		5D9615962962DB5F00DE70C4 /* APELogWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9615952962DB5F00DE70C4 /* APELogWriter.swift */; };
+		5D9615982962DB9B00DE70C4 /* APELogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9615972962DB9B00DE70C4 /* APELogFormatter.swift */; };
+		5D96159B2962DBED00DE70C4 /* APELogChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D96159A2962DBED00DE70C4 /* APELogChannel.swift */; };
+		5D96159E2962E52700DE70C4 /* APELoggerWriters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D96159D2962E52700DE70C4 /* APELoggerWriters.swift */; };
+		5D9615A22962EAC600DE70C4 /* APELoggerFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9615A12962EAC600DE70C4 /* APELoggerFormatters.swift */; };
+		5D9615A72963006200DE70C4 /* APELogChannelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9615A62963006200DE70C4 /* APELogChannelExtensions.swift */; };
 		86120824233F74A9006608F1 /* UserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86120811233F74A9006608F1 /* UserAgent.swift */; };
 		864E5A0424DB017400F5D70C /* APESingleUnitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 864E5A0324DB017400F5D70C /* APESingleUnitViewController.m */; };
 		864E5A0724DB0C1300F5D70C /* APEUnitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864E5A0524DB0C0100F5D70C /* APEUnitViewController.swift */; };
@@ -143,6 +153,16 @@
 		36FC4E55241776BC00A25076 /* APEUnitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEUnitView.swift; sourceTree = "<group>"; };
 		374B416556F3A68B888D54DF /* Pods-ApesterKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ApesterKit.release.xcconfig"; path = "Target Support Files/Pods-ApesterKit/Pods-ApesterKit.release.xcconfig"; sourceTree = "<group>"; };
 		3D4D185EABE4D9AEDC49B7D7 /* Pods_Apester.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Apester.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D9615852962CA3200DE70C4 /* APELoggerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APELoggerService.swift; sourceTree = "<group>"; };
+		5D96158C2962D8B300DE70C4 /* APELogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APELogger.swift; sourceTree = "<group>"; };
+		5D96158E2962D96B00DE70C4 /* APEThreadMutex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEThreadMutex.swift; sourceTree = "<group>"; };
+		5D9615902962DB0500DE70C4 /* APEProcessInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEProcessInfo.swift; sourceTree = "<group>"; };
+		5D9615952962DB5F00DE70C4 /* APELogWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APELogWriter.swift; sourceTree = "<group>"; };
+		5D9615972962DB9B00DE70C4 /* APELogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APELogFormatter.swift; sourceTree = "<group>"; };
+		5D96159A2962DBED00DE70C4 /* APELogChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APELogChannel.swift; sourceTree = "<group>"; };
+		5D96159D2962E52700DE70C4 /* APELoggerWriters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APELoggerWriters.swift; sourceTree = "<group>"; };
+		5D9615A12962EAC600DE70C4 /* APELoggerFormatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APELoggerFormatters.swift; sourceTree = "<group>"; };
+		5D9615A62963006200DE70C4 /* APELogChannelExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APELogChannelExtensions.swift; sourceTree = "<group>"; };
 		86120811233F74A9006608F1 /* UserAgent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAgent.swift; sourceTree = "<group>"; };
 		864E5A0224DB017400F5D70C /* APESingleUnitViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APESingleUnitViewController.h; sourceTree = "<group>"; };
 		864E5A0324DB017400F5D70C /* APESingleUnitViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APESingleUnitViewController.m; sourceTree = "<group>"; };
@@ -322,6 +342,62 @@
 			path = Unit;
 			sourceTree = "<group>";
 		};
+		5D96158B2962D89B00DE70C4 /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+				5D96158C2962D8B300DE70C4 /* APELogger.swift */,
+				5D9615942962DB4600DE70C4 /* Protocols */,
+				5D9615A52963005D00DE70C4 /* Extensions */,
+				5D96159C2962E51400DE70C4 /* Writers */,
+				5D9615AB2963452C00DE70C4 /* Formatters */,
+				5D9615AA296301DB00DE70C4 /* Helper */,
+			);
+			path = Logger;
+			sourceTree = "<group>";
+		};
+		5D9615942962DB4600DE70C4 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				5D96159A2962DBED00DE70C4 /* APELogChannel.swift */,
+				5D9615952962DB5F00DE70C4 /* APELogWriter.swift */,
+				5D9615972962DB9B00DE70C4 /* APELogFormatter.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		5D96159C2962E51400DE70C4 /* Writers */ = {
+			isa = PBXGroup;
+			children = (
+				5D96159D2962E52700DE70C4 /* APELoggerWriters.swift */,
+			);
+			path = Writers;
+			sourceTree = "<group>";
+		};
+		5D9615A52963005D00DE70C4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5D9615A62963006200DE70C4 /* APELogChannelExtensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		5D9615AA296301DB00DE70C4 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				5D96158E2962D96B00DE70C4 /* APEThreadMutex.swift */,
+				5D9615902962DB0500DE70C4 /* APEProcessInfo.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		5D9615AB2963452C00DE70C4 /* Formatters */ = {
+			isa = PBXGroup;
+			children = (
+				5D9615A12962EAC600DE70C4 /* APELoggerFormatters.swift */,
+			);
+			path = Formatters;
+			sourceTree = "<group>";
+		};
 		6EF3402A682CD3A2CD069BF8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -350,6 +426,7 @@
 				8679F3C02423E11F00AA4749 /* APEConfiguration.swift */,
 				8679F3BE2423E07300AA4749 /* APEView.swift */,
 				8679F3C8242402BF00AA4749 /* APEViewService.swift */,
+				5D9615852962CA3200DE70C4 /* APELoggerService.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -434,6 +511,7 @@
 		BB44109B22D53BE500BB1DEC /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				5D96158B2962D89B00DE70C4 /* Logger */,
 				BB9709AA222322E000E1076B /* Constants.swift */,
 				BB44109922D53B9500BB1DEC /* MessagesDispatcher.swift */,
 				BB44109122D53AAB00BB1DEC /* ScriptMessageHandler.swift */,
@@ -742,26 +820,36 @@
 			files = (
 				BB44109A22D53B9500BB1DEC /* MessagesDispatcher.swift in Sources */,
 				8652CB21233BF93B0092E309 /* SynchronizedScript.swift in Sources */,
+				5D9615962962DB5F00DE70C4 /* APELogWriter.swift in Sources */,
 				8682A20327A804F300A40F88 /* APEPubMaticViewDelegate.swift in Sources */,
+				5D96159E2962E52700DE70C4 /* APELoggerWriters.swift in Sources */,
 				8658F76A23832E4500C23BDA /* APEStripViewDelegate.swift in Sources */,
 				86B735ED23380D9100949864 /* APEStripStyle.swift in Sources */,
 				864FDAB3283278D100A84AEC /* APEBannerView.swift in Sources */,
 				8679F3C9242402BF00AA4749 /* APEViewService.swift in Sources */,
+				5D96158F2962D96B00DE70C4 /* APEThreadMutex.swift in Sources */,
 				86120824233F74A9006608F1 /* UserAgent.swift in Sources */,
+				5D9615A22962EAC600DE70C4 /* APELoggerFormatters.swift in Sources */,
+				5D9615862962CA3200DE70C4 /* APELoggerService.swift in Sources */,
 				8679F3C62423EE7D00AA4749 /* APEViewNavigationType.swift in Sources */,
 				8679F3C22423E31900AA4749 /* APEView.swift in Sources */,
 				BB44109D22D53BF300BB1DEC /* Extensions.swift in Sources */,
+				5D9615982962DB9B00DE70C4 /* APELogFormatter.swift in Sources */,
+				5D9615A72963006200DE70C4 /* APELogChannelExtensions.swift in Sources */,
 				8679F3C12423E11F00AA4749 /* APEConfiguration.swift in Sources */,
 				8658F76C23832F9700C23BDA /* APEEnvironment.swift in Sources */,
 				361BF13F241EB9770079BFE3 /* APEUnitViewDelegate.swift in Sources */,
 				867BF0CC282910E7009BF1DB /* APEPubMaticProvider.swift in Sources */,
+				5D96159B2962DBED00DE70C4 /* APELogChannel.swift in Sources */,
 				867D559B23E4A0D600190D64 /* APEStripViewService.swift in Sources */,
 				867BF0CE282910EB009BF1DB /* APEMonetizationParams.swift in Sources */,
 				BB44109F22D53D2F00BB1DEC /* APEStripConfiguration.swift in Sources */,
+				5D9615912962DB0500DE70C4 /* APEProcessInfo.swift in Sources */,
 				8682A20027A804EC00A40F88 /* APEAdMobViewDelegate.swift in Sources */,
 				BB9709AB222322E000E1076B /* Constants.swift in Sources */,
 				36B5DC1F241954A1000E46AF /* APEUnitConfiguration.swift in Sources */,
 				86EAFF2D233E9D1000081AAB /* BundleInfo.swift in Sources */,
+				5D96158D2962D8B300DE70C4 /* APELogger.swift in Sources */,
 				8682A20627A8051F00A40F88 /* APEAdMobViewProvider.swift in Sources */,
 				36B5DC1D2419549B000E46AF /* APEUnitView.swift in Sources */,
 				BB44109222D53AAB00BB1DEC /* ScriptMessageHandler.swift in Sources */,
