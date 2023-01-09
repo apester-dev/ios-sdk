@@ -28,29 +28,29 @@ extension APEUnitView {
             self.receiveAdErrorCompletion = receiveAdErrorCompletion
         }
         func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
-            APELoggerService.shared.info("")
+            APELoggerService.shared.info()
             receiveAdSuccessCompletion()
         }
         
         @nonobjc func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: NSError) {
-            APELoggerService.shared.info("")
+            APELoggerService.shared.info()
             receiveAdErrorCompletion(error)
         }
 
         func bannerViewWillPresentScreen(_ bannerView: GADBannerView) {
-            APELoggerService.shared.info("")
+            APELoggerService.shared.info()
         }
 
         func bannerViewWillDismissScreen(_ bannerView: GADBannerView) {
-            APELoggerService.shared.info("")
+            APELoggerService.shared.info()
         }
 
         func bannerViewDidDismissScreen(_ bannerView: GADBannerView) {
-            APELoggerService.shared.info("")
+            APELoggerService.shared.info()
         }
 
         func adViewWillLeaveApplication(_ bannerView: GADBannerView) {
-            APELoggerService.shared.info("")
+            APELoggerService.shared.info()
         }
     }
 }

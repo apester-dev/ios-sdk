@@ -450,7 +450,7 @@ extension APEUnitView {
     }
     
     func manualPostActionResize() {
-        APELoggerService.shared.info("manualPostActionResize-start")
+        APELoggerService.shared.info("start")
         var computedHeight = CGFloat(0.0)
         
         if containerView.ape_isExist {
@@ -469,7 +469,7 @@ extension APEUnitView {
             }
         }
         loadingState.height = CGFloat(computedHeight)
-        APELoggerService.shared.info("manualPostActionResize-end")
+        APELoggerService.shared.info("end")
         delegate?.unitView(self, didUpdateHeight: computedHeight)
     }
     

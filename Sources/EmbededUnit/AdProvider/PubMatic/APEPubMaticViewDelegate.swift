@@ -27,30 +27,30 @@ extension APEUnitView {
         }
         
         func bannerViewPresentationController() -> UIViewController {
-            APELoggerService.shared.info("")
+            APELoggerService.shared.info()
             return self.containerViewController ?? UIApplication.shared.windows.first!.rootViewController!
         }
 
         func bannerViewDidReceiveAd(_ bannerView: POBBannerView) {
-            APELoggerService.shared.info("")
+            APELoggerService.shared.info()
             receiveAdSuccessCompletion()
         }
         
         func bannerView(_ bannerView: POBBannerView, didFailToReceiveAdWithError error: Error) {
-            APELoggerService.shared.info("")
+            APELoggerService.shared.info()
             receiveAdErrorCompletion(error)
         }
         
         func bannerViewWillLeaveApplication(_ bannerView: POBBannerView) {
-            APELoggerService.shared.info("")
+            APELoggerService.shared.info()
         }
         
         func bannerViewWillPresentModal(_ bannerView: POBBannerView) {
-            APELoggerService.shared.info("")
+            APELoggerService.shared.info()
         }
         
         func bannerViewDidDismissModal(_ bannerView: POBBannerView) {
-            APELoggerService.shared.info("")
+            APELoggerService.shared.info()
         }
     }
     
