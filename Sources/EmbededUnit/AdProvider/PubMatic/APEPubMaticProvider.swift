@@ -18,6 +18,7 @@ extension APEUnitView.BannerViewProvider {
         inUnitBackgroundColor       : UIColor,
         containerViewController     : UIViewController,
         onAdRemovalCompletion       : @escaping HandlerAdType,
+        onAdRequestedCompletion     : @escaping HandlerVoidType,
         receiveAdSuccessCompletion  : @escaping HandlerVoidType,
         receiveAdErrorCompletion    : @escaping HandlerErrorType
     ) -> APEUnitView.BannerViewProvider {
@@ -42,8 +43,7 @@ extension APEUnitView.BannerViewProvider {
         
         OpenWrapSDK.setApplicationInfo(appInfo)
         
-        banner.delegate = makePubMaticViewDelegate(
-            adType: adType,
+        banner.delegate = APEUnitView.PubMaticViewDelegate.init(
             containerViewController: containerViewController,
             receiveAdSuccessCompletion: {
                 banner.onReceiveAdSuccess?()
@@ -52,8 +52,7 @@ extension APEUnitView.BannerViewProvider {
             receiveAdErrorCompletion: { [banner] error in
                 banner.onReceiveAdError?(error)
                 receiveAdErrorCompletion(error)
-            }
-        )
+            })
         
         let pubMaticView = POBBannerView(
             publisherId: params.publisherId,
@@ -67,10 +66,11 @@ extension APEUnitView.BannerViewProvider {
         pubMaticView?.request.bidSummaryEnabled = params.bidSummaryLogs
         pubMaticView?.delegate = banner.delegate as? POBBannerViewDelegate
         pubMaticView?.loadAd()
-        APELoggerService.shared.info("pubMaticView::loadAd() - adType:\(adType), unitID: \(params.adUnitId)")
+        
+        onAdRequestedCompletion()
         
         banner.adContent = pubMaticView
-
+        
         provider.banner = { [banner] in banner }
         provider.type   = { [banner] in
             banner.monetization
@@ -88,21 +88,7 @@ extension APEUnitView.BannerViewProvider {
             pubMaticView?.forceRefresh()
         }
         return provider
-    }
-    
-    static func makePubMaticViewDelegate(
-        adType: APEUnitView.Monetization.AdType,
-        containerViewController: UIViewController,
-        receiveAdSuccessCompletion: @escaping (() -> Void),
-        receiveAdErrorCompletion: @escaping ((Error?) -> Void)
-    ) -> APEUnitView.PubMaticViewDelegate {
-        .init(
-            containerViewController: containerViewController,
-            receiveAdSuccessCompletion: receiveAdSuccessCompletion,
-            receiveAdErrorCompletion: receiveAdErrorCompletion
-        )
-    }
-    
+    }    
 }
 
 // MARK:- PubMatic ADs
@@ -130,29 +116,36 @@ extension APEUnitView {
         }
         
         guard let containerVC = containerViewController else {
-            dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingImpressionFailed)
+            dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingImpressionFailed, for: adType)
             return
         }
         
-        viewProvider = .pubMaticProvider(
+        viewProvider = APEUnitView.BannerViewProvider.pubMaticProvider(
             params                  : params,
             adTitleLabelText        : configuration.adTitleLabelText,
             inUnitBackgroundColor   : configuration.adInUnitBackgroundColor,
             containerViewController : containerVC,
-            onAdRemovalCompletion   : {  [weak self] adType in
-                
-                self?.removeAdView(of: adType)
-            },
-            receiveAdSuccessCompletion  : { [weak self] in
+            onAdRemovalCompletion      : { [weak self] adsType in
                 
                 guard let strongSelf = self else { return }
-                strongSelf.dispatchNativeAdEvent(named: Constants.Monetization.playerMonImpression)
+                strongSelf.removeAdView(of: adsType)
+            },
+            onAdRequestedCompletion    : { [weak self] in
+                
+                guard let strongSelf = self else { return }
+                strongSelf.dispatchNativeAdEvent(named: Constants.Monetization.playerMonImpressionPending, for: adType)
+                APELoggerService.shared.info("pubMaticView::loadAd() - adType:\(adType), unitID: \(adUnitId)")
+            },
+            receiveAdSuccessCompletion : { [weak self] in
+                
+                guard let strongSelf = self else { return }
+                strongSelf.dispatchNativeAdEvent(named: Constants.Monetization.playerMonImpression, for: adType)
                 strongSelf.manualPostActionResize()
             },
-            receiveAdErrorCompletion    : { [weak self] error in
+            receiveAdErrorCompletion   : { [weak self] error in
                 
                 guard let strongSelf = self else { return }
-                strongSelf.dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingImpressionFailed)
+                strongSelf.dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingImpressionFailed, for: adType)
                 strongSelf.manualPostActionResize()
             })
         
@@ -172,6 +165,6 @@ extension APEUnitView {
             display(banner: provider, forAdType: params.adType)
         }
         
-        dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingPass)
+        dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingPass, for: adType)
     }
 }

@@ -22,7 +22,7 @@ extension APEUnitView {
             }
         }
         
-        enum AdType: String {
+        enum AdType: String , CustomStringConvertible {
             case bottom
             case inUnit
             case companion
@@ -36,6 +36,8 @@ extension APEUnitView {
             }
             var height : CGFloat { return size.height }
             var width  : CGFloat { return size.width  }
+            
+            var description : String { return rawValue }
         }
         
         var adUnitId: String {
