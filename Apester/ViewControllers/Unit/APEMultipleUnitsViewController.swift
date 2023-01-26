@@ -38,6 +38,7 @@ class APEMultipleUnitsViewController: UIViewController {
                 APEViewService.shared.preloadUnitViews(with: UnitConfigurationsFactory.configurations(hideApesterAds: false))
             }
             APEViewService.shared.unitView(for: unitParams.id)?.delegate = self
+            APEViewService.shared.unitView(for: unitParams.id)?.setGdprString(UnitConfigurationsFactory.gdprString)
         }
     }
 }
