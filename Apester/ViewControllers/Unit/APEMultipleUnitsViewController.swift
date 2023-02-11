@@ -24,6 +24,8 @@ class APEMultipleUnitsViewController: UIViewController {
     
     private lazy var unitsParams: [APEUnitParams] = { configurations.map(\.unitParams) }()
     
+    fileprivate var apesterUnitViewHeight: CGFloat = CGFloat(0.0)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -63,7 +65,18 @@ extension APEMultipleUnitsViewController: UICollectionViewDataSource {
         return cell
     }
 }
-
+extension APEMultipleUnitsViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        if apesterUnitViewHeight == CGFloat(0.0) {
+            return collectionView.bounds.size
+        } else {
+            return CGSize.init(width: collectionView.bounds.width, height: apesterUnitViewHeight)
+        }
+        
+    }
+}
 extension APEMultipleUnitsViewController: APEUnitViewDelegate {
     
     func unitView(_ unitView: APEUnitView, didFailLoadingUnit unitId: String) {
@@ -83,6 +96,7 @@ extension APEMultipleUnitsViewController: APEUnitViewDelegate {
     
     func unitView(_ unitView: APEUnitView, didUpdateHeight height: CGFloat) {
         print("## unitView.didUpdateHeight: \(height), \(unitView.height), \(unitView.configuration.unitParams.id)")
-        collectionView.reloadData()
+        apesterUnitViewHeight = height
+        // collectionView.reloadData()
     }
 }

@@ -34,7 +34,7 @@ class APEUnitViewController: UIViewController {
         // For fullscreen mode set to be true.
         let fullscreen = false;
 
-        configuration.setFullscreen(fullscreen);
+        configuration.setFullscreen(fullscreen)
         
         if let unit = unitParams {
             // preLoad implementation
@@ -44,19 +44,17 @@ class APEUnitViewController: UIViewController {
         if apesterUnitView == nil {
             // not preload!
             apesterUnitView = APEUnitView(configuration: configuration)
-
         }
-//        apesterUnitView.setGdprString("new consent")
+        
         apesterUnitView.subscribe(events: ["fullscreen_off"])
         apesterUnitView?.delegate = self
 
         apesterUnitView.display(in: unitContainerView, containerViewController: self)
         
         // This to handle minimize app with full screen
-        NotificationCenter.default.addObserver(self, selector: #selector(willResignActive),
-                                               name: UIApplication.willResignActiveNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(willBackActive),
-                                               name: UIApplication.willEnterForegroundNotification, object: nil)
+        let center = NotificationCenter.default
+        center.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willResignActiveNotification   , object: nil)
+        center.addObserver(self, selector: #selector(willBackActive  ), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
     
     @objc func willResignActive(_ notification: Notification) {
