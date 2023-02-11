@@ -17,7 +17,8 @@ import SafariServices
 ///
 /// Between The Apester Units Carousel component (The `StripWebView`)
 /// And the selected Apester Unit (The `StoryWebView`)
-@objcMembers public class APEView: NSObject {
+@objcMembers
+public class APEView: NSObject {
 
     struct LoadingState {
         var isLoaded = false
@@ -26,9 +27,11 @@ import SafariServices
         var initialMessage: String?
         var openUnitMessage: String?
     }
-
-    var lastDeviceOrientation: UIDeviceOrientation = UIDevice.current.orientation
-    let setDeviceOrientation: ((Int) -> Void) = { UIDevice.current.setValue($0, forKey: "orientation") }
+    
+    var lastDeviceOrientation: UIDeviceOrientation
+    let setDeviceOrientation : ((Int) -> Void)     = {
+        UIDevice.current.setValue($0, forKey: "orientation")
+    }
 
     var containerView: UIView?
     weak var containerViewController: UIViewController?
@@ -36,11 +39,11 @@ import SafariServices
     // MARK:- Private Properties
     private let environment: APEEnvironment!
 
-    var messageDispatcher = MessageDispatcher()
+    var messageDispatcher : MessageDispatcher
 
-    var loadingState = LoadingState()
+    var loadingState : LoadingState
 
-    var subscribedEvents: Set<String> = Set()
+    var subscribedEvents: Set<String>
 
     // MARK:- Public Properties
     public var height: CGFloat {
@@ -48,12 +51,16 @@ import SafariServices
     }
 
     /// The strip view visibility status, update this property either when the strip view is visible or not.
-    public var isDisplayed: Bool = false
+    public var isDisplayed : Bool
 
 
     init(_ environment: APEEnvironment) {
-        
-        self.environment = environment
+        self.lastDeviceOrientation = UIDevice.current.orientation
+        self.messageDispatcher     = MessageDispatcher()
+        self.loadingState          = LoadingState()
+        self.subscribedEvents      = Set()
+        self.isDisplayed           = false
+        self.environment           = environment
         super.init()
         
         // prefetch channel data...
@@ -65,9 +72,6 @@ import SafariServices
         }
     }
 
-    @available(*, deprecated, renamed: "display(in:containerViewController:)")
-    public func display(in containerView: UIView, containerViewConroller: UIViewController) {}
-    
     /// Display the channel carousel units view
     ///
     /// - Parameters:
@@ -124,7 +128,12 @@ import SafariServices
     }
 }
 
-// MARK:- Internal API's to override
+// MARK: - deprecated methods
+public extension APEView {
+    @available(*, deprecated, renamed: "display(in:containerViewController:)")
+    func display(in containerView: UIView, containerViewConroller: UIViewController) {}
+}
+// MARK: - Internal API's to override
 @available(iOS 11.0, *)
 extension APEView {
 
