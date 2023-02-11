@@ -45,7 +45,11 @@ class MessageDispatcher {
         script.wait()
     }
     
-    func sendNativeAdEvent(to webView: WKWebView, named event: String, ofType adType: String) {
-        self.dispatch(apesterEvent: "{ type: \"native_ad_report\", nativeAdEvent: \"\(event)\", nativeAdType: \"\(adType)\" }", to: webView);
+    func sendNativeAdEvent(to webView: WKWebView, named event: String, ofType adType: String, inActive display: Bool) {
+        self.dispatch(apesterEvent: "{ type: \"native_ad_report\", nativeAdEvent: \"\(event)\", nativeAdType: \"\(adType)\", inView: \"\(display)\" }", to: webView);
+    }
+    
+    func sendNativeGDPREvent(to webView: WKWebView, consent gdprString: String) {
+        self.dispatch(apesterEvent: "{ type: \"gdpr_success\", consent: \"\(gdprString)\" }", to: webView);
     }
 }

@@ -19,7 +19,7 @@ class APEBannerView : UIView
     private(set) var monetization : APEUnitView.Monetization
     
     // MARK: - display
-    var containerView : UIView?
+    var containerView : APEContainerView?
     
     // MARK: - display - elements
     private var timeInView: Int?
@@ -59,8 +59,7 @@ class APEBannerView : UIView
         label.backgroundColor = .darkText.withAlphaComponent(0.25)
         label.font = .boldSystemFont(ofSize: 12)
         label.textColor = .lightText
-        label.setNeedsLayout()
-        label.layoutIfNeeded()
+        label.sizeToFit()
         return label
     }
     
@@ -116,10 +115,11 @@ class APEBannerView : UIView
     }
     
     // MARK: - public API
-    @objc func show(in container: UIView) {
+    @objc
+    func show(in container: APEContainerView) {
         
         // take action only if the `APEBannerView` is not embeded in a container, and the `APEBannerView` contains an ad object
-        guard superview == nil , let adView = adContent else { return }
+        guard containerView == nil , superview == nil , let adView = adContent else { return }
         
         containerView = container
         

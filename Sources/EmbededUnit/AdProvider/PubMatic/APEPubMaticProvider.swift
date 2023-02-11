@@ -46,10 +46,12 @@ extension APEUnitView.BannerViewProvider {
         banner.delegate = APEUnitView.PubMaticViewDelegate.init(
             containerViewController: containerViewController,
             receiveAdSuccessCompletion: {
+                provider.bannerStatus = .success
                 banner.onReceiveAdSuccess?()
                 receiveAdSuccessCompletion()
             },
             receiveAdErrorCompletion: { [banner] error in
+                provider.bannerStatus = .failure
                 banner.onReceiveAdError?(error)
                 receiveAdErrorCompletion(error)
             })
@@ -71,20 +73,22 @@ extension APEUnitView.BannerViewProvider {
         
         banner.adContent = pubMaticView
         
-        provider.banner = { [banner] in banner }
-        provider.type   = { [banner] in
+        provider.banner   = { [banner] in
+            banner
+        }
+        provider.type     = { [banner] in
             banner.monetization
         }
-        provider.content = { [banner] in
+        provider.content  = { [banner] in
             banner.adContent
         }
-        provider.hide = { [banner] in
+        provider.hide     = { [banner] in
             banner.hide()
         }
-        provider.show = { [banner] containerView in
+        provider.show     = { [banner] containerView in
             banner.show(in: containerView)
         }
-        provider.refresh = { [pubMaticView] in
+        provider.refresh  = { [pubMaticView] in
             pubMaticView?.forceRefresh()
         }
         return provider
@@ -96,75 +100,75 @@ extension APEUnitView {
     
     func setupPubMaticView(params: PubMaticParams) {
         
-        let adType   = params.adType
-        let adUnitId = params.adUnitId
-        
-        var viewProvider = bannerViewProviders.first(where: {
+        /// Step 01. Check if UnitView conainer has a containerViewController, A adViewProvider can be created / presented only if we have a valid container.
+        guard let containerVC = containerViewController else {
+            dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingImpressionFailed, for: params.adType, widget: false)
+            return
+        }
+
+        /// Step 02. Locate a viewProvider instance if it exists in cache
+        let provider: APEUnitView.BannerViewProvider? = bannerViewProviders.first(where: {
             switch $0.type() {
-            case .adMob, .none:
+            case .adMob:
                 return false
-            case .pubMatic(let params):
-                return params.adUnitId == adUnitId && params.adType == adType
+            case .pubMatic(let p):
+                return p.adUnitId == params.adUnitId && p.adType == params.adType
             }
         })
         
-        if let provider = viewProvider {
-            
-            provider.refresh()
-            display(banner: provider, forAdType: params.adType)
-            return
-        }
-        
-        guard let containerVC = containerViewController else {
-            dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingImpressionFailed, for: adType)
-            return
-        }
-        
-        viewProvider = APEUnitView.BannerViewProvider.pubMaticProvider(
+        /// Step 03. if viewProvider instance is not found create it
+        let viewProvider = provider.ape_isExist ? provider! : APEUnitView.BannerViewProvider.pubMaticProvider(
             params                  : params,
             adTitleLabelText        : configuration.adTitleLabelText,
             inUnitBackgroundColor   : configuration.adInUnitBackgroundColor,
             containerViewController : containerVC,
             onAdRemovalCompletion      : { [weak self] adsType in
-                
+
                 guard let strongSelf = self else { return }
                 strongSelf.removeAdView(of: adsType)
             },
             onAdRequestedCompletion    : { [weak self] in
-                
+
                 guard let strongSelf = self else { return }
-                strongSelf.dispatchNativeAdEvent(named: Constants.Monetization.playerMonImpressionPending, for: adType)
-                APELoggerService.shared.info("pubMaticView::loadAd() - adType:\(adType), unitID: \(adUnitId)")
+                strongSelf.dispatchNativeAdEvent(named: Constants.Monetization.playerMonImpressionPending, for: params.adType, widget: true)
+                APELoggerService.shared.info("pubMaticView::loadAd() - adType:\(params.adType), unitID: \(params.adUnitId)")
             },
             receiveAdSuccessCompletion : { [weak self] in
-                
+
                 guard let strongSelf = self else { return }
-                strongSelf.dispatchNativeAdEvent(named: Constants.Monetization.playerMonImpression, for: adType)
+                strongSelf.dispatchNativeAdEvent(named: Constants.Monetization.playerMonImpression, for: params.adType, widget: true)
                 strongSelf.manualPostActionResize()
             },
             receiveAdErrorCompletion   : { [weak self] error in
-                
+
                 guard let strongSelf = self else { return }
-                strongSelf.dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingImpressionFailed, for: adType)
+                strongSelf.dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingImpressionFailed, for: params.adType, widget: true)
                 strongSelf.manualPostActionResize()
             })
         
+        /// Step 04. if viewProvider is not in cache, add it
+        if !bannerViewProviders.contains(viewProvider) {
+            bannerViewProviders.append(viewProvider)
+        }
+
         // Added to enable debug mode handling
         if params.testMode && params.debugLogs {
             
-            OpenWrapSDK.setLogLevel(POBSDKLogLevel.all)
+            OpenWrapSDK.setLogLevel(POBSDKLogLevel.off)
             
             if let gdpr = configuration.gdprString {
                 os_log("ApeSterSDK::-GDPR-String-: %{public}@", log: OSLog.ApesterSDK, type: .debug, gdpr)
+                
+                messageDispatcher.sendNativeGDPREvent(to: webContent, consent: gdpr)
             }
         }
+
+        viewProvider.refresh()
         
-        if let provider = viewProvider {
-            
-            bannerViewProviders.append(provider)
-            display(banner: provider, forAdType: params.adType)
-        }
+        /// Step 05. - try to show GADView
+        // guard display(banner: viewProvider) else { return }
         
-        dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingPass, for: adType)
+        /// Step 06. Send analytics event if GADView was shown
+        dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingPass, for: params.adType, widget: true)
     }
 }

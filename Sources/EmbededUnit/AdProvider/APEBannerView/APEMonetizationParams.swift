@@ -128,3 +128,24 @@ extension APEUnitView {
         }
     }
 }
+
+//internal protocol AdParamaters  {
+//    var identifier   : String { get }
+//    var monetization : APEUnitView.Monetization.AdType { get }
+//    var isVariant    : Bool { get }
+//}
+//extension AdParamaters where Self : Equatable {
+//    static func == (lhs: AdParamaters, rhs: AdParamaters) -> Bool {
+//        return lhs.identifier == rhs.identifier && lhs.monetization == rhs.monetization && lhs.isVariant == rhs.isVariant
+//    }
+//}
+//extension APEUnitView.AdMobParams : AdParamaters {
+//    var identifier   : String { adUnitId }
+//    var monetization : APEUnitView.Monetization.AdType { adType }
+//    var isVariant      : Bool   { isCompanionVariant }
+//}
+//extension APEUnitView.PubMaticParams : AdParamaters {
+//    var identifier   : String { adUnitId }
+//    var monetization : APEUnitView.Monetization.AdType { adType }
+//    var isVariant      : Bool   { isCompanionVariant }
+//}
