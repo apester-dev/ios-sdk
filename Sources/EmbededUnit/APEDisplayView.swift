@@ -21,8 +21,8 @@ public class APEContainerView : UIView
         return view == self ? nil : view
     }
     // MARK: -
-    fileprivate func setSubviews(as hidden: Bool) {
-        subviews.forEach { $0.isHidden = hidden }
+    fileprivate func setSubviewsVisibility(_ visibility: Bool) {
+        subviews.forEach { $0.isHidden = visibility }
     }
 }
 
@@ -36,7 +36,7 @@ internal class APEContainerViewUnit : APEContainerView {
             if let height = displayHeight , displayConstraint?.constant != height {
                 setNeedsUpdateConstraints()
                 setNeedsLayout()
-                setSubviews(as: height == 0.0)
+                setSubviewsVisibility(height == 0.0)
                 displayConstraint?.isActive = false
                 displayConstraint?.constant = height
                 displayConstraint?.isActive = true
@@ -152,7 +152,7 @@ internal class APEContainerViewBottom : APEContainerView {
             if let height = displayHeight {
                 setNeedsUpdateConstraints()
                 setNeedsLayout()
-                setSubviews(as: height == 0.0)
+                setSubviewsVisibility(height == 0.0)
                 displayConstraint?.isActive = false
                 displayConstraint?.constant = height
                 displayConstraint?.isActive = true
@@ -192,7 +192,7 @@ internal class APEContainerViewCompanion : APEContainerView {
             if let height = displayHeight {
                 setNeedsUpdateConstraints()
                 setNeedsLayout()
-                setSubviews(as: height == 0.0)
+                setSubviewsVisibility(height == 0.0)
                 displayConstraint?.isActive = false
                 displayConstraint?.constant = height
                 displayConstraint?.isActive = true
