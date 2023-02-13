@@ -36,7 +36,7 @@ internal class APEContainerViewUnit : APEContainerView {
             if let height = displayHeight , displayConstraint?.constant != height {
                 setNeedsUpdateConstraints()
                 setNeedsLayout()
-                setSubviewsVisibility(height == 0.0)
+                setSubviewsVisibility(height != 0.0)
                 displayConstraint?.isActive = false
                 displayConstraint?.constant = height
                 displayConstraint?.isActive = true
@@ -152,7 +152,7 @@ internal class APEContainerViewBottom : APEContainerView {
             if let height = displayHeight {
                 setNeedsUpdateConstraints()
                 setNeedsLayout()
-                setSubviewsVisibility(height == 0.0)
+                setSubviewsVisibility(height != 0.0)
                 displayConstraint?.isActive = false
                 displayConstraint?.constant = height
                 displayConstraint?.isActive = true
@@ -192,7 +192,7 @@ internal class APEContainerViewCompanion : APEContainerView {
             if let height = displayHeight {
                 setNeedsUpdateConstraints()
                 setNeedsLayout()
-                setSubviewsVisibility(height == 0.0)
+                setSubviewsVisibility(height != 0.0)
                 displayConstraint?.isActive = false
                 displayConstraint?.constant = height
                 displayConstraint?.isActive = true
