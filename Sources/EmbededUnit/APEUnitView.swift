@@ -399,7 +399,7 @@ extension APEUnitView {
         }
         DispatchQueue.main.async {
             
-            print("$$ - inUnitHeight: \(inUnitHeight), inBottomHeight: \(inBottomHeight), adBottomHeight: \(adBottomHeight), adCompanionHeight: \(adCompanionHeight)")
+            //print("$$ - inUnitHeight: \(inUnitHeight), inBottomHeight: \(inBottomHeight), adBottomHeight: \(adBottomHeight), adCompanionHeight: \(adCompanionHeight)")
             
             self.loadingState.height = self.displayView.applyLayoutHeight(
                 inUnitHeight, inBottomHeight, adBottomHeight, adCompanionHeight
@@ -434,7 +434,7 @@ extension APEUnitView {
     }
     
     func manualPostActionResize() {
-        APELoggerService.shared.info("SOME-SOME-SOME-SOME-SOME-SOME")
+        // APELoggerService.shared.info("SOME-SOME-SOME-SOME-SOME-SOME")
         updateFinalDisplay(with: displayView.adUnit.displayHeight ?? CGFloat(0.0) )
     }
     

@@ -100,7 +100,7 @@ extension APEUnitView {
     
     func setupPubMaticView(params: PubMaticParams) {
         
-        /// Step 01. Check if UnitView conainer has a containerViewController, A adViewProvider can be created / presented only if we have a valid container.
+        /// Step 01. Check if UnitView container has a containerViewController, A adViewProvider can be created / presented only if we have a valid container.
         guard let containerVC = containerViewController else {
             dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingImpressionFailed, for: params.adType, widget: false)
             return
