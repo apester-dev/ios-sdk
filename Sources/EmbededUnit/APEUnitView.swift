@@ -355,10 +355,10 @@ extension APEUnitView {
     
     @discardableResult
     func display(banner bannerView: APEUnitView.BannerViewProvider) -> Bool{
-        guard let containerView = container(for: bannerView.type()) else { return false }
-        guard let b = bannerView.content(), b.superview == nil      else { return false }
-        let a = bannerView.type()
-        switch (a.adType, a.isCompanionVariant) {
+        guard let containerView = container(for: bannerView.type())      else { return false }
+        guard let banner = bannerView.content(), banner.superview == nil else { return false }
+        let monetization = bannerView.type()
+        switch (monetization.adType, monetization.isCompanionVariant) {
         case (.inUnit   , _    ) : bannerView.show(containerView)
         case (.bottom   , true ) : bannerView.show(containerView)
         case (.bottom   , false) : bannerView.show(containerView)
