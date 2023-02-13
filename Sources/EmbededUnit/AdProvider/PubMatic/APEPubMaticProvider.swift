@@ -67,6 +67,7 @@ extension APEUnitView.BannerViewProvider {
         pubMaticView?.request.bidSummaryEnabled = params.bidSummaryLogs
         pubMaticView?.delegate = banner.delegate as? POBBannerViewDelegate
         pubMaticView?.loadAd()
+        APELoggerService.shared.info("pubMaticView::loadAd() - adType:\(adType), unitID: \(params.adUnitId)")
         
         banner.adContent = pubMaticView
 

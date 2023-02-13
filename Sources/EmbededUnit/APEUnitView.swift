@@ -358,7 +358,7 @@ private extension APEUnitView {
     func updateDisplaySize(with height: CGFloat, width: CGFloat) {
         
         guard configuration.autoFullscreen == nil else { return }
-        
+        APELoggerService.shared.info("start")
         // 1 - update the unitWebView height constraint
         self.webContentConstraintHeight.flatMap { NSLayoutConstraint.deactivate([$0]) }
         webContentConstraintHeight = webContent.heightAnchor.constraint(equalToConstant: height)
@@ -383,7 +383,7 @@ private extension APEUnitView {
         
         displayView.setNeedsLayout()
         displayView.layoutIfNeeded()
-        
+        APELoggerService.shared.info("end")
         self.manualPostActionResize()
     }
 }
@@ -450,7 +450,7 @@ extension APEUnitView {
     }
     
     func manualPostActionResize() {
-        
+        APELoggerService.shared.info("start")
         var computedHeight = CGFloat(0.0)
         
         if containerView.ape_isExist {
@@ -469,11 +469,13 @@ extension APEUnitView {
             }
         }
         loadingState.height = CGFloat(computedHeight)
+        APELoggerService.shared.info("end")
         delegate?.unitView(self, didUpdateHeight: computedHeight)
     }
     
     func dispatchNativeAdEvent(named eventName: String) {
         messageDispatcher.sendNativeAdEvent(to: webContent, eventName)
+        APELoggerService.shared.info(eventName)
     }
     
     func removeAdView(of monetization: APEUnitView.Monetization?) {
