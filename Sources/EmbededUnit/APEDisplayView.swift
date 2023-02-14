@@ -22,7 +22,7 @@ public class APEContainerView : UIView
     }
     // MARK: -
     fileprivate func setSubviewsVisibility(_ visibility: Bool) {
-        subviews.forEach { $0.isHidden = visibility }
+        subviews.forEach { $0.isHidden = !visibility }
     }
 }
 
