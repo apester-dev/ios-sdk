@@ -13,6 +13,12 @@ import Foundation
 @objcMembers
 public class APEUnitView : APEView
 {
+    internal class AdProvider {
+        internal static let adMob    : String = "adMob"
+        internal static let pubmatic : String = "pubmatic"
+        internal static let aniview  : String = "aniview_native"
+    }
+    
     // MARK: - API - Display
     public private(set) var displayView : APEDisplayView!
     internal weak var webContent : WKWebView! { displayView.adUnit.webContent }
@@ -287,12 +293,31 @@ extension APEUnitView {
     }
 }
 extension APEUnitView {
-    func dispatchNativeAdEvent(named eventName: String, for adParamaters: Monetization.AdType, widget inActiveDisplay: Bool) {
+    func dispatchNativeAdEvent(
+        named eventName: String,
+        for adParamaters: Monetization.AdType,
+        ofType adProviderType: String,
+        widget inActiveDisplay: Bool
+    ) {
         APELoggerService.shared.info(eventName)
+        
+        func monProvider(for adParamaters: Monetization.AdType) -> String
+        {
+            switch adParamaters {
+            case .inUnit: return "da"
+            case .bottom: return "da_bottom"
+            case .companion: return "co"
+            }
+        }
+        
+        let provider = monProvider(for: adParamaters)
+        
         messageDispatcher.sendNativeAdEvent(
             to: webContent,
             named: eventName,
-            ofType: adParamaters.description,
+            adType: adParamaters.description,
+            ofType: adProviderType,
+            provider: provider,
             inActive: inActiveDisplay
         )
     }

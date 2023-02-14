@@ -11,7 +11,7 @@ import WebKit
 
 // MARK:- MessageDispatcher
 class MessageDispatcher {
-
+    
     private var messages: [Int: String] = [:]
     private var synchronizationLock : SynchronizedScript = SynchronizedScript()
     
@@ -45,8 +45,15 @@ class MessageDispatcher {
         script.wait()
     }
     
-    func sendNativeAdEvent(to webView: WKWebView, named event: String, ofType adType: String, inActive display: Bool) {
-        self.dispatch(apesterEvent: "{ type: \"native_ad_report\", nativeAdEvent: \"\(event)\", nativeAdType: \"\(adType)\", inView: \"\(display)\" }", to: webView);
+    func sendNativeAdEvent(
+        to webView: WKWebView,
+        named event: String,
+        adType: String,
+        ofType monetizationType: String,
+        provider monetizationProvider: String,
+        inActive display: Bool
+    ) {
+        self.dispatch(apesterEvent: "{ type: \"native_ad_report\", nativeAdEvent: \"\(event)\", nativeAdType: \"\(adType)\", monType: \"\(monetizationType)\", monProvider: \"\(monetizationProvider)\", inView: \"\(display)\" }" , to: webView);
     }
     
     func sendNativeGDPREvent(to webView: WKWebView, consent gdprString: String) {

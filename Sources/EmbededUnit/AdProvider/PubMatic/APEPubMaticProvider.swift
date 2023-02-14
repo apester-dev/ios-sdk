@@ -102,7 +102,7 @@ extension APEUnitView {
         
         /// Step 01. Check if UnitView container has a containerViewController, A adViewProvider can be created / presented only if we have a valid container.
         guard let containerVC = containerViewController else {
-            dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingImpressionFailed, for: params.adType, widget: false)
+            dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingImpressionFailed, for: params.adType, ofType: APEUnitView.AdProvider.pubmatic, widget: false)
             return
         }
 
@@ -130,19 +130,19 @@ extension APEUnitView {
             onAdRequestedCompletion    : { [weak self] in
 
                 guard let strongSelf = self else { return }
-                strongSelf.dispatchNativeAdEvent(named: Constants.Monetization.playerMonImpressionPending, for: params.adType, widget: true)
+                strongSelf.dispatchNativeAdEvent(named: Constants.Monetization.playerMonImpressionPending, for: params.adType, ofType: APEUnitView.AdProvider.pubmatic, widget: true)
                 APELoggerService.shared.info("pubMaticView::loadAd() - adType:\(params.adType), unitID: \(params.adUnitId)")
             },
             receiveAdSuccessCompletion : { [weak self] in
 
                 guard let strongSelf = self else { return }
-                strongSelf.dispatchNativeAdEvent(named: Constants.Monetization.playerMonImpression, for: params.adType, widget: true)
+                strongSelf.dispatchNativeAdEvent(named: Constants.Monetization.playerMonImpression, for: params.adType, ofType: APEUnitView.AdProvider.pubmatic, widget: true)
                 strongSelf.manualPostActionResize()
             },
             receiveAdErrorCompletion   : { [weak self] error in
 
                 guard let strongSelf = self else { return }
-                strongSelf.dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingImpressionFailed, for: params.adType, widget: true)
+                strongSelf.dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingImpressionFailed, for: params.adType, ofType: APEUnitView.AdProvider.pubmatic, widget: true)
                 strongSelf.manualPostActionResize()
             })
         
@@ -169,6 +169,6 @@ extension APEUnitView {
         // guard display(banner: viewProvider) else { return }
         
         /// Step 06. Send analytics event if GADView was shown
-        dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingPass, for: params.adType, widget: true)
+        dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingPass, for: params.adType, ofType: APEUnitView.AdProvider.pubmatic, widget: true)
     }
 }
