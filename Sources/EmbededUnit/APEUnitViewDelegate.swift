@@ -13,14 +13,14 @@ import WebKit
 
 /// A ChannelToken Loading state update
 @objc public protocol APEUnitViewDelegate: NSObjectProtocol {
-
+    
     /// when the unitId loaded successfully
     ///
     /// - Parameters:
     ///   - unitView: the view updater
     ///   - unitId: The mediaId for regular unit or the channel token for playlist
     func unitView(_ unitView: APEUnitView, didFinishLoadingUnit unitId: String)
-
+    
     /// when the webView couldn't be loaded
     /// - Parameters:
     ///   - unitView: the view updater
@@ -32,7 +32,7 @@ import WebKit
     ///   - unitView: the view updater
     ///   - height: the view new height
     func unitView(_ unitView: APEUnitView, didUpdateHeight height: CGFloat)
-
+    
     /// when ads completed and not try to get more ads.
     /// - Parameters:
     ///   - unitView: the view updater

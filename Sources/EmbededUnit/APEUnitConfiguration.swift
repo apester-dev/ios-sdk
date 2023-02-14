@@ -10,9 +10,9 @@ import UIKit
 import OpenWrapSDK // TODO: redundant SDK dependency
 
 public enum APEUnitParams {
-    case unit(mediaId: String) // Consider unit Environment 
+    case unit(mediaId: String) // Consider unit Environment
     case playlist(tags: [String], channelToken: String, context: Bool, fallback: Bool)
-
+    
     public var id: String {
         switch self {
         case .unit(let mediaId):
@@ -90,6 +90,8 @@ public enum APEUnitParams {
         self.gdprString = gdprString
         self.baseUrl = baseUrl
         super.init(bundle: bundle, environment: environment)
+        OpenWrapSDK.setGDPREnabled(false)
+        OpenWrapSDK.setGDPRConsent("")
     }
     
     public convenience init(unitParams: APEUnitParams, bundle: Bundle) {
@@ -97,7 +99,7 @@ public enum APEUnitParams {
     }
     
     public convenience init(unitParams: APEUnitParams, bundle: Bundle, hideApesterAds: Bool) {
-           self.init(unitParams: unitParams, bundle: bundle, hideApesterAds: hideApesterAds, gdprString: nil, baseUrl: nil, environment: .production)
+        self.init(unitParams: unitParams, bundle: bundle, hideApesterAds: hideApesterAds, gdprString: nil, baseUrl: nil, environment: .production)
     }
     
     public convenience init(unitParams: APEUnitParams, bundle: Bundle, gdprString: String) {
@@ -140,7 +142,7 @@ public enum APEUnitParams {
         self.init(unitParams: .unit(mediaId: mediaId),
                   bundle: bundle, hideApesterAds: hideApesterAds, baseUrl: baseUrl)
     }
-
+    
     @objc public convenience init(tags: [String], channelToken: String, context: Bool, fallback: Bool, bundle: Bundle) {
         self.init(unitParams: .playlist(tags: tags, channelToken: channelToken, context: context, fallback: fallback),
                   bundle: bundle)

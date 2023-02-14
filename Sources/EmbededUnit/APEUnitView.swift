@@ -10,34 +10,18 @@ import WebKit
 import UIKit
 import Foundation
 
-@objcMembers public class APEContainerView: UIView {
-    public override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        let view = super.hitTest(point, with: event)
-        return view == self ? nil : view
+@objcMembers
+public class APEUnitView : APEView
+{
+    internal class AdProvider {
+        internal static let adMob    : String = "adMob"
+        internal static let pubmatic : String = "pubmatic"
+        internal static let aniview  : String = "aniview_native"
     }
-}
-@objcMembers public   class APEDisplayView            : APEContainerView {}
-@objcMembers internal class APEContainerViewInUnit    : APEContainerView {}
-@objcMembers internal class APEContainerViewBottom    : APEContainerView {}
-@objcMembers internal class APEContainerViewCompanion : APEContainerView {}
-
-@objcMembers public class APEUnitView: APEView {
     
     // MARK: - API - Display
-    public   private(set) var   displayView: APEDisplayView!
-    internal private(set) var    webContent: WKWebView!
-    internal private(set) var adMainContent: APEContainerViewInUnit!
-    internal private(set) var adMainBottom : APEContainerViewBottom!
-    internal private(set) var adCompanion  : APEContainerViewCompanion!
-    
-    private var displayViewConstraintHeight: NSLayoutConstraint?
-    private var displayViewConstraintWidth : NSLayoutConstraint?
-    
-    private var webContentConstraintHeight : NSLayoutConstraint?
-    private var webContentConstraintWidth  : NSLayoutConstraint?
-    
-    private var adMainBottomConstraintHeight: NSLayoutConstraint?
-    private var  adCompanionConstraintHeight: NSLayoutConstraint?
+    public private(set) var displayView : APEDisplayView!
+    internal weak var webContent : WKWebView! { displayView.adUnit.webContent }
     
     // MARK: - Data
     internal var bannerViewProviders: [BannerViewProvider]
@@ -61,20 +45,6 @@ import Foundation
         }
     }
     
-    // MARK: - event API
-    /// subscribe to events in order to observe the events messages data.
-    /// for Example, subscribe to load and ready events by: `unitView.subscribe(["apester_interaction_loaded", "click_next"])`
-    /// - Parameter events: the event names.
-    public override func subscribe(events: [String]) {
-        DispatchQueue.main.async { self.subscribedEvents = self.subscribedEvents.union(events) }
-    }
-    
-    /// unsubscribe from events.
-    /// - Parameter events: the event names.
-    public override func unsubscribe(events: [String]) {
-        DispatchQueue.main.async { self.subscribedEvents = self.subscribedEvents.subtracting(events) }
-    }
-    
     // MARK: - Initialization
     public init(configuration: APEUnitConfiguration) {
         
@@ -85,85 +55,28 @@ import Foundation
         self.configuration = configuration
         let options = WKWebView.Options(events: [Constants.Unit.proxy, Constants.Unit.validateUnitViewVisibility], contentBehavior: .never, delegate: self)
         
-        self.displayView   = APEDisplayView(frame: .zero)
-        self.webContent    = WKWebView.make(with: options, params: configuration.parameters)
-        self.adMainContent = APEContainerViewInUnit(frame: .zero)
-        self.adMainBottom  = APEContainerViewBottom(frame: .zero)
-        self.adCompanion   = APEContainerViewCompanion(frame: .zero)
-        
-        displayView.addSubview(webContent)
-        displayView.addSubview(adMainContent)
-        displayView.addSubview(adMainBottom)
-        displayView.addSubview(adCompanion)
-        
-        if let unitUrl = configuration.unitURL {
-            webContent.load(URLRequest(url: unitUrl))
-        }
+        self.displayView = APEDisplayView(frame: .zero)
+        self.displayView.adUnit.webContent = WKWebView.make(with: options, params: configuration.parameters)
+        self.refreshContent()
     }
     
     public override func display(in containerView: UIView, containerViewController: UIViewController) {
         super.display(in: containerView, containerViewController: containerViewController)
         
-        // webContent.backgroundColor = .red
-        // adMainContent.backgroundColor = .green.withAlphaComponent(CGFloat(0.3))
-        // adMainBottom.backgroundColor = .brown
-        // adCompanion.backgroundColor = .cyan
-        
-        displayViewConstraintHeight = displayView.heightAnchor.constraint(equalTo: containerView.heightAnchor)
-        displayViewConstraintHeight?.priority = .defaultLow
-        
-        displayViewConstraintWidth = displayView.widthAnchor.constraint(equalTo: containerView.widthAnchor)
-        displayViewConstraintWidth?.priority = .defaultLow
-        
-        containerView.layoutIfNeeded()
-        
+        // Apester Host
         var containerConstraint = [NSLayoutConstraint]()
         containerConstraint += containerView.ape_addSubview(displayView, with: [
             equal(\.topAnchor) , equal(\.leadingAnchor), equal(\.trailingAnchor)
         ])
-        displayView.ape_anchor(view: containerView, with: [ greaterOrEqualValue(\.heightAnchor, \.heightAnchor) ], priority: .required)
+        displayView.ape_anchor(view: containerView, with: [ greaterOrEqualValue(\.heightAnchor, \.heightAnchor) ])
         
-        // webview
-        displayView.ape_anchor(view: webContent, with: [ equal(\.topAnchor) , equal(\.leadingAnchor), equal(\.trailingAnchor) ])
-        
-        webContentConstraintHeight = webContent.heightAnchor.constraint(equalTo: containerView.heightAnchor)
-        webContentConstraintHeight?.priority = .defaultLow
-        webContentConstraintHeight?.isActive = true
-        
-        webContentConstraintWidth = webContent.widthAnchor.constraint(equalTo: containerView.widthAnchor)
-        webContentConstraintWidth?.priority = .defaultLow
-        webContentConstraintWidth?.isActive = true
-        
-        // cpm
-        webContent.ape_anchor(view: adMainContent, with: UIView.anchorToContainer)
-        
-        // bottom
-        webContent.ape_anchor(view: adMainBottom  , with: [ equal(\.leadingAnchor), equal(\.trailingAnchor)])
-        adMainBottomConstraintHeight = webContent.ape_anchor(view: adMainBottom   , with: [ equal(\.bottomAnchor) ]).first
-        
-        // companion
-        adCompanion.ape_anchor(view: webContent   , with: [ equal(\.leadingAnchor), equal(\.trailingAnchor) ])
-        adCompanion.ape_anchor(view: adMainBottom , with: [ equal(\.bottomAnchor, \.topAnchor, constant: 0) ])
-        displayView.ape_anchor(view: adCompanion  , with: [ equal(\.bottomAnchor) ] , priority: .required    )
-        
-        adCompanionConstraintHeight = adCompanion.heightAnchor.constraint(equalToConstant: adCompanion.intrinsicContentSize.height)
-        adCompanionConstraintHeight?.priority = .defaultLow
-        adCompanionConstraintHeight?.isActive = true
-        
-        [webContent,containerView].forEach {
+        [displayView,containerView].forEach {
+            $0?.setNeedsUpdateConstraints()
             $0?.setNeedsLayout()
             $0?.layoutIfNeeded()
         }
         
-        // show AD Views
-        showAdViews()
-    }
-    
-    func showAdViews() {
-        
-        bannerViewProviders.forEach {
-            display(banner: $0, forAdType: $0.type()?.adType)
-        }
+        reload()
     }
     
     /// Remove the unit web view
@@ -175,20 +88,29 @@ import Foundation
         
         configuration.gdprString = gdprString
         
-        if let unitUrl = configuration.unitURL { webContent.load(URLRequest(url:unitUrl)) }
+        reload()
+        messageDispatcher.sendNativeGDPREvent(to: webContent, consent: gdprString)
     }
     
     /// Refresh unit content
     public override func refreshContent() {
-        // should be implemented later.
+        
+        guard let unitUrl = configuration.unitURL else { return }
+        webContent.load(URLRequest(url:unitUrl))
+        updatePreviewDisplay(with: CGFloat(500.0))
     }
     
     /// Reload webView
     public func reload() {
         
-        if let unitUrl = configuration.unitURL { webContent.load(URLRequest(url:unitUrl)) }
         bannerViewProviders.forEach({ $0.hide() })
         bannerViewProviders.removeAll()
+        displayView.removeBannerViews()
+        
+        loadingState.isLoaded = false
+        loadingState.isReady  = false
+        
+        refreshContent()
     }
     
     public func stop() {
@@ -271,57 +193,74 @@ extension APEUnitView {
         
         let messageName = message.name
         
-        if messageName == Constants.Unit.proxy, message.webView?.hash == webContent.hash, let bodyString = message.body as? String {
+        if messageName == Constants.Unit.proxy, message.webView?.hash == webContent.hash,
+           let bodyString = message.body as? String ,
+           let dictionary = bodyString.ape_dictionary
+        {
+            // print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+            // print("$$ - \(bodyString)")
+            // print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
             
-            if !loadingState.isLoaded {
-                loadingState.isLoaded = true
+            if dictionary["type"] as? String == Constants.Unit.isReady
+            {
+                if !loadingState.isReady {
+                    loadingState.isReady = true
+                }
             }
             
-            if bodyString.contains(Constants.Unit.resize), let dictionary = bodyString.ape_dictionary {
-                
+            if dictionary["type"] as? String == Constants.Unit.resize , let isFinalSize = dictionary["isFinalSizeForInApp"] as? Bool
+            {
                 let height = dictionary.ape_floatValue(for: Constants.Unit.height)
-                let width  = dictionary.ape_floatValue(for: Constants.Unit.width)
                 
-                if CGFloat(height) != loadingState.height {
-                    loadingState.height = CGFloat(height)
-                    
-                    if loadingState.isLoaded {
-                        updateDisplaySize(with: height, width: width)
+                if !isFinalSize {
+                    updatePreviewDisplay(with: height)
+                } else {
+                    if !loadingState.isLoaded {
+                        loadingState.isLoaded = true
+                        updateFinalDisplay(with: height)
                     }
                 }
             }
             
-            if bodyString.contains(Constants.WebView.apesterAdsCompleted) {
+            if dictionary["type"] as? String == Constants.WebView.apesterAdsCompleted
+            {
                 delegate?.unitView(self, didCompleteAdsForUnit: self.configuration.unitParams.id)
             }
             
-            if bodyString.contains(Constants.Monetization.initNativeAd) , let dictionary = bodyString.ape_dictionary {
-                
-                if let params = AdMobParams   (from: dictionary) {
-                    setupAdMobView(params: params)
-                }
-                if let params = PubMaticParams(from: dictionary) {
-                    setupPubMaticView(params: params)
-                }
-            }
-            
-            if bodyString.contains(Constants.Monetization.initInUnit)  , let dictionary = bodyString.ape_dictionary {
-                
-                if let params = AdMobParams   (from: dictionary) {
-                    setupAdMobView(params: params)
-                }
-                if let params = PubMaticParams(from: dictionary) {
-                    setupPubMaticView(params: params)
-                }
-            }
-            
-            if bodyString.contains(Constants.Monetization.killInUnit)
+            if dictionary["type"] as? String == Constants.Monetization.initInUnit
             {
-                removeAdView(for: bannerViewProviders.first { $0.type()?.adType == .inUnit })
+                if let params = AdMobParams   (from: dictionary)
+                {
+                    setupAdMobView(params: params)
+                }
+                if let params = PubMaticParams(from: dictionary)
+                {
+                    setupPubMaticView(params: params)
+                }
             }
             
-            if bodyString.contains(Constants.Unit.isReady), (configuration.autoFullscreen != nil) {
-                
+            if dictionary["type"] as? String == Constants.Monetization.initNativeAd
+            {
+                if let params = AdMobParams   (from: dictionary)
+                {
+                    setupAdMobView(params: params)
+                }
+                if let params = PubMaticParams(from: dictionary)
+                {
+                    setupPubMaticView(params: params)
+                }
+            }
+            
+            if dictionary["type"] as? String == Constants.Monetization.killInUnit
+            {
+                if let p = bannerViewProviders.first(where: { $0.type().adType == .inUnit }) {
+                    p.hide()
+                    displayView.removeInUnitAd()
+                }
+            }
+            
+            if dictionary.keys.contains(Constants.Unit.isReady) , (configuration.autoFullscreen != nil)
+            {
                 DispatchQueue.main.async {
                     
                     self.viewAbilityAssignment()
@@ -331,8 +270,8 @@ extension APEUnitView {
                 }
             }
             
-            if bodyString.contains(Constants.WebView.fullscreenOff) {
-                
+            if dictionary.keys.contains(Constants.WebView.fullscreenOff)
+            {
                 configuration.setFullscreen(false)
                 stop()
             }
@@ -342,7 +281,8 @@ extension APEUnitView {
             viewAbilityAssignment()
         }
         
-        if let bodyString = message.body as? String {
+        if let bodyString = message.body as? String
+        {
             publish(message: bodyString)
         }
     }
@@ -352,39 +292,34 @@ extension APEUnitView {
             .unregister(from: [Constants.Unit.proxy, Constants.Unit.validateUnitViewVisibility])
     }
 }
-
-private extension APEUnitView {
-    
-    func updateDisplaySize(with height: CGFloat, width: CGFloat) {
+extension APEUnitView {
+    func dispatchNativeAdEvent(
+        named eventName: String,
+        for adParamaters: Monetization.AdType,
+        ofType adProviderType: String,
+        widget inActiveDisplay: Bool
+    ) {
+        APELoggerService.shared.info(eventName)
         
-        guard configuration.autoFullscreen == nil else { return }
-        APELoggerService.shared.info("start")
-        // 1 - update the unitWebView height constraint
-        self.webContentConstraintHeight.flatMap { NSLayoutConstraint.deactivate([$0]) }
-        webContentConstraintHeight = webContent.heightAnchor.constraint(equalToConstant: height)
-        webContentConstraintHeight?.priority = .defaultHigh
-        webContentConstraintHeight?.isActive = true
-        
-        // 2 - update the unitWebView width constraint
-        self.webContentConstraintWidth.flatMap { NSLayoutConstraint.deactivate([$0]) }
-        webContentConstraintWidth = webContent.widthAnchor.constraint(equalToConstant: width)
-        webContentConstraintWidth?.priority = .defaultHigh
-        webContentConstraintWidth?.isActive = true
-        
-        showAdViews()
-        
-        if containerView.ape_isExist, let p = provider(for: .bottom), p.type()?.isCompanionVariant == true {
-            
-            self.adMainBottomConstraintHeight.flatMap { NSLayoutConstraint.deactivate([$0]) }
-            adMainBottomConstraintHeight = webContent.ape_anchor(view: adMainBottom, with: [
-                equal(\.topAnchor, \.bottomAnchor, constant: 0)
-            ]).first
+        func monProvider(for adParamaters: Monetization.AdType) -> String
+        {
+            switch adParamaters {
+            case .inUnit: return "da"
+            case .bottom: return "da_bottom"
+            case .companion: return "co"
+            }
         }
         
-        displayView.setNeedsLayout()
-        displayView.layoutIfNeeded()
-        APELoggerService.shared.info("end")
-        self.manualPostActionResize()
+        let provider = monProvider(for: adParamaters)
+        
+        messageDispatcher.sendNativeAdEvent(
+            to: webContent,
+            named: eventName,
+            adType: adParamaters.description,
+            ofType: adProviderType,
+            provider: provider,
+            inActive: inActiveDisplay
+        )
     }
 }
 
@@ -392,90 +327,140 @@ extension APEUnitView {
     
     struct BannerViewProvider : Equatable {
         
+        enum Status {
+            case pending
+            case success
+            case failure
+        }
         typealias HandlerAdType     = (APEUnitView.Monetization) -> Void
         typealias HandlerVoidType   = () -> Void
         typealias HandlerErrorType  = (Error?) -> Void
         
-        var type    : () -> Monetization?
-        var banner  : () -> APEBannerView?
+        var type    : () -> APEUnitView.Monetization
+        var banner  : () -> APEBannerView
         var content : () -> UIView?
         var refresh : () -> Void
-        var show    : (_ contentView: UIView) -> Void
+        var show    : (_ contentView: APEContainerView) -> Void
         var hide    : () -> Void
+        var bannerStatus : Status
+        var bannerHeight : CGFloat {
+            return banner().intrinsicContentSize.height
+        }
         
         init() {
-            self.type    = { fatalError() }
-            self.banner  = { fatalError() }
-            self.content = { fatalError() }
-            self.refresh = { fatalError() }
-            self.show    = { _ in fatalError() }
-            self.hide    = { fatalError() }
+            self.type     = { fatalError() }
+            self.banner   = { fatalError() }
+            self.content  = { fatalError() }
+            self.refresh  = { fatalError() }
+            self.show     = { _ in fatalError() }
+            self.hide     = { fatalError() }
+            self.bannerStatus = .pending
         }
         
         static func == (lhs: APEUnitView.BannerViewProvider, rhs: APEUnitView.BannerViewProvider) -> Bool {
-            lhs.type() == rhs.type()
+            
+            let lt = lhs.type()
+            let rt = rhs.type()
+            
+            return lt.adUnitId == rt.adUnitId && lt.adType == rt.adType && lt.isCompanionVariant == rt.isCompanionVariant
         }
     }
     
-    func bannerViewProvider(for adType: Monetization.AdType, adUnitId: String) -> APEUnitView.BannerViewProvider? {
+    func container(for adParamaters: APEUnitView.Monetization?) -> APEContainerView? {
         
-        return bannerViewProviders.first(where: {
-            switch $0.type() {
-            case .adMob   (let params): return params.adUnitId == adUnitId && params.adType == adType
-            case .pubMatic(let params): return params.adUnitId == adUnitId && params.adType == adType
-            case .none: return false
+        guard let paramaters = adParamaters else { return nil }
+        
+        switch (paramaters.adType, paramaters.isCompanionVariant) {
+        case (.inUnit   , _    ) : return displayView.adUnit.adContentMain
+        case (.bottom   , true ) : return displayView.adUnit.adContentBunner
+        case (.bottom   , false) : return displayView.adBottom
+        case (.companion, _    ) : return displayView.adCompanion
+        }
+    }
+    
+    @discardableResult
+    func display(banner bannerView: APEUnitView.BannerViewProvider) -> Bool{
+        guard let containerView = container(for: bannerView.type())      else { return false }
+        guard let banner = bannerView.content(), banner.superview == nil else { return false }
+        let monetization = bannerView.type()
+        switch (monetization.adType, monetization.isCompanionVariant) {
+        case (.inUnit   , _    ) : bannerView.show(containerView)
+        case (.bottom   , true ) : bannerView.show(containerView)
+        case (.bottom   , false) : bannerView.show(containerView)
+        case (.companion, _    ) : bannerView.show(containerView)
+        }
+        return true
+    }
+    
+    func updatePreviewDisplay(with height: CGFloat) {
+        
+        APELoggerService.shared.info("start---\(height)")
+        DispatchQueue.main.async {
+            self.loadingState.height = self.displayView.applyPreviewHeight(height)
+        }
+    }
+    
+    func updateFinalDisplay(with height: CGFloat) {
+        
+        guard loadingState.isReady && loadingState.isLoaded else { return }
+        
+        guard configuration.autoFullscreen == nil else { return }
+        APELoggerService.shared.info("start---\(height)")
+        
+        let       inUnitHeight = CGFloat(height)
+        var     inBottomHeight = CGFloat(0.0)
+        var     adBottomHeight = CGFloat(0.0)
+        var  adCompanionHeight = CGFloat(0.0)
+        
+        // Setup BannerView Height
+        if let p = bannerViewProviders.first(where: { $0.type().adType == .bottom && $0.type().isCompanionVariant == true }) {
+            inBottomHeight = p.bannerHeight
+        }
+        if let p = bannerViewProviders.first(where: { $0.type().adType == .bottom && $0.type().isCompanionVariant == false }) {
+            adBottomHeight = p.bannerHeight
+        }
+        if let p = bannerViewProviders.first(where: { $0.type().adType == .companion }) {
+            adCompanionHeight = p.bannerHeight
+        }
+        DispatchQueue.main.async {
+            
+            //print("$$ - inUnitHeight: \(inUnitHeight), inBottomHeight: \(inBottomHeight), adBottomHeight: \(adBottomHeight), adCompanionHeight: \(adCompanionHeight)")
+            
+            self.loadingState.height = self.displayView.applyLayoutHeight(
+                inUnitHeight, inBottomHeight, adBottomHeight, adCompanionHeight
+            )
+            
+            // Show BannerView ads content
+            if let p = self.bannerViewProviders.first(where: { $0.type().adType == .inUnit }) {
+                if p.bannerStatus == .success {
+                    self.display(banner: p)
+                }
             }
-        })
-    }
-    
-    func container(for adType: APEUnitView.Monetization.AdType?) -> UIView? {
-        
-        switch adType {
-        case .inUnit    : return adMainContent
-        case .bottom    : return adMainBottom
-        case .companion : return adCompanion
-        case .none      : return nil
+            if let p = self.bannerViewProviders.first(where: { $0.type().adType == .bottom && $0.type().isCompanionVariant == true }) {
+                if p.bannerStatus != .failure {
+                    self.display(banner: p)
+                }
+            }
+            if let p = self.bannerViewProviders.first(where: { $0.type().adType == .bottom && $0.type().isCompanionVariant == false }) {
+                if p.bannerStatus != .failure {
+                    self.display(banner: p)
+                }
+            }
+            if let p = self.bannerViewProviders.first(where: { $0.type().adType == .companion }) {
+                if p.bannerStatus != .failure {
+                    self.display(banner: p)
+                }
+            }
         }
-    }
-    
-    func provider(for adType: APEUnitView.Monetization.AdType?) -> APEUnitView.BannerViewProvider? {
-        return bannerViewProviders.first(where: { $0.type()?.adType == adType })
-    }
-    
-    func display(banner bannerView: APEUnitView.BannerViewProvider, forAdType type: APEUnitView.Monetization.AdType?) {
         
-        guard let containerView = container(for: type)         else { return }
-        guard let b = bannerView.content(), b.superview == nil else { return }
-        bannerView.show(containerView)
+        APELoggerService.shared.info("end")
+        
+        delegate?.unitView(self, didUpdateHeight: height)
     }
     
     func manualPostActionResize() {
-        APELoggerService.shared.info("start")
-        var computedHeight = CGFloat(0.0)
-        
-        if containerView.ape_isExist {
-            
-            if let c = webContentConstraintHeight , c.isActive {
-                computedHeight += c.constant
-            }
-            
-            if let p = provider(for: .bottom), p.type()?.isCompanionVariant == true, let b = p.banner() {
-                // add .bottom view isCompanionVariant == true into calculation
-                computedHeight += b.intrinsicContentSize.height
-            }
-            if let p = provider(for: .companion), let b = p.banner() {
-                // add .companion view into calculation
-                computedHeight += b.intrinsicContentSize.height
-            }
-        }
-        loadingState.height = CGFloat(computedHeight)
-        APELoggerService.shared.info("end")
-        delegate?.unitView(self, didUpdateHeight: computedHeight)
-    }
-    
-    func dispatchNativeAdEvent(named eventName: String) {
-        messageDispatcher.sendNativeAdEvent(to: webContent, eventName)
-        APELoggerService.shared.info(eventName)
+        // APELoggerService.shared.info("SOME-SOME-SOME-SOME-SOME-SOME")
+        updateFinalDisplay(with: displayView.adUnit.displayHeight ?? CGFloat(0.0) )
     }
     
     func removeAdView(of monetization: APEUnitView.Monetization?) {
@@ -491,6 +476,7 @@ extension APEUnitView {
         if let bannerView = viewProvider, let location = bannerViewProviders.firstIndex(of: bannerView) {
             bannerViewProviders.remove(at: location)
             bannerView.hide()
+            
         }
     }
 }

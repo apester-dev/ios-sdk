@@ -19,14 +19,6 @@ import SafariServices
 /// And the selected Apester Unit (The `StoryWebView`)
 @objcMembers public class APEStripView: APEView {
 
-    private struct LoadingState {
-        var isLoaded = false
-        var isReady = false
-        var height: CGFloat = 10
-        var initialMessage: String?
-        var openUnitMessage: String?
-    }
-
     private class StripStoryViewController: UIViewController {
         var webView: WKWebView!
 
@@ -134,23 +126,6 @@ import SafariServices
     /// Hide the story view
     public override func hideStory() {
         self.messageDispatcher.dispatchAsync(Constants.WebView.close, to: self.storyWebView)
-    }
-
-    /// subscribe to events in order to observe the events messages data.
-    /// for Example, subscribe to load and ready events by: `stripView.subscribe(["strip_loaded", "apester_strip_units"])`
-    /// - Parameter events: the event names.
-    public override func subscribe(events: [String]) {
-        DispatchQueue.main.async {
-            self.subscribedEvents = self.subscribedEvents.union(events)
-        }
-    }
-
-    /// unsubscribe from events.
-    /// - Parameter events: the event names.
-    public override func unsubscribe(events: [String]) {
-        DispatchQueue.main.async {
-            self.subscribedEvents = self.subscribedEvents.subtracting(events)
-        }
     }
 
     deinit {

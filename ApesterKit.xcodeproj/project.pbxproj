@@ -25,6 +25,7 @@
 		5D9615A72963006200DE70C4 /* APELogChannelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9615A62963006200DE70C4 /* APELogChannelExtensions.swift */; };
 		5DB96210296C1BE20093598A /* DemoThreadMutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB9620F296C1BE20093598A /* DemoThreadMutex.swift */; };
 		5DB96212296C1BFE0093598A /* DemoLogWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB96211296C1BFE0093598A /* DemoLogWriter.swift */; };
+		5DD46FF529959D4800A14595 /* APEDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD46FF429959D4800A14595 /* APEDisplayView.swift */; };
 		86120824233F74A9006608F1 /* UserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86120811233F74A9006608F1 /* UserAgent.swift */; };
 		864E5A0424DB017400F5D70C /* APESingleUnitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 864E5A0324DB017400F5D70C /* APESingleUnitViewController.m */; };
 		864E5A0724DB0C1300F5D70C /* APEUnitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864E5A0524DB0C0100F5D70C /* APEUnitViewController.swift */; };
@@ -167,6 +168,7 @@
 		5D9615A62963006200DE70C4 /* APELogChannelExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APELogChannelExtensions.swift; sourceTree = "<group>"; };
 		5DB9620F296C1BE20093598A /* DemoThreadMutex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoThreadMutex.swift; sourceTree = "<group>"; };
 		5DB96211296C1BFE0093598A /* DemoLogWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoLogWriter.swift; sourceTree = "<group>"; };
+		5DD46FF429959D4800A14595 /* APEDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APEDisplayView.swift; sourceTree = "<group>"; };
 		86120811233F74A9006608F1 /* UserAgent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAgent.swift; sourceTree = "<group>"; };
 		864E5A0224DB017400F5D70C /* APESingleUnitViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APESingleUnitViewController.h; sourceTree = "<group>"; };
 		864E5A0324DB017400F5D70C /* APESingleUnitViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APESingleUnitViewController.m; sourceTree = "<group>"; };
@@ -507,6 +509,7 @@
 				3697E8652417F86700B6AC79 /* APEUnitConfiguration.swift */,
 				361BF13E241EB9770079BFE3 /* APEUnitViewDelegate.swift */,
 				36FC4E55241776BC00A25076 /* APEUnitView.swift */,
+				5DD46FF429959D4800A14595 /* APEDisplayView.swift */,
 				86A5033B270DC249003CA642 /* AdProvider */,
 			);
 			path = EmbededUnit;
@@ -855,6 +858,7 @@
 				BB9709AB222322E000E1076B /* Constants.swift in Sources */,
 				36B5DC1F241954A1000E46AF /* APEUnitConfiguration.swift in Sources */,
 				86EAFF2D233E9D1000081AAB /* BundleInfo.swift in Sources */,
+				5DD46FF529959D4800A14595 /* APEDisplayView.swift in Sources */,
 				5D96158D2962D8B300DE70C4 /* APELogger.swift in Sources */,
 				8682A20627A8051F00A40F88 /* APEAdMobViewProvider.swift in Sources */,
 				36B5DC1D2419549B000E46AF /* APEUnitView.swift in Sources */,

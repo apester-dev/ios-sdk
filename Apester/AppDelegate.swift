@@ -15,14 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // initiate StripConfigurationsFactory environment
-        StripConfigurationsFactory.environment = .stage
-        // preloadStripViews
-        // APEViewService.shared.preloadStripViews(with: StripConfigurationsFactory.configurations(hideApesterAds: false))
-        // initiate UnitConfigurationsFactory environment
-        UnitConfigurationsFactory.environment = .dev
-        // preloadUnitViews
-        // APEViewService.shared.preloadUnitViews(with: UnitConfigurationsFactory.configurations(hideApesterAds: false))
+        
         APELoggerService.shared.enabled = true
         APELoggerService.shared.formatter = APELogger.Formatters.Concatenating([
             APELogger.Formatters.standard,
@@ -32,6 +25,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             APELogger.Writers.standard,
             DemoLogWriter()
         ])
+        
+        // initiate StripConfigurationsFactory environment
+        StripConfigurationsFactory.environment = .stage
+        // preloadStripViews
+        // APEViewService.shared.preloadStripViews(with: StripConfigurationsFactory.configurations(hideApesterAds: false))
+        
+        // initiate UnitConfigurationsFactory environment
+        UnitConfigurationsFactory.environment = .dev
+        
+        let configurations = UnitConfigurationsFactory.configurations(hideApesterAds: false, gdprString: UnitConfigurationsFactory.gdprString)
+        
+        // preloadUnitViews
+        APEViewService.shared.preloadUnitViews(with: configurations)
         return true
     }
     

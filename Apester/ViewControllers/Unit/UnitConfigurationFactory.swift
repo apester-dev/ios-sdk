@@ -17,8 +17,9 @@ import ApesterKit
     
     static func unitsIds() -> [String] { unitsParams.map(\.id) }
     
-//    static var gdprString = "COw4XqLOw4XqLAAAAAENAXCAAAAAAAAAAAAAAAAAAAAA.IFukWSQgAIQwgI0QEByFAAAAeIAACAIgSAAQAIAgEQACEABAAAgAQFAEAIAAAGBAAgAAAAQAIFAAMCQAAgAAQiRAEQAAAAANAAIAAggAIYQFAAARmggBC3ZCYzU2yIA.QFukWSQgAIQwgI0QEByFAAAAeIAACAIgSAAQAIAgEQACEABAAAgAQFAEAIAAAGBAAgAAAAQAIFAAMCQAAgAAQiRAEQAAAAANAAIAAggAIYQFAAARmggBC3ZCYzU2yIA.YAAAAAAAAAAAAAAAAAA"
-    static var gdprString : String? = nil
+    static var gdprString = "CPlrcMAPlrcMACnABIDECzCkAP_AAAAAAAYgI8pd9D7dbXFDefx_SPt0OYwW0NBTKuQCChSAA2AFVAOQcLQA02EaMATAhiACEQIAolIBAAEEHAFUAECQQIAEAAHsIgSEhAAKIABEEBEQAAIQAAoKAAAAEAAIgAABIgSAmBiQS5LmRUCAGIAQBgBYgogBCIABAgMBBEAIABgIAIIIwygAAQAAAIIAAAAAARAAAgAAAJCQAYAAgjyGgAwABBHkRABgACCPIqADAAEEeRkAGAAII8joAMAAQR5IQAYAAgjySgAwABBHkpABgACCPIAA.f_gAAAAABcgAAAAA"
+    // static var gdprString : String? = nil
+    
     static func configurations(hideApesterAds: Bool, gdprString: String? = nil, baseUrl: String? = nil) -> [APEUnitConfiguration]  {
         
         var unitsParams: [APEUnitParams]!
@@ -26,9 +27,10 @@ import ApesterKit
         switch environment {
         case .production:
             unitsParams = [
-                // .unit(mediaId: "6231aab6b6a111002a435a45"), // ADMob Test
-                .unit(mediaId: "61ee7ff6a5e14a002b6c044a"), //.unit(mediaId: "60eeda29b54b6f002448ba79"),
-                .playlist(tags: [], channelToken: "5f85919d44959d32decd9d31", context: false, fallback: false),
+                // // .unit(mediaId: "6231aab6b6a111002a435a45"), // ADMob Test
+                // .unit(mediaId: "61ee7ff6a5e14a002b6c044a"), //.unit(mediaId: "60eeda29b54b6f002448ba79"),
+                // .playlist(tags: [], channelToken: "5f85919d44959d32decd9d31", context: false, fallback: false),
+                .playlist(tags: [], channelToken: "61ee7fd7a33874001368f396", context: false, fallback: false)
             ]
         case .stage:
             unitsParams = [
@@ -44,18 +46,15 @@ import ApesterKit
                           fallback: false),
             ]
         case .local:
-            unitsParams = [.playlist(tags: ["news", "sport", "yoga"],
-                                     channelToken: "5d6fc15d07d512002b67ecc6",
-                                     context: false,
-                                     fallback: false),
-                           .unit(mediaId: "5e67bd1c6abc6400725787ab")]
-        case .dev:
-//            unitsParams = [
-//                .playlist(tags: [], channelToken: "601a9c857e7e58b7a8e6f78e", context: false, fallback: false)
-//            ]
             unitsParams = [
-                // 610a3f7dabe1d5003c662f3b
-                // 62a5c51e7c1ce9002a94941f
+                .unit(mediaId: "5e67bd1c6abc6400725787ab"),
+                .playlist(tags: ["news", "sport", "yoga"],
+                          channelToken: "5d6fc15d07d512002b67ecc6",
+                          context: false,
+                          fallback: false),
+            ]
+        case .dev:
+            unitsParams = [
                 .playlist(tags: [], channelToken: "610a3f7dabe1d5003c662f3b", context: false, fallback: false)
             ]
         }

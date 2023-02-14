@@ -8,18 +8,21 @@
 
 import Foundation
 import WebKit
+import OpenWrapSDK
 
 extension APEUnitView {
     
-    class PubMaticViewDelegate: NSObject, POBBannerViewDelegate {
+    class PubMaticViewDelegate : NSObject , POBBannerViewDelegate {
+        
         weak var containerViewController: UIViewController?
+        
         private let receiveAdSuccessCompletion: (() -> Void)
         private let receiveAdErrorCompletion: ((Error?) -> Void)
         
         init(
             containerViewController: UIViewController?,
-             receiveAdSuccessCompletion: @escaping (() -> Void),
-             receiveAdErrorCompletion: @escaping ((Error?) -> Void)
+            receiveAdSuccessCompletion: @escaping (() -> Void),
+            receiveAdErrorCompletion: @escaping ((Error?) -> Void)
         ) {
             self.containerViewController = containerViewController
             self.receiveAdSuccessCompletion = receiveAdSuccessCompletion
@@ -30,7 +33,7 @@ extension APEUnitView {
             APELoggerService.shared.info()
             return self.containerViewController ?? UIApplication.shared.windows.first!.rootViewController!
         }
-
+        
         func bannerViewDidReceiveAd(_ bannerView: POBBannerView) {
             APELoggerService.shared.info()
             receiveAdSuccessCompletion()
@@ -53,5 +56,4 @@ extension APEUnitView {
             APELoggerService.shared.info()
         }
     }
-    
 }

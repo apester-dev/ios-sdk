@@ -93,9 +93,9 @@ struct Constants {
         static let debugLogs        = "debugLogs"
         static let bidSummaryLogs   = "bidSummaryLogs"
         static let timeInView       = "timeInView"
-        static let playerMonImpression =  "player_mon_impression"
-        static let playerMonLoadingPass =  "player_mon_loading_pass"
-        static let playerMonImpressionPending = "player_mon_impression_pending"
-        static let playerMonLoadingImpressionFailed =  "player_mon_loading_impression_failed"
+        static let playerMonImpression              = "player_mon_impression"
+        static let playerMonLoadingPass             = "player_mon_loading_pass"
+        static let playerMonImpressionPending       = "player_mon_impression_pending"
+        static let playerMonLoadingImpressionFailed = "player_mon_loading_impression_failed"
     }
 }

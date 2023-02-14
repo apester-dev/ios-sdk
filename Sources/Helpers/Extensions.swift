@@ -214,8 +214,9 @@ internal extension UIView {
     func ape_constraints(
         view other: UIView,
         with constraints: [APEConstraint],
-        priority : UILayoutPriority
+        priority : UILayoutPriority = .required
     ) -> [NSLayoutConstraint] {
+        other.translatesAutoresizingMaskIntoConstraints = false
         return constraints.compactMap {
              $0(other, self)
         } .map {
