@@ -1,6 +1,6 @@
 //
 //  APEMultipleStripsViewController.swift
-//  Apister
+//  Apester
 //
 //  Created by Hasan Sa on 24/02/2019.
 //  Copyright © 2019 Apester. All rights reserved.
