@@ -87,7 +87,7 @@ internal extension WKWebView {
         webView.uiDelegate = delegate
         webView.scrollView.contentInsetAdjustmentBehavior = options.contentBehavior
         webView.accessibilityIdentifier = "apesterWebContainer"
-        if #available(iOS 15.0, *) {
+        if #available(iOS 15.5, *) {
             webView.setMinimumViewportInset(UIEdgeInsets.zero, maximumViewportInset: UIEdgeInsets.zero)
         }
         return webView
