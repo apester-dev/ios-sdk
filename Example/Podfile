@@ -1,0 +1,19 @@
+source 'https://cdn.cocoapods.org/'
+
+install! 'cocoapods', :warn_for_unused_master_specs_repo => false
+
+workspace 'ApesterKit.xcworkspace'
+
+project 'ApesterKit.xcodeproj'
+
+platform :ios, '11.0'
+
+use_frameworks!
+
+target 'ApesterKit_Example' do
+  pod 'ApesterKit', :path => '../', :appspecs => ['HostApp'], :testspecs => ['UnitTests'];
+
+  target 'ApesterKit_Tests' do
+    inherit! :search_paths
+  end
+end
