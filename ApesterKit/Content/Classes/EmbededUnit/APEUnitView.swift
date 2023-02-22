@@ -79,6 +79,10 @@ public class APEUnitView : APEView
         reload()
     }
     
+    /// pass the color to use and if the view should be opaque or not
+    public func updateBackground(color: UIColor, isOpaque opaque: Bool) {
+        displayView.updateBackground(color: color, isOpaque: opaque)
+    }
     /// Remove the unit web view
     public override func hide() {
         displayView.removeFromSuperview()

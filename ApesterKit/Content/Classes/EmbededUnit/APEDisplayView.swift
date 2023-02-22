@@ -24,6 +24,10 @@ public class APEContainerView : UIView
     fileprivate func setSubviewsVisibility(_ visibility: Bool) {
         subviews.forEach { $0.isHidden = !visibility }
     }
+    fileprivate func updateBackground(color: UIColor, isOpaque opaque: Bool) {
+        backgroundColor = color
+        isOpaque = opaque
+    }
 }
 
 @objcMembers
@@ -129,6 +133,18 @@ internal class APEContainerViewUnit : APEContainerView {
     }
     internal func removeInUnitAd() {
         adContentMain.subviews.forEach { $0.removeFromSuperview() }
+    }
+    fileprivate override func updateBackground(color: UIColor, isOpaque opaque: Bool) {
+        super.updateBackground(color: color, isOpaque: opaque)
+        
+        webContent.scrollView.backgroundColor = color
+        webContent.backgroundColor = color
+        webContent.isOpaque = false
+        
+        adContentMain.backgroundColor = nil
+        adContentMain.isOpaque = false
+        adContentBunner.backgroundColor = nil
+        adContentBunner.isOpaque = false
     }
     // MARK: - =========================================================================================================
     private var adBottomConstraint: NSLayoutConstraint?
@@ -348,5 +364,11 @@ public class APEDisplayView : APEContainerView {
     }
     internal func removeInUnitAd() {
         adUnit.removeInUnitAd()
+    }
+    internal override func updateBackground(color: UIColor, isOpaque opaque: Bool) {
+        super.updateBackground(color: color, isOpaque: opaque)
+        adUnit.updateBackground(color: color, isOpaque: opaque)
+        adBottom.updateBackground(color: color, isOpaque: opaque)
+        adCompanion.updateBackground(color: color, isOpaque: opaque)
     }
 }
