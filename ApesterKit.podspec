@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
     s.name             = 'ApesterKit'
-    s.version          = '3.3.9'
+    s.version          = '3.3.10'
     s.summary          = 'ApesterKit provides a light-weight framework that loads Apester Unit in a webView'
     
     # This description is used to generate tags and improve search results.
@@ -41,8 +41,8 @@ Pod::Spec.new do |s|
     s.scheme                = { :code_coverage => true }
     s.subspec   'Content' do |content|
         s.source_files = 'ApesterKit/Content/Classes/**/*'
-        s.dependency 'Google-Mobile-Ads-SDK', '10.0'
-        s.dependency 'OpenWrapSDK'          , '2.7.0'
+        s.dependency 'Google-Mobile-Ads-SDK', '~> 10.0'
+        s.dependency 'OpenWrapSDK'          , '~>  2.7.0'
     end
     s.app_spec 'HostApp' do |app_spec|
         app_spec.scheme              = {
@@ -106,9 +106,7 @@ Pod::Spec.new do |s|
         unit_tests.dependency          'ApesterKit/HostApp'
         
         # Dependencies
-        unit_tests.dependency 'Google-Mobile-Ads-SDK', '10.0'
-        unit_tests.dependency 'OpenWrapSDK'          , '2.7.0'
+        unit_tests.dependency 'Google-Mobile-Ads-SDK', '~> 10.0'
+        unit_tests.dependency 'OpenWrapSDK'          , '~>  2.7.0'
     end
-    
-    
 end
