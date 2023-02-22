@@ -47,7 +47,8 @@
     _apesterUnitView.delegate = self;
 
     [_apesterUnitView displayIn:_containerView containerViewController:self];
-
+    [_apesterUnitView updateBackgroundWithColor:[UIColor redColor] isOpaque:NO];
+    
     NSString *gdpr = [UnitConfigurationsFactory gdprString];
     if (gdpr && [gdpr length] > 0) {
         [_apesterUnitView setGdprString:UnitConfigurationsFactory.gdprString];
