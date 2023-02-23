@@ -47,7 +47,7 @@
     _apesterUnitView.delegate = self;
 
     [_apesterUnitView displayIn:_containerView containerViewController:self];
-
+    
     NSString *gdpr = [UnitConfigurationsFactory gdprString];
     if (gdpr && [gdpr length] > 0) {
         [_apesterUnitView setGdprString:UnitConfigurationsFactory.gdprString];

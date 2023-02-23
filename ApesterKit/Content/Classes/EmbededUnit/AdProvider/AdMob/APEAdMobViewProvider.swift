@@ -21,9 +21,7 @@ extension APEUnitView.BannerViewProvider {
         receiveAdSuccessCompletion  : @escaping HandlerVoidType,
         receiveAdErrorCompletion    : @escaping HandlerErrorType
     ) -> APEUnitView.BannerViewProvider {
-        
         var provider = APEUnitView.BannerViewProvider()
-        
         let banner = APEBannerView(
             adTitleLabelText: adTitleLabelText,
             monetizationType: .adMob(params: params),
@@ -60,25 +58,32 @@ extension APEUnitView.BannerViewProvider {
         
         onAdRequestedCompletion()
         
-        banner.adContent = gADView
+        banner.adView = gADView
         
-        provider.banner   = { [banner] in
-            banner
+        provider.type = { [banner] in
+            banner.monetizationType
         }
-        provider.type     = { [banner] in
-            banner.monetization
+        provider.banner = { [banner] in
+            banner.adView
         }
-        provider.content  = { [banner] in
-            banner.adContent
-        }
-        provider.hide     = { [banner] in
+        provider.hide = { [banner] in
             banner.hide()
         }
-        provider.show     = { [banner] containerView in
+        provider.show = { [banner] containerView in
             banner.show(in: containerView)
         }
-        provider.refresh  = {}
+        provider.refresh = {}
         return provider
+    }
+    
+    static func makeGADViewDelegate(
+        containerViewController: UIViewController,
+        receiveAdSuccessCompletion: @escaping (() -> Void),
+        receiveAdErrorCompletion: @escaping ((Error?) -> Void)
+    ) -> APEUnitView.AdMobViewDelegate {
+        .init(containerViewController: containerViewController,
+              receiveAdSuccessCompletion: receiveAdSuccessCompletion,
+              receiveAdErrorCompletion: receiveAdErrorCompletion)
     }
 }
 
@@ -86,33 +91,34 @@ extension APEUnitView.BannerViewProvider {
 extension APEUnitView {
     
     func setupAdMobView(params: AdMobParams) {
-
-        /// Step 01. Check if UnitView container has a containerViewController, A adViewProvider can be created / presented only if we have a valid container.
-        guard let containerVC = containerViewController else {
+        let adUnitId = params.adUnitId
+        var bannerView = self.bannerViews.first(where: {
+            switch $0.type() {
+            case .adMob(let params):
+                return params.adUnitId == adUnitId
+            case .pubMatic:
+                return false
+            }
+        })
+        if let bannerView = bannerView {
+            if let containerView = unitWebView, let banner = bannerView.banner(), banner.superview == nil {
+                bannerView.show(containerView)
+            }
+            return
+        }
+        guard let containerViewController = self.containerViewController else {
             dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingImpressionFailed, for: params.adType, ofType: APEUnitView.AdProvider.adMob, widget: false)
             return
         }
-
-        /// Step 02. Locate a viewProvider instance if it exists in cache
-        let provider: APEUnitView.BannerViewProvider? = bannerViewProviders.first(where: {
-            switch $0.type() {
-            case .pubMatic:
-                return false
-            case .adMob(let p):
-                return p.adUnitId == params.adUnitId && p.adType == params.adType
-            }
-        })
         
-        /// Step 03. if viewProvider instance is not found create it
-        let viewProvider = provider.ape_isExist ? provider! : APEUnitView.BannerViewProvider.adMobProvider(
-            params                  : params,
-            adTitleLabelText        : configuration.adTitleLabelText,
-            inUnitBackgroundColor   : configuration.adInUnitBackgroundColor,
-            containerViewController : containerVC,
-            onAdRemovalCompletion      : { [weak self] adsType in
-                
+        bannerView = .adMobProvider(
+            params: params,
+            adTitleLabelText: configuration.adTitleLabelText,
+            inUnitBackgroundColor: configuration.adInUnitBackgroundColor,
+            containerViewController: containerViewController,
+            onAdRemovalCompletion: { [weak self] adsType in
                 guard let strongSelf = self else { return }
-                strongSelf.removeAdView(of: adsType)
+                strongSelf.removeAdView(of: adsType.adType)
             },
             onAdRequestedCompletion    : { [weak self] in
                 
@@ -124,24 +130,22 @@ extension APEUnitView {
                 
                 guard let strongSelf = self else { return }
                 strongSelf.dispatchNativeAdEvent(named: Constants.Monetization.playerMonImpression, for: params.adType, ofType: APEUnitView.AdProvider.adMob, widget: true)
-                strongSelf.manualPostActionResize()
             },
             receiveAdErrorCompletion   : { [weak self] error in
                 
                 guard let strongSelf = self else { return }
                 strongSelf.dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingImpressionFailed, for: params.adType, ofType: APEUnitView.AdProvider.adMob, widget: true)
-                strongSelf.manualPostActionResize()
+                
             })
         
-        /// Step 04. if viewProvider is not in cache, add it
-        if !bannerViewProviders.contains(viewProvider) {
-            bannerViewProviders.append(viewProvider)
+            // showGADView
+        if let bannerView = bannerView {
+            self.bannerViews.append(bannerView)
+            if let containerView = unitWebView, let banner = bannerView.banner(), banner.superview == nil {
+                bannerView.show(containerView)
+            }
         }
         
-        /// Step 05. - try to show GADView
-        // guard display(banner: viewProvider) else { return }
-            
-        /// Step 06. Send analytics event if GADView was shown
         dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingPass, for: params.adType, ofType: APEUnitView.AdProvider.adMob, widget: true)
     }
 }

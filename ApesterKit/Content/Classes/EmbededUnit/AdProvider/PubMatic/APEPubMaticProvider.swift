@@ -71,16 +71,13 @@ extension APEUnitView.BannerViewProvider {
         
         onAdRequestedCompletion()
         
-        banner.adContent = pubMaticView
+        banner.adView = pubMaticView
         
+        provider.type = { [banner] in
+            banner.monetizationType
+        }
         provider.banner   = { [banner] in
             banner
-        }
-        provider.type     = { [banner] in
-            banner.monetization
-        }
-        provider.content  = { [banner] in
-            banner.adContent
         }
         provider.hide     = { [banner] in
             banner.hide()
@@ -92,83 +89,68 @@ extension APEUnitView.BannerViewProvider {
             pubMaticView?.forceRefresh()
         }
         return provider
-    }    
+    }
 }
 
 // MARK:- PubMatic ADs
 extension APEUnitView {
     
     func setupPubMaticView(params: PubMaticParams) {
-        
-        /// Step 01. Check if UnitView container has a containerViewController, A adViewProvider can be created / presented only if we have a valid container.
-        guard let containerVC = containerViewController else {
-            dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingImpressionFailed, for: params.adType, ofType: APEUnitView.AdProvider.pubmatic, widget: false)
-            return
-        }
-
-        /// Step 02. Locate a viewProvider instance if it exists in cache
-        let provider: APEUnitView.BannerViewProvider? = bannerViewProviders.first(where: {
+        let adType: Monetization.AdType = params.adType
+        var bannerView = self.bannerViews.first(where: {
             switch $0.type() {
+            case .pubMatic(let params):
+                return params.adType == adType
             case .adMob:
                 return false
-            case .pubMatic(let p):
-                return p.adUnitId == params.adUnitId && p.adType == params.adType
             }
         })
+        if let bannerView = bannerView {
+            bannerView.refresh()
+            if let containerView = unitWebView, let banner = bannerView.banner(), banner.superview == nil {
+                bannerView.show(containerView)
+                return
+            }
+        }
         
-        /// Step 03. if viewProvider instance is not found create it
-        let viewProvider = provider.ape_isExist ? provider! : APEUnitView.BannerViewProvider.pubMaticProvider(
-            params                  : params,
-            adTitleLabelText        : configuration.adTitleLabelText,
-            inUnitBackgroundColor   : configuration.adInUnitBackgroundColor,
-            containerViewController : containerVC,
-            onAdRemovalCompletion      : { [weak self] adsType in
-
+        guard let containerViewController = self.containerViewController else {
+            dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingImpressionFailed, for: params.adType, ofType: APEUnitView.AdProvider.adMob, widget: false)
+            return
+        }
+        bannerView = .pubMaticProvider(
+            params: params,
+            adTitleLabelText: configuration.adTitleLabelText,
+            inUnitBackgroundColor: configuration.adInUnitBackgroundColor,
+            containerViewController: containerViewController,
+            onAdRemovalCompletion: {  [weak self] adsType in
+                
                 guard let strongSelf = self else { return }
-                strongSelf.removeAdView(of: adsType)
+                strongSelf.removeAdView(of: adsType.adType)
             },
             onAdRequestedCompletion    : { [weak self] in
-
+                
                 guard let strongSelf = self else { return }
                 strongSelf.dispatchNativeAdEvent(named: Constants.Monetization.playerMonImpressionPending, for: params.adType, ofType: APEUnitView.AdProvider.pubmatic, widget: true)
                 APELoggerService.shared.info("pubMaticView::loadAd() - adType:\(params.adType), unitID: \(params.adUnitId)")
             },
             receiveAdSuccessCompletion : { [weak self] in
-
+                
                 guard let strongSelf = self else { return }
                 strongSelf.dispatchNativeAdEvent(named: Constants.Monetization.playerMonImpression, for: params.adType, ofType: APEUnitView.AdProvider.pubmatic, widget: true)
-                strongSelf.manualPostActionResize()
             },
-            receiveAdErrorCompletion   : { [weak self] error in
-
+            receiveAdErrorCompletion: { [weak self] error in
+                
                 guard let strongSelf = self else { return }
                 strongSelf.dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingImpressionFailed, for: params.adType, ofType: APEUnitView.AdProvider.pubmatic, widget: true)
-                strongSelf.manualPostActionResize()
             })
         
-        /// Step 04. if viewProvider is not in cache, add it
-        if !bannerViewProviders.contains(viewProvider) {
-            bannerViewProviders.append(viewProvider)
-        }
-
-        // Added to enable debug mode handling
-        if params.testMode && params.debugLogs {
-            
-            OpenWrapSDK.setLogLevel(POBSDKLogLevel.off)
-            
-            if let gdpr = configuration.gdprString {
-                os_log("ApeSterSDK::-GDPR-String-: %{public}@", log: OSLog.ApesterSDK, type: .debug, gdpr)
-                
-                messageDispatcher.sendNativeGDPREvent(to: webContent, consent: gdpr)
+        if let bannerView = bannerView {
+            self.bannerViews.append(bannerView)
+            if let containerView = unitWebView, let banner = bannerView.banner(), banner.superview == nil {
+                bannerView.show(containerView)
             }
         }
-
-        viewProvider.refresh()
         
-        /// Step 05. - try to show GADView
-        // guard display(banner: viewProvider) else { return }
-        
-        /// Step 06. Send analytics event if GADView was shown
         dispatchNativeAdEvent(named: Constants.Monetization.playerMonLoadingPass, for: params.adType, ofType: APEUnitView.AdProvider.pubmatic, widget: true)
     }
 }
