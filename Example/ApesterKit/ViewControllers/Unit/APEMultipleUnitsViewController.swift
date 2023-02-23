@@ -24,23 +24,19 @@ class APEMultipleUnitsViewController: UIViewController {
     
     private lazy var unitsParams: [APEUnitParams] = { configurations.map(\.unitParams) }()
     
-    fileprivate var apesterUnitViewHeight: CGFloat = CGFloat(0.0)
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if let l = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            l.estimatedItemSize = collectionView.bounds.size
-        }
         
         // update unitViews delegates
         unitsParams.forEach { unitParams in
             if APEViewService.shared.unitView(for: unitParams.id) == nil {
                 // not preload!
-                APEViewService.shared.preloadUnitViews(with: UnitConfigurationsFactory.configurations(hideApesterAds: false))
+                let configurations = UnitConfigurationsFactory.configurations(hideApesterAds: false, gdprString: UnitConfigurationsFactory.gdprString)
+                
+                // preloadUnitViews
+                APEViewService.shared.preloadUnitViews(with: configurations)
             }
             APEViewService.shared.unitView(for: unitParams.id)?.delegate = self
-            APEViewService.shared.unitView(for: unitParams.id)?.setGdprString(UnitConfigurationsFactory.gdprString)
         }
     }
 }
@@ -69,12 +65,12 @@ extension APEMultipleUnitsViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        if apesterUnitViewHeight == CGFloat(0.0) {
-            return collectionView.bounds.size
-        } else {
-            return CGSize.init(width: collectionView.bounds.width, height: apesterUnitViewHeight)
+        if indexPath.row % Self.emptyCellsCount == 0 {
+            let unit = self.unitsParams[indexPath.row / Self.emptyCellsCount]
+            let stripView = APEViewService.shared.unitView(for: unit.id)
+            return CGSize(width: collectionView.bounds.width, height: stripView?.height ?? 0)
         }
-        
+        return CGSize(width: collectionView.bounds.width, height: 220)
     }
 }
 extension APEMultipleUnitsViewController: APEUnitViewDelegate {
@@ -96,7 +92,6 @@ extension APEMultipleUnitsViewController: APEUnitViewDelegate {
     
     func unitView(_ unitView: APEUnitView, didUpdateHeight height: CGFloat) {
         print("## unitView.didUpdateHeight: \(height), \(unitView.height), \(unitView.configuration.unitParams.id)")
-        apesterUnitViewHeight = height
-        // collectionView.reloadData()
+        collectionView.reloadData()
     }
 }

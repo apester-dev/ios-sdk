@@ -8,69 +8,44 @@
 
 import UIKit
 
-class APEBannerView : UIView
-{
-    // MARK: - Typealias
-    typealias HandlerVoid   = () -> Void
-    typealias HandlerError  = (Error?) -> Void
-    typealias HandlerAdType = (APEUnitView.Monetization) -> Void
+class APEBannerView: UIView {
     
-    // MARK: - data
-    private(set) var monetization : APEUnitView.Monetization
+    var containerView: UIView?
+    var containerViewConstraints: [NSLayoutConstraint] = []
+    var titleLabel: UILabel?
+    var inUnitBackgroundColor: UIColor = .clear
+    var monetizationType: APEUnitView.Monetization
+    var adView: UIView?
+    var adViewTimer: Timer?
+    var delegate: AnyObject?
+    var timeInView: Int?
+    var onAdRemovalCompletion: ((APEUnitView.Monetization) -> Void)?
+    var onReceiveAdSuccess: (() -> Void)?
+    var onReceiveAdError: ((Error?) -> Void)?
     
-    // MARK: - display
-    var containerView : APEContainerView?
+    private var makeTitleLabel: (_ text: String) -> UILabel = { text in
+        let label = UILabel()
+        label.text = text
+        label.backgroundColor = .darkText.withAlphaComponent(0.25)
+        label.font = .boldSystemFont(ofSize: 12)
+        label.textColor = .lightText
+        return label
+    }
     
-    // MARK: - display - elements
-    private var timeInView: Int?
-    private var titleLabel: UILabel
-    private lazy var closeButton: UIButton = {
-        
-        var button = UIButton(type: .custom)
+    lazy var closeButton: UIButton = {
+        var button: UIButton!
+        button = UIButton(type: .custom)
         button.setTitle("🅧", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.widthAnchor.constraint(equalToConstant: 30).isActive = true
         button.heightAnchor.constraint(equalToConstant: 30).isActive = true
         button.addTarget(self, action: #selector(hide), for: .touchUpInside)
-        button.accessibilityIdentifier = "apesterInUnitBunnerCloseButton"
-        button.accessibilityHint = "Tap Apester In Unit Close Button to dismiss In Unit ad"
         return button
     }()
     
-    // MARK: - AdContent - elements
-    internal var adContent : UIView?
-    internal var delegate  : AnyObject?
-    private  var refreshTimer : Timer?
-    
-    // MARK: - special case
-    private var inUnitBackgroundColor: UIColor
-    
-    // MARK: - Handlers
-    private(set) var onReceiveAdSuccess    : HandlerVoid?
-    private(set) var onReceiveAdError      : HandlerError?
-    private(set) var onAdRemovalCompletion : HandlerAdType?
-    
-    // MARK: - Helper
-    private var makeTitleLabel: (_ text: String) -> UILabel = { text in
-        
-        let label = UILabel()
-        label.text = text
-        label.backgroundColor = .darkText.withAlphaComponent(0.25)
-        label.font = .boldSystemFont(ofSize: 12)
-        label.textColor = .lightText
-        label.sizeToFit()
-        return label
-    }
-    
-    override var intrinsicContentSize : CGSize {
-        let adContainerHeight = monetization.adType.height + titleLabel.bounds.height
-        return .init(width: monetization.adType.width, height: adContainerHeight)
-    }
-    
-    // MARK: - Initialization
     override init(frame: CGRect) {
-        fatalError("init(frame:) has not been implemented")
+        fatalError("init(coder:) has not been implemented")
     }
     
     required init?(coder: NSCoder) {
@@ -79,192 +54,169 @@ class APEBannerView : UIView
     
     init(
         adTitleLabelText: String,
-        monetizationType type: APEUnitView.Monetization,
-        inUnitBackgroundColor color: UIColor,
+        monetizationType: APEUnitView.Monetization,
+        inUnitBackgroundColor: UIColor,
         timeInView: Int?,
         containerViewController: UIViewController,
-        onAdRemovalCompletion: HandlerAdType?
+        onAdRemovalCompletion: ((APEUnitView.Monetization) -> Void)?
     ) {
-        self.monetization = type
-        self.titleLabel   = makeTitleLabel(adTitleLabelText)
-        self.inUnitBackgroundColor = color
+        self.monetizationType      = monetizationType
+        self.titleLabel            = makeTitleLabel(adTitleLabelText)
+        self.inUnitBackgroundColor = inUnitBackgroundColor
         self.timeInView = timeInView
         super.init(frame: .zero)
         self.backgroundColor    = .clear
         self.onReceiveAdSuccess = { [weak self] in
-            guard let strongSelf = self else { return }
-            strongSelf.onAdSuccessAction()
-        }
-        self.onReceiveAdError   = { [weak self] error in
             
-            guard let strongSelf = self else { return }
-            strongSelf.onAdRemovalCompletion?(strongSelf.monetization)
+            guard let self = self, self.superview == self.containerView else { return }
+            if let containerView = self.containerView, let bannerView = self.adView {
+                var constraints = self.containerViewConstraints
+                self.removeConstraints(constraints)
+                
+                constraints = [
+                    self.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+                    self.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+                    self.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+                    self.heightAnchor.constraint(equalTo: bannerView.heightAnchor,
+                                                 constant: self.titleLabel?.bounds.height ?? 0)
+                ]
+                if case .inUnit = self.monetizationType.adType {
+                    constraints  = [
+                        self.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+                        self.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+                        self.topAnchor.constraint(equalTo: containerView.topAnchor),
+                        self.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+                    ]
+                }
+                self.translatesAutoresizingMaskIntoConstraints = false
+                NSLayoutConstraint.activate(constraints)
+                self.containerViewConstraints = constraints
+            }
+                // Display a background is ad is pubMatic
+            var timeInView = self.timeInView
+            if case .inUnit = self.monetizationType.adType {
+                timeInView = timeInView ?? 7
+                self.backgroundColor = self.inUnitBackgroundColor
+            }
+            self.adView?.isHidden = false
+            self.titleLabel?.isHidden = false
+            self.closeButton.isHidden = false
+                // Run Timer with timeInView interval or 7 sec
+            guard self.adViewTimer == nil, let timeInView = timeInView else { return }
+            self.adViewTimer = Timer.scheduledTimer(withTimeInterval: Double(timeInView), repeats: false) { _ in
+                
+                self.onAdRemovalCompletion?(self.monetizationType)
+            }
+        }
+        
+        self.onReceiveAdError = { [weak self] error in
+            guard let self = self else { return }
+            print(error?.localizedDescription ?? "")
+            self.onAdRemovalCompletion?(self.monetizationType)
         }
         self.onAdRemovalCompletion = onAdRemovalCompletion
     }
     
-    // MARK: - lifecycle
     deinit {
-        self.refreshTimer?.invalidate()
-        self.refreshTimer = nil
-        self.adContent = nil
+        self.adView = nil
+        self.adViewTimer = nil
         self.delegate = nil
         self.onAdRemovalCompletion = nil
         self.onReceiveAdSuccess = nil
         self.onReceiveAdError = nil
     }
     
-    // MARK: - public API
-    @objc
-    func show(in container: APEContainerView) {
+    func show(in containerView: UIView) {
+        guard let adView = adView, superview == nil else {
+            return
+        }
+        containerView.addSubview(self)
+        self.adView?.isHidden = true
+        addSubview(adView)
+        bringSubviewToFront(adView)
         
-        // take action only if the `APEBannerView` is not embeded in a container, and the `APEBannerView` contains an ad object
-        guard containerView == nil , superview == nil , let adView = adContent else { return }
+        self.containerView = containerView
+        var constraints: [NSLayoutConstraint] = []
         
-        containerView = container
-        
-        container.ape_addSubview(self, with: UIView.anchorToContainer)
-        
-        [adView,titleLabel].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false; addSubview($0)
+        if let titleLabel = titleLabel {
+            addSubview(titleLabel)
+            titleLabel.translatesAutoresizingMaskIntoConstraints = false
+            constraints = [titleLabel.leadingAnchor.constraint(equalTo: adView.leadingAnchor),
+                           titleLabel.bottomAnchor.constraint(equalTo: adView.topAnchor)]
+            titleLabel.isHidden = true
+            bringSubviewToFront(adView)
         }
         
-        adView.isHidden      = true
-        titleLabel.isHidden  = true
-        closeButton.isHidden = true
         
-        titleLabel.ape_anchor(view: adView, with: [
-            equal(\.leadingAnchor) ,
-            equal(\.topAnchor, \.bottomAnchor)
-        ])
-        titleLabel.setNeedsLayout()
-        titleLabel.layoutIfNeeded()
-        
-        applyConstraintsTodisplay(with: adView)
-        
-        if monetization.adType == .inUnit {
-            
-            let offset = CGFloat(12.0)
-            ape_addSubview(closeButton, with: [])
-            closeButton.ape_anchor(view: adView, with: [
-                equal(\.trailingAnchor, \.leadingAnchor, constant:  offset),
-                equal(\.topAnchor     , \.bottomAnchor , constant: -offset)
-            ])
+        if case .inUnit = monetizationType.adType {
+            closeButton.isHidden = true
+            addSubview(closeButton)
+            closeButton.translatesAutoresizingMaskIntoConstraints = false
+            constraints += [
+                closeButton.leadingAnchor.constraint(equalTo: adView.trailingAnchor, constant: -7),
+                closeButton.bottomAnchor.constraint(equalTo: adView.topAnchor, constant: 7)
+            ]
+            bringSubviewToFront(closeButton)
         }
+        
+        NSLayoutConstraint.activate(constraints)
+        adView.translatesAutoresizingMaskIntoConstraints = false
+        adView.removeConstraints(adView.constraints)
+        NSLayoutConstraint.activate(adViewLayoutConstraints(adView, containerView: containerView, type: monetizationType.adType))
     }
     
     @objc func hide() {
+        if adViewTimer != nil {
+            adViewTimer?.invalidate()
+            adViewTimer = nil
+        }
+        adView?.removeFromSuperview()
+        self.adView = nil
+        self.removeFromSuperview()
+        self.delegate = nil
         
-        refreshTimer?.invalidate()
-        refreshTimer = nil
-        
-        [closeButton,titleLabel,adContent,self].forEach { $0?.removeFromSuperview() }
-        adContent = nil
-        delegate  = nil
-        
-        onAdRemovalCompletion?(monetization)
+        onAdRemovalCompletion?(monetizationType)
         onAdRemovalCompletion = nil
+        
     }
 }
-fileprivate extension APEBannerView {
+
+private extension APEBannerView {
     
-    func applyConstraintsTodisplay(with adView: UIView) {
+    func adViewLayoutConstraints(_ adView: UIView, containerView: UIView, type: APEUnitView.Monetization.AdType) -> [NSLayoutConstraint] {
         
-        let adContainerHeight = monetization.adType.height + titleLabel.bounds.height
-        ape_anchor(view: self, with: [
-            greaterOrEqualValue(\.heightAnchor, to: adContainerHeight)
-        ])
+        var constraints: [NSLayoutConstraint] = []
         
-        switch (monetization, monetization.adType) {
-        case (.adMob, .bottom):
-            ape_anchor(view: adView, with: [
-                equal(\.leadingAnchor ),
-                equal(\.trailingAnchor),
-                equal(\.bottomAnchor  )
-            ])
-            break
+        switch monetizationType {
+        case .pubMatic(params: let params):
+            constraints = [adView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor, constant: 0),
+                           adView.widthAnchor.constraint(equalToConstant: type.size.width),
+                           adView.heightAnchor.constraint(equalToConstant: type.size.height)]
             
-        case (.adMob, .inUnit):
-            ape_anchor(view: adView, with: [
-                equal(\.centerXAnchor, constant: 0),
-                equal(\.centerYAnchor, constant: 0)
-            ])
-            adView.ape_anchor(view: adView, with: [
-                equalValue(\.widthAnchor , to: monetization.adType.width),
-                equalValue(\.heightAnchor, to: monetization.adType.height)
-            ])
-            break
-            
-        case (.adMob, .companion):
-            ape_anchor(view: adView, with: [
-                equal(\.centerXAnchor, constant: 0),
-                equal(\.centerYAnchor, constant: 0)
-            ])
-            adView.ape_anchor(view: adView, with: [
-                equalValue(\.widthAnchor , to: monetization.adType.width),
-                equalValue(\.heightAnchor, to: monetization.adType.height)
-            ])
-            break
-            
-        case (.pubMatic, .bottom):
-            ape_anchor(view: adView, with: [
-                equal(\.centerXAnchor, constant: 0),
-                equal(\.bottomAnchor  )
-            ])
-            adView.ape_anchor(view: adView, with: [
-                equalValue(\.widthAnchor , to: monetization.adType.width),
-                equalValue(\.heightAnchor, to: monetization.adType.height)
-            ])
-            break
-            
-        case (.pubMatic, .inUnit):
-            ape_anchor(view: adView, with: [
-                equal(\.centerXAnchor, constant: 0),
-                equal(\.centerYAnchor, constant: 0)
-            ])
-            adView.ape_anchor(view: adView, with: [
-                equalValue(\.widthAnchor , to: monetization.adType.width),
-                equalValue(\.heightAnchor, to: monetization.adType.height)
-            ])
-            break
-            
-        case (.pubMatic, .companion):
-            ape_anchor(view: adView, with: [
-                equal(\.centerXAnchor),
-                equal(\.bottomAnchor)
-            ])
-            adView.ape_anchor(view: adView, with: [
-                equalValue(\.widthAnchor , to: monetization.adType.width),
-                equalValue(\.heightAnchor, to: monetization.adType.height)
-            ])
-            break
+            switch params.adType {
+            case .bottom:
+                constraints += [adView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 0)]
+            case .inUnit:
+                constraints += [adView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor, constant: 0)]
+            }
+        case .adMob(params: let params):
+            constraints = [adView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+                           adView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor)]
+            switch params.adType {
+            case .bottom:
+                constraints += [adView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 0)]
+                if params.isCompanionVariant {
+                    constraints += [adView.topAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 0)]
+                } else {
+                    constraints += [adView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 0)]
+                }
+            case .inUnit:
+                constraints = [adView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor, constant: 0),
+                               adView.widthAnchor.constraint(equalToConstant: type.size.width),
+                               adView.heightAnchor.constraint(equalToConstant: type.size.height),
+                               adView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor, constant: 0)]
+            }
         }
-    }
-    
-    func onAdSuccessAction() {
-        
-        // Apply action only if the `APEBannerView` is embeded into some display element
-        guard superview == containerView else { return }
-        
-        adContent?.isHidden = false
-        titleLabel.isHidden = false
-        
-        // Display a background is ad is pubMatic
-        var timeInDisplay : Int? = timeInView
-        
-        if monetization.adType == .inUnit {
-            timeInDisplay        = timeInDisplay ?? 7
-            backgroundColor      = inUnitBackgroundColor
-            closeButton.isHidden = false
-        }
-        
-        // Run Timer with timeInView interval or 7 sec
-        guard let inDisplay = timeInDisplay , refreshTimer == nil else { return }
-        
-        refreshTimer = Timer.scheduledTimer(withTimeInterval: Double(inDisplay), repeats: false, block: { [weak self] timer in
-            
-            guard let strongSelf = self else { return }
-            strongSelf.onAdRemovalCompletion?(strongSelf.monetization)
-        })
+        return constraints
     }
 }
