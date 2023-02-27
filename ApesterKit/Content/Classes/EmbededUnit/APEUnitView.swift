@@ -217,6 +217,10 @@ extension APEUnitView {
             // print("$$ - \(bodyString)")
             // print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
             
+            if !loadingState.isLoaded {
+                loadingState.isLoaded = true
+            }
+            
             if dictionary["type"] as? String == Constants.Unit.isReady
             {
                 if !loadingState.isReady {
@@ -231,13 +235,7 @@ extension APEUnitView {
                 
                 if CGFloat(height) != self.loadingState.height {
                     self.loadingState.height = CGFloat(height)
-                }
-                
-                if isFinalSize {
-                    if !loadingState.isLoaded {
-                        loadingState.isLoaded = true
-                        update(height: height, width: width)
-                    }
+                    self.update(height: height, width: width)
                 }
             }
             
