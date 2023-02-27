@@ -228,7 +228,7 @@ extension APEUnitView {
                 }
             }
             
-            if dictionary["type"] as? String == Constants.Unit.resize , let isFinalSize = dictionary["isFinalSizeForInApp"] as? Bool
+            if dictionary["type"] as? String == Constants.Unit.resize 
             {
                 let height = dictionary.ape_floatValue(for: Constants.Unit.height)
                 let width  = dictionary.ape_floatValue(for: Constants.Unit.width)
