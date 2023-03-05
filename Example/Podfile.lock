@@ -1,17 +1,9 @@
 PODS:
-  - ApesterKit (3.3.10):
-    - ApesterKit/Content (= 3.3.10)
+  - ApesterKit (3.3.13):
+    - ApesterKit/Content (= 3.3.13)
     - Google-Mobile-Ads-SDK (~> 10.0)
     - OpenWrapSDK (~> 2.7.0)
-  - ApesterKit/Content (3.3.10):
-    - Google-Mobile-Ads-SDK (~> 10.0)
-    - OpenWrapSDK (~> 2.7.0)
-  - ApesterKit/HostApp (3.3.10):
-    - ApesterKit/Content
-    - Google-Mobile-Ads-SDK (~> 10.0)
-    - OpenWrapSDK (~> 2.7.0)
-  - ApesterKit/UnitTests (3.3.10):
-    - ApesterKit/HostApp
+  - ApesterKit/Content (3.3.13):
     - Google-Mobile-Ads-SDK (~> 10.0)
     - OpenWrapSDK (~> 2.7.0)
   - Google-Mobile-Ads-SDK (10.1.0):
@@ -67,8 +59,6 @@ PODS:
 
 DEPENDENCIES:
   - ApesterKit (from `../`)
-  - ApesterKit/HostApp (from `../`)
-  - ApesterKit/UnitTests (from `../`)
 
 SPEC REPOS:
   trunk:
@@ -85,7 +75,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ApesterKit: 3c870e6855622d64018625fbe9be23213130ca1d
+  ApesterKit: 8a14f4244fd5113ca783b3ce6d72bcaeebcc1136
   Google-Mobile-Ads-SDK: 894be2e3e3e8281004bda14381f9af7ad73eeffd
   GoogleAppMeasurement: 40c70a7d89013f0eca72006c4b9732163ea4cdae
   GoogleUserMessagingPlatform: 5f8b30daf181805317b6b985bb51c1ff3beca054
@@ -94,6 +84,6 @@ SPEC CHECKSUMS:
   OpenWrapSDK: 2c7784a19a258ca841ff25c1a04c7c6ecbd7ba1c
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
 
-PODFILE CHECKSUM: 92eec895a1a3efe69ca28975a30f2cc1ac8d00b0
+PODFILE CHECKSUM: ef797a75db0d119003fa6d95f76a6e13e652acaf
 
 COCOAPODS: 1.11.3
