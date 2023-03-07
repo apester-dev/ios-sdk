@@ -9,6 +9,7 @@ import WebKit
 import UIKit
 import Foundation
 
+@objc(APEContainerViewUnit)
 @objcMembers
 internal class APEContainerViewUnit : APEContainerView {
     

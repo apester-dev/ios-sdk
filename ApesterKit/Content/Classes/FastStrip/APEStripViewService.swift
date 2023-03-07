@@ -10,7 +10,9 @@ import Foundation
 import UIKit
 
 @available(*, deprecated, renamed: "APEViewService", message: "Please use APEViewService instead")
-@objcMembers public class APEStripViewService: NSObject {
+@objc(APEStripViewService)
+@objcMembers
+public class APEStripViewService: NSObject {
 
     public static let shared = APEStripViewService()
 

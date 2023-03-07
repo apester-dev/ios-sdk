@@ -9,6 +9,7 @@
 import Foundation
 
 /// Apester logger service
+@objc(APELoggerService)
 @objcMembers
 public final class APELoggerService : NSObject {
     

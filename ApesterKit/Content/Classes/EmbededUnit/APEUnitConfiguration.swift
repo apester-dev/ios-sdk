@@ -23,6 +23,7 @@ public enum APEUnitParams {
     }
 }
 
+@objc(APEUnitConfiguration)
 @objcMembers public class APEUnitConfiguration: APEConfiguration {
     
     private enum Keys: String {

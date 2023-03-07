@@ -12,7 +12,9 @@ public enum APEStripConfigurationError: Error {
     case invalidChannelToken
 }
 
-@objcMembers public class APEStripConfiguration: APEConfiguration {
+@objc(APEStripConfiguration)
+@objcMembers
+public class APEStripConfiguration: APEConfiguration {
 
     private enum Keys: String {
         case channelToken = "token"
@@ -59,6 +61,7 @@ public enum APEStripConfigurationError: Error {
 
 // MARK:- Dictionary Extension
 extension Dictionary {
+    
     func componentsURL(baseURL urlString: String) -> URL? {
         var components = URLComponents(string: urlString)
         components?.queryItems = self.compactMap { (arg) in

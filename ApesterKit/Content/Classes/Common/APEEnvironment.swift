@@ -8,8 +8,13 @@
 
 import Foundation
 
-@objc public enum APEEnvironment: Int {
-    case production, stage, local, dev
+@objc(APEEnvironment)
+public enum APEEnvironment: Int {
+    
+    case production
+    case stage
+    case local
+    case dev
     
     var stripBaseUrl: String {
         var env: String

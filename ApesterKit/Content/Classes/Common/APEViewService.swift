@@ -11,7 +11,9 @@ import UIKit
 
 
 /// APEView caching service
-@objcMembers public class APEViewService: NSObject {
+@objc(APEViewService)
+@objcMembers
+public class APEViewService: NSObject {
 
     public static let shared = APEViewService()
 
@@ -22,7 +24,8 @@ import UIKit
 }
 
 // MARK:- Preload APEStripViews
-@objc public extension APEViewService {
+@objc
+public extension APEViewService {
 
     /// Preload multiple strip views with strip configurations,
     /// each configuration will contains all the data to cache the strip view to get loaded,
@@ -60,7 +63,8 @@ import UIKit
 }
 
 // MARK:- Preload APEUnitViews
-@objc public extension APEViewService {
+@objc
+public extension APEViewService {
     /// Preload view with unit configuration,
     /// configuration will contains the data to cache the view that has loaded,
     /// - Parameter configurations: the configuration to preload

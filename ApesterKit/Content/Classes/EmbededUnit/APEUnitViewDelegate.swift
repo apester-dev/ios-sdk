@@ -12,7 +12,8 @@ import WebKit
 @available(iOS 11.0, *)
 
 /// A ChannelToken Loading state update
-@objc public protocol APEUnitViewDelegate: NSObjectProtocol {
+@objc(APEUnitViewDelegate)
+public protocol APEUnitViewDelegate: NSObjectProtocol {
     
     /// when the unitId loaded successfully
     ///

@@ -12,7 +12,8 @@ import WebKit
 @available(iOS 11.0, *)
 
 /// A ChannelToken Loading state update
-@objc public protocol APEStripViewDelegate: NSObjectProtocol {
+@objc(APEStripViewDelegate)
+public protocol APEStripViewDelegate: NSObjectProtocol {
 
     /// when the ChannelToken loaded successfuly
     ///

@@ -17,14 +17,15 @@ import SafariServices
 ///
 /// Between The Apester Units Carousel component (The `StripWebView`)
 /// And the selected Apester Unit (The `StoryWebView`)
+@objc(APEView)
 @objcMembers
 public class APEView: NSObject {
 
     struct LoadingState {
         var isLoaded = false
-        var isReady = false
+        var isReady  = false
         var height: CGFloat = 10
-        var initialMessage: String?
+        var  initialMessage: String?
         var openUnitMessage: String?
     }
     

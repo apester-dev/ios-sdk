@@ -8,6 +8,7 @@
 import UIKit
 import Foundation
 
+@objc(APEContainerViewCompanion)
 @objcMembers
 internal class APEContainerViewCompanion : APEContainerView {
     

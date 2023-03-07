@@ -9,6 +9,7 @@ import WebKit
 import UIKit
 import Foundation
 
+@objc(APEUnitView)
 @objcMembers
 public class APEUnitView : APEView
 {

@@ -17,7 +17,9 @@ import SafariServices
 ///
 /// Between The Apester Units Carousel component (The `StripWebView`)
 /// And the selected Apester Unit (The `StoryWebView`)
-@objcMembers public class APEStripView: APEView {
+@objc(APEStripView)
+@objcMembers
+public class APEStripView: APEView {
 
     private class StripStoryViewController: UIViewController {
         var webView: WKWebView!

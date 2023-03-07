@@ -7,7 +7,9 @@
 //
 
 import UIKit
+import Foundation
 
+@objc(APEDisplayView)
 @objcMembers
 public class APEDisplayView : APEContainerView {
     
