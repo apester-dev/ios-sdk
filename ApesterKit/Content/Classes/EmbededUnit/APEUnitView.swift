@@ -197,7 +197,7 @@ extension APEUnitView {
             return
         }
         
-        if containerVC.view.allSubviews.first(where: { $0 == view }) != nil {
+        if containerVC.view.ape_allSubviews.first(where: { $0 == view }) != nil {
             let convertedCenterPoint = view.convert(view.center, to: containerVC.view)
             self.isDisplayed = containerVC.view.bounds.contains(convertedCenterPoint)
         } else {

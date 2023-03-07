@@ -111,12 +111,28 @@ internal extension UIColor {
 
 internal extension UIView {
     
-    var allSubviews: [UIView] {
-        return subviews + subviews.flatMap { $0.allSubviews }
+    var ape_allSubviews: [UIView] {
+        return subviews + subviews.flatMap { $0.ape_allSubviews }
     }
 }
 
-
+internal extension UIApplication
+{
+    var ape_keyWindow : UIWindow?
+    {
+        if #available(iOS 13.0, *)
+        {
+            guard let windowScene = openSessions.first?.scene as? UIWindowScene else { return keyWindow }
+            guard let  sceneDelegate = windowScene.delegate                     else { return keyWindow }
+            guard let windowDelegate = sceneDelegate as? UIWindowSceneDelegate  else { return keyWindow }
+            return windowDelegate.window ?? keyWindow
+        }
+        else
+        {
+            return keyWindow
+        }
+    }
+}
 // Convenience tuple to handle constraint application
 internal typealias APEConstraint = (_ child: UIView, _ parent: UIView) -> NSLayoutConstraint
 
