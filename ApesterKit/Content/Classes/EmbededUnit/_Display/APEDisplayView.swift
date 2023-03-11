@@ -11,8 +11,8 @@ import Foundation
 
 @objc(APEDisplayView)
 @objcMembers
-public class APEDisplayView : APEContainerView {
-    
+public class APEDisplayView : APEContainerView
+{    
     // MARK: - sub views
     internal var adUnit     : APEContainerViewUnit!
     internal var adBottom   : APEContainerViewBottom!
@@ -22,28 +22,26 @@ public class APEDisplayView : APEContainerView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.addSubviews()
-        self.applyAutoresizingMask()
-        self.applyBaseConstraint()
+        self.apply_autoresizingMask()
+        self.apply_baseConstraint()
     }
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.addSubviews()
-        self.applyAutoresizingMask()
-        self.applyBaseConstraint()
+        self.apply_autoresizingMask()
+        self.apply_baseConstraint()
     }
     fileprivate func addSubviews() {
         adUnit      = APEContainerViewUnit     (frame: .zero)
         adBottom    = APEContainerViewBottom   (frame: .zero)
         adCompanion = APEContainerViewCompanion(frame: .zero)
     }
-    internal override func applyAutoresizingMask() {
-        super.applyAutoresizingMask()
+    fileprivate func apply_autoresizingMask() {
         self.adUnit     .translatesAutoresizingMaskIntoConstraints = false
         self.adBottom   .translatesAutoresizingMaskIntoConstraints = false
         self.adCompanion.translatesAutoresizingMaskIntoConstraints = false
     }
-    internal override func applyBaseConstraint() {
-        super.applyBaseConstraint()
+    fileprivate func apply_baseConstraint() {
         applyLayout()
         applyDebug()
     }
@@ -60,23 +58,23 @@ public class APEDisplayView : APEContainerView {
             equal(\.topAnchor),
             equal(\.leadingAnchor),
             equal(\.trailingAnchor)
-        ], priority: .init(rawValue: 999))
+        ], priority: .required)
         constraints += adUnit.ape_constraints(view: adBottom , with: [
             equal(\.topAnchor, \.bottomAnchor, constant: 0)
-        ], priority: .init(rawValue: 999))
+        ], priority: .required)
         constraints += ape_constraints(view: adBottom, with: [
             equal(\.leadingAnchor),
             equal(\.trailingAnchor)
-        ], priority: .init(rawValue: 999))
+        ], priority: .required)
         constraints += adCompanion.ape_constraints(view: adBottom , with: [
             equal(\.bottomAnchor, \.topAnchor, constant: 0)
-        ], priority: .init(rawValue: 999))
+        ], priority: .required)
         constraints += ape_constraints(view: adCompanion, with: [
             equal(\.leadingAnchor),
             equal(\.trailingAnchor),
             equal(\.bottomAnchor)
-        ], priority: .init(rawValue: 999))
-        
+        ], priority: .required)
+
         NSLayoutConstraint.activate(constraints)
     }
     fileprivate func applyDebug() {
@@ -84,19 +82,10 @@ public class APEDisplayView : APEContainerView {
         // adUnit      .backgroundColor = .red
         // adBottom    .backgroundColor = .magenta
         // adCompanion .backgroundColor = .cyan
+        // backgroundColor = .purple
     }
     
     // MARK: -
-    @discardableResult
-    internal func applyPreviewHeight(
-        _ heightInUnitContent: CGFloat
-    ) -> CGFloat {
-        adUnit.applyPreviewHeight(heightInUnitContent)
-        adBottom   .displayHeight = CGFloat(0.0)
-        adCompanion.displayHeight = CGFloat(0.0)
-        displayHeight = heightInUnitContent
-        return displayHeight ?? CGFloat(0.0)
-    }
     @discardableResult
     internal func applyLayoutHeight(
         _ heightInUnitContent: CGFloat,
@@ -104,18 +93,15 @@ public class APEDisplayView : APEContainerView {
         _ heightBottom: CGFloat,
         _ heightCompanion: CGFloat
     ) -> CGFloat {
+        displayHeight = heightInUnitContent + heightBottom + heightCompanion
         adUnit.applyLayoutHeight(heightInUnitContent, heightInUnitBanner)
         adBottom   .displayHeight = heightBottom
         adCompanion.displayHeight = heightCompanion
-        displayHeight = heightInUnitContent + heightBottom + heightCompanion
         return displayHeight ?? CGFloat(0.0)
     }
     internal func removeBannerViews() {
         adUnit.removeBannerViews()
         adBottom.subviews.forEach { $0.removeFromSuperview() }
         adCompanion.subviews.forEach { $0.removeFromSuperview() }
-    }
-    internal func removeInUnitAd() {
-        adUnit.removeInUnitAd()
     }
 }

@@ -17,8 +17,8 @@ public class APEViewService: NSObject {
 
     public static let shared = APEViewService()
 
-    private var stripViewsData: [String: APEStripView] = [:]
-    private var unitViewsData: [String: APEUnitView] = [:]
+    private var stripControllers: [String: APEStripView] = [:]
+    private var  unitControllers: [String: APEUnitView ] = [:]
 
     private override init() {}
 }
@@ -40,7 +40,7 @@ public extension APEViewService {
         let stripViewsData = configs.reduce(into: [:]) {
             $0[$1.channelToken] = APEStripView(configuration: $1)
         }
-        self.stripViewsData.merge(stripViewsData, uniquingKeysWith: { $1 })
+        self.stripControllers.merge(stripViewsData, uniquingKeysWith: { $1 })
     }
 
     /// Unload strip views so it can be Removed from cache with the given channelTokens if exists
@@ -48,7 +48,7 @@ public extension APEViewService {
     func unloadStripViews(with channelTokens: [String]) {
         DispatchQueue.main.async {
             channelTokens.forEach {
-                self.stripViewsData[$0] = nil
+                self.stripControllers[$0] = nil
             }
         }
     }
@@ -57,7 +57,7 @@ public extension APEViewService {
     /// FYI, the stripView value will be nil in case it hasn't been initialized Via the `preloadStripViews` API first.
     /// - Parameter channelToken: the channelToken
     func stripView(for channelToken: String) -> APEStripView? {
-        self.stripViewsData[channelToken]
+        self.stripControllers[channelToken]
     }
 
 }
@@ -78,7 +78,7 @@ public extension APEViewService {
         let unitViewsData = configs.reduce(into: [:]) {
             $0[$1.unitParams.id] = APEUnitView(configuration: $1)
         }
-        self.unitViewsData.merge(unitViewsData, uniquingKeysWith: { $1 })
+        self.unitControllers.merge(unitViewsData, uniquingKeysWith: { $1 })
 
     }
 
@@ -87,7 +87,7 @@ public extension APEViewService {
     func unloadUnitViews(with unitIds: [String]) {
         DispatchQueue.main.async {
             unitIds.forEach {
-                self.unitViewsData[$0] = nil
+                self.unitControllers[$0] = nil
             }
         }
     }
@@ -96,6 +96,6 @@ public extension APEViewService {
     /// FYI, the unit value will be nil in case it hasn't been initialized Via the `preloadUnitViews` API first.
     /// - Parameter id: the APEUnitParams
     func unitView(for id: String) -> APEUnitView? {
-        return self.unitViewsData[id]
+        return self.unitControllers[id]
     }
 }

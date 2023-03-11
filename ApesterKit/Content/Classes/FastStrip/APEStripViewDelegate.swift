@@ -9,11 +9,12 @@
 import WebKit
 
 #if os(iOS)
-@available(iOS 11.0, *)
+public typealias APEStripViewDelegate = APEStripControllerDelegate
 
+@available(iOS 11.0, *)
 /// A ChannelToken Loading state update
 @objc(APEStripViewDelegate)
-public protocol APEStripViewDelegate: NSObjectProtocol {
+public protocol APEStripControllerDelegate: NSObjectProtocol {
 
     /// when the ChannelToken loaded successfuly
     ///

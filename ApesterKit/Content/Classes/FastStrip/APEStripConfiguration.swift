@@ -63,11 +63,12 @@ public class APEStripConfiguration: APEConfiguration {
 extension Dictionary {
     
     func componentsURL(baseURL urlString: String) -> URL? {
+        
         var components = URLComponents(string: urlString)
         components?.queryItems = self.compactMap { (arg) in
-            guard let key = arg.key as? String, let value = arg.value as? String else {
-                return nil
-            }
+        
+            guard let key   = arg.key   as? String else { return nil }
+            guard let value = arg.value as? String else { return nil }
             return URLQueryItem(name: key, value: value)
         }
         return components?.url

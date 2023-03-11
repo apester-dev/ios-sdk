@@ -11,14 +11,14 @@ import Foundation
 
 @objc(APEContainerViewUnit)
 @objcMembers
-internal class APEContainerViewUnit : APEContainerView {
-    
+internal class APEContainerViewUnit : APEContainerView
+{    
     // MARK: -
     internal var webContent : WKWebView! {
         didSet {
             adContentMain   = APEContainerView(frame: .zero)
             adContentBunner = APEContainerView(frame: .zero)
-            applyAutoresizingMask()
+            applyCurrentAutoresizingMask()
             applyLayout()
             applyDebug()
         }
@@ -29,38 +29,37 @@ internal class APEContainerViewUnit : APEContainerView {
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
+        applyAutoresizingMask()
         applyBaseConstraint()
     }
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        applyAutoresizingMask()
         applyBaseConstraint()
     }
     
-    internal override func applyAutoresizingMask() {
-        super.applyAutoresizingMask()
+    private func applyCurrentAutoresizingMask() {
         self.webContent     .translatesAutoresizingMaskIntoConstraints = false
         self.adContentMain  .translatesAutoresizingMaskIntoConstraints = false
         self.adContentBunner.translatesAutoresizingMaskIntoConstraints = false
-    }
+    }    
     
     // MARK: -
     fileprivate func applyLayout() {
-        
+
         // webview
         ape_addSubview(webContent, with: UIView.anchorToContainer)
-        
+
         // cpm
         ape_addSubview(adContentMain, with: UIView.anchorToContainer)
-        
+
         // bottom - bunner - inside
         addSubview(adContentBunner)
-        webContent.ape_anchor(view: adContentBunner, with: [
+        ape_anchor(view: adContentBunner, with: [
             equal(\.leadingAnchor),
             equal(\.trailingAnchor),
             equal(\.bottomAnchor)
         ])
-        adBottomConstraint = adContentBunner.heightAnchor.constraint(equalToConstant: 0)
-        adBottomConstraint?.priority = .init(rawValue: 999)
     }
     fileprivate func applyDebug() {
         return;
@@ -81,25 +80,19 @@ internal class APEContainerViewUnit : APEContainerView {
         _ heightInUnitContent: CGFloat,
         _ heightInUnitBanner: CGFloat
     ) -> CGFloat {
-        adBottomHeight   = heightInUnitBanner
-        displayHeight    = heightInUnitContent
+        displayHeight  = heightInUnitContent
+        adBottomHeight = heightInUnitBanner
         return displayHeight ?? CGFloat(0.0)
     }
     internal func removeBannerViews() {
         adContentMain  .subviews.forEach { $0.removeFromSuperview() }
         adContentBunner.subviews.forEach { $0.removeFromSuperview() }
     }
-    internal func removeInUnitAd() {
-        adContentMain.subviews.forEach { $0.removeFromSuperview() }
-    }
     // MARK: - =========================================================================================================
-    private var adBottomConstraint: NSLayoutConstraint?
     private var adBottomHeight: CGFloat? {
-        didSet {
-            guard let height = adBottomHeight else { return }
-            adBottomConstraint?.isActive = false
-            adBottomConstraint?.constant = height
-            adBottomConstraint?.isActive = true
+        get { adContentBunner.displayHeight }
+        set {
+            adContentBunner.displayHeight = newValue
         }
     }
 }

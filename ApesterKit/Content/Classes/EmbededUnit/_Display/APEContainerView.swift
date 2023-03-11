@@ -16,19 +16,27 @@ public class APEContainerView : UIView
     var hasContent : Bool { !isEmpty }
     
     // MARK: - constraints
-    fileprivate var displayConstraint: NSLayoutConstraint?
+    internal var displayConstraintHeight: NSLayoutConstraint?
     internal var displayHeight: CGFloat? {
         didSet {
-            if let height = displayHeight , displayConstraint?.constant != height {
-                setSubviewsVisibility(height != 0.0)
-                displayConstraint?.isActive = false
-                displayConstraint?.constant = height
-                displayConstraint?.isActive = true
+            if let value = displayHeight {
+                update(constraint: displayConstraintHeight, by: value, visibility: true)
             } else {
-                displayConstraint?.isActive = false
+                displayConstraintHeight?.isActive = false
             }
         }
     }
+    internal var displayConstraintWidth: NSLayoutConstraint?
+    internal var displayWidth: CGFloat? {
+        didSet {
+            if let value = displayWidth {
+                update(constraint: displayConstraintWidth, by: value, visibility: false)
+            } else {
+                displayConstraintWidth?.isActive = false
+            }
+        }
+    }
+    
     // MARK: - Init
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,9 +53,8 @@ public class APEContainerView : UIView
         self.translatesAutoresizingMaskIntoConstraints = false
     }
     internal func applyBaseConstraint() {
-        let constraint = heightAnchor.constraint(equalToConstant: CGFloat(0.0))
-        constraint.priority = .defaultHigh
-        self.displayConstraint = constraint
+        self.displayConstraintHeight = ape_constraintSelf(with: equalValue(\.heightAnchor, to: .zero) , priority: .required)
+        self.displayConstraintWidth  = ape_constraintSelf(with: equalValue(\.widthAnchor , to: .zero) , priority: .required)
     }
 
     // MARK: - touch event handling
@@ -60,4 +67,17 @@ public class APEContainerView : UIView
     internal func setSubviewsVisibility(_ visibility: Bool) {
         subviews.forEach { $0.isHidden = !visibility }
     }
+    
+    // MARK: -
+    private func update(
+        constraint item: NSLayoutConstraint?,
+        by value: CGFloat, visibility: Bool
+    ) {
+        guard item?.constant != value else { return }
+        if (visibility) { setSubviewsVisibility(value != 0.0) }
+        item?.isActive = false
+        item?.constant = value
+        item?.isActive = true
+    }
+    
 }

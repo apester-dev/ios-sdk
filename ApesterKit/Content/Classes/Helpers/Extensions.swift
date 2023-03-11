@@ -87,9 +87,9 @@ internal extension WKWebView {
         webView.uiDelegate = delegate
         webView.scrollView.contentInsetAdjustmentBehavior = options.contentBehavior
         webView.accessibilityIdentifier = "apesterWebContainer"
-        if #available(iOS 15.5, *) {
-            webView.setMinimumViewportInset(UIEdgeInsets.zero, maximumViewportInset: UIEdgeInsets.zero)
-        }
+//        if #available(iOS 15.5, *) {
+//            webView.setMinimumViewportInset(UIEdgeInsets.zero, maximumViewportInset: UIEdgeInsets.zero)
+//        }
         return webView
     }
 }
@@ -196,7 +196,7 @@ internal func    lessOrEqualValue<L>(to: KeyPath<UIView, L>, multiplier m: CGFlo
     return    lessOrEqualValue(to, to, multiplier: m, constant: c)
 }
 // ================================================================================================================== //
-
+// MARK: - constraints handling
 internal extension UIView {
     
     static var anchorToContainer : [APEConstraint]
@@ -211,7 +211,7 @@ internal extension UIView {
     func ape_addSubview(
         _ other: UIView,
         with constraints: [APEConstraint] ,
-        priority : UILayoutPriority = UILayoutPriority.required
+        priority : UILayoutPriority = .required
     ) -> [NSLayoutConstraint] {
         addSubview(other)
         return ape_anchor(view: other, with: constraints, priority: priority)
@@ -221,9 +221,8 @@ internal extension UIView {
     func ape_anchor(
         view other: UIView,
         with constraints: [APEConstraint],
-        priority : UILayoutPriority = UILayoutPriority.required
+        priority : UILayoutPriority = .required
     ) -> [NSLayoutConstraint] {
-        other.translatesAutoresizingMaskIntoConstraints = false
         let c = ape_constraints(view: other, with: constraints, priority: priority)
         NSLayoutConstraint.activate(c)
         return c
@@ -233,14 +232,56 @@ internal extension UIView {
     func ape_constraints(
         view other: UIView,
         with constraints: [APEConstraint],
-        priority : UILayoutPriority = .required
+        priority : UILayoutPriority = .defaultHigh
     ) -> [NSLayoutConstraint] {
-        other.translatesAutoresizingMaskIntoConstraints = false
+        
         return constraints.compactMap {
-             $0(other, self)
-        } .map {
-            $0.priority = priority;
-            return $0
+            ape_constraint(view: other, with: $0, priority: priority)
         }
+    }
+    
+    
+    
+    @discardableResult
+    func ape_constraint(
+        view other: UIView,
+        with constraint: APEConstraint,
+        priority : UILayoutPriority = .defaultHigh
+    ) -> NSLayoutConstraint {
+        
+        other.translatesAutoresizingMaskIntoConstraints = false
+        
+        let c = constraint(other, self)
+        c.priority = priority
+        return c
+    }
+   
+    
+    @discardableResult
+    func ape_anchor(
+        view other: UIView,
+        with constraint: APEConstraint,
+        priority : UILayoutPriority = .defaultHigh
+    ) -> NSLayoutConstraint {
+        let c = ape_constraint(view: other, with: constraint, priority: priority)
+        NSLayoutConstraint.activate([c])
+        return c
+    }
+    
+    @discardableResult
+    func ape_constraintSelf(
+        with constraint: APEConstraint,
+        priority : UILayoutPriority = .defaultHigh
+    ) -> NSLayoutConstraint {
+        return ape_constraint(view: self, with: constraint, priority: priority)
+    }
+    @discardableResult
+    func ape_anchorSelf(
+        with constraint: APEConstraint,
+        priority : UILayoutPriority = .defaultHigh
+    ) -> NSLayoutConstraint {
+        let c = ape_constraintSelf(with: constraint, priority: priority)
+        NSLayoutConstraint.activate([c])
+        return c
     }
 }

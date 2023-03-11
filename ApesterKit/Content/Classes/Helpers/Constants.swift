@@ -86,7 +86,7 @@ struct Constants {
         static let initInUnit       = "apester_init_inunit"
         static let killInUnit       = "apester_kill_native_ad"
         static let adUnitId         = "iosAdUnitId"
-        static let isCompanionVariant = "isCompanionVariant"
+        static let isVariant        = "isCompanionVariant"
         static let adType           = "adType"
         static let appDomain        = "appDomain"
         static let testMode         = "testMode"

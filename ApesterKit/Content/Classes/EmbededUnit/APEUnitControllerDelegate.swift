@@ -1,5 +1,5 @@
 //
-//  APEUnitViewDelegate.swift
+//  APEUnitControllerDelegate.swift
 //  ApesterKit
 //
 //  Created by Almog Haimovitch on 15/03/2020.
@@ -9,11 +9,13 @@
 import WebKit
 
 #if os(iOS)
-@available(iOS 11.0, *)
+
+public typealias APEUnitViewDelegate = APEUnitControllerDelegate
 
 /// A ChannelToken Loading state update
+@available(iOS 11.0, *)
 @objc(APEUnitViewDelegate)
-public protocol APEUnitViewDelegate: NSObjectProtocol {
+public protocol APEUnitControllerDelegate: NSObjectProtocol {
     
     /// when the unitId loaded successfully
     ///

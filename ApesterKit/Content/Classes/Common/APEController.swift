@@ -1,5 +1,5 @@
 //
-//  APEView.swift
+//  APEController.swift
 //  ApesterKit
 //
 //  Created by Hasan Sawaed Tabash on 3/19/20.
@@ -13,13 +13,15 @@ import SafariServices
 #if os(iOS)
 @available(iOS 11.0, *)
 
+public typealias APEView = APEController
+
 /// A Proxy Messaging Handler
 ///
 /// Between The Apester Units Carousel component (The `StripWebView`)
-/// And the selected Apester Unit (The `StoryWebView`)
+/// And the selected Apester Unit                (The `StoryWebView`)
 @objc(APEView)
 @objcMembers
-public class APEView: NSObject {
+public class APEController: NSObject {
 
     struct LoadingState {
         var isLoaded = false
@@ -129,14 +131,9 @@ public class APEView: NSObject {
     }
 }
 
-// MARK: - deprecated methods
-public extension APEView {
-    @available(*, deprecated, renamed: "display(in:containerViewController:)")
-    func display(in containerView: UIView, containerViewConroller: UIViewController) {}
-}
 // MARK: - Internal API's to override
 @available(iOS 11.0, *)
-extension APEView {
+extension APEController {
 
     func orientationDidChangeNotification() {
         fatalError("OVERRIDE ME")
@@ -163,10 +160,12 @@ extension APEView {
     }
 }
 
-// MARK:- Handle WebView Presentation
+// MARK: - Handle WebView Presentation
 @available(iOS 11.0, * )
-private extension APEView {
+private extension APEController {
+    
     func decisionHandler(navigationAction: WKNavigationAction, webView: WKWebView, completion: (WKNavigationActionPolicy) -> Void) {
+        
         var policy = WKNavigationActionPolicy.cancel
         // is valid URL
         if let url = navigationAction.request.url {
@@ -207,17 +206,19 @@ private extension APEView {
     }
 }
 
-// MARK: UIAdaptivePresentationControllerDelegate
+// MARK: - UIAdaptivePresentationControllerDelegate
 @available(iOS 11.0, *)
-extension APEView: UIAdaptivePresentationControllerDelegate {
+extension APEController : UIAdaptivePresentationControllerDelegate {
+    
     public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         self.hideStory()
     }
 }
 
-// MARK:- WKScriptMessageHandler
+// MARK: - WKScriptMessageHandler
 @available(iOS 11.0, *)
-extension APEView: WKScriptMessageHandler {
+extension APEController : WKScriptMessageHandler {
+    
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         DispatchQueue.main.async {
             self.handleUserContentController(message: message)
@@ -225,9 +226,9 @@ extension APEView: WKScriptMessageHandler {
     }
 }
 
-// MARK:- WKNavigationDelegate
+// MARK: - WKNavigationDelegate
 @available(iOS 11.0, *)
-extension APEView: WKNavigationDelegate {
+extension APEController : WKNavigationDelegate {
 
     public func webView(_ webView: WKWebView,
                         didReceive challenge: URLAuthenticationChallenge,
@@ -281,10 +282,12 @@ extension APEView: WKNavigationDelegate {
     }
 }
 
-// MARK:- WKUIDelegate
+// MARK: - WKUIDelegate
 @available(iOS 11.0, *)
-extension APEView: WKUIDelegate {
+extension APEController: WKUIDelegate {
+    
     public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        
         if let url = navigationAction.request.url {
             self.open(url: url, type: .shareLinkActivated)
         }
@@ -292,11 +295,19 @@ extension APEView: WKUIDelegate {
     }
 }
 
-// MARK:- WKScriptMessageHandler
+// MARK: - UIScrollViewDelegate
 @available(iOS 11.0, *)
-extension APEView: UIScrollViewDelegate {
+extension APEController : UIScrollViewDelegate {
+    
     public func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
         scrollView.pinchGestureRecognizer?.isEnabled = false
     }
 }
+
+// MARK: - deprecated methods
+public extension APEController {
+    @available(*, deprecated, renamed: "display(in:containerViewController:)")
+    func display(in containerView: UIView, containerViewConroller: UIViewController) {}
+}
+
 #endif
