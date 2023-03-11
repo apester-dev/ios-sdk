@@ -92,7 +92,7 @@ extension APEMultipleUnitsViewController: APEUnitViewDelegate {
     
     func unitView(_ unitView: APEUnitView, didUpdateHeight height: CGFloat) {
         print("||||========")
-        print("|||| unitView.didUpdateHeight: \(height), \(unitView.height), \(unitView.configuration.unitParams.id)")
+        print("|||| unitView.didUpdateHeight: param: \(height), unitView.height: \(unitView.height), \(unitView.identifier)")
         print("||||========")
         collectionView.reloadData()
     }

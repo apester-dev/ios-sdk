@@ -75,7 +75,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ApesterKit: 8a14f4244fd5113ca783b3ce6d72bcaeebcc1136
+  ApesterKit: 6ef1167fe1e149bbda6a5f608a346ad87666ece6
   Google-Mobile-Ads-SDK: 894be2e3e3e8281004bda14381f9af7ad73eeffd
   GoogleAppMeasurement: 40c70a7d89013f0eca72006c4b9732163ea4cdae
   GoogleUserMessagingPlatform: 5f8b30daf181805317b6b985bb51c1ff3beca054

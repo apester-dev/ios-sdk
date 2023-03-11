@@ -38,6 +38,9 @@ class APEUnitCollectionViewCell: UICollectionViewCell {
     }
 
     override func prepareForReuse() {
+        if unitView?.displayView.superview != nil {
+            unitView?.hide()
+        }
         unitView = nil
     }
 
