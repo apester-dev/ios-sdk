@@ -2,6 +2,15 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:TestPlans/LocationBerlin.gpx">
+   </FileRef>
+   <FileRef
+      location = "group:TestPlans/LocationCologne.gpx">
+   </FileRef>
+   <FileRef
+      location = "group:TestPlans/LocationMunich.gpx">
+   </FileRef>
+   <FileRef
       location = "group:ApesterKit.xcodeproj">
    </FileRef>
    <FileRef

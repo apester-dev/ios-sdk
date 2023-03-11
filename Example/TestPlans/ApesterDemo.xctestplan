@@ -1,0 +1,55 @@
+{
+  "configurations" : [
+    {
+      "id" : "F44E4CF0-2715-42D9-923E-1120B65E134C",
+      "name" : "Configuration Berlin",
+      "options" : {
+        "language" : "de",
+        "locationScenario" : {
+          "identifier" : "..\/TestPlans\/LocationBerlin.gpx"
+        },
+        "region" : "DE"
+      }
+    },
+    {
+      "id" : "6D2A0FD6-6664-45DA-9589-41EF97CF4F64",
+      "name" : "Configuration Munich",
+      "options" : {
+        "language" : "de",
+        "locationScenario" : {
+          "identifier" : "..\/TestPlans\/LocationMunich.gpx"
+        },
+        "region" : "DE"
+      }
+    },
+    {
+      "id" : "6C56F867-91AF-4A20-96E6-7B1387920037",
+      "name" : "Configuration Cologne",
+      "options" : {
+        "language" : "de",
+        "locationScenario" : {
+          "identifier" : "..\/TestPlans\/LocationCologne.gpx"
+        },
+        "region" : "DE"
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:ApesterDemo.xcodeproj",
+      "identifier" : "2D0B4422292CE52600D7EB59",
+      "name" : "ApesterDemo"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:ApesterDemo.xcodeproj",
+        "identifier" : "5DBECD932949ADBC00EE1FF4",
+        "name" : "ApesterDemoUITests"
+      }
+    }
+  ],
+  "version" : 1
+}
