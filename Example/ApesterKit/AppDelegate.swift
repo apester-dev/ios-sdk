@@ -34,10 +34,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // initiate UnitConfigurationsFactory environment
         UnitConfigurationsFactory.environment = .dev
         
-        // let configurations = UnitConfigurationsFactory.configurations(hideApesterAds: false, gdprString: UnitConfigurationsFactory.gdprString)
+        let configurations = UnitConfigurationsFactory.configurations(hideApesterAds: false, gdprString: UnitConfigurationsFactory.gdprString)
         
         // preloadUnitViews
-        // APEViewService.shared.preloadUnitViews(with: configurations)
+        APEViewService.shared.preloadUnitViews(with: configurations)
         return true
     }
 
