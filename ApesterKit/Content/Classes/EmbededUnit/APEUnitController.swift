@@ -490,8 +490,8 @@ internal extension APEUnitController
         
         switch (paramaters.adType, paramaters.isCompanionVariant) {
         case (.inUnit   , _    ) : return displayView.adUnit.adContentMain
-        case (.bottom   , true ) : return displayView.adUnit.adContentBunner
-        case (.bottom   , false) : return displayView.adBottom
+        case (.bottom   , false) : return displayView.adUnit.adContentBunner
+        case (.bottom   , true ) : return displayView.adBottom
         case (.companion, _    ) : return displayView.adCompanion
         }
     }
