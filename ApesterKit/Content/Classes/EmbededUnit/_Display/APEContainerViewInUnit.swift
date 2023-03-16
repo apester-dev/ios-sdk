@@ -17,23 +17,25 @@ internal class APEContainerViewUnit : APEContainerView
     internal var webContent : WKWebView! {
         didSet {
             adContentMain   = APEContainerView(frame: .zero)
-            adContentBunner = APEContainerView(frame: .zero)
+            adContentBanner = APEContainerView(frame: .zero)
             applyCurrentAutoresizingMask()
             applyLayout()
             applyDebug()
         }
     }
     internal fileprivate(set) var adContentMain   : APEContainerView!
-    internal fileprivate(set) var adContentBunner : APEContainerView!
+    internal fileprivate(set) var adContentBanner : APEContainerView!
     
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        applyAutoresizingMask()
-        applyBaseConstraint()
+        commonInit()
     }
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        commonInit()
+    }
+    internal override func commonInit() {
         applyAutoresizingMask()
         applyBaseConstraint()
     }
@@ -41,7 +43,7 @@ internal class APEContainerViewUnit : APEContainerView
     private func applyCurrentAutoresizingMask() {
         self.webContent     .translatesAutoresizingMaskIntoConstraints = false
         self.adContentMain  .translatesAutoresizingMaskIntoConstraints = false
-        self.adContentBunner.translatesAutoresizingMaskIntoConstraints = false
+        self.adContentBanner.translatesAutoresizingMaskIntoConstraints = false
     }    
     
     // MARK: -
@@ -54,8 +56,8 @@ internal class APEContainerViewUnit : APEContainerView
         ape_addSubview(adContentMain, with: UIView.anchorToContainer)
 
         // bottom - bunner - inside
-        addSubview(adContentBunner)
-        ape_anchor(view: adContentBunner, with: [
+        addSubview(adContentBanner)
+        ape_anchor(view: adContentBanner, with: [
             equal(\.leadingAnchor),
             equal(\.trailingAnchor),
             equal(\.bottomAnchor)
@@ -86,13 +88,13 @@ internal class APEContainerViewUnit : APEContainerView
     }
     internal func removeBannerViews() {
         adContentMain  .subviews.forEach { $0.removeFromSuperview() }
-        adContentBunner.subviews.forEach { $0.removeFromSuperview() }
+        adContentBanner.subviews.forEach { $0.removeFromSuperview() }
     }
     // MARK: - =========================================================================================================
     private var adBottomHeight: CGFloat? {
-        get { adContentBunner.displayHeight }
+        get { adContentBanner.displayHeight }
         set {
-            adContentBunner.displayHeight = newValue
+            adContentBanner.displayHeight = newValue
         }
     }
 }

@@ -138,7 +138,7 @@ internal class APEAdView : UIView
             equal(\.topAnchor, \.bottomAnchor)
         ])
 
-        applyConstraintsTodisplay(with: adView)
+        applyConstraintsToDisplay(with: adView)
 
         if monetization.adType == .inUnit {
 
@@ -200,7 +200,7 @@ internal class APEAdView : UIView
         
         onAdRemovalCompletion(monetization)
     }
-    private func applyConstraintsTodisplay(with adView: UIView & APENativeLibraryAdView) {
+    private func applyConstraintsToDisplay(with adView: UIView & APENativeLibraryAdView) {
         
         ape_anchor(view: self, with: [
             greaterOrEqualValue(\.heightAnchor, to: creativeHeight)

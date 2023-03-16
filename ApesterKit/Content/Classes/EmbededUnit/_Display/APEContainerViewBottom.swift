@@ -15,17 +15,14 @@ internal class APEContainerViewBottom : APEContainerView
     // MARK: - Init
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        applyAutoresizingMask()
-        applyBaseConstraint()
+        commonInit()
     }
     public required init?(coder: NSCoder) {
         super.init(coder: coder)
+        commonInit()
+    }
+    internal override func commonInit() {
         applyAutoresizingMask()
         applyBaseConstraint()
     }
-    
-//    internal override func applyBaseConstraint() {
-//        self.displayConstraintHeight = ape_constraintSelf(with: equalValue(\.heightAnchor, to: .zero) , priority: .required)
-//        self.displayConstraintWidth  = ape_constraintSelf(with: equalValue(\.widthAnchor , to: .zero) , priority: .required)
-//    }
 }
