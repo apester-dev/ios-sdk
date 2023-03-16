@@ -40,8 +40,8 @@ internal class APEAdProvider : Equatable
     
     // MARK: - Computed properties - Ad type
     internal var isInUnit         : Bool { adType == .inUnit    }
-    internal var isInternalBottom : Bool { adType == .bottom && monetization.isCompanionVariant == true  }
-    internal var isExternalBottom : Bool { adType == .bottom && monetization.isCompanionVariant == false }
+    internal var isInternalBottom : Bool { adType == .bottom && monetization.isCompanionVariant == false }
+    internal var isExternalBottom : Bool { adType == .bottom && monetization.isCompanionVariant == true  }
     internal var isCompanion      : Bool { adType == .companion }
     
     // MARK: - properties
