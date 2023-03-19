@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
     s.name             = 'ApesterKit'
-    s.version          = '3.3.12'
+    s.version          = '3.3.13'
     s.summary          = 'ApesterKit provides a light-weight framework that loads Apester Unit in a webView'
     
     # This description is used to generate tags and improve search results.
@@ -44,69 +44,69 @@ Pod::Spec.new do |s|
         s.dependency 'Google-Mobile-Ads-SDK', '~> 10.0'
         s.dependency 'OpenWrapSDK'          , '~>  2.7.0'
     end
-    s.app_spec 'HostApp' do |app_spec|
-        app_spec.scheme              = {
-            :code_coverage           => true ,
-            :launch_arguments        => [ ]
-        }
-        app_spec.source_files        = 'ApesterKit/App/Classes/**/*.{h,m,swift}'
-        app_spec.resources           = 'ApesterKit/App/Assets/**/*.{xib,storyboard,*.xcassets}'
-        app_spec.preserve_paths      = [
-        'App/Classes/**/*.{h,m,swift}',
-        'App/Assets/**/*.{xib,storyboard}'
-        ]
-        app_spec.info_plist          = {
-            'CFBundleIdentifier'                    => 'com.apesterkit.demo',
-            'UIStatusBarStyle'                      => 'UIStatusBarStyleLightContent',
-            'UIApplicationSceneManifest'            => {
-                'UIApplicationSupportsMultipleScenes' => false,
-                'UISceneConfigurations' => {
-                    'UIWindowSceneSessionRoleApplication' => [
-                    {
-                        'UISceneConfigurationName' => 'Default Configuration',
-                        'UISceneDelegateClassName' => '$(PRODUCT_MODULE_NAME).SceneDelegate',
-                        'UISceneStoryboardFile'    => 'Main'
-                    }
-                    ]
-                }
-            },
-            'UILaunchStoryboardName'                => 'LaunchScreen',
-            'UIMainStoryboardFile'                  => 'Main',
-            'UISupportedInterfaceOrientations'      => [
-            'UIInterfaceOrientationPortrait',
-            'UIInterfaceOrientationLandscapeLeft',
-            'UIInterfaceOrientationLandscapeRight',
-            ],
-            'UISupportedInterfaceOrientations~ipad' => [
-            'UIInterfaceOrientationPortrait',
-            'UIInterfaceOrientationLandscapeLeft',
-            'UIInterfaceOrientationLandscapeRight',
-            ],
-            'NSAppTransportSecurity'                => {
-                'NSAllowsArbitraryLoads' => true
-            },
-            'GADApplicationIdentifier'              => 'ca-app-pub-7862987392320388~1726030239'
-        }
-        
-        # Internal dependencies
-        app_spec.dependency 'ApesterKit/Content'
-    end
-    s.test_spec 'UnitTests'   do |unit_tests|
-        unit_tests.test_type         = :unit
-        unit_tests.platforms         = { :ios => ios_deployment_target }
-        unit_tests.scheme            = {
-            :code_coverage           => true ,
-            :launch_arguments        => [ ]
-        }
-        unit_tests.source_files      = [ 'ApesterKit/Tests/Classes/*.{h,m,swift}' ]
-        unit_tests.preserve_paths    = [ 'ApesterKit/Tests/Classes/*.{h,m,swift}' ]
-        
-        unit_tests.requires_app_host = true
-        unit_tests.app_host_name     = 'ApesterKit/HostApp'
-        unit_tests.dependency          'ApesterKit/HostApp'
-        
-        # Dependencies
-        unit_tests.dependency 'Google-Mobile-Ads-SDK', '~> 10.0'
-        unit_tests.dependency 'OpenWrapSDK'          , '~>  2.7.0'
-    end
+    # s.app_spec 'HostApp' do |app_spec|
+    #     app_spec.scheme              = {
+    #         :code_coverage           => true ,
+    #         :launch_arguments        => [ ]
+    #     }
+    #     app_spec.source_files        = 'ApesterKit/App/Classes/**/*.{h,m,swift}'
+    #     app_spec.resources           = 'ApesterKit/App/Assets/**/*.{xib,storyboard,*.xcassets}'
+    #     app_spec.preserve_paths      = [
+    #     'App/Classes/**/*.{h,m,swift}',
+    #     'App/Assets/**/*.{xib,storyboard}'
+    #     ]
+    #     app_spec.info_plist          = {
+    #         'CFBundleIdentifier'                    => 'com.apesterkit.demo',
+    #         'UIStatusBarStyle'                      => 'UIStatusBarStyleLightContent',
+    #         'UIApplicationSceneManifest'            => {
+    #             'UIApplicationSupportsMultipleScenes' => false,
+    #             'UISceneConfigurations' => {
+    #                 'UIWindowSceneSessionRoleApplication' => [
+    #                 {
+    #                     'UISceneConfigurationName' => 'Default Configuration',
+    #                     'UISceneDelegateClassName' => '$(PRODUCT_MODULE_NAME).SceneDelegate',
+    #                     'UISceneStoryboardFile'    => 'Main'
+    #                 }
+    #                 ]
+    #             }
+    #         },
+    #         'UILaunchStoryboardName'                => 'LaunchScreen',
+    #         'UIMainStoryboardFile'                  => 'Main',
+    #         'UISupportedInterfaceOrientations'      => [
+    #         'UIInterfaceOrientationPortrait',
+    #         'UIInterfaceOrientationLandscapeLeft',
+    #         'UIInterfaceOrientationLandscapeRight',
+    #         ],
+    #         'UISupportedInterfaceOrientations~ipad' => [
+    #         'UIInterfaceOrientationPortrait',
+    #         'UIInterfaceOrientationLandscapeLeft',
+    #         'UIInterfaceOrientationLandscapeRight',
+    #         ],
+    #         'NSAppTransportSecurity'                => {
+    #             'NSAllowsArbitraryLoads' => true
+    #         },
+    #         'GADApplicationIdentifier'              => 'ca-app-pub-7862987392320388~1726030239'
+    #     }
+    #
+    #     # Internal dependencies
+    #     app_spec.dependency 'ApesterKit/Content'
+    # end
+    # s.test_spec 'UnitTests'   do |unit_tests|
+    #     unit_tests.test_type         = :unit
+    #     unit_tests.platforms         = { :ios => ios_deployment_target }
+    #     unit_tests.scheme            = {
+    #         :code_coverage           => true ,
+    #         :launch_arguments        => [ ]
+    #     }
+    #     unit_tests.source_files      = [ 'ApesterKit/Tests/Classes/*.{h,m,swift}' ]
+    #     unit_tests.preserve_paths    = [ 'ApesterKit/Tests/Classes/*.{h,m,swift}' ]
+    #
+    #     unit_tests.requires_app_host = true
+    #     unit_tests.app_host_name     = 'ApesterKit/HostApp'
+    #     unit_tests.dependency          'ApesterKit/HostApp'
+    #
+    #     # Dependencies
+    #     unit_tests.dependency 'Google-Mobile-Ads-SDK', '~> 10.0'
+    #     unit_tests.dependency 'OpenWrapSDK'          , '~>  2.7.0'
+    # end
 end

@@ -11,7 +11,7 @@
         <!--Single UnitView-->
         <scene sceneID="2y1-F3-cq2">
             <objects>
-                <viewController title="Single UnitView" id="pma-5c-gKe" customClass="APEUnitViewController" customModule="Apester" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Single UnitView" id="pma-5c-gKe" customClass="APEUnitViewController" customModule="ApesterKit_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Tha-vb-h2l"/>
                         <viewControllerLayoutGuide type="bottom" id="UCx-eN-l3Z"/>
@@ -160,7 +160,7 @@
         <!--Multiple StripView-->
         <scene sceneID="eiQ-mw-1h6">
             <objects>
-                <viewController storyboardIdentifier="APEMultipleStripsViewController" title="Multiple StripView" id="fOt-2H-GaU" customClass="APEMultipleStripsViewController" customModule="Apester" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="APEMultipleStripsViewController" title="Multiple StripView" id="fOt-2H-GaU" customClass="APEMultipleStripsViewController" customModule="ApesterKit_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ZL4-IJ-CHq"/>
                         <viewControllerLayoutGuide type="bottom" id="dkN-SG-8z9"/>
@@ -179,7 +179,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ReuseCellIdentifier" id="ZlC-Np-5R3" customClass="APEStripCollectionViewCell" customModule="Apester" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ReuseCellIdentifier" id="ZlC-Np-5R3" customClass="APEStripCollectionViewCell" customModule="ApesterKit_Example" customModuleProvider="target">
                                         <rect key="frame" x="-20" y="0.0" width="375" height="200"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -274,7 +274,7 @@
         <!--Multiple UnitViews-->
         <scene sceneID="ngn-Af-Lgg">
             <objects>
-                <viewController title="Multiple UnitViews" id="dOx-Jl-j63" customClass="APEMultipleUnitsViewController" customModule="Apester" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Multiple UnitViews" id="dOx-Jl-j63" customClass="APEMultipleUnitsViewController" customModule="ApesterKit_Example" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8CZ-qs-B6R"/>
                         <viewControllerLayoutGuide type="bottom" id="Gca-sA-sIu"/>
@@ -293,7 +293,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ReuseCellIdentifier" id="qQW-xh-D3X" customClass="APEUnitCollectionViewCell" customModule="Apester" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ReuseCellIdentifier" id="qQW-xh-D3X" customClass="APEUnitCollectionViewCell" customModule="ApesterKit_Example" customModuleProvider="target">
                                         <rect key="frame" x="-20" y="0.0" width="375" height="200"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -360,9 +360,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VgY-aI-Drh">
                                 <rect key="frame" x="10" y="54" width="355" height="554"/>
                                 <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" priority="999" constant="300" id="f6h-IK-d8y"/>
-                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -384,7 +381,6 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="containerView" destination="VgY-aI-Drh" id="g7h-ST-lAV"/>
-                        <outlet property="heightConstraint" destination="f6h-IK-d8y" id="luB-yp-WPd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gUv-0h-WN1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

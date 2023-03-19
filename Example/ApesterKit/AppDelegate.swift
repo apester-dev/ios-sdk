@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let configurations = UnitConfigurationsFactory.configurations(hideApesterAds: false, gdprString: UnitConfigurationsFactory.gdprString)
         
         // preloadUnitViews
-        APEViewService.shared.preloadUnitViews(with: configurations)
+        // APEViewService.shared.preloadUnitViews(with: configurations)
         return true
     }
 
