@@ -67,7 +67,7 @@ internal class APEContainerViewUnit : APEContainerView
         return;
         // webContent      .backgroundColor = .red
         // adContentMain   .backgroundColor = .green.withAlphaComponent(CGFloat(0.3))
-        // adContentBunner .backgroundColor = .brown
+        // adContentBanner .backgroundColor = .brown
     }
     
     // MARK: -
