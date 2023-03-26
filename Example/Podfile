@@ -11,9 +11,5 @@ platform :ios, '11.0'
 use_frameworks!
 
 target 'ApesterKit_Example' do
-  pod 'ApesterKit', :path => '../' , :appspecs => ['HostApp'] , :testspecs => ['UnitTests','UITests'];
-
-  target 'ApesterKit_Tests' do
-    inherit! :search_paths
-  end
+  pod 'ApesterKit', :path => '../'; #, :appspecs => ['zHostApp'] , :testspecs => ['zUnitTests','zUITests'];
 end
