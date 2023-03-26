@@ -8,9 +8,11 @@
 
 import Foundation
 
-struct Constants {
+struct Constants
+{
     /// Payload Keys
-    struct Payload {
+    struct Payload
+    {
         static let advertisingId = "advertisingId"
         static let trackingEnabled = "trackingEnabled"
         static let bundleId = "bundleId"
@@ -21,7 +23,8 @@ struct Constants {
     }
 
     /// WebView shared functions or keys
-    struct WebView {
+    struct WebView
+    {
         static let apesterAdsCompleted = "apester_ads_completed"
         // functions
         static let close = "window.__closeApesterStory()"
@@ -43,7 +46,8 @@ struct Constants {
     }
 
     /// Strip Keys
-    struct Strip {
+    struct Strip
+    {
         // urls
         static let stripPath = "/apester-detatched-strip.html"
         static let stripStoryPath = "/apester-detatched-story.html"
@@ -63,7 +67,8 @@ struct Constants {
         static let validateStripViewVisibity = "validateStripViewVisibity"
     }
     
-    struct Unit {
+    struct Unit
+    {
         static let isReady = "apester_interaction_loaded"
         static let inAppUnitDetached = "in-app-unit-detached"
         static let unitPath = "/v2/static/\(inAppUnitDetached).html"
@@ -75,9 +80,11 @@ struct Constants {
         static let initInAppParams = "init_inapp_params"
     }
     
-    struct Monetization {
+    struct Monetization
+    {
         static let adMob            = "adMob"
         static let pubMatic         = "pubMatic"
+        static let amazon           = "amazon"
         static let profileId        = "iosProfileId"
         static let adProvider       = "provider"
         static let publisherId      = "publisherId"
@@ -93,6 +100,10 @@ struct Constants {
         static let debugLogs        = "debugLogs"
         static let bidSummaryLogs   = "bidSummaryLogs"
         static let timeInView       = "timeInView"
+    }
+    
+    struct Analytics
+    {
         static let playerMonImpression              = "player_mon_impression"
         static let playerMonLoadingPass             = "player_mon_loading_pass"
         static let playerMonImpressionPending       = "player_mon_impression_pending"

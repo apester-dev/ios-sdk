@@ -262,6 +262,32 @@ internal class APEAdView : UIView
             nativeAdConstraintHeight = adView.ape_anchorSelf(with: heightTemplate, priority: .required)
             nativeAdConstraintWidth  = adView.ape_anchorSelf(with:  widthTemplate, priority: .required)
             break
+        case (.amazon, .bottom):
+            ape_anchor(view: adView, with: [
+                equal(\.centerXAnchor, constant: 0),
+                equal(\.bottomAnchor  )
+            ])
+            nativeAdConstraintHeight = adView.ape_anchorSelf(with: heightTemplate, priority: .required)
+            nativeAdConstraintWidth  = adView.ape_anchorSelf(with:  widthTemplate, priority: .required)
+            break
+
+        case (.amazon, .inUnit):
+            ape_anchor(view: adView, with: [
+                equal(\.centerXAnchor, constant: 0),
+                equal(\.centerYAnchor, constant: 0)
+            ])
+            nativeAdConstraintHeight = adView.ape_anchorSelf(with: heightTemplate, priority: .required)
+            nativeAdConstraintWidth  = adView.ape_anchorSelf(with:  widthTemplate, priority: .required)
+            break
+
+        case (.amazon, .companion):
+            ape_anchor(view: adView, with: [
+                equal(\.centerXAnchor),
+                equal(\.bottomAnchor)
+            ])
+            nativeAdConstraintHeight = adView.ape_anchorSelf(with: heightTemplate, priority: .required)
+            nativeAdConstraintWidth  = adView.ape_anchorSelf(with:  widthTemplate, priority: .required)
+            break
         }
     }
     

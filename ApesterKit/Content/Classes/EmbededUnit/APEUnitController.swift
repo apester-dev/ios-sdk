@@ -358,8 +358,14 @@ extension APEUnitController
     
     override func destroy()
     {
-        self.unitWebView.configuration.userContentController
-            .unregister(from: [Constants.Unit.proxy, Constants.Unit.validateUnitViewVisibility])
+        let scriptMessages = [
+            Constants.Unit.proxy,
+            Constants.Unit.validateUnitViewVisibility
+        ]
+        self.unitWebView
+            .configuration
+            .userContentController
+            .unregister(from: scriptMessages)
     }
 }
 
@@ -516,6 +522,7 @@ internal extension APEUnitController
         
         guard let provider = adBannerProviders.first(where: {
             switch $0.monetization {
+            case .amazon  (let p): return p.type == adType
             case .adMob   (let p): return p.type == adType
             case .pubMatic(let p): return p.type == adType
             }
