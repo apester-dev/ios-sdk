@@ -19,6 +19,7 @@ class APEStripCollectionViewCell: UICollectionViewCell {
     }
 
     override func prepareForReuse() {
+        super.prepareForReuse()
         stripView = nil
     }
 
@@ -38,6 +39,7 @@ class APEUnitCollectionViewCell: UICollectionViewCell {
     }
 
     override func prepareForReuse() {
+        super.prepareForReuse()
         if unitView?.displayView.superview != nil {
             unitView?.hide()
         }

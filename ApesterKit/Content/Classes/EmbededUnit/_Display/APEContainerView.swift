@@ -40,15 +40,16 @@ public class APEContainerView : UIView
     // MARK: - Init
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        applyAutoresizingMask()
-        applyBaseConstraint()
+        commonInit()
     }
     public required init?(coder: NSCoder) {
         super.init(coder: coder)
+        commonInit()
+    }
+    internal func commonInit() {
         applyAutoresizingMask()
         applyBaseConstraint()
     }
-    
     internal func applyAutoresizingMask() {
         self.translatesAutoresizingMaskIntoConstraints = false
     }

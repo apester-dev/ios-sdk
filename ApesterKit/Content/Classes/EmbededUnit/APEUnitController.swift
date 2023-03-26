@@ -24,6 +24,15 @@ public class APEUnitController : APEController
     private var containerConstraintHeight: NSLayoutConstraint?
     private var containerConstraintWidth : NSLayoutConstraint?
     
+    private var   displayConstraints : [NSLayoutConstraint]
+    {
+        return [displayConstraintHeight, displayConstraintWidth].compactMap({ $0 })
+    }
+    private var containerConstraints : [NSLayoutConstraint]
+    {
+        return [containerConstraintHeight, containerConstraintWidth].compactMap({ $0 })
+    }
+    
     // MARK: - Data - internal
     internal var adBannerProviders: [APEAdProvider]
     
@@ -79,13 +88,6 @@ public class APEUnitController : APEController
         // update unitWebView frame according to containerView bounds
         containerView.layoutIfNeeded()
         
-        // print("||||======== display(in:containerViewController:)")
-        // print("||||======== containerView")
-        // containerView.constraints.forEach({ print("|||| \($0)") })
-        // print("||||======== displayView")
-        // displayView?.constraints.forEach({ print("|||| \($0)") })
-        // print("||||========")
-        
         if (displayView.superview.ape_isExist && displayView.superview != containerView) {
             hide()
         }
@@ -95,36 +97,27 @@ public class APEUnitController : APEController
             containerView.addSubview(displayView)
             
             // Apester Host
-            var containerConstraint = [NSLayoutConstraint]()
+            var containerConstraints = [NSLayoutConstraint]()
             
-            containerConstraint += containerView.ape_constraints(view: displayView, with: [
+            containerConstraints += containerView.ape_constraints(view: displayView, with: [
                 equal(\.topAnchor) , equal(\.leadingAnchor), equal(\.trailingAnchor)
             ], priority: .required)
             
-            let displayConstraints = [
+            let newConstraints = [
                 containerView.ape_constraint(view: displayView, with: equal(\.heightAnchor), priority: .defaultLow),
                 containerView.ape_constraint(view: displayView, with: equal(\.widthAnchor ), priority: .defaultLow)
             ]
-            containerConstraint += displayConstraints
+            containerConstraints += newConstraints
             
-            [displayConstraintHeight,displayConstraintWidth].compactMap({ $0 }).forEach({
-                displayView.removeConstraint($0)
-            })
-            displayView.displayConstraintHeight = displayConstraints.first
-            displayView.displayConstraintWidth  = displayConstraints.last
+            displayConstraints.forEach({ displayView.removeConstraint($0) })
+            displayView.displayConstraintHeight = newConstraints.first
+            displayView.displayConstraintWidth  = newConstraints.last
             
             displayConstraintHeight = displayView.displayConstraintHeight
             displayConstraintWidth  = displayView.displayConstraintWidth
             
-            NSLayoutConstraint.activate(containerConstraint)
+            NSLayoutConstraint.activate(containerConstraints)
         }
-        
-        // print("||||========")
-        // print("||||======== containerView")
-        // containerView.constraints.forEach({ print("|||| \($0)") })
-        // print("||||======== displayView")
-        // displayView?.constraints.forEach({ print("|||| \($0)") })
-        // print("||||======== display(in:containerViewController:)--end")
         
         // show AD Views
         showAdViews()
@@ -413,10 +406,9 @@ private extension APEUnitController
         guard !configuration.autoFullscreen.ape_isExist else { return }
         
         let containerHeight = height + companionAdHeight;
-        NSLayoutConstraint.deactivate([displayConstraintHeight, displayConstraintWidth].compactMap({ $0 }))
-        [displayConstraintHeight, displayConstraintWidth].compactMap({ $0 }).forEach({
-            displayView.removeConstraint($0)
-        })
+        NSLayoutConstraint.deactivate(displayConstraints)
+        displayConstraints.forEach({ displayView.removeConstraint($0) })
+        
         // 1 - update the displayView height constraint
         let dhConstraint = equalValue(\.heightAnchor, to: containerHeight)
         displayView.displayConstraintHeight = displayView.ape_constraintSelf(with: dhConstraint, priority: .defaultHigh)
@@ -426,14 +418,19 @@ private extension APEUnitController
         let dwConstraint = equalValue(\.widthAnchor , to: width)
         displayView.displayConstraintWidth = displayView.ape_constraintSelf(with: dwConstraint, priority: .defaultHigh)
         displayConstraintWidth = displayView.displayConstraintWidth
-        NSLayoutConstraint.activate([displayConstraintHeight, displayConstraintWidth].compactMap({ $0 }))
+        NSLayoutConstraint.activate(displayConstraints)
         
-        displayView.applyLayoutHeight(height, internalBottomAdHeight, externalBottomAdHeight, companionAdHeight)
+        displayView.applyLayoutHeight(
+            content: height,
+            internal: internalBottomAdHeight,
+            external: externalBottomAdHeight,
+            companion: companionAdHeight
+        )
         
         if let container = containerView {
             
-            NSLayoutConstraint.deactivate([containerConstraintHeight, containerConstraintWidth].compactMap({ $0 }))
-            [containerConstraintHeight, containerConstraintWidth].compactMap({ $0 }).forEach({
+            NSLayoutConstraint.deactivate(containerConstraints)
+            containerConstraints.compactMap({ $0 }).forEach({
                 displayView.removeConstraint($0)
             })
             // 3 - update the widget containerView height constraint
@@ -444,7 +441,7 @@ private extension APEUnitController
             let cwConstraint = equalValue(\.widthAnchor, to: width)
             containerConstraintWidth = container.ape_constraintSelf(with: cwConstraint, priority: .defaultHigh)
             
-            NSLayoutConstraint.activate([containerConstraintHeight, containerConstraintWidth].compactMap({ $0 }))
+            NSLayoutConstraint.activate(containerConstraints)
         }
         
         // print("||||========containerView")
@@ -490,7 +487,7 @@ internal extension APEUnitController
         
         switch (paramaters.adType, paramaters.isCompanionVariant) {
         case (.inUnit   , _    ) : return displayView.adUnit.adContentMain
-        case (.bottom   , false) : return displayView.adUnit.adContentBunner
+        case (.bottom   , false) : return displayView.adUnit.adContentBanner
         case (.bottom   , true ) : return displayView.adBottom
         case (.companion, _    ) : return displayView.adCompanion
         }
@@ -569,7 +566,12 @@ internal extension APEUnitController {
         displayConstraintHeight = displayView.displayConstraintHeight
         NSLayoutConstraint.activate([displayConstraintHeight].compactMap({ $0 }))
         
-        displayView.applyLayoutHeight(height, internalBottomAdHeight, externalBottomAdHeight, companionAdHeight)
+        displayView.applyLayoutHeight(
+            content: height,
+            internal: internalBottomAdHeight,
+            external: externalBottomAdHeight,
+            companion: companionAdHeight
+        )
         
         if let container = containerView
         {

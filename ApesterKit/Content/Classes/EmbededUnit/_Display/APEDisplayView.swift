@@ -88,10 +88,10 @@ public class APEDisplayView : APEContainerView
     // MARK: -
     @discardableResult
     internal func applyLayoutHeight(
-        _ heightInUnitContent: CGFloat,
-        _ heightInUnitBanner: CGFloat,
-        _ heightBottom: CGFloat,
-        _ heightCompanion: CGFloat
+        content heightInUnitContent: CGFloat,
+        internal heightInUnitBanner: CGFloat,
+        external heightBottom: CGFloat,
+        companion heightCompanion: CGFloat
     ) -> CGFloat {
         displayHeight = heightInUnitContent + heightBottom + heightCompanion
         adUnit.applyLayoutHeight(heightInUnitContent, heightInUnitBanner)
