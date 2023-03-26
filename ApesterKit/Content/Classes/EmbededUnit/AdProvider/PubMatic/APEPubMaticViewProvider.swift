@@ -23,13 +23,13 @@ extension APEUnitController {
         dispatchNativeAdEvent(named: eventName, for: adParamaters, ofType: APEAdProviderType.pubmatic, widget: inActiveDisplay)
     }
     
-    func setupPubMaticView(params: PubMaticParams) {
+    func setupPubMaticView(params: APEPubMaticAdParameters) {
         
         // /// Step 01. Check if UnitView container has a containerViewController,
         // /// A adViewProvider can be created / presented only if we have a valid container.
         // guard let containerVC = containerViewController else {
         //
-        //     let name = Constants.Monetization.playerMonLoadingImpressionFailed
+        //     let name = Constants.Analytics.playerMonLoadingImpressionFailed
         //     dispatchPubmaticEvent(named: name, for: params, widget: false)
         //     return
         // }
@@ -37,6 +37,8 @@ extension APEUnitController {
         /// Step 02. Locate a viewProvider instance if it exists in cache
         let provider: APEAdProvider? = adBannerProviders.first(where: {
             switch $0.monetization {
+            case .amazon:
+                return false
             case .adMob:
                 return false
             case .pubMatic(let p):
@@ -58,21 +60,21 @@ extension APEUnitController {
             onAdRequestedCompletion    : { [weak self] in
                 
                 guard let strongSelf = self else { return }
-                let name = Constants.Monetization.playerMonImpressionPending
+                let name = Constants.Analytics.playerMonImpressionPending
                 strongSelf.dispatchPubmaticEvent(named: name, for: params, widget: true)
                 APELoggerService.shared.info("pubMaticView::loadAd() - adType:\(params.type), unitID: \(params.identifier)")
             },
             receiveAdSuccessCompletion : { [weak self] in
                 
                 guard let strongSelf = self else { return }
-                let name = Constants.Monetization.playerMonImpression
+                let name = Constants.Analytics.playerMonImpression
                 strongSelf.dispatchPubmaticEvent(named: name, for: params, widget: true)
                 strongSelf.manualPostActionResize()
             },
             receiveAdErrorCompletion   : { [weak self] error in
                 
                 guard let strongSelf = self else { return }
-                let name = Constants.Monetization.playerMonLoadingImpressionFailed
+                let name = Constants.Analytics.playerMonLoadingImpressionFailed
                 strongSelf.dispatchPubmaticEvent(named: name, for: params, widget: true)
                 strongSelf.manualPostActionResize()
             })
@@ -86,7 +88,7 @@ extension APEUnitController {
         /// A adViewProvider can be presented only if we have a valid container.
         guard containerViewController.ape_isExist else {
             
-            let name = Constants.Monetization.playerMonLoadingImpressionFailed
+            let name = Constants.Analytics.playerMonLoadingImpressionFailed
             dispatchPubmaticEvent(named: name, for: params, widget: false)
             return
         }
@@ -106,13 +108,13 @@ extension APEUnitController {
         guard display(banner: viewProvider) else { return }
         
         /// Step 06. Send analytics event if GADView was shown
-        dispatchPubmaticEvent(named: Constants.Monetization.playerMonLoadingPass, for: params, widget: true)
+        dispatchPubmaticEvent(named: Constants.Analytics.playerMonLoadingPass, for: params, widget: true)
     }
 }
 extension APEAdProvider {
     
     static func pubMaticProvider(
-        params	                    : PubMaticParams,
+        params	                    : APEPubMaticAdParameters,
         delegate                    : APEAdProviderDelegate,
         adTitleLabelText	        : String,
         inUnitBackgroundColor       : UIColor,
