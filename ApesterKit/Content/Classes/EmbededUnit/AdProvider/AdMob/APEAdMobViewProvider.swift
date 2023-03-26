@@ -5,11 +5,12 @@
 //  Created by Hasan Sawaed Tabash on 06/10/2021.
 //  Copyright © 2021 Apester. All rights reserved.
 //
-
 import UIKit
 import Foundation
 import GoogleMobileAds
-
+///
+///
+///
 // MARK:- Google ADs
 extension APEUnitController {
     
@@ -21,12 +22,12 @@ extension APEUnitController {
         dispatchNativeAdEvent(named: eventName, for: adParamaters, ofType: APEAdProviderType.adMob, widget: inActiveDisplay)
     }
     
-    func setupAdMobView(params: AdMobParams) {
+    func setupAdMobView(params: APEAdMobAdParameters) {
         
         // /// Step 01. Check if UnitView container has a containerViewController, A adViewProvider can be created / presented only if we have a valid container.
         // guard let containerVC = containerViewController else {
         //
-        //     let name = Constants.Monetization.playerMonLoadingImpressionFailed
+        //     let name = Constants.Analytics.playerMonLoadingImpressionFailed
         //     dispatchAdMobEvent(named: name, for: params, widget: false)
         //     return
         // }
@@ -34,6 +35,8 @@ extension APEUnitController {
         /// Step 02. Locate a viewProvider instance if it exists in cache
         let provider: APEAdProvider? = adBannerProviders.first(where: {
             switch $0.monetization {
+            case .amazon:
+                return false
             case .pubMatic:
                 return false
             case .adMob(let p):
@@ -50,7 +53,7 @@ extension APEUnitController {
             onAdRequestedCompletion    : { [weak self] in
 
                 guard let strongSelf = self else { return }
-                let name = Constants.Monetization.playerMonImpressionPending
+                let name = Constants.Analytics.playerMonImpressionPending
                 strongSelf.dispatchAdMobEvent(named: name, for: params, widget: true)
                 
                 APELoggerService.shared.info("gADView::loadAd() - adType:\(params.type), unitID: \(params.identifier)")
@@ -58,14 +61,14 @@ extension APEUnitController {
             receiveAdSuccessCompletion : { [weak self] in
 
                 guard let strongSelf = self else { return }
-                let name = Constants.Monetization.playerMonImpression
+                let name = Constants.Analytics.playerMonImpression
                 strongSelf.dispatchAdMobEvent(named: name, for: params, widget: true)
                 strongSelf.manualPostActionResize()
             },
             receiveAdErrorCompletion   : { [weak self] error in
 
                 guard let strongSelf = self else { return }
-                let name = Constants.Monetization.playerMonLoadingImpressionFailed
+                let name = Constants.Analytics.playerMonLoadingImpressionFailed
                 strongSelf.dispatchAdMobEvent(named: name, for: params, widget: true)
                 strongSelf.manualPostActionResize()
             },
@@ -83,7 +86,7 @@ extension APEUnitController {
         /// Step 05. Check if UnitView container has a containerViewController, A adViewProvider can be presented only if we have a valid container.
         guard containerViewController.ape_isExist else {
             
-            let name = Constants.Monetization.playerMonLoadingImpressionFailed
+            let name = Constants.Analytics.playerMonLoadingImpressionFailed
             dispatchAdMobEvent(named: name, for: params, widget: false)
             return
         }
@@ -91,13 +94,13 @@ extension APEUnitController {
         guard display(banner: viewProvider) else { return }
 
         /// Step 07. Send analytics event if GADView was shown
-        dispatchAdMobEvent(named: Constants.Monetization.playerMonLoadingPass, for: params, widget: true)
+        dispatchAdMobEvent(named: Constants.Analytics.playerMonLoadingPass, for: params, widget: true)
     }
 }
 extension APEAdProvider {
     
     static func adMobProvider(
-        params                      : AdMobParams,
+        params                      : APEAdMobAdParameters,
         delegate                    : APEAdProviderDelegate,
         adTitleLabelText            : String,
         inUnitBackgroundColor       : UIColor,

@@ -5,11 +5,12 @@
 //  Created by Hasan Sawaed Tabash on 03/10/2021.
 //  Copyright © 2021 Apester. All rights reserved.
 //
-
 import UIKit
 import Foundation
 import GoogleMobileAds
-
+///
+///
+///
 extension GADBannerView : APENativeLibraryAdView
 {
     var nativeSize: CGSize { adSize.size }
