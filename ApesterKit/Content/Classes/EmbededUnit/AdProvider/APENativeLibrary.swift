@@ -4,9 +4,11 @@
 //
 //  Created by Arkadi Yoskovitz on 3/8/23.
 //
-
+import Foundation
 import UIKit
-
+///
+///
+///
 internal protocol APENativeLibraryAdView
 {
     var nativeSize : CGSize { get }

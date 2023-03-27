@@ -60,33 +60,35 @@ internal extension WKWebView {
 
     struct Options {
         typealias Delegate = WKNavigationDelegate & UIScrollViewDelegate & WKScriptMessageHandler & WKUIDelegate
-        let events: [String]
-        let contentBehavior: UIScrollView.ContentInsetAdjustmentBehavior
-        weak var delegate: Delegate?
+        let events          : [String]
+        let contentBehavior : UIScrollView.ContentInsetAdjustmentBehavior
+        weak var delegate   : Delegate?
     }
 
     private static let navigatorUserAgent = "navigator.userAgent"
 
     static func make(with options: Options, params: [String: String]?) -> WKWebView {
+        
         let delegate = options.delegate
+        
         let configuration = WKWebViewConfiguration()
         configuration.websiteDataStore = WKWebsiteDataStore.default()
         configuration.userContentController.register(to: options.events, delegate: delegate)
         if let rawParams = params {
-            configuration.userContentController.addScript(params: rawParams);
+            configuration.userContentController.addScript(params: rawParams)
         }
         configuration.allowsInlineMediaPlayback = true
         configuration.mediaTypesRequiringUserActionForPlayback = []
         
-        let webView = WKWebView(frame: CGRect.init(x: 0.0, y: 0.0, width: 1, height: 1), configuration: configuration)
-        webView.navigationDelegate = delegate
+        let webView = WKWebView(frame: CGRect(x: 0.0, y: 0.0, width: 1, height: 1), configuration: configuration)
         webView.insetsLayoutMarginsFromSafeArea = true
-        webView.scrollView.isScrollEnabled = false
-        webView.scrollView.bouncesZoom = false
-        webView.scrollView.delegate = delegate
-        webView.uiDelegate = delegate
         webView.scrollView.contentInsetAdjustmentBehavior = options.contentBehavior
-        webView.accessibilityIdentifier = "apesterWebContainer"
+        webView.scrollView.isScrollEnabled  = false
+        webView.scrollView.bouncesZoom      = false
+        webView.scrollView.delegate         = delegate
+        webView.navigationDelegate          = delegate
+        webView.uiDelegate                  = delegate
+        webView.accessibilityIdentifier     = "apesterWebContainer"
 //        if #available(iOS 15.5, *) {
 //            webView.setMinimumViewportInset(UIEdgeInsets.zero, maximumViewportInset: UIEdgeInsets.zero)
 //        }

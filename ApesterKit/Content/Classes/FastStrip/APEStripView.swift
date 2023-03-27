@@ -5,11 +5,12 @@
 //  Created by Hasan Sa on 24/02/2019.
 //  Copyright © 2019 Apester. All rights reserved.
 //
-
 import Foundation
 import WebKit
 import SafariServices
-
+///
+///
+///
 #if os(iOS)
 
 public typealias APEStripView = APEStripController
@@ -21,12 +22,14 @@ public typealias APEStripView = APEStripController
 /// And the selected Apester Unit (The `StoryWebView`)
 @objc(APEStripView)
 @objcMembers
-public class APEStripController: APEController {
+public class APEStripController : APEController
+{
+    private class StripStoryViewController : UIViewController
+    {
+        var webView : WKWebView!
 
-    private class StripStoryViewController: UIViewController {
-        var webView: WKWebView!
-
-        override func viewDidLoad() {
+        override func viewDidLoad()
+        {
             super.viewDidLoad()
             self.view.addSubview(self.webView)
             self.webView.translatesAutoresizingMaskIntoConstraints = false

@@ -5,17 +5,19 @@
 //  Created by Hasan Sawaed Tabash on 11/18/19.
 //  Copyright © 2019 Apester. All rights reserved.
 //
-
+import Foundation
 import WebKit
-
+///
+///
+///
 #if os(iOS)
 public typealias APEStripViewDelegate = APEStripControllerDelegate
 
 @available(iOS 11.0, *)
 /// A ChannelToken Loading state update
 @objc(APEStripViewDelegate)
-public protocol APEStripControllerDelegate: NSObjectProtocol {
-
+public protocol APEStripControllerDelegate : NSObjectProtocol
+{
     /// when the ChannelToken loaded successfuly
     ///
     /// - Parameters:

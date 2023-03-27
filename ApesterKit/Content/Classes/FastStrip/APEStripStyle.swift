@@ -5,9 +5,11 @@
 //  Created by Hasan Sawaed Tabash on 9/22/19.
 //  Copyright © 2019 Apester. All rights reserved.
 //
-
+import Foundation
 import UIKit
-
+///
+///
+///
 @objc(APEStripShape)
 public enum APEStripShape: Int {
     case round, square, roundSquare

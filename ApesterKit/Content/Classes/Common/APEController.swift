@@ -5,25 +5,28 @@
 //  Created by Hasan Sawaed Tabash on 3/19/20.
 //  Copyright © 2020 Apester. All rights reserved.
 //
-
 import Foundation
 import WebKit
 import SafariServices
-
+///
+///
+///
 #if os(iOS)
 @available(iOS 11.0, *)
-
+///
+///
+///
 public typealias APEView = APEController
-
 /// A Proxy Messaging Handler
 ///
 /// Between The Apester Units Carousel component (The `StripWebView`)
 /// And the selected Apester Unit                (The `StoryWebView`)
 @objc(APEView)
 @objcMembers
-public class APEController: NSObject {
-
-    struct LoadingState {
+public class APEController : NSObject
+{
+    struct LoadingState
+    {
         var isLoaded = false
         var isReady  = false
         var height: CGFloat = 10
@@ -57,7 +60,8 @@ public class APEController: NSObject {
     public var isDisplayed : Bool
 
 
-    init(_ environment: APEEnvironment) {
+    init(_ environment: APEEnvironment)
+    {
         self.lastDeviceOrientation = UIDevice.current.orientation
         self.messageDispatcher     = MessageDispatcher()
         self.loadingState          = LoadingState()
@@ -80,30 +84,35 @@ public class APEController: NSObject {
     /// - Parameters:
     ///   - containerView: the channel strip view superview
     ///   - containerViewController: the container view ViewController
-    public func display(in containerView: UIView, containerViewController: UIViewController) {
+    public func display(in containerView: UIView, containerViewController: UIViewController)
+    {
         self.containerView = containerView
         self.containerViewController = containerViewController
     }
     
     /// Remove the channel carousel units view
-    public func hide() {
+    public func hide()
+    {
         fatalError("OVERRIDE ME")
     }
     
     /// Refresh strip / unit content
-    public func refreshContent() {
+    public func refreshContent()
+    {
         fatalError("OVERRIDE ME")
     }
 
     /// Hide the story view
-    public func hideStory() {
+    public func hideStory()
+    {
         fatalError("OVERRIDE ME")
     }
 
     /// subscribe to events in order to observe the events messages data.
     /// for Example, subscribe to load and ready events by: `stripView.subscribe(["strip_loaded", "apester_strip_units"])`
     /// - Parameter events: the event names.
-    public func subscribe(events: [String]) {
+    public func subscribe(events: [String])
+    {
         DispatchQueue.main.async {
             self.subscribedEvents = self.subscribedEvents.union(events)
         }
@@ -111,13 +120,15 @@ public class APEController: NSObject {
 
     /// unsubscribe from events.
     /// - Parameter events: the event names.
-    public func unsubscribe(events: [String]) {
+    public func unsubscribe(events: [String])
+    {
         DispatchQueue.main.async {
             self.subscribedEvents = self.subscribedEvents.subtracting(events)
         }
     }
 
-    func open(_ url: URL) {
+    func open(_ url: URL)
+    {
         DispatchQueue.main.async {
             if UIApplication.shared.canOpenURL(url) {
                 UIApplication.shared.open(url, options: [:]) { _ in }
@@ -133,38 +144,45 @@ public class APEController: NSObject {
 
 // MARK: - Internal API's to override
 @available(iOS 11.0, *)
-extension APEController {
-
-    func orientationDidChangeNotification() {
+extension APEController
+{
+    func orientationDidChangeNotification()
+    {
         fatalError("OVERRIDE ME")
     }
 
-    func open(url: URL, type: APEViewNavigationType) {
+    func open(url: URL, type: APEViewNavigationType)
+    {
         fatalError("OVERRIDE ME")
     }
 
-    func didFailLoading(error: Error) {
+    func didFailLoading(error: Error)
+    {
         fatalError("OVERRIDE ME")
     }
 
-    func didFinishLoading() {
+    func didFinishLoading()
+    {
         fatalError("OVERRIDE ME")
     }
 
-    func handleUserContentController(message: WKScriptMessage) {
+    func handleUserContentController(message: WKScriptMessage)
+    {
         fatalError("OVERRIDE ME")
     }
 
-    func destroy() {
+    func destroy()
+    {
         fatalError("OVERRIDE ME")
     }
 }
 
 // MARK: - Handle WebView Presentation
 @available(iOS 11.0, * )
-private extension APEController {
-    
-    func decisionHandler(navigationAction: WKNavigationAction, webView: WKWebView, completion: (WKNavigationActionPolicy) -> Void) {
+private extension APEController
+{
+    func decisionHandler(navigationAction: WKNavigationAction, webView: WKWebView, completion: (WKNavigationActionPolicy) -> Void)
+    {
         
         var policy = WKNavigationActionPolicy.cancel
         // is valid URL
@@ -208,18 +226,20 @@ private extension APEController {
 
 // MARK: - UIAdaptivePresentationControllerDelegate
 @available(iOS 11.0, *)
-extension APEController : UIAdaptivePresentationControllerDelegate {
-    
-    public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+extension APEController : UIAdaptivePresentationControllerDelegate
+{
+    public func presentationControllerDidDismiss(_ presentationController: UIPresentationController)
+    {
         self.hideStory()
     }
 }
 
 // MARK: - WKScriptMessageHandler
 @available(iOS 11.0, *)
-extension APEController : WKScriptMessageHandler {
-    
-    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+extension APEController : WKScriptMessageHandler
+{
+    public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage)
+    {
         DispatchQueue.main.async {
             self.handleUserContentController(message: message)
         }
@@ -228,8 +248,8 @@ extension APEController : WKScriptMessageHandler {
 
 // MARK: - WKNavigationDelegate
 @available(iOS 11.0, *)
-extension APEController : WKNavigationDelegate {
-
+extension APEController : WKNavigationDelegate
+{
     public func webView(_ webView: WKWebView,
                         didReceive challenge: URLAuthenticationChallenge,
                         completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
@@ -284,8 +304,8 @@ extension APEController : WKNavigationDelegate {
 
 // MARK: - WKUIDelegate
 @available(iOS 11.0, *)
-extension APEController: WKUIDelegate {
-    
+extension APEController : WKUIDelegate
+{
     public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
         
         if let url = navigationAction.request.url {
@@ -297,17 +317,17 @@ extension APEController: WKUIDelegate {
 
 // MARK: - UIScrollViewDelegate
 @available(iOS 11.0, *)
-extension APEController : UIScrollViewDelegate {
-    
+extension APEController : UIScrollViewDelegate
+{
     public func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
         scrollView.pinchGestureRecognizer?.isEnabled = false
     }
 }
 
 // MARK: - deprecated methods
-public extension APEController {
+public extension APEController
+{
     @available(*, deprecated, renamed: "display(in:containerViewController:)")
     func display(in containerView: UIView, containerViewConroller: UIViewController) {}
 }
-
 #endif

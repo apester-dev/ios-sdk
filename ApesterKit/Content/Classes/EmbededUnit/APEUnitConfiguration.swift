@@ -9,33 +9,38 @@
 import UIKit
 import OpenWrapSDK // TODO: redundant SDK dependency
 
-public enum APEUnitParams {
-    case unit(mediaId: String) // Consider unit Environment
-    case playlist(tags: [String], channelToken: String, context: Bool, fallback: Bool)
+///
+///
+///
+public enum APEUnitParams
+{
+    case unit    (mediaId:  String) // Consider unit Environment
+    case playlist(tags   : [String], channelToken: String, context: Bool, fallback: Bool)
     
-    public var id: String {
-        switch self {
-        case .unit(let mediaId):
-            return mediaId
-        case .playlist( _, let channelToken, _, _):
-            return channelToken
+    public var id: String
+    {
+        switch self
+        {
+        case .unit    (let mediaId): return mediaId
+        case .playlist( _, let channelToken, _, _):return channelToken
         }
     }
 }
 
 @objc(APEUnitConfiguration)
-@objcMembers public class APEUnitConfiguration: APEConfiguration {
-    
-    private enum Keys: String {
-        case tags = "tags"
-        case baseUrl = "baseUrl"
-        case mediaId = "mediaId"
-        case context = "context"
-        case fallback = "fallback"
-        case gdprString = "gdprString"
-        case channelToken = "channelToken"
-        case noApesterAds = "noApesterAds"
-        case cachedVersion = "cachedVersion"
+@objcMembers public class APEUnitConfiguration : APEConfiguration
+{
+    private enum Keys : String
+    {
+        case tags           = "tags"
+        case baseUrl        = "baseUrl"
+        case mediaId        = "mediaId"
+        case context        = "context"
+        case fallback       = "fallback"
+        case gdprString     = "gdprString"
+        case channelToken   = "channelToken"
+        case noApesterAds   = "noApesterAds"
+        case cachedVersion  = "cachedVersion"
         case autoFullscreen = "autoFullscreen"
     }
     

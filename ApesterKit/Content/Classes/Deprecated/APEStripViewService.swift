@@ -5,10 +5,11 @@
 //  Created by Hasan Sawaed Tabash on 1/31/20.
 //  Copyright © 2020 Apester. All rights reserved.
 //
-
-import Foundation
 import UIKit
-
+import Foundation
+///
+///
+///
 @available(*, deprecated, renamed: "APEViewService", message: "Please use APEViewService instead")
 @objc(APEStripViewService)
 @objcMembers

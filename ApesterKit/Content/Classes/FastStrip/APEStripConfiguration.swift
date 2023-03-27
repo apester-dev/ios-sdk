@@ -5,13 +5,18 @@
 //  Created by Hasan Sa on 10/07/2019.
 //  Copyright © 2019 Apester. All rights reserved.
 //
-
+import Foundation
 import UIKit
-
-public enum APEStripConfigurationError: Error {
+///
+///
+///
+public enum APEStripConfigurationError : Error
+{
     case invalidChannelToken
 }
-
+///
+///
+///
 @objc(APEStripConfiguration)
 @objcMembers
 public class APEStripConfiguration: APEConfiguration {

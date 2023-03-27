@@ -5,11 +5,16 @@
 //  Created by Almog Haimovitch on 15/03/2020.
 //  Copyright © 2020 Apester. All rights reserved.
 //
-
+import Foundation
+import UIKit
 import WebKit
-
+///
+///
+///
 #if os(iOS)
-
+///
+///
+///
 public typealias APEUnitViewDelegate = APEUnitControllerDelegate
 
 /// A ChannelToken Loading state update

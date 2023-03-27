@@ -5,9 +5,11 @@
 //  Created by Hasan Sawaed Tabash on 16/05/2022.
 //  Copyright © 2022 Apester. All rights reserved.
 //
-
+import Foundation
 import UIKit
-
+///
+///
+///
 internal class APEAdView : UIView
 {
     // MARK: - data
