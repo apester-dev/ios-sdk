@@ -1,13 +1,14 @@
 //
-//  APEMonetizationParams.swift
+//  APEMonetization.swift
 //  ApesterKit
 //
 //  Created by Hasan Sawaed Tabash on 09/05/2022.
 //  Copyright © 2022 Apester. All rights reserved.
 //
-
 import Foundation
-
+///
+///
+///
 enum APEMonetization : Equatable
 {
     

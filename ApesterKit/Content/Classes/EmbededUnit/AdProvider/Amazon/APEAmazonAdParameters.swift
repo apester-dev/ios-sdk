@@ -36,6 +36,11 @@ internal struct APEAmazonAdParameters : Hashable , APEAdParameters
     internal let amazon_slotID  : String
     internal let dfp_au_banner  : String
     
+    internal init?(_ dictionary: [String: Any])
+    {
+        self.init(from: dictionary)
+    }
+    
     internal init?(from dictionary1: [String: Any])
     {
         var dictionary = dictionary1

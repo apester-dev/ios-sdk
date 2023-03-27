@@ -4,17 +4,11 @@
 //
 //  Created by Arkadi Yoskovitz on 3/7/23.
 //
-
-import UIKit
 import Foundation
-
-internal enum APEAdProviderType : String , CustomStringConvertible {
-    case adMob    = "adMob"
-    case pubmatic = "pubmatic"
-    case amazon   = "amazon"
-    case aniview  = "aniview_native"
-    var description : String { rawValue }
-}
+import UIKit
+///
+///
+///
 internal protocol APEAdProviderDelegate : AnyObject
 {
     var adPresentingViewController: UIViewController? { get }

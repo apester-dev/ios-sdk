@@ -4,9 +4,10 @@
 //
 //  Created by Arkadi Yoskovitz on 3/8/23.
 //
-
 import Foundation
-
+///
+///
+///
 internal protocol APEAdParameters
 {
     var identifier : String    { get }

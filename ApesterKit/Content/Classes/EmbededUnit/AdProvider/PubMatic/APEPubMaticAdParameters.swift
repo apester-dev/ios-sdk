@@ -24,6 +24,11 @@ internal struct APEPubMaticAdParameters : Hashable , APEAdParameters
     internal let bidSummaryLogs : Bool
     internal let timeInView     : Int?
      
+    internal init?(_ dictionary: [String: Any])
+    {
+        self.init(from: dictionary)
+    }
+    
     internal init?(from dictionary: [String: Any])
     {
         typealias Keys = Constants.Monetization
