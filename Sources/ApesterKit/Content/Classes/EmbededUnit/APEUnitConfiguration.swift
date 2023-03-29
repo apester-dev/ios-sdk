@@ -5,10 +5,7 @@
 //  Created by Almog Haimovitch on 10/03/2020.
 //  Copyright © 2020 Apester. All rights reserved.
 //
-
 import UIKit
-import OpenWrapSDK // TODO: redundant SDK dependency
-
 ///
 ///
 ///
@@ -46,14 +43,7 @@ public enum APEUnitParams
     
     public private(set) var unitParams: APEUnitParams
     
-    public var gdprString: String? {
-        didSet {
-            guard let gdprString = gdprString else { return }
-            // TODO: Test the SDK with & without GDPR consent
-            OpenWrapSDK.setGDPREnabled(true)
-            OpenWrapSDK.setGDPRConsent(gdprString)
-        }
-    }
+    public var gdprString: String?
     
     private(set) var id: String = ""
     private(set) var baseUrl: String?
@@ -100,8 +90,9 @@ public enum APEUnitParams
         self.gdprString = gdprString
         self.baseUrl = baseUrl
         super.init(bundle: bundle, environment: environment)
-        OpenWrapSDK.setGDPREnabled(false)
-        OpenWrapSDK.setGDPRConsent("")
+        // TODO: - FIX THIS
+        // OpenWrapSDK.setGDPREnabled(false)
+        // OpenWrapSDK.setGDPRConsent("")
     }
     
     public convenience init(unitParams: APEUnitParams, bundle: Bundle) {

@@ -1,28 +1,35 @@
 //
-//  APEPubMaticDelegate.swift
+//  APEAmazonDelegate.swift
 //  ApesterKit
 //
 //  Created by Hasan Sawaed Tabash on 03/10/2021.
 //  Copyright © 2021 Apester. All rights reserved.
 //
-
 import UIKit
 import Foundation
+///
+///
+///
 import OpenWrapSDK
-
-extension POBBannerView : APENativeLibraryAdView
-{
-    var nativeSize: CGSize { creativeSize().cgSize() }
-    func forceRefreshAd() { forceRefresh() }
-}
-
-class APEPubMaticDelegate : APENativeLibraryDelegate
+////import OpenWrapHandlerDFP
+////import DTBiOSSDK
+/////
+/////
+/////
+//extension POBBannerView : APENativeLibraryAdView
+//{
+//    var nativeSize: CGSize { creativeSize().cgSize() }
+//    func forceRefreshAd() { forceRefresh() }
+//}
+///
+///
+///
+class APEAmazonDelegate : APENativeLibraryDelegate
 {
     
 }
-
 // MARK: - POBBannerViewDelegate
-extension APEPubMaticDelegate : POBBannerViewDelegate
+extension APEAmazonDelegate : POBBannerViewDelegate
 {
     /// Asks the delegate for a view controller instance to use for presenting modal views as a result of user interaction on an ad. Usual implementation may simply return self, if it is a view controller class.
     func bannerViewPresentationController() -> UIViewController {

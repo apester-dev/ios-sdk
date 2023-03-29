@@ -10,14 +10,14 @@ import Foundation
 ///
 enum APEAdType : String , CustomStringConvertible
 {
-    case bottom    = "bottom"
     case inUnit    = "inUnit"
+    case bottom    = "bottom"
     case companion = "companion"
     
     var supportedSizes: [APEAdSize] {
         switch self {
-        case .bottom: return [.adSize320x50]
         case .inUnit: return [.adSize300x250]
+        case .bottom: return [.adSize320x50]
         case .companion: return [.adSize300x250, .adSize320x50]
         }
     }

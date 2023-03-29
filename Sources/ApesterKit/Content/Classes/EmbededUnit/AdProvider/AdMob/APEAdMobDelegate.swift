@@ -7,6 +7,9 @@
 //
 import UIKit
 import Foundation
+///
+///
+///
 import GoogleMobileAds
 ///
 ///
@@ -16,7 +19,9 @@ extension GADBannerView : APENativeLibraryAdView
     var nativeSize: CGSize { adSize.size }
     func forceRefreshAd() { /* NO OPERATION HERE */ }
 }
-
+///
+///
+///
 class APEAdMobDelegate : APENativeLibraryDelegate
 {
     

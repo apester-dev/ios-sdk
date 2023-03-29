@@ -5,32 +5,36 @@
 //  Created by Hasan Sawaed Tabash on 03/10/2021.
 //  Copyright © 2021 Apester. All rights reserved.
 //
-import UIKit
 import Foundation
+import UIKit
+///
+///
+///
 import OpenWrapSDK
-//import OpenWrapHandlerDFP
-//import DTBiOSSDK
-//
-//extension POBBannerView : APENativeLibraryAdView
-//{
-//    var nativeSize: CGSize { creativeSize().cgSize() }
-//    func forceRefreshAd() { forceRefresh() }
-//}
-//
-class APEAmazonDelegate : APENativeLibraryDelegate
+///
+///
+///
+extension POBBannerView : APENativeLibraryAdView
 {
-
+    var nativeSize: CGSize { creativeSize().cgSize() }
+    func forceRefreshAd() { forceRefresh() }
 }
-
+///
+///
+///
+class APEPubMaticDelegate : APENativeLibraryDelegate
+{
+    
+}
 // MARK: - POBBannerViewDelegate
-extension APEAmazonDelegate : POBBannerViewDelegate
+extension APEPubMaticDelegate : POBBannerViewDelegate
 {
     /// Asks the delegate for a view controller instance to use for presenting modal views as a result of user interaction on an ad. Usual implementation may simply return self, if it is a view controller class.
     func bannerViewPresentationController() -> UIViewController {
         APELoggerService.shared.info()
         return self.containerViewController ?? UIApplication.shared.ape_keyWindow!.rootViewController!
     }
-
+    
     /// Notifies the delegate that an ad has been successfully loaded and rendered.
     ///
     /// - Parameter bannerView: The POBBannerView instance sending the message.
@@ -39,7 +43,7 @@ extension APEAmazonDelegate : POBBannerViewDelegate
         APELoggerService.shared.info()
         receiveAdSuccess()
     }
-
+    
     /// Notifies the delegate of an error encountered while loading or rendering an ad.
     ///
     /// - Parameters:
@@ -49,14 +53,14 @@ extension APEAmazonDelegate : POBBannerViewDelegate
         APELoggerService.shared.info("error: \(error.localizedDescription)")
         receiveAdError(error)
     }
-
+    
     /// Notifies the delegate whenever current app goes in the background due to user click.
     ///
     /// - Parameter bannerView: The POBBannerView instance sending the message.
     func bannerViewWillLeaveApplication(_ bannerView: POBBannerView) {
         APELoggerService.shared.info()
     }
-
+    
     /// Notifies delegate that the banner view will launch a modal on top of
     /// the current view controller, as a result of user interaction.
     ///
@@ -64,7 +68,7 @@ extension APEAmazonDelegate : POBBannerViewDelegate
     func bannerViewWillPresentModal(_ bannerView: POBBannerView) {
         APELoggerService.shared.info()
     }
-
+    
     /// Notifies delegate that the banner view has dismissed the modal on top of
     /// the current view controller.
     ///
@@ -72,7 +76,7 @@ extension APEAmazonDelegate : POBBannerViewDelegate
     func bannerViewDidDismissModal(_ bannerView: POBBannerView) {
         APELoggerService.shared.info()
     }
-
+    
     /// Notifies the delegate that the banner view was clicked.
     ///
     /// - Parameter bannerView: The POBBannerView instance sending the message.

@@ -39,49 +39,54 @@ Pod::Spec.new do |s|
     
     s.default_subspecs      = 'Content'
     s.scheme                = { :code_coverage => true }
-    s.subspec   'Content_Core' do |content|
+    
+    s.subspec   'Content_Core'    do |content|
+        # content.pod_target_xcconfig = {
+        #   'OTHER_LDFLAGS' => '$(inherited) -ObjC -all_load'
+        # }
         content.source_files =
-        'ApesterKit/Content/Classes/Common/*.{h,m,swift}',
-        'ApesterKit/Content/Classes/Services/*.{h,m,swift}',
-        'ApesterKit/Content/Classes/Logger/**/*.{h,m,swift}',
-        'ApesterKit/Content/Classes/Helpers/*.{h,m,swift}',
-        'ApesterKit/Content/Classes/FastStrip/*.{h,m,swift}',
-        'ApesterKit/Content/Classes/EmbededUnit/*.{h,m,swift}',
-        'ApesterKit/Content/Classes/EmbededUnit/_Display/*.{h,m,swift}',
-        'ApesterKit/Content/Classes/EmbededUnit/AdProvider/*.{h,m,swift}',
-        'ApesterKit/Content/Classes/EmbededUnit/AdProvider/_AdProviderData/*.{h,m,swift}',
-        'ApesterKit/Content/Classes/Deprecated/*.{h,m,swift}'
+        'Sources/ApesterKit/Content/Classes/Common/*.{h,m,swift}',
+        'Sources/ApesterKit/Content/Classes/Services/*.{h,m,swift}',
+        'Sources/ApesterKit/Content/Classes/Logger/**/*.{h,m,swift}',
+        'Sources/ApesterKit/Content/Classes/Helpers/*.{h,m,swift}',
+        'Sources/ApesterKit/Content/Classes/FastStrip/*.{h,m,swift}',
+        'Sources/ApesterKit/Content/Classes/EmbededUnit/*.{h,m,swift}',
+        'Sources/ApesterKit/Content/Classes/EmbededUnit/_Display/*.{h,m,swift}',
+        'Sources/ApesterKit/Content/Classes/EmbededUnit/AdProvider/*.{h,m,swift}',
+        'Sources/ApesterKit/Content/Classes/EmbededUnit/AdProvider/Data/*.{h,m,swift}',
+        'Sources/ApesterKit/Content/Classes/EmbededUnit/AdProvider/Loader/*.{h,m,swift}',
+        'Sources/ApesterKit/Content/Classes/Deprecated/*.{h,m,swift}'
+        content.dependency 'ApesterObjcBridging'
     end
-    s.subspec   'ContentAdmob' do |content|
-        content.source_files = 'ApesterKit/Content/Classes/EmbededUnit/AdProvider/AdMob/*.{h,m,swift}'
+    s.subspec   'ContentAdmob'    do |content|
+        content.source_files = 'Sources/ApesterKit/Content/Classes/EmbededUnit/AdProvider/AdMob/*.{h,m,swift}'
         content.dependency 'ApesterKit/Content_Core'
         content.dependency 'Google-Mobile-Ads-SDK', '~> 10.0'
     end
     s.subspec   'ContentPubmatic' do |content|
-        content.source_files = 'ApesterKit/Content/Classes/EmbededUnit/AdProvider/PubMatic/*.{h,m,swift}'
+        content.source_files = 'Sources/ApesterKit/Content/Classes/EmbededUnit/AdProvider/PubMatic/*.{h,m,swift}'
         content.dependency 'ApesterKit/Content_Core'
         content.dependency 'OpenWrapSDK' , '~> 2.7.0'
     end
-    s.subspec   'ContentAmazon' do |content|
-        content.source_files = 'ApesterKit/Content/Classes/EmbededUnit/AdProvider/Amazon/*.{h,m,swift}'
+    s.subspec   'ContentAmazon'   do |content|
+        content.source_files = 'Sources/ApesterKit/Content/Classes/EmbededUnit/AdProvider/Amazon/*.{h,m,swift}'
         content.dependency 'ApesterKit/Content_Core'
         content.dependency 'OpenWrapHandlerDFP'        , '~> 3.1.0'
         content.dependency 'AmazonPublisherServicesSDK', '~> 4.4.0'
     end
-    s.subspec   'Content' do |content|
+    s.subspec   'Content'         do |content|
         content.dependency 'ApesterKit/Content_Core'
         content.dependency 'ApesterKit/ContentAdmob'
         content.dependency 'ApesterKit/ContentPubmatic'
-        content.dependency 'ApesterKit/ContentAmazon'
     end
-    
-    s.app_spec  'zHostApp'   do |app_spec|
+
+    s.app_spec  'zHostApp'        do |app_spec|
         app_spec.scheme              = {
             :code_coverage           => true ,
             :launch_arguments        => [ ]
         }
-        app_spec.source_files        = 'ApesterKit/App/Classes/**/*.{h,m,swift}'
-        app_spec.resources           = 'ApesterKit/App/Assets/**/*.{xib,storyboard,*.xcassets}'
+        app_spec.source_files        = 'Sources/ApesterKit/App/Classes/**/*.{h,m,swift}'
+        app_spec.resources           = 'Sources/ApesterKit/App/Assets/**/*.{xib,storyboard,*.xcassets}'
         app_spec.preserve_paths      = [
             'App/**/*.{h,m,swift}',
             'App/**/*.{xib,storyboard}'
@@ -152,44 +157,45 @@ Pod::Spec.new do |s|
           ]
         }
         app_spec.pod_target_xcconfig = {
-          'SWIFT_OBJC_BRIDGING_HEADER' => '$(PODS_TARGET_SRCROOT)/ApesterKit/App/Classes/ApesterKit-HostApp-Bridging-Header.h'
+          'SWIFT_OBJC_BRIDGING_HEADER' => '$(PODS_TARGET_SRCROOT)/Sources/ApesterKit/App/Classes/ApesterKit-HostApp-Bridging-Header.h'
         }
+        
         # Internal dependencies
         app_spec.dependency 'ApesterKit/Content'
-    
+
         # External dependencies
         app_spec.dependency 'XCGLogger'      , '~> 7.0.1'
         app_spec.dependency 'EzImageLoader'
     end
-    s.test_spec 'zUnitTests' do |unit_tests|
+    s.test_spec 'zUnitTests'      do |unit_tests|
         unit_tests.test_type         = :unit
         unit_tests.platforms         = { :ios => ios_deployment_target }
         unit_tests.scheme            = {
             :code_coverage           => true ,
             :launch_arguments        => [ ]
         }
-        unit_tests.source_files      = [ 'ApesterKit/UnitTests/Classes/*.{h,m,swift}' ]
-        unit_tests.preserve_paths    = [ 'ApesterKit/UnitTests/Classes/*.{h,m,swift}' ]
-    
+        unit_tests.source_files      = [ 'Sources/ApesterKit/UnitTests/Classes/*.{h,m,swift}' ]
+        unit_tests.preserve_paths    = [ 'Sources/ApesterKit/UnitTests/Classes/*.{h,m,swift}' ]
+
         unit_tests.requires_app_host = true
         unit_tests.app_host_name     = 'ApesterKit/zHostApp'
         unit_tests.dependency          'ApesterKit/zHostApp'
-    
+
         # Dependencies
         unit_tests.dependency 'Google-Mobile-Ads-SDK', '~> 10.0'
         unit_tests.dependency 'OpenWrapSDK'          , '~>  2.7.0'
     end
-    s.test_spec 'zUITests'   do |ui_tests|
-    
+    s.test_spec 'zUITests'        do |ui_tests|
+
         ui_tests.test_type         = :ui
         ui_tests.platforms         = { :ios => ios_deployment_target }
         ui_tests.scheme            = {
             :code_coverage           => true ,
             :launch_arguments        => [ ]
         }
-        ui_tests.source_files      = [ 'ApesterKit/UITests/Classes/*.{h,m,swift}' ]
-        ui_tests.preserve_paths    = [ 'ApesterKit/UITests/Classes/*.{h,m,swift}' ]
-    
+        ui_tests.source_files      = [ 'Sources/ApesterKit/UITests/Classes/*.{h,m,swift}' ]
+        ui_tests.preserve_paths    = [ 'Sources/ApesterKit/UITests/Classes/*.{h,m,swift}' ]
+
         ui_tests.requires_app_host = true
         ui_tests.app_host_name     = 'ApesterKit/zHostApp'
         ui_tests.dependency          'ApesterKit/zHostApp'

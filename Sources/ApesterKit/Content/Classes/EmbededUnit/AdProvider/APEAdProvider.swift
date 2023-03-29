@@ -12,6 +12,7 @@ import UIKit
 internal protocol APEAdProviderDelegate : AnyObject
 {
     var adPresentingViewController: UIViewController? { get }
+    func sendNativeGDPREvent(with gdprString: String)
 }
 internal class APEAdProvider : Equatable
 {

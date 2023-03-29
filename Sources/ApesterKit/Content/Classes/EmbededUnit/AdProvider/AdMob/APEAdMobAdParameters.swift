@@ -15,11 +15,6 @@ internal struct APEAdMobAdParameters : Hashable , APEAdParameters
     internal let isVariant      : Bool
     internal let type           : APEAdType
     
-    internal init?(_ dictionary: [String: Any])
-    {
-        self.init(from: dictionary)
-    }
-    
     internal init?(from dictionary: [String: Any])
     {
         typealias Keys = Constants.Monetization
@@ -32,7 +27,7 @@ internal struct APEAdMobAdParameters : Hashable , APEAdParameters
         guard let adType    = APEAdType(rawValue: typeStr) else { return nil }
         
         self.identifier = adUnitId
-        self.isVariant = isVariant
-        self.type = adType
+        self.isVariant  = isVariant
+        self.type       = adType
     }
 }

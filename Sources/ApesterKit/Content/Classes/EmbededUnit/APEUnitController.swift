@@ -301,27 +301,13 @@ extension APEUnitController
             if dictionary["type"] as? String == Constants.Monetization.initInUnit
             {
                 print("||>>>> Payload: \(String(describing: dictionary))")
-                if let params = AdMobParams   (from: dictionary)
-                {
-                    setupAdMobView(params: params)
-                }
-                if let params = PubMaticParams(from: dictionary)
-                {
-                    setupPubMaticView(params: params)
-                }
+                APEAdProviderLoader.setupAdProvider(for: self, basedOn: dictionary)
             }
             
             if dictionary["type"] as? String == Constants.Monetization.initNativeAd
             {
                 print("||>>>> Payload: \(String(describing: dictionary))")
-                if let params = AdMobParams   (from: dictionary)
-                {
-                    setupAdMobView(params: params)
-                }
-                if let params = PubMaticParams(from: dictionary)
-                {
-                    setupPubMaticView(params: params)
-                }
+                APEAdProviderLoader.setupAdProvider(for: self, basedOn: dictionary)
             }
             
             if dictionary["type"] as? String == Constants.Monetization.killInUnit
@@ -602,7 +588,12 @@ internal extension APEUnitController {
     }
 }
 extension APEUnitController : APEAdProviderDelegate {
+    
     weak var adPresentingViewController: UIViewController? {
         get { containerViewController }
+    }
+    
+    func sendNativeGDPREvent(with gdprString: String) {
+        messageDispatcher.sendNativeGDPREvent(to: unitWebView, consent: gdprString)
     }
 }

@@ -11,7 +11,6 @@ import Foundation
 ///
 enum APEMonetization : Equatable
 {
-    
     case adMob   (params: APEAdParameters)
     case pubMatic(params: APEAdParameters)
     case amazon  (params: APEAdParameters)
