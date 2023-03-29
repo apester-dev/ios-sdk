@@ -78,6 +78,7 @@ Pod::Spec.new do |s|
         content.dependency 'ApesterKit/Content_Core'
         content.dependency 'ApesterKit/ContentAdmob'
         content.dependency 'ApesterKit/ContentPubmatic'
+        content.dependency 'ApesterKit/ContentAmazon'
     end
 
     s.app_spec  'zHostApp'        do |app_spec|

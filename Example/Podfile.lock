@@ -1,15 +1,21 @@
 PODS:
+  - AmazonPublisherServicesSDK (4.4.3)
   - ApesterKit (3.3.14):
     - ApesterKit/Content (= 3.3.14)
   - ApesterKit/Content (3.3.14):
     - ApesterKit/Content_Core
     - ApesterKit/ContentAdmob
+    - ApesterKit/ContentAmazon
     - ApesterKit/ContentPubmatic
   - ApesterKit/Content_Core (3.3.14):
     - ApesterObjcBridging
   - ApesterKit/ContentAdmob (3.3.14):
     - ApesterKit/Content_Core
     - Google-Mobile-Ads-SDK (~> 10.0)
+  - ApesterKit/ContentAmazon (3.3.14):
+    - AmazonPublisherServicesSDK (~> 4.4.0)
+    - ApesterKit/Content_Core
+    - OpenWrapHandlerDFP (~> 3.1.0)
   - ApesterKit/ContentPubmatic (3.3.14):
     - ApesterKit/Content_Core
     - OpenWrapSDK (~> 2.7.0)
@@ -78,6 +84,9 @@ PODS:
   - ObjcExceptionBridging (1.0.1):
     - ObjcExceptionBridging/ObjcExceptionBridging (= 1.0.1)
   - ObjcExceptionBridging/ObjcExceptionBridging (1.0.1)
+  - OpenWrapHandlerDFP (3.1.0):
+    - Google-Mobile-Ads-SDK (>= 8.12.0)
+    - OpenWrapSDK
   - OpenWrapSDK (2.7.0):
     - OpenWrapSDK/OpenWrap (= 2.7.0)
   - OpenWrapSDK/OpenWrap (2.7.0)
@@ -96,6 +105,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - AmazonPublisherServicesSDK
     - EzHTTP
     - EzImageLoader
     - Google-Mobile-Ads-SDK
@@ -104,6 +114,7 @@ SPEC REPOS:
     - GoogleUtilities
     - nanopb
     - ObjcExceptionBridging
+    - OpenWrapHandlerDFP
     - OpenWrapSDK
     - PromisesObjC
     - XCGLogger
@@ -115,7 +126,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ApesterKit: 20b11d97cca650f9223b3a12ad6666aaea9a582e
+  AmazonPublisherServicesSDK: cd88ef55d5afaa6483bcb04b977e1585a95f9211
+  ApesterKit: 3d3e0fe600efa34d4a9bd41c4ed80388983ad09b
   ApesterObjcBridging: f3227971a1a25c04fc3200662b3ca417b40a50e2
   EzHTTP: d8f7e50a69bbcd6ae4f9853692d6bc5cf92e598b
   EzImageLoader: a930cbd57aaca0dbc3515ad3ff4639843d8658d9
@@ -125,6 +137,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: c2bdc4cf2ce786c4d2e6b3bcfd599a25ca78f06f
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
+  OpenWrapHandlerDFP: b184b1d7686f615e0a19c51c99f4d4526c6a9a93
   OpenWrapSDK: 2c7784a19a258ca841ff25c1a04c7c6ecbd7ba1c
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   XCGLogger: 1943831ef907df55108b0b18657953f868de973b
