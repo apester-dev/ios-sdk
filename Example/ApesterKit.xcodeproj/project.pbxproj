@@ -21,13 +21,12 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		F4CE8995AD1CC1908FBE5116 /* Pods_ApesterKit_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54126D9FCC312B3D88048B4D /* Pods_ApesterKit_Example.framework */; };
+		B4A4145E852D079728DBB148 /* Pods_ApesterKit_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EBCECD5AFAF31E1A592ADB0 /* Pods_ApesterKit_Example.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		32388D7401E88B99FBEF34A8 /* Pods-ApesterKit_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ApesterKit_Example.release.xcconfig"; path = "Target Support Files/Pods-ApesterKit_Example/Pods-ApesterKit_Example.release.xcconfig"; sourceTree = "<group>"; };
-		3C5397857DB657FFD1898FC8 /* Pods-ApesterKit_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ApesterKit_Tests.release.xcconfig"; path = "Target Support Files/Pods-ApesterKit_Tests/Pods-ApesterKit_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		54126D9FCC312B3D88048B4D /* Pods_ApesterKit_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ApesterKit_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FF4327B3499C362CECF5D65 /* Pods-ApesterKit_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ApesterKit_Example.release.xcconfig"; path = "Target Support Files/Pods-ApesterKit_Example/Pods-ApesterKit_Example.release.xcconfig"; sourceTree = "<group>"; };
+		29F0EBBD4C5AA8D4E0AF1A69 /* Pods-ApesterKit_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ApesterKit_Example.debug.xcconfig"; path = "Target Support Files/Pods-ApesterKit_Example/Pods-ApesterKit_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		5D4C7A93299E38EE00C1FC01 /* DemoThreadMutex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoThreadMutex.swift; sourceTree = "<group>"; };
 		5D4C7A94299E38EE00C1FC01 /* DemoLogWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoLogWriter.swift; sourceTree = "<group>"; };
 		5D4C7A9B299E394500C1FC01 /* ApesterKit_Example-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ApesterKit_Example-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -41,6 +40,8 @@
 		5D4C7AA6299E395A00C1FC01 /* APESingleUnitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APESingleUnitViewController.h; sourceTree = "<group>"; };
 		5D4C7AA7299E395A00C1FC01 /* UnitConfigurationFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitConfigurationFactory.swift; sourceTree = "<group>"; };
 		5D4C7AAC299E396200C1FC01 /* APECollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APECollectionViewCell.swift; sourceTree = "<group>"; };
+		5DBE88D529D32BAD009B2369 /* ApesterObjcBridging.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; name = ApesterObjcBridging.podspec; path = ../ApesterObjcBridging.podspec; sourceTree = "<group>"; };
+		5EBCECD5AFAF31E1A592ADB0 /* Pods_ApesterKit_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ApesterKit_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD01AFB9204008FA782 /* ApesterKit_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApesterKit_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -49,9 +50,6 @@
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		60C7ECC25F81007A08831296 /* ApesterKit.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = ApesterKit.podspec; path = ../ApesterKit.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		8CE5FD2F402F203FBA490B3C /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		9532F5B012F19698457B3604 /* Pods-ApesterKit_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ApesterKit_Tests.debug.xcconfig"; path = "Target Support Files/Pods-ApesterKit_Tests/Pods-ApesterKit_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		BFA1CB87F82ABFE9D18059A8 /* Pods_ApesterKit_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ApesterKit_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EE997734D01E0FE5ECD22D1A /* Pods-ApesterKit_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ApesterKit_Example.debug.xcconfig"; path = "Target Support Files/Pods-ApesterKit_Example/Pods-ApesterKit_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		F629917179A80DF506AA2AB2 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -60,18 +58,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4CE8995AD1CC1908FBE5116 /* Pods_ApesterKit_Example.framework in Frameworks */,
+				B4A4145E852D079728DBB148 /* Pods_ApesterKit_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		42378E350F8485E5152788D8 /* Frameworks */ = {
+		4CE61618C11CB0289D9F2C18 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				54126D9FCC312B3D88048B4D /* Pods_ApesterKit_Example.framework */,
-				BFA1CB87F82ABFE9D18059A8 /* Pods_ApesterKit_Tests.framework */,
+				5EBCECD5AFAF31E1A592ADB0 /* Pods_ApesterKit_Example.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -123,7 +120,7 @@
 				607FACD21AFB9204008FA782 /* Example for ApesterKit */,
 				607FACD11AFB9204008FA782 /* Products */,
 				8AB1F7CFFCF59128A4CE8D13 /* Pods */,
-				42378E350F8485E5152788D8 /* Frameworks */,
+				4CE61618C11CB0289D9F2C18 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -165,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				60C7ECC25F81007A08831296 /* ApesterKit.podspec */,
+				5DBE88D529D32BAD009B2369 /* ApesterObjcBridging.podspec */,
 				8CE5FD2F402F203FBA490B3C /* README.md */,
 				F629917179A80DF506AA2AB2 /* LICENSE */,
 			);
@@ -174,10 +172,8 @@
 		8AB1F7CFFCF59128A4CE8D13 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				EE997734D01E0FE5ECD22D1A /* Pods-ApesterKit_Example.debug.xcconfig */,
-				32388D7401E88B99FBEF34A8 /* Pods-ApesterKit_Example.release.xcconfig */,
-				9532F5B012F19698457B3604 /* Pods-ApesterKit_Tests.debug.xcconfig */,
-				3C5397857DB657FFD1898FC8 /* Pods-ApesterKit_Tests.release.xcconfig */,
+				29F0EBBD4C5AA8D4E0AF1A69 /* Pods-ApesterKit_Example.debug.xcconfig */,
+				1FF4327B3499C362CECF5D65 /* Pods-ApesterKit_Example.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -189,12 +185,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "ApesterKit_Example" */;
 			buildPhases = (
-				B0EFEC6310BFE3EFE0B156C1 /* [CP] Check Pods Manifest.lock */,
+				5D1CDD71DE93CE3CA2D1ACB1 /* [CP] Check Pods Manifest.lock */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
-				51AF2550B66A1A078EDEC046 /* [CP] Embed Pods Frameworks */,
-				35E5B75A39B9A733B4E07844 /* [CP] Copy Pods Resources */,
+				5F4F3B486D1CD4F5116080CC /* [CP] Embed Pods Frameworks */,
+				E591AEFA090586BB6F410905 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -254,25 +250,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		35E5B75A39B9A733B4E07844 /* [CP] Copy Pods Resources */ = {
+		5D1CDD71DE93CE3CA2D1ACB1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ApesterKit_Example/Pods-ApesterKit_Example-resources.sh",
-				"${PODS_ROOT}/OpenWrapSDK/OpenWrapSDK/POBResources.bundle",
+			inputFileListPaths = (
 			);
-			name = "[CP] Copy Pods Resources";
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/POBResources.bundle",
+				"$(DERIVED_FILE_DIR)/Pods-ApesterKit_Example-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ApesterKit_Example/Pods-ApesterKit_Example-resources.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		51AF2550B66A1A078EDEC046 /* [CP] Embed Pods Frameworks */ = {
+		5F4F3B486D1CD4F5116080CC /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -298,26 +298,22 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ApesterKit_Example/Pods-ApesterKit_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B0EFEC6310BFE3EFE0B156C1 /* [CP] Check Pods Manifest.lock */ = {
+		E591AEFA090586BB6F410905 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
+				"${PODS_ROOT}/Target Support Files/Pods-ApesterKit_Example/Pods-ApesterKit_Example-resources.sh",
+				"${PODS_ROOT}/OpenWrapSDK/OpenWrapSDK/POBResources.bundle",
 			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ApesterKit_Example-checkManifestLockResult.txt",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/POBResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ApesterKit_Example/Pods-ApesterKit_Example-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -466,7 +462,7 @@
 		};
 		607FACF01AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EE997734D01E0FE5ECD22D1A /* Pods-ApesterKit_Example.debug.xcconfig */;
+			baseConfigurationReference = 29F0EBBD4C5AA8D4E0AF1A69 /* Pods-ApesterKit_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -487,7 +483,7 @@
 		};
 		607FACF11AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 32388D7401E88B99FBEF34A8 /* Pods-ApesterKit_Example.release.xcconfig */;
+			baseConfigurationReference = 1FF4327B3499C362CECF5D65 /* Pods-ApesterKit_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
