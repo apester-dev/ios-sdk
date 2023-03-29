@@ -45,14 +45,6 @@ import ApesterKit
                           context: false,
                           fallback: false),
             ]
-        case .local:
-            unitsParams = [
-                .unit(mediaId: "5e67bd1c6abc6400725787ab"),
-                .playlist(tags: ["news", "sport", "yoga"],
-                          channelToken: "5d6fc15d07d512002b67ecc6",
-                          context: false,
-                          fallback: false),
-            ]
         case .dev:
             unitsParams = [
                 // .unit(mediaId: "62a5c51e7c1ce9002a94941f"),

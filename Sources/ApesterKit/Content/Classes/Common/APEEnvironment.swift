@@ -14,7 +14,6 @@ public enum APEEnvironment: Int
 {
     case production
     case stage
-    case local
     case dev
     
     var stripBaseUrl: String
@@ -25,8 +24,6 @@ public enum APEEnvironment: Int
             env = ""
         case .stage:
             env = "stg."
-        case .local:
-            return "https://strip-pwa.apester.local.com"
         case .dev:
             env = "stg."
         }
@@ -41,8 +38,6 @@ public enum APEEnvironment: Int
         case .stage:
             // return "https://renderer.stg.apester.dev"
             return "https://renderer.stg.apester.com"
-        case .local:
-            return "https://player.apester.local.com"
         case .dev:
             return "https://renderer.dayagi.apester.dev"
         }

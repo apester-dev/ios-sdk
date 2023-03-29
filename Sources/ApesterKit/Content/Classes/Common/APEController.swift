@@ -25,7 +25,7 @@ public typealias APEView = APEController
 @objcMembers
 public class APEController : NSObject
 {
-    struct LoadingState
+    internal struct LoadingState
     {
         var isLoaded = false
         var isReady  = false
@@ -34,22 +34,21 @@ public class APEController : NSObject
         var openUnitMessage: String?
     }
     
-    var lastDeviceOrientation: UIDeviceOrientation
-    let setDeviceOrientation : ((Int) -> Void)     = {
+    internal var lastDeviceOrientation: UIDeviceOrientation
+    internal let setDeviceOrientation : ((Int) -> Void)     = {
         UIDevice.current.setValue($0, forKey: "orientation")
     }
 
-    var containerView: UIView?
-    weak var containerViewController: UIViewController?
+    internal var containerView: UIView?
+    internal weak var containerViewController: UIViewController?
 
     // MARK:- Private Properties
-    private let environment: APEEnvironment!
+    
+    internal var messageDispatcher : MessageDispatcher
 
-    var messageDispatcher : MessageDispatcher
+    internal var loadingState : LoadingState
 
-    var loadingState : LoadingState
-
-    var subscribedEvents: Set<String>
+    internal var subscribedEvents: Set<String>
 
     // MARK:- Public Properties
     public var height: CGFloat {
@@ -59,15 +58,13 @@ public class APEController : NSObject
     /// The strip view visibility status, update this property either when the strip view is visible or not.
     public var isDisplayed : Bool
 
-
-    init(_ environment: APEEnvironment)
+    override init()
     {
         self.lastDeviceOrientation = UIDevice.current.orientation
         self.messageDispatcher     = MessageDispatcher()
         self.loadingState          = LoadingState()
         self.subscribedEvents      = Set()
         self.isDisplayed           = false
-        self.environment           = environment
         super.init()
         
         // prefetch channel data...
@@ -253,13 +250,6 @@ extension APEController : WKNavigationDelegate
     public func webView(_ webView: WKWebView,
                         didReceive challenge: URLAuthenticationChallenge,
                         completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        if case .local = self.environment,
-            challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust,
-            let serverTrust = challenge.protectionSpace.serverTrust {
-            let credential = URLCredential(trust: serverTrust)
-            completionHandler(.useCredential, credential)
-            return
-        }
         completionHandler(.performDefaultHandling, nil)
     }
 

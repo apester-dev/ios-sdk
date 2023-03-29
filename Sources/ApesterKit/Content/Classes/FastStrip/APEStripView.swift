@@ -86,7 +86,7 @@ public class APEStripController : APEController
     /// - Parameters:
     ///   - configuration: the strip view custom configuration, i.e channelToken, shape, size
     public init(configuration: APEStripConfiguration) {
-        super.init(configuration.environment)
+        super.init()
         self.configuration = configuration
         // prefetch channel data...
         self.prepareStripView()

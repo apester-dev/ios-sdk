@@ -67,7 +67,7 @@ public class APEUnitController : APEController
     {
         self.adBannerProviders = []
         self.widgetHeight = 0
-        super.init(configuration.environment)
+        super.init()
         
         self.configuration = configuration
         
