@@ -41,7 +41,7 @@ extension APEAdMobDelegate : GADBannerViewDelegate
     
     /// Tells the delegate that an ad request failed. The failure is normally due to network
     /// connectivity or ad availablility (for example, no fill).
-    @nonobjc func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: NSError) {
+    func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
         APELoggerService.shared.info()
         receiveAdError(error)
     }
@@ -50,6 +50,7 @@ extension APEAdMobDelegate : GADBannerViewDelegate
     func bannerViewDidRecordImpression(_ bannerView: GADBannerView) {
         APELoggerService.shared.info()
     }
+
     /// Tells the delegate that a click has been recorded for the ad.
     func bannerViewDidRecordClick(_ bannerView: GADBannerView) {
         APELoggerService.shared.info()
