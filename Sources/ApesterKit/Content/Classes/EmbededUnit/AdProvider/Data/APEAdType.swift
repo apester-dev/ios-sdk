@@ -8,13 +8,13 @@ import Foundation
 ///
 ///
 ///
-enum APEAdType : String , CustomStringConvertible
+internal enum APEAdType : String , CustomStringConvertible
 {
     case inUnit    = "inUnit"
     case bottom    = "bottom"
     case companion = "companion"
     
-    var supportedSizes: [APEAdSize] {
+    internal var supportedSizes: [APEAdSize] {
         switch self {
         case .inUnit: return [.adSize300x250]
         case .bottom: return [.adSize320x50]
@@ -22,5 +22,5 @@ enum APEAdType : String , CustomStringConvertible
         }
     }
     
-    var description : String { return rawValue }
+    internal var description : String { return rawValue }
 }

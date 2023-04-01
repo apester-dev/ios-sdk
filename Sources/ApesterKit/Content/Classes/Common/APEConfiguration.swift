@@ -10,12 +10,14 @@ import Foundation
 ///
 ///
 @objc(APEConfiguration)
-@objcMembers public class APEConfiguration : NSObject
+@objcMembers
+public class APEConfiguration : NSObject
 {
-    let bundleInfo  : [String : String]
-    let environment : APEEnvironment
-
-    var parameters  : [String: String] { self.bundleInfo.merging([], uniquingKeysWith: { $1 }) }
+    internal let environment : APEEnvironment
+    internal let bundleInfo  : [String : String]
+    internal var parameters  : [String : String] {
+        bundleInfo.merging([], uniquingKeysWith: { $1 })
+    }
     
     public init(bundle: Bundle, environment: APEEnvironment)
     {

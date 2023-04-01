@@ -13,5 +13,5 @@ internal enum APEAdProviderType : String , CustomStringConvertible {
     case pubmatic = "pubmatic"
     case amazon   = "amazon"
     case aniview  = "aniview_native"
-    var description : String { rawValue }
+    internal var description : String { rawValue }
 }

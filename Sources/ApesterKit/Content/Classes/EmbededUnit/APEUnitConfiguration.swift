@@ -25,7 +25,8 @@ public enum APEUnitParams
 }
 
 @objc(APEUnitConfiguration)
-@objcMembers public class APEUnitConfiguration : APEConfiguration
+@objcMembers
+public class APEUnitConfiguration : APEConfiguration
 {
     private enum Keys : String
     {
@@ -45,10 +46,10 @@ public enum APEUnitParams
     
     public var gdprString: String?
     
-    private(set) var id: String = ""
-    private(set) var baseUrl: String?
-    private(set) var hideApesterAds: Bool
-    private(set) var autoFullscreen: Bool?
+    internal private(set) var id            : String = ""
+    internal private(set) var baseUrl       : String?
+    internal private(set) var hideApesterAds: Bool
+    internal private(set) var autoFullscreen: Bool?
     
     public var adTitleLabelText       : String  = "Anzeige "
     public var adInUnitBackgroundColor: UIColor = .darkGray.withAlphaComponent(0.975)

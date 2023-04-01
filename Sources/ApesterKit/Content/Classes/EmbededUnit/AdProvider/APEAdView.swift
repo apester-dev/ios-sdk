@@ -13,7 +13,7 @@ import UIKit
 internal class APEAdView : UIView
 {
     // MARK: - data
-    private(set) var monetization : APEMonetization
+    internal private(set) var monetization : APEMonetization
 
     // MARK: - display
     internal var containerView : APEContainerView?
@@ -83,7 +83,7 @@ internal class APEAdView : UIView
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(
+    internal init(
         adTitleText titleText: String,
         monetizationType type: APEMonetization,
         inUnitBackgroundColor color: UIColor,
@@ -117,7 +117,8 @@ internal class APEAdView : UIView
     }
     
     // MARK: - public API
-    @objc func showAd(in container: APEContainerView) {
+    @objc
+    internal func showAd(in container: APEContainerView) {
         
         // take action only if the `APEAdView` is not embeded in a container, and the `APEBannerView` contains an ad object
         guard !containerView.ape_isExist else { return }
@@ -153,7 +154,8 @@ internal class APEAdView : UIView
         }
     }
     
-    @objc func hideAd() {
+    @objc
+    internal func hideAd() {
         
         refreshTimer?.invalidate()
         refreshTimer = nil

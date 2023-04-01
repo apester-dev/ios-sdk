@@ -9,27 +9,27 @@ import Foundation
 ///
 ///
 ///
-enum APEMonetization : Equatable
+internal enum APEMonetization : Equatable
 {
     case adMob   (params: APEAdParameters)
     case pubMatic(params: APEAdParameters)
     case amazon  (params: APEAdParameters)
     
-    var identifier : String {
+    internal var identifier : String {
         switch self {
         case .adMob   (let p): return p.identifier
         case .pubMatic(let p): return p.identifier
         case .amazon  (let p): return p.identifier
         }
     }
-    var isCompanionVariant: Bool {
+    internal var isCompanionVariant : Bool {
         switch self {
         case .adMob   (let p): return p.isVariant
         case .pubMatic(let p): return p.isVariant
         case .amazon  (let p): return p.isVariant
         }
     }
-    var adType: APEAdType {
+    internal var adType : APEAdType {
         switch self {
         case .adMob   (let p): return p.type
         case .pubMatic(let p): return p.type

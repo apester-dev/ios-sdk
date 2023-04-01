@@ -47,14 +47,6 @@ public protocol APEUnitControllerDelegate: NSObjectProtocol {
     ///   - unitId: The mediaId for regular unit or the channel token for playlist
     func unitView(_ unitView: APEUnitView, didCompleteAdsForUnit unitId: String)
     
-    /// implement this function in order to handle the tapped link URL from the view
-    /// - Parameters:
-    ///   - unitView: the unit view
-    ///   - url: the url to handle
-    ///   - completion: the handler callback, return true in case the delegate handles the URL, otherwise return false
-    @objc optional
-    func unitView(_ unitView: APEUnitView, shouldHandleURL url: URL, type: APEViewNavigationType, completion: @escaping ((Bool) -> Void))
-    
     /// when a subscribed event message has been received
     /// for Example, subscribe to load and ready events by: `stripView.subscribe(["apester_interaction_loaded", "click_next"])`
     /// - Parameters:
@@ -63,5 +55,13 @@ public protocol APEUnitControllerDelegate: NSObjectProtocol {
     ///   - message: the message data for that event
     @objc optional
     func unitView(_ unitView: APEUnitView, didReciveEvent name:String, message: String)
+    
+    /// implement this function in order to handle the tapped link URL from the view
+    /// - Parameters:
+    ///   - unitView: the unit view
+    ///   - url: the url to handle
+    ///   - completion: the handler callback, return true in case the delegate handles the URL, otherwise return false
+    @objc optional
+    func unitView(_ unitView: APEUnitView, shouldHandleURL url: URL, type: APEViewNavigationType, completion: @escaping ((Bool) -> Void))
 }
 #endif

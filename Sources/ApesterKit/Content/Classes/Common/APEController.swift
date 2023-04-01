@@ -27,11 +27,11 @@ public class APEController : NSObject
 {
     internal struct LoadingState
     {
-        var isLoaded = false
-        var isReady  = false
-        var height: CGFloat = 10
-        var  initialMessage: String?
-        var openUnitMessage: String?
+        internal var isLoaded       : Bool    = false
+        internal var isReady        : Bool    = false
+        internal var height         : CGFloat = 10
+        internal var  initialMessage: String?
+        internal var openUnitMessage: String?
     }
     
     internal var lastDeviceOrientation: UIDeviceOrientation
@@ -124,7 +124,7 @@ public class APEController : NSObject
         }
     }
 
-    func open(_ url: URL)
+    internal func open(_ url: URL)
     {
         DispatchQueue.main.async {
             if UIApplication.shared.canOpenURL(url) {
@@ -143,32 +143,32 @@ public class APEController : NSObject
 @available(iOS 11.0, *)
 extension APEController
 {
-    func orientationDidChangeNotification()
+    internal func orientationDidChangeNotification()
     {
         fatalError("OVERRIDE ME")
     }
 
-    func open(url: URL, type: APEViewNavigationType)
+    internal func open(url: URL, type: APEViewNavigationType)
     {
         fatalError("OVERRIDE ME")
     }
 
-    func didFailLoading(error: Error)
+    internal func didFailLoading(error: Error)
     {
         fatalError("OVERRIDE ME")
     }
 
-    func didFinishLoading()
+    internal func didFinishLoading()
     {
         fatalError("OVERRIDE ME")
     }
 
-    func handleUserContentController(message: WKScriptMessage)
+    internal func handleUserContentController(message: WKScriptMessage)
     {
         fatalError("OVERRIDE ME")
     }
 
-    func destroy()
+    internal func destroy()
     {
         fatalError("OVERRIDE ME")
     }

@@ -11,28 +11,34 @@ import AdSupport
 ///
 ///
 /// BundleInfo
-class BundleInfo {
-    static let bundleName = "ApesterKit.bundle"
+internal class BundleInfo
+{    
+    internal static let bundleName = "ApesterKit.bundle"
 
-    static var bundle: Bundle {
+    internal static var bundle : Bundle
+    {
         let klass: AnyClass = object_getClass(self)!
         return Bundle(for: klass)
     }
 
-    static func contentsOfFile(_ file: String) -> String {
+    internal static func contentsOfFile(_ file: String) -> String
+    {
         // load js bundle file
-        if let bundleResourcePath = bundle.resourcePath {
-            let path = "\(bundleResourcePath)/\(BundleInfo.bundleName)/\(file)"
-            let data = NSData(contentsOfFile: path)
-            if let fileData = data as Data?, let result = String(data: fileData, encoding: String.Encoding.utf8) {
-                return result
-            }
-        }
-        return ""
+        guard let bundleResourcePath = bundle.resourcePath else { return "" }
+        
+        let path = "\(bundleResourcePath)/\(BundleInfo.bundleName)/\(file)"
+        
+        let data = NSData(contentsOfFile: path)
+        
+        guard let fileData = data as Data? else { return "" }
+        guard let result = String(data: fileData, encoding: String.Encoding.utf8) else { return "" }
+        
+        return result
     }
 
     // the deviceInfoParamsDictionary settings data
-    static func bundleInfoPayload(with bundle: Bundle?) -> [String: String] {
+    internal static func bundleInfoPayload(with bundle: Bundle?) -> [String: String]
+    {
         var deviceInfoPayload: [String: String] = [:]
 
         // get the device advertisingIdentifier
@@ -71,7 +77,8 @@ class BundleInfo {
         return deviceInfoPayload
     }
 
-    static func appNameAndVersion(from infoDictionary: [String : String]) -> String {
+    internal static func appNameAndVersion(from infoDictionary: [String : String]) -> String
+    {
          return "\(infoDictionary[Constants.Payload.appName] ?? "")/\(infoDictionary[Constants.Payload.appVersion] ?? "")"
     }
 }

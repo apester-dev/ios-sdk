@@ -50,7 +50,7 @@ public protocol APEStripControllerDelegate : NSObjectProtocol
     ///   - name: the subscribed event
     ///   - message: the message data for that event
     @objc optional
-    func stripView(_ stripView: APEStripView, didReciveEvent name:String, message: String)
+    func stripView(_ stripView: APEStripView, didReciveEvent name: String, message: String)
 
     /// implement this function in order to handle the tapped link URL from the strip view
     /// - Parameters:

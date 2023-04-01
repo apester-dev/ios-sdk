@@ -28,7 +28,7 @@ public class APEStripConfiguration: APEConfiguration {
 
     public private(set) var channelToken: String
     public private(set) var style: APEStripStyle
-    private(set) var hideApesterAds: Bool
+    internal private(set) var hideApesterAds: Bool
     
     override var parameters: [String: String] {
         var value = super.parameters.merging(style.parameters, uniquingKeysWith: { $1 })
@@ -37,21 +37,30 @@ public class APEStripConfiguration: APEConfiguration {
         return value
     }
 
-    var stripURL: URL? {
+    internal var stripURL: URL? {
         return self.parameters.componentsURL(baseURL: (self.environment.stripBaseUrl + Constants.Strip.stripPath))
     }
 
-    var storyURL: URL? {
+    internal var storyURL: URL? {
         return self.parameters.componentsURL(baseURL: (self.environment.stripBaseUrl + Constants.Strip.stripStoryPath))
     }
 
-    public init(channelToken: String, style: APEStripStyle, bundle: Bundle, environment: APEEnvironment, hideApesterAds: Bool) throws {
+    public init(
+        channelToken: String,
+        style: APEStripStyle,
+        bundle: Bundle,
+        environment: APEEnvironment,
+        hideApesterAds: Bool
+    ) throws {
+    
         guard !channelToken.isEmpty else {
             throw APEStripConfigurationError.invalidChannelToken
         }
+        
         self.channelToken = channelToken
         self.style = style
         self.hideApesterAds = hideApesterAds
+        
         super.init(bundle: bundle, environment: environment)
     }
     
