@@ -66,6 +66,8 @@ final public class APEAmazonStrategy : APEAdProviderStrategy
             }
         )
         
+        uniqePubMaticConfiguration(basedOn: parameters)
+        
         let banner = APEAdView(
             adTitleText          : adTitleLabelText,
             monetizationType     : provider.monetization,
@@ -74,40 +76,38 @@ final public class APEAmazonStrategy : APEAdProviderStrategy
             onAdRemovalCompletion: onAdRemovalCompletion
         )
         
-        let appInfo = POBApplicationInfo()
-        appInfo.domain      = parameters.appDomain
-        appInfo.storeURL    = URL(string: parameters.appStoreUrl)!
-        
-        OpenWrapSDK.setApplicationInfo(appInfo)
-        //
         let nativeAdLibView: POBBannerView?
-        //
-        //let adSizes = params.type.supportedSizes
-        //    .compactMap {
-        //        switch $0 {
-        //        case .adSize320x50:  return NSValueFromGADAdSize(GADAdSizeBanner)
-        //        case .adSize300x250: return NSValueFromGADAdSize(GADAdSizeMediumRectangle)
-        //        }
-        //    }
-        //
-        //if let eventHandler = DFPBannerEventHandler(adUnitId: params.dfp_au_banner, andSizes: adSizes) {
-        //    eventHandler.configBlock = { view , request, bid in
-        //
-        //    }
-        //    nativeAdLibView = POBBannerView(
-        //        publisherId: params.publisherId,
-        //        profileId: .init(value: params.profileId),
-        //        adUnitId: params.identifier,
-        //        eventHandler: eventHandler
-        //    )
-        //} else {
-        //    nativeAdLibView = POBBannerView(
-        //        publisherId: params.publisherId,
-        //        profileId: .init(value: params.profileId),
-        //        adUnitId: params.identifier,
-        //        adSizes: params.type.supportedSizes.compactMap { POBAdSizeMakeFromCGSize($0.size) }
-        //    )
-        //}
+        
+        let adSize : APEAdSize = (params.type == .bottom) ? APEAdSize.adSize320x50 : APEAdSize.adSize300x250
+        
+        let adSizes = params.type.supportedSizes
+            .compactMap {
+                switch $0 {
+                case .adSize320x50:  return NSValueFromGADAdSize(GADAdSizeBanner)
+                case .adSize300x250: return NSValueFromGADAdSize(GADAdSizeMediumRectangle)
+                }
+            }
+        
+        
+        if let eventHandler = DFPBannerEventHandler(adUnitId: parameters.dfp_au_banner, andSizes: adSizes) {
+            
+            eventHandler.configBlock = { view , request, bid in }
+            
+            nativeAdLibView = POBBannerView(
+                publisherId: parameters.publisherId,
+                profileId: .init(value: parameters.profileId),
+                adUnitId: parameters.identifier,
+                eventHandler: eventHandler
+            )
+            
+        } else {
+            nativeAdLibView = POBBannerView(
+                publisherId: parameters.publisherId,
+                profileId: .init(value: parameters.profileId),
+                adUnitId: parameters.identifier,
+                adSizes: parameters.type.supportedSizes.compactMap { POBAdSizeMakeFromCGSize($0.size) }
+            )
+        }
         //
         //if let nativeAdView = nativeAdLibView {
         //    nativeAdView.request.debug             = params.debugLogs
@@ -135,5 +135,42 @@ final public class APEAmazonStrategy : APEAdProviderStrategy
         //    adBanner.showAd(in: containerDisplay)
         //}
         return provider
+    }
+    
+    private func uniqePubMaticConfiguration(
+        basedOn parameters: APEAmazonAdParameters
+    ) {
+        let appInfo = POBApplicationInfo()
+        appInfo.domain = parameters.appDomain
+        if let appStoreUrl = URL(string: parameters.appStoreUrl) {
+            appInfo.storeURL = appStoreUrl
+        }
+        
+        OpenWrapSDK.setApplicationInfo(appInfo)
+    }
+    
+    private func generatePOBBannerView(
+        basedOn parameters: APEAmazonAdParameters
+    ) -> POBBannerView? {
+        let adSizes =  [NSValue]()
+        if let eventHandler = DFPBannerEventHandler(adUnitId: parameters.dfp_au_banner, andSizes: adSizes) {
+            
+            eventHandler.configBlock = { view , request, bid in }
+            
+            return POBBannerView(
+                publisherId: parameters.publisherId,
+                profileId: .init(value: parameters.profileId),
+                adUnitId: parameters.identifier,
+                eventHandler: eventHandler
+            )
+            
+        } else {
+            return POBBannerView(
+                publisherId: parameters.publisherId,
+                profileId: .init(value: parameters.profileId),
+                adUnitId: parameters.identifier,
+                adSizes: parameters.type.supportedSizes.compactMap { POBAdSizeMakeFromCGSize($0.size) }
+            )
+        }
     }
 }
