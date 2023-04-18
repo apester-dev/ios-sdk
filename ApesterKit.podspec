@@ -55,6 +55,7 @@ Pod::Spec.new do |s|
         'Sources/ApesterKit/Content/Classes/EmbededUnit/AdProvider/*.{h,m,swift}',
         'Sources/ApesterKit/Content/Classes/EmbededUnit/AdProvider/Data/*.{h,m,swift}',
         'Sources/ApesterKit/Content/Classes/EmbededUnit/AdProvider/Loader/*.{h,m,swift}',
+        'Sources/ApesterKit/Content/Classes/EmbededUnit/AdProvider/Bidding/*.{h,m,swift}',
         'Sources/ApesterKit/Content/Classes/Deprecated/*.{h,m,swift}'
         content.dependency 'ApesterObjcBridging'
     end

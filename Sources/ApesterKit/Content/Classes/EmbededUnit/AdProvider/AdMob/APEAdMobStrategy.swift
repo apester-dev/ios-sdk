@@ -48,13 +48,14 @@ final public class APEAdMobStrategy : APEAdProviderStrategy
         )
         
         provider.nativeDelegate = APEAdMobDelegate.init(
-            container: nil,
+            adProvider      : provider,
+            container       : nil,
             receiveAdSuccess: { [provider] in
                 provider.statusSuccess()
                 provider.bannerView.onReceiveAdSuccess()
                 receiveAdSuccessCompletion()
             },
-            receiveAdError: { [provider] mistake in
+            receiveAdError  : { [provider] mistake in
                 provider.statusFailure()
                 provider.bannerView.onReceiveAdError(mistake)
                 receiveAdErrorCompletion(mistake)
@@ -93,13 +94,14 @@ final public class APEAdMobStrategy : APEAdProviderStrategy
             
             guard let adBanner = banner else { return }
             
+            if let nativeDelegate = provider.nativeDelegate {
+                nativeDelegate.containerViewController = delegate.adPresentingViewController
+            }
+            
             if let nativeAdView = nativeAdLibView , !nativeAdView.rootViewController.ape_isExist {
                 nativeAdView.rootViewController = delegate.adPresentingViewController
                 nativeAdView.load(GADRequest())
                 onAdRequestedCompletion()
-            }
-            if let nativeDelegate = provider.nativeDelegate {
-                nativeDelegate.containerViewController = delegate.adPresentingViewController
             }
             adBanner.showAd(in: containerDisplay)
         }

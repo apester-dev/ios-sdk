@@ -17,7 +17,8 @@ import GoogleMobileAds
 extension GADBannerView : APENativeLibraryAdView
 {
     var nativeSize: CGSize { adSize.size }
-    func forceRefreshAd() { /* NO OPERATION HERE */ }
+    func forceRefreshAd()  { /* NO OPERATION HERE */ }
+    func proceedToTriggerLoadAd() { /* NO OPERATION HERE */ }
 }
 ///
 ///

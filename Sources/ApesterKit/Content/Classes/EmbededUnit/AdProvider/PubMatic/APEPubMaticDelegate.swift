@@ -18,6 +18,7 @@ extension POBBannerView : APENativeLibraryAdView
 {
     var nativeSize: CGSize { creativeSize().cgSize() }
     func forceRefreshAd() { forceRefresh() }
+    func proceedToTriggerLoadAd() { proceedToLoadAd() }
 }
 ///
 ///

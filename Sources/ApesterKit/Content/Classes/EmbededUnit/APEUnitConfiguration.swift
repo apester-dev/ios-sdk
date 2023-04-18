@@ -91,9 +91,6 @@ public class APEUnitConfiguration : APEConfiguration
         self.gdprString = gdprString
         self.baseUrl = baseUrl
         super.init(bundle: bundle, environment: environment)
-        // TODO: - FIX THIS
-        // OpenWrapSDK.setGDPREnabled(false)
-        // OpenWrapSDK.setGDPRConsent("")
     }
     
     public convenience init(unitParams: APEUnitParams, bundle: Bundle) {

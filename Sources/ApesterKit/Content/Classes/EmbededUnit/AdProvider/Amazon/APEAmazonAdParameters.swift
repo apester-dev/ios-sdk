@@ -11,12 +11,25 @@ import Foundation
 ///
 internal struct APEAmazonAdParameters : Hashable , APEAdParameters
 {
-    enum CodingKeys : String , CustomStringConvertible
+    fileprivate enum CodingKeys : String , CustomStringConvertible
     {
-        case amazon_key
-        case amazon_slotID
-        case amazon_dfp_au
-        var description : String { return rawValue }
+        case adProvider 	= "provider"
+        case adUnitId   	= "iosAdUnitId"
+        case adType         = "adType"
+        case isVariant      = "isCompanionVariant"
+        case profileId      = "iosProfileId"
+        case publisherId    = "publisherId"
+        case appStoreUrl    = "iosAppStoreUrl"
+        case appDomain      = "appDomain"
+        case testMode       = "testMode"
+        case debugLogs      = "debugLogs"
+        case bidSummaryLogs = "bidSummaryLogs"
+        case timeInView     = "timeInView"
+        case amazon_app_key = "iosAmazonAppId"
+        case amazon_slotID  = "iosAmazonUuid"
+        case amazon_dfp_au  = "iosGamAdUnit"
+        
+        fileprivate var description : String { return rawValue }
     }
     
     internal let identifier     : String
@@ -44,28 +57,25 @@ internal struct APEAmazonAdParameters : Hashable , APEAdParameters
     internal init?(from dictionary1: [String: Any])
     {
         var dictionary = dictionary1
-        typealias Keys = Constants.Monetization
-        
-        guard let provider  = dictionary[Keys.adProvider] as? String , provider == Keys.amazon else { return nil }
-        guard let adUnitId  = dictionary[Keys.adUnitId  ] as? String else { return nil }
-        guard let typeStr   = dictionary[Keys.adType    ] as? String else { return nil }
-        guard let isVariant = dictionary[Keys.isVariant ] as? Bool   else { return nil }
-        
-        guard let adType    = APEAdType(rawValue: typeStr) else { return nil }
-        
-        guard let profileIdStr = dictionary[Keys.profileId  ] as? String , let profileId = Int(profileIdStr) else {
-            return nil
-        }
-        guard let appStoreUrl  = dictionary[Keys.appStoreUrl] as? String else { return nil }
-        guard let publisherId  = dictionary[Keys.publisherId] as? String else { return nil }
-        
-        dictionary[CodingKeys.amazon_key   .description] = "a9_onboarding_app_id"
+        dictionary[CodingKeys.amazon_app_key.description] = "a9_onboarding_app_id"
         dictionary[CodingKeys.amazon_slotID.description] = "5ab6a4ae-4aa5-43f4-9da4-e30755f2b295"
         dictionary[CodingKeys.amazon_dfp_au.description] = "/15671365/pm_sdk/A9_Demo"
+        typealias Keys = CodingKeys
         
-        guard var a_key    = dictionary[CodingKeys.amazon_key   .description] as? String else { return nil }
-        guard var a_slotID = dictionary[CodingKeys.amazon_slotID.description] as? String else { return nil }
-        guard var a_dfp_au = dictionary[CodingKeys.amazon_dfp_au.description] as? String else { return nil }
+        guard let provider      = dictionary[Keys.adProvider    .description] as? String else { return nil }
+        guard let adUnitId      = dictionary[Keys.adUnitId      .description] as? String else { return nil }
+        guard let typeStr       = dictionary[Keys.adType        .description] as? String else { return nil }
+        guard let isVariant     = dictionary[Keys.isVariant     .description] as? Bool   else { return nil }
+        guard let profileIdStr  = dictionary[Keys.profileId     .description] as? String else { return nil }
+        guard let appStoreUrl   = dictionary[Keys.appStoreUrl   .description] as? String else { return nil }
+        guard let publisherId   = dictionary[Keys.publisherId   .description] as? String else { return nil }
+        guard let amazon_key    = dictionary[Keys.amazon_app_key.description] as? String else { return nil }
+        guard let amazon_slotID = dictionary[Keys.amazon_slotID .description] as? String else { return nil }
+        guard let amazon_dfp_au = dictionary[Keys.amazon_dfp_au .description] as? String else { return nil }
+        
+        guard provider == Constants.Monetization.pubMatic  else { return nil }
+        guard let adType    = APEAdType(rawValue: typeStr) else { return nil }
+        guard let profileId = Int(profileIdStr)            else { return nil }
         
         self.identifier     = adUnitId
         self.isVariant      = isVariant
@@ -73,14 +83,13 @@ internal struct APEAmazonAdParameters : Hashable , APEAdParameters
         self.profileId      = profileId
         self.appStoreUrl    = appStoreUrl
         self.publisherId    = publisherId
-        self.appDomain      = dictionary[Keys.appDomain     ] as? String ?? ""
-        self.testMode       = dictionary[Keys.testMode      ] as? Bool ?? false
-        self.debugLogs      = dictionary[Keys.debugLogs     ] as? Bool ?? false
-        self.bidSummaryLogs = dictionary[Keys.bidSummaryLogs] as? Bool ?? false
-        self.timeInView     = dictionary[Keys.timeInView    ] as? Int
-        
-        self.amazon_key     = a_key
-        self.amazon_slotID  = a_slotID
-        self.dfp_au_banner  = a_dfp_au
+        self.appDomain      = dictionary[Keys.appDomain     .description] as? String ?? ""
+        self.testMode       = dictionary[Keys.testMode      .description] as? Bool ?? false
+        self.debugLogs      = dictionary[Keys.debugLogs     .description] as? Bool ?? false
+        self.bidSummaryLogs = dictionary[Keys.bidSummaryLogs.description] as? Bool ?? false
+        self.timeInView     = dictionary[Keys.timeInView    .description] as? Int
+        self.amazon_key     = amazon_key
+        self.amazon_slotID  = amazon_slotID
+        self.dfp_au_banner  = amazon_dfp_au
     }
 }

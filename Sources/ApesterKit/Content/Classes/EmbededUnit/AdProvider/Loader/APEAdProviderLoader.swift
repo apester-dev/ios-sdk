@@ -28,10 +28,11 @@ private extension APEAdProviderLoader
     private static func availableStrategies(
         for controller: APEUnitController
     ) ->  [APEAdProviderStrategyProtocol] {
+        // Maks sure to test for amazon first, due to a non-standard parsing
         return [
-            adMobStrategy   (for: controller),
             amazonStrategy  (for: controller),
-            pubmaticStrategy(for: controller)
+            pubmaticStrategy(for: controller),
+            adMobStrategy   (for: controller)
         ].compactMap { $0 }
     }
     

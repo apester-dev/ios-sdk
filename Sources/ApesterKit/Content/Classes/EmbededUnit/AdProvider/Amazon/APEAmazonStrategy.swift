@@ -46,27 +46,33 @@ final public class APEAmazonStrategy : APEAdProviderStrategy
     ) -> APEAdProvider {
         
         let parameters = params as! APEAmazonAdParameters
-
+        
+        publishGDPR(basedOn: parameters, GDPRConsent: gdprString, delegate: delegate)
+        
         let provider = APEAdProvider(
-            monetization: APEMonetization.pubMatic(params: parameters),
+            monetization: APEMonetization.amazon(params: parameters),
             delegate: delegate
         )
         
-        provider.nativeDelegate = APEAmazonDelegate.init(
-            container: nil,
+        let nativeDelegate = APEAmazonDelegate.init(
+            adProvider      : provider,
+            container       : nil,
             receiveAdSuccess: { [provider] in
                 provider.statusSuccess()
                 provider.bannerView.onReceiveAdSuccess()
                 receiveAdSuccessCompletion()
             },
-            receiveAdError: { [provider] mistake in
+            receiveAdError  : { [provider] mistake in
                 provider.statusFailure()
                 provider.bannerView.onReceiveAdError(mistake)
                 receiveAdErrorCompletion(mistake)
             }
         )
+        provider.nativeDelegate = nativeDelegate
         
-        uniqePubMaticConfiguration(basedOn: parameters)
+        applyAmazonConfiguration(basedOn: parameters)
+        applyPubMaticConfiguration(basedOn: parameters)
+        applyPubMaticGDPRConsent(gdprString)
         
         let banner = APEAdView(
             adTitleText          : adTitleLabelText,
@@ -76,22 +82,35 @@ final public class APEAmazonStrategy : APEAdProviderStrategy
             onAdRemovalCompletion: onAdRemovalCompletion
         )
         
-        let nativeAdLibView: POBBannerView?
+        let apesterAdSize = (parameters.type == .bottom) ? APEAdSize.adSize320x50 : APEAdSize.adSize300x250
         
-        let adSize : APEAdSize = (params.type == .bottom) ? APEAdSize.adSize320x50 : APEAdSize.adSize300x250
+        let adSizes = adSizeValue(basedOn: apesterAdSize)
         
-        let adSizes = params.type.supportedSizes
-            .compactMap {
-                switch $0 {
-                case .adSize320x50:  return NSValueFromGADAdSize(GADAdSizeBanner)
-                case .adSize300x250: return NSValueFromGADAdSize(GADAdSizeMediumRectangle)
-                }
-            }
-        
-        
+        let nativeAdLibView : POBBannerView?
         if let eventHandler = DFPBannerEventHandler(adUnitId: parameters.dfp_au_banner, andSizes: adSizes) {
             
-            eventHandler.configBlock = { view , request, bid in }
+            nativeDelegate.biddingManager.register(Bidder: APEAmazonAdLoader(
+                SlotUUID: parameters.amazon_slotID,
+                apesterSize: apesterAdSize)
+            )
+            
+            eventHandler.configBlock = { view , request, bid in
+                print("eventHandler.configBlock")
+                
+                guard let delegate = provider.nativeDelegate as? APEAmazonDelegate else { return }
+                    
+                let partnerTargeting = delegate.biddingManager.retrivePartnerTargeting()
+                let  customTargeting = request?.customTargeting as? NSMutableDictionary ?? NSMutableDictionary()
+                
+                for pair in partnerTargeting
+                {
+                    guard let information = pair.value as?  [String: String] else { continue }
+                    customTargeting.addEntries(from: information)
+                }
+                request?.customTargeting = customTargeting as? [String: String]
+                
+                print("Successfully added targeting from all bidders")
+            }
             
             nativeAdLibView = POBBannerView(
                 publisherId: parameters.publisherId,
@@ -105,39 +124,53 @@ final public class APEAmazonStrategy : APEAdProviderStrategy
                 publisherId: parameters.publisherId,
                 profileId: .init(value: parameters.profileId),
                 adUnitId: parameters.identifier,
-                adSizes: parameters.type.supportedSizes.compactMap { POBAdSizeMakeFromCGSize($0.size) }
+                adSizes: [apesterAdSize].compactMap { POBAdSizeMakeFromCGSize($0.size) }
             )
         }
-        //
-        //if let nativeAdView = nativeAdLibView {
-        //    nativeAdView.request.debug             = params.debugLogs
-        //    nativeAdView.request.testModeEnabled   = params.testMode
-        //    nativeAdView.request.bidSummaryEnabled = params.bidSummaryLogs
-        //    nativeAdView.delegate = provider.nativeDelegate as? POBBannerViewDelegate
-        //}
-        //
-        //banner.adContent       = nativeAdLibView
+        
+        if let nativeAdView = nativeAdLibView {
+            nativeAdView.request.debug             = parameters.debugLogs
+            nativeAdView.request.testModeEnabled   = parameters.testMode
+            nativeAdView.request.bidSummaryEnabled = parameters.bidSummaryLogs
+            nativeAdView.delegate = provider.nativeDelegate as? POBBannerViewDelegate
+            nativeAdView.bidEventDelegate = provider.nativeDelegate as? POBBidEventDelegate
+        }
+        
+        banner.adContent       = nativeAdLibView
         provider.bannerView    = banner
         provider.bannerContent = { [weak banner] in banner?.adContent }
         provider.refresh       = { [weak banner] in banner?.adContent?.forceRefreshAd() }
         provider.hide          = { [weak banner] in banner?.hideAd()  }
-        //provider.show          = { [weak banner] containerDisplay in
-        //
-        //    guard let adBanner = banner else { return }
-        //
-        //    if let nativeAdLibView {
-        //        nativeAdLibView.loadAd()
-        //        onAdRequestedCompletion()
-        //    }
-        //    if let nativeDelegate = provider.nativeDelegate {
-        //        nativeDelegate.containerViewController = delegate.adPresentingViewController
-        //    }
-        //    adBanner.showAd(in: containerDisplay)
-        //}
+        provider.show          = { [weak banner] containerDisplay in
+            
+            guard let adBanner = banner else { return }
+            
+            if let nativeDelegate = provider.nativeDelegate {
+                nativeDelegate.containerViewController = delegate.adPresentingViewController
+                nativeDelegate.biddingManager.loadBids()
+            }
+            
+            if let nativeAdLibView {
+                nativeAdLibView.loadAd()
+                onAdRequestedCompletion()
+            }
+            
+            adBanner.showAd(in: containerDisplay)
+        }
         return provider
     }
     
-    private func uniqePubMaticConfiguration(
+    private func applyAmazonConfiguration(
+        basedOn parameters: APEAmazonAdParameters
+    ) {
+        let instance = DTBAds.sharedInstance()
+        instance.setAppKey(parameters.amazon_key)
+        instance.mraidPolicy = AUTO_DETECT_MRAID
+        instance.setLogLevel(parameters.debugLogs ? DTBLogLevelAll : DTBLogLevelOff)
+        instance.testMode = parameters.testMode
+        
+    }
+    private func applyPubMaticConfiguration(
         basedOn parameters: APEAmazonAdParameters
     ) {
         let appInfo = POBApplicationInfo()
@@ -147,6 +180,40 @@ final public class APEAmazonStrategy : APEAdProviderStrategy
         }
         
         OpenWrapSDK.setApplicationInfo(appInfo)
+        OpenWrapSDK.setLogLevel(parameters.debugLogs ? POBSDKLogLevel.all : POBSDKLogLevel.off)
+    }
+    
+    private func applyPubMaticGDPRConsent(
+        _ gdprString: String?
+    ) {
+        guard let gdpr = gdprString else {
+            OpenWrapSDK.setGDPREnabled(false); return
+        }
+        
+        OpenWrapSDK.setGDPREnabled(true)
+        OpenWrapSDK.setGDPRConsent(gdpr)
+    }
+    private func publishGDPR(
+        basedOn parameters    : APEAmazonAdParameters,
+        GDPRConsent gdprString: String?,
+        delegate              : APEAdProviderDelegate
+    ) {
+        guard parameters.testMode  else { return }
+        guard parameters.debugLogs else { return }
+        
+        guard let gdpr = gdprString else { return }
+        os_log("ApeSterSDK::-GDPR-String-: %{public}@", log: OSLog.ApesterSDK, type: .debug, gdpr)
+        delegate.sendNativeGDPREvent(with: gdpr)
+    }
+    
+    private func adSizeValue(basedOn adSize: APEAdSize) -> [NSValue]
+    {
+        return [adSize].compactMap {
+            switch $0 {
+            case .adSize320x50:  return NSValueFromGADAdSize(GADAdSizeBanner)
+            case .adSize300x250: return NSValueFromGADAdSize(GADAdSizeMediumRectangle)
+            }
+        }
     }
     
     private func generatePOBBannerView(

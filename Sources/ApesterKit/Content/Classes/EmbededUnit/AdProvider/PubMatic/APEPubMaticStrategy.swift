@@ -51,13 +51,14 @@ final public class APEPubMaticStrategy : APEAdProviderStrategy
         )
         
         provider.nativeDelegate = APEPubMaticDelegate.init(
-            container: nil,
+            adProvider      : provider,
+            container       : nil,
             receiveAdSuccess: { [provider] in
                 provider.statusSuccess()
                 provider.bannerView.onReceiveAdSuccess()
                 receiveAdSuccessCompletion()
             },
-            receiveAdError: { [provider] mistake in
+            receiveAdError  : { [provider] mistake in
                 provider.statusFailure()
                 provider.bannerView.onReceiveAdError(mistake)
                 receiveAdErrorCompletion(mistake)
@@ -102,13 +103,15 @@ final public class APEPubMaticStrategy : APEAdProviderStrategy
             
             guard let adBanner = banner else { return }
             
+            if let nativeDelegate = provider.nativeDelegate {
+                nativeDelegate.containerViewController = delegate.adPresentingViewController
+            }
+            
             if let nativeAdView = nativeAdLibView {
                 nativeAdView.loadAd()
                 onAdRequestedCompletion()
             }
-            if let nativeDelegate = provider.nativeDelegate {
-                nativeDelegate.containerViewController = delegate.adPresentingViewController
-            }
+            
             adBanner.showAd(in: containerDisplay)
         }
         return provider
@@ -137,6 +140,8 @@ final public class APEPubMaticStrategy : APEAdProviderStrategy
         }
         
         OpenWrapSDK.setApplicationInfo(appInfo)
+        
+        OpenWrapSDK.setLogLevel(parameters.debugLogs ? POBSDKLogLevel.all : POBSDKLogLevel.off)
     }
     
     private func uniqePubMaticGDPRConsent(

@@ -25,7 +25,7 @@ internal class APEAdProvider : Equatable
     
     // MARK: - typealias
     internal typealias HandlerAdType     = (APEMonetization) -> Void
-    internal typealias HandlerViewType   = () -> UIView?
+    internal typealias HandlerViewType   = () -> (UIView & APENativeLibraryAdView)?
     internal typealias HandlerVoidType   = () -> Void
     internal typealias HandlerErrorType  = (Error?) -> Void
     internal typealias HandlerContainerType = (APEContainerView) -> Void
