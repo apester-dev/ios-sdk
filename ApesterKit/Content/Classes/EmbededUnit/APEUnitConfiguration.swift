@@ -23,6 +23,7 @@ public enum APEUnitParams {
     }
 }
 
+@objc(APEUnitConfiguration)
 @objcMembers public class APEUnitConfiguration: APEConfiguration {
     
     private enum Keys: String {
@@ -54,21 +55,25 @@ public enum APEUnitParams {
     private(set) var hideApesterAds: Bool
     private(set) var autoFullscreen: Bool?
     
-    public var adTitleLabelText: String = "Anzeige "
+    public var adTitleLabelText       : String  = "Anzeige "
     public var adInUnitBackgroundColor: UIColor = .darkGray.withAlphaComponent(0.975)
     
     override var parameters: [String: String] {
+        
         var value = super.parameters
+        
         switch self.unitParams {
         case .unit(let mediaId):
             value[Keys.mediaId.rawValue] = mediaId
         case .playlist(let tags, let channelToken, let context, let fallback):
             value[Keys.channelToken.rawValue] = channelToken
-            value[Keys.context.rawValue] = "\(context)"
-            value[Keys.fallback.rawValue] = "\(fallback)"
-            value[Keys.tags.rawValue] = tags.joined(separator:",")
+            value[Keys.context     .rawValue] = "\(context)"
+            value[Keys.fallback    .rawValue] = "\(fallback)"
+            value[Keys.tags        .rawValue] = tags.joined(separator:",")
         }
+        
         value[Keys.noApesterAds.rawValue] = "\(self.hideApesterAds)"
+        
         if let fullscreen = self.autoFullscreen {
             value[Keys.autoFullscreen.rawValue] = "\(fullscreen)"
         }

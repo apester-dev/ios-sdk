@@ -1,5 +1,5 @@
 //
-//  APEStripView.swift
+//  APEStripController.swift
 //  ApesterKit
 //
 //  Created by Hasan Sa on 24/02/2019.
@@ -11,13 +11,17 @@ import WebKit
 import SafariServices
 
 #if os(iOS)
-@available(iOS 11.0, *)
 
+public typealias APEStripView = APEStripController
+
+@available(iOS 11.0, *)
 /// A Proxy Messaging Handler
 ///
 /// Between The Apester Units Carousel component (The `StripWebView`)
 /// And the selected Apester Unit (The `StoryWebView`)
-@objcMembers public class APEStripView: APEView {
+@objc(APEStripView)
+@objcMembers
+public class APEStripController: APEController {
 
     private class StripStoryViewController: UIViewController {
         var webView: WKWebView!
@@ -136,7 +140,7 @@ import SafariServices
 
 // MARK: - Override internal APIs
 @available(iOS 11.0, *)
-extension APEStripView {
+extension APEStripController {
 
     // MARK:- Handle Device orientationDidChangeNotification
     override func orientationDidChangeNotification() {
@@ -198,7 +202,8 @@ extension APEStripView {
 
 // MARK:- Private
 @available(iOS 11.0, *)
-private extension APEStripView {
+private extension APEStripController {
+    
     private var channelToken: String { self.configuration.channelToken }
     // Setup
     func prepareStripView() {
@@ -287,7 +292,7 @@ private extension APEStripView {
                 self.isDisplayed = false
                 return
             }
-            if containerVC.view.allSubviews.first(where: { $0 == view }) != nil {
+            if containerVC.view.ape_allSubviews.first(where: { $0 == view }) != nil {
                 let convertedCenterPoint = view.convert(view.center, to: containerVC.view)
                 self.isDisplayed = containerVC.view.bounds.contains(convertedCenterPoint)
             } else {
@@ -349,7 +354,8 @@ private extension APEStripView {
 
 // MARK:- Handle WebView Presentation
 @available(iOS 11.0, * )
-extension APEStripView {
+extension APEStripController {
+    
     func displayStoryComponent() {
         DispatchQueue.main.async {
             self.lastDeviceOrientation = UIDevice.current.orientation

@@ -8,7 +8,8 @@
 
 import UIKit
 
-@objc public enum APEStripShape: Int {
+@objc(APEStripShape)
+public enum APEStripShape: Int {
     case round, square, roundSquare
     
     var value: String {
@@ -25,7 +26,8 @@ import UIKit
     }
 }
 
-@objc public enum APEStripSize: Int {
+@objc(APEStripSize)
+public enum APEStripSize: Int {
     case small, medium, large
     
     var value: String {
@@ -42,7 +44,9 @@ import UIKit
     }
 }
 
-@objcMembers public class APEStripHeader: NSObject {
+@objc(APEStripHeader)
+@objcMembers
+public class APEStripHeader: NSObject {
 
     private enum Keys: String {
         case text    = "headerText"
@@ -93,7 +97,9 @@ import UIKit
     }
 }
 
-@objcMembers public class APEStripStyle: NSObject {
+@objc(APEStripStyle)
+@objcMembers
+public class APEStripStyle: NSObject {
 
     private enum Keys: String {
         case shape          = "itemShape"

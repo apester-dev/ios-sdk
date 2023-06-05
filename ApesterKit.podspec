@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
     s.name             = 'ApesterKit'
-    s.version          = '3.3.12'
+    s.version          = '3.3.13'
     s.summary          = 'ApesterKit provides a light-weight framework that loads Apester Unit in a webView'
     
     # This description is used to generate tags and improve search results.
@@ -52,44 +52,83 @@ Pod::Spec.new do |s|
         app_spec.source_files        = 'ApesterKit/App/Classes/**/*.{h,m,swift}'
         app_spec.resources           = 'ApesterKit/App/Assets/**/*.{xib,storyboard,*.xcassets}'
         app_spec.preserve_paths      = [
-        'App/Classes/**/*.{h,m,swift}',
-        'App/Assets/**/*.{xib,storyboard}'
+            'App/**/*.{h,m,swift}',
+            'App/**/*.{xib,storyboard}'
         ]
         app_spec.info_plist          = {
-            'CFBundleIdentifier'                    => 'com.apesterkit.demo',
-            'UIStatusBarStyle'                      => 'UIStatusBarStyleLightContent',
-            'UIApplicationSceneManifest'            => {
-                'UIApplicationSupportsMultipleScenes' => false,
-                'UISceneConfigurations' => {
-                    'UIWindowSceneSessionRoleApplication' => [
-                    {
-                        'UISceneConfigurationName' => 'Default Configuration',
-                        'UISceneDelegateClassName' => '$(PRODUCT_MODULE_NAME).SceneDelegate',
-                        'UISceneStoryboardFile'    => 'Main'
-                    }
-                    ]
-                }
-            },
-            'UILaunchStoryboardName'                => 'LaunchScreen',
-            'UIMainStoryboardFile'                  => 'Main',
-            'UISupportedInterfaceOrientations'      => [
-            'UIInterfaceOrientationPortrait',
-            'UIInterfaceOrientationLandscapeLeft',
-            'UIInterfaceOrientationLandscapeRight',
-            ],
-            'UISupportedInterfaceOrientations~ipad' => [
-            'UIInterfaceOrientationPortrait',
-            'UIInterfaceOrientationLandscapeLeft',
-            'UIInterfaceOrientationLandscapeRight',
-            ],
-            'NSAppTransportSecurity'                => {
-                'NSAllowsArbitraryLoads' => true
-            },
-            'GADApplicationIdentifier'              => 'ca-app-pub-7862987392320388~1726030239'
+          'CFBundleIdentifier'                    => 'com.apesterkit.hostapp',
+          'UIStatusBarStyle'                      => 'UIStatusBarStyleLightContent',
+          'UIApplicationSceneManifest'            => {
+            'UIApplicationSupportsMultipleScenes' => false,
+            'UISceneConfigurations' => {
+              'UIWindowSceneSessionRoleApplication' => [
+              {
+                'UISceneConfigurationName' => 'Default Configuration',
+                'UISceneDelegateClassName' => '$(PRODUCT_MODULE_NAME).SceneDelegate'
+              }
+              ]
+            }
+          },
+          'UILaunchStoryboardName'                => 'LaunchScreen',
+          'UISupportedInterfaceOrientations'      => [
+          'UIInterfaceOrientationPortrait',
+          'UIInterfaceOrientationLandscapeLeft',
+          'UIInterfaceOrientationLandscapeRight',
+          ],
+          'UISupportedInterfaceOrientations~ipad' => [
+          'UIInterfaceOrientationPortrait',
+          'UIInterfaceOrientationLandscapeLeft',
+          'UIInterfaceOrientationLandscapeRight',
+          ],
+          'NSAppTransportSecurity'                => {
+            'NSAllowsArbitraryLoads' => true
+          },
+          'GADApplicationIdentifier'              => 'ca-app-pub-7862987392320388~1726030239',
+          'SKAdNetworkItems'                      => [
+          { 'SKAdNetworkIdentifier' => 'cstr6suwn9.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => '4fzdc2evr5.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => '2fnua5tdw4.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => 'ydx93a7ass.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => '5a6flpkh64.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => 'p78axxw29g.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => 'v72qych5uu.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => 'c6k4g5qg8m.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => 's39g8k73mm.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => '3qy4746246.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => '3sh42y64q3.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => 'f38h382jlk.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => 'hs6bdukanm.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => 'prcb7njmu6.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => 'wzmmz9fp6w.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => 'yclnxrl5pm.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => '4468km3ulz.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => 't38b2kh725.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => '7ug5zh24hu.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => '9rd848q2bz.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => 'n6fk4nfna4.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => 'kbd757ywx3.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => '9t245vhmpl.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => '2u9pt9hc89.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => '8s468mfl3y.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => 'av6w8kgt66.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => 'klf5c3l5u5.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => 'ppxm28t8ap.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => '424m5254lk.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => 'uw77j35x4d.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => 'e5fvkxwrpn.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => 'zq492l623r.skadnetwork' },
+          { 'SKAdNetworkIdentifier' => '3qcr597p9d.skadnetwork' },
+          ]
         }
-        
+        app_spec.pod_target_xcconfig = {
+          'SWIFT_OBJC_BRIDGING_HEADER' => '$(PODS_TARGET_SRCROOT)/ApesterKit/App/Classes/ApesterKit-HostApp-Bridging-Header.h'
+        }
         # Internal dependencies
         app_spec.dependency 'ApesterKit/Content'
+        
+        # External dependencies
+        app_spec.dependency 'XCGLogger'      , '~> 7.0.1'
+        app_spec.dependency 'EzImageLoader'
     end
     s.test_spec 'UnitTests'   do |unit_tests|
         unit_tests.test_type         = :unit
@@ -98,8 +137,8 @@ Pod::Spec.new do |s|
             :code_coverage           => true ,
             :launch_arguments        => [ ]
         }
-        unit_tests.source_files      = [ 'ApesterKit/Tests/Classes/*.{h,m,swift}' ]
-        unit_tests.preserve_paths    = [ 'ApesterKit/Tests/Classes/*.{h,m,swift}' ]
+        unit_tests.source_files      = [ 'ApesterKit/UnitTests/Classes/*.{h,m,swift}' ]
+        unit_tests.preserve_paths    = [ 'ApesterKit/UnitTests/Classes/*.{h,m,swift}' ]
         
         unit_tests.requires_app_host = true
         unit_tests.app_host_name     = 'ApesterKit/HostApp'
@@ -108,5 +147,20 @@ Pod::Spec.new do |s|
         # Dependencies
         unit_tests.dependency 'Google-Mobile-Ads-SDK', '~> 10.0'
         unit_tests.dependency 'OpenWrapSDK'          , '~>  2.7.0'
+    end
+    s.test_spec 'UITests' do |ui_tests|
+        
+        ui_tests.test_type         = :ui
+        ui_tests.platforms         = { :ios => ios_deployment_target }
+        ui_tests.scheme            = {
+            :code_coverage           => true ,
+            :launch_arguments        => [ ]
+        }
+        ui_tests.source_files      = [ 'ApesterKit/UITests/Classes/*.{h,m,swift}' ]
+        ui_tests.preserve_paths    = [ 'ApesterKit/UITests/Classes/*.{h,m,swift}' ]
+        
+        ui_tests.requires_app_host = true
+        ui_tests.app_host_name     = 'ApesterKit/HostApp'
+        ui_tests.dependency          'ApesterKit/HostApp'
     end
 end

@@ -1,63 +1,81 @@
 //
-//  MyLibAppDelegate.swift
-//  ApesterKit-HostApp
+//  AppDelegate.swift
+//  ApesterDemo
 //
-//  Created by Ivelin Davidov on 14.02.22.
+//  Created by Asaf Baibekov on 22/11/2022.
 //
-
 import UIKit
-import ApesterKit
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    var window: UIWindow?
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        APELoggerService.shared.enabled = true
-        APELoggerService.shared.formatter = APELogger.Formatters.Concatenating([
-            APELogger.Formatters.standard,
-            APELogger.Formatters.FunctionFormatter()
-        ])
-        APELoggerService.shared.writer = APELogger.Writers.Redirecting(writers: [
-            APELogger.Writers.standard,
-            DemoLogWriter()
-        ])
+///
+///
+///
+@main
+open class AppDelegate : APEApplicationDelegateDispatcher
+{
+    open var window : UIWindow?
+    
+    static var shared : AppDelegate {
+        UIApplication.shared.delegate as! AppDelegate
+    }
+    
+    open override func obtainServices() -> [APEApplicationDelegateService] {
+        return [
+            LoggerService(),
+            SDKLoggerService(),
+            FeedMonitorService()
+        ]
+    }
+}
+extension AppDelegate
+{
+    func retrieveService<S>(of serviceType: S.Type) -> S where S : APEApplicationDelegateService {
         
-        // initiate StripConfigurationsFactory environment
-        StripConfigurationsFactory.environment = .stage
-        // preloadStripViews
-        // APEViewService.shared.preloadStripViews(with: StripConfigurationsFactory.configurations(hideApesterAds: false))
+        guard let result = monitoredApplicationServices.first(where: {
+            type(of: $0) == S.self
+        }) as? S else {
+            
+            fatalError("""
+                A predefined service is missing,  \
+                something is wrong in the AppDelegate file,  \
+                check the \(String(describing: serviceType)) definition
+            """)
+        }
+        return result
+    }
+    
+    var      loggerService: LoggerService      { retrieveService(of: LoggerService.self) }
+    var fileWatcherService: FeedMonitorService { retrieveService(of: FeedMonitorService.self) }
+}
+///
+/// MARK: - Application Lifecycle
+///
+extension AppDelegate
+{
+    open override func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]?) -> Bool {
+        let result = super.application(application, willFinishLaunchingWithOptions: launchOptions)
+        return result
+    }
+    open override func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]?) -> Bool {
+        let result = super.application(application, didFinishLaunchingWithOptions: launchOptions)
+        return result
+    }
+}
+///
+/// MARK: - UISceneSession Lifecycle
+///
+extension AppDelegate
+{
+    @available(iOS 13.0, *)
+    override open func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         
-        // initiate UnitConfigurationsFactory environment
-        UnitConfigurationsFactory.environment = .dev
-        
-        let configurations = UnitConfigurationsFactory.configurations(hideApesterAds: false, gdprString: UnitConfigurationsFactory.gdprString)
-        
-        // preloadUnitViews
-        APEViewService.shared.preloadUnitViews(with: configurations)
-        return true
+        // Called when a new scene session is being created.
+        // Use this method to select a configuration to create the new scene with.
+        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
-
-    func applicationWillResignActive(_ application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-    }
-
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    }
-
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    }
-
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    }
-
-    func applicationWillTerminate(_ application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    
+    @available(iOS 13.0, *)
+    override open func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
+        // Called when the user discards a scene session.
+        // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
+        // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 }

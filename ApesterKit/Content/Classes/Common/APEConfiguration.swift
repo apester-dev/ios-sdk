@@ -8,6 +8,7 @@
 
 import Foundation
 
+@objc(APEConfiguration)
 @objcMembers public class APEConfiguration: NSObject {
     let bundleInfo: [String : String]
     let environment: APEEnvironment

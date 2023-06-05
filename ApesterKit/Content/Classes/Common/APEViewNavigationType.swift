@@ -12,7 +12,8 @@ import Foundation
 @available(iOS 11.0, *)
 
 /// This enum describes the link type was activated.
-@objc public enum APEViewNavigationType: Int {
+@objc(APEViewNavigationType)
+public enum APEViewNavigationType: Int {
     /// Navigation is taking place for some other reason.
     case other
     /// A link with an href attribute was activated by the user.
