@@ -168,7 +168,6 @@ final public class APEAmazonStrategy : APEAdProviderStrategy
         instance.mraidPolicy = AUTO_DETECT_MRAID
         instance.setLogLevel(parameters.debugLogs ? DTBLogLevelAll : DTBLogLevelOff)
         instance.testMode = parameters.testMode
-        
     }
     private func applyPubMaticConfiguration(
         basedOn parameters: APEAmazonAdParameters

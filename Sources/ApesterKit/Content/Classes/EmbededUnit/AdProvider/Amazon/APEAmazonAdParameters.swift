@@ -25,6 +25,7 @@ internal struct APEAmazonAdParameters : Hashable , APEAdParameters
         case debugLogs      = "debugLogs"
         case bidSummaryLogs = "bidSummaryLogs"
         case timeInView     = "timeInView"
+        
         case amazon_app_key = "iosAmazonAppId"
         case amazon_slotID  = "iosAmazonUuid"
         case amazon_dfp_au  = "iosGamAdUnit"
@@ -54,12 +55,8 @@ internal struct APEAmazonAdParameters : Hashable , APEAdParameters
         self.init(from: dictionary)
     }
     
-    internal init?(from dictionary1: [String: Any])
+    internal init?(from dictionary: [String: Any])
     {
-        var dictionary = dictionary1
-        dictionary[CodingKeys.amazon_app_key.description] = "a9_onboarding_app_id"
-        dictionary[CodingKeys.amazon_slotID.description] = "5ab6a4ae-4aa5-43f4-9da4-e30755f2b295"
-        dictionary[CodingKeys.amazon_dfp_au.description] = "/15671365/pm_sdk/A9_Demo"
         typealias Keys = CodingKeys
         
         guard let provider      = dictionary[Keys.adProvider    .description] as? String else { return nil }
@@ -76,6 +73,7 @@ internal struct APEAmazonAdParameters : Hashable , APEAdParameters
         guard provider == Constants.Monetization.pubMatic  else { return nil }
         guard let adType    = APEAdType(rawValue: typeStr) else { return nil }
         guard let profileId = Int(profileIdStr)            else { return nil }
+        guard !amazon_key.isEmpty && !amazon_slotID.isEmpty && !amazon_dfp_au.isEmpty else { return nil }
         
         self.identifier     = adUnitId
         self.isVariant      = isVariant
