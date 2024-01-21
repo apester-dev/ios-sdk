@@ -72,7 +72,7 @@ final public class APEAdMobStrategy : APEAdProviderStrategy
         
         // TODO: ARKADI - move this to a diffrent location to make the system load faster
         GADMobileAds.sharedInstance().start(completionHandler: nil)
-        
+//        GADMobileAds.sharedInstance().requestConfiguration.testDeviceIdentifiers = ["92209F2A-5E96-47EB-B15B-DF3F18FBDDC4"]
         // let adSizes = params.type.supportedSizes.compactMap {
         //     GADAdSizeFromCGSize($0.size)
         // }

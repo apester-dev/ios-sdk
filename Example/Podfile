@@ -6,11 +6,13 @@ workspace 'ApesterKit.xcworkspace'
 
 project 'ApesterKit.xcodeproj'
 
-platform :ios, '11.0'
+platform :ios, '14.0'
 
 use_frameworks!
 
 target 'ApesterKit_Example' do
   pod 'ApesterObjcBridging', :path => '../' ;
   pod 'ApesterKit'         , :path => '../' , :appspecs => ['zHostApp'] , :testspecs => ['zUnitTests','zUITests'];
+  pod 'AmazonPublisherServicesSDK', '~> 4.4.0'
+
 end

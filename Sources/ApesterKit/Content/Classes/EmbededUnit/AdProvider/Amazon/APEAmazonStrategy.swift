@@ -167,7 +167,9 @@ final public class APEAmazonStrategy : APEAdProviderStrategy
         instance.setAppKey(parameters.amazon_key)
         instance.mraidPolicy = AUTO_DETECT_MRAID
         instance.setLogLevel(parameters.debugLogs ? DTBLogLevelAll : DTBLogLevelOff)
-        instance.testMode = parameters.testMode
+        instance.testMode = true
+        let dtbAdNetworkInfo = DTBAdNetworkInfo(networkName: DTBADNETWORK_ADMOB)
+        DTBAds.sharedInstance().setAdNetworkInfo(dtbAdNetworkInfo)
     }
     private func applyPubMaticConfiguration(
         basedOn parameters: APEAmazonAdParameters

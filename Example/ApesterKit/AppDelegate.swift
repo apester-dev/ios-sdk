@@ -32,16 +32,10 @@ extension AppDelegate : UIApplicationDelegate
             APELogger.Writers.standard,
             DemoLogWriter()
         ])
-        
-        // initiate StripConfigurationsFactory environment
-        StripConfigurationsFactory.environment = .stage
-        // preloadStripViews
-        // APEViewService.shared.preloadStripViews(with: StripConfigurationsFactory.configurations(hideApesterAds: false))
-        
         // initiate UnitConfigurationsFactory environment
-        UnitConfigurationsFactory.environment = .dev
-        
-        let configurations = UnitConfigurationsFactory.configurations(hideApesterAds: false, gdprString: UnitConfigurationsFactory.gdprString)
+        UnitConfigurationsFactory.environment = .production
+    
+        let configurations = UnitConfigurationsFactory.configurations(hideApesterAds: false, gdprString: UnitConfigurationsFactory.gdprString, baseUrl: UnitConfigurationsFactory.baseUrl)
         
         // preloadUnitViews
         APEViewService.shared.preloadUnitViews(with: configurations)

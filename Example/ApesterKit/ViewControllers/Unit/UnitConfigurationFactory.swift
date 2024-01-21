@@ -19,7 +19,7 @@ import ApesterKit
     
     static var gdprString = "CPlrcMAPlrcMACnABIDECzCkAP_AAAAAAAYgI8pd9D7dbXFDefx_SPt0OYwW0NBTKuQCChSAA2AFVAOQcLQA02EaMATAhiACEQIAolIBAAEEHAFUAECQQIAEAAHsIgSEhAAKIABEEBEQAAIQAAoKAAAAEAAIgAABIgSAmBiQS5LmRUCAGIAQBgBYgogBCIABAgMBBEAIABgIAIIIwygAAQAAAIIAAAAAARAAAgAAAJCQAYAAgjyGgAwABBHkRABgACCPIqADAAEEeRkAGAAII8joAMAAQR5IQAYAAgjySgAwABBHkpABgACCPIAA.f_gAAAAABcgAAAAA"
     // static var gdprString : String? = nil
-    
+    static var baseUrl: String = "https://www.kicker.de/apester-in-app-unit-detached?__APESTER_DEBUG__=true"
     static func configurations(hideApesterAds: Bool, gdprString: String? = nil, baseUrl: String? = nil) -> [APEUnitConfiguration]  {
         
         var unitsParams: [APEUnitParams]!
@@ -27,23 +27,31 @@ import ApesterKit
         switch environment {
         case .production:
             unitsParams = [
-                // // .unit(mediaId: "6231aab6b6a111002a435a45"), // ADMob Test
-                // .unit(mediaId: "61ee7ff6a5e14a002b6c044a"), //.unit(mediaId: "60eeda29b54b6f002448ba79"),
-                // .playlist(tags: [], channelToken: "5f85919d44959d32decd9d31", context: false, fallback: false),
-                .playlist(tags: [], channelToken: "61ee7fd7a33874001368f396", context: false, fallback: false)
-            ]
+              .unit(mediaId: "65941b08a7dea3751aad1574"), // ADMob Test
+//               .unit(mediaId: "65732bc74862859b7c33cfdf"),
+//                .unit(mediaId: "6567528b0833500f6a825511"),
+//               .unit(mediaId: "65673b98b5c744a440d4a8df"),
+//                 ADMob Test
+               // .unit(mediaId: "61ee7ff6a5e14a002b6c044a"), //.unit(mediaId: "60eeda29b54b6f002448ba79"),
+               //sport1
+                .playlist(tags: [], channelToken: "61ee7fd7a33874001368f396", context: false, fallback: false),
+               // kicker
+//                .playlist(tags: [], channelToken: "61ee7fd7a33874001368f396", context: false, fallback: false)
+//                .playlist(tags: [], channelToken: "61ee7fd7a33874001368f396", context: false, fallback: false)
+           ]
         case .stage:
             unitsParams = [
-                .unit(mediaId: "613d0754e9d41e0024816a38"),
-                .unit(mediaId: "5e6fa2351d18fd8580776612"),
-                .playlist(tags: ["news", "sport", "yoga"],
-                          channelToken: "5dcbc10016698427404a0f57",
-                          context: false,
-                          fallback: false),
-                .playlist(tags: ["yo", "bo", "ho"],
-                          channelToken: "5dde8f05694a5dc20a16f3c8",
-                          context: false,
-                          fallback: false),
+                .playlist(tags: [], channelToken: "64d0ae93dc9c1f0012f5cf23", context: false, fallback: false),
+//                .unit(mediaId: "613d0754e9d41e0024816a38"),
+//                .unit(mediaId: "5e6fa2351d18fd8580776612"),
+//                .playlist(tags: ["news", "sport", "yoga"],
+//                          channelToken: "5dcbc10016698427404a0f57",
+//                          context: false,
+//                          fallback: false),
+//                .playlist(tags: ["yo", "bo", "ho"],
+//                          channelToken: "5dde8f05694a5dc20a16f3c8",
+//                          context: false,
+//                          fallback: false),
             ]
         case .dev:
             unitsParams = [

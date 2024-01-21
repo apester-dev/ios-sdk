@@ -36,8 +36,7 @@ public enum APEEnvironment: Int
         case .production:
             return "https://renderer.apester.com"
         case .stage:
-            // return "https://renderer.stg.apester.dev"
-            return "https://renderer.stg.apester.com"
+            return "renderer.apester.com/v2/static/in-app-unit-detached-v2.html"
         case .dev:
             return "https://renderer.dayagi.apester.dev"
         }

@@ -31,6 +31,7 @@ internal class MessageDispatcher
     
     private func dispatch(message: String, to webView: WKWebView, completion: HandlerAnyOptionalType? = nil)
     {
+        print("\n/n >>>> Event message : \(message) \n/n")
         webView.evaluateJavaScript(message) { (response, error) in
             completion?(response)
         }

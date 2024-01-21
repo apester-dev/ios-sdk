@@ -24,6 +24,7 @@ extension ScriptMessageHandler : WKScriptMessageHandler
 {
     internal func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage)
     {
+        print("ScriptMessageHandler userContentController message: \(message.body)")
         self.delegate?.userContentController(userContentController, didReceive: message)
     }
 }

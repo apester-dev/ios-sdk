@@ -265,6 +265,7 @@ extension APEUnitController
            let bodyString = message.body as? String ,
            let dictionary = bodyString.ape_dictionary
         {
+            print(">>>>>> dictionary ape => \(dictionary)")
             if !loadingState.isLoaded {
                 loadingState.isLoaded = true
             }
@@ -301,12 +302,16 @@ extension APEUnitController
             if dictionary["type"] as? String == Constants.Monetization.initInUnit
             {
                 print("||>>>> Payload: \(String(describing: dictionary))")
-                APEAdProviderLoader.setupAdProvider(for: self, basedOn: dictionary)
+                var dict = dictionary
+//                dict["provider"] = "adMob"
+//                dict["iosAdUnitId"] = "ca-app-pub-3940256099942544/2934735716"
+//                dict["andriodAdUnitId"] =  "ca-app-pub-3940256099942544/2934735716"
+                APEAdProviderLoader.setupAdProvider(for: self, basedOn: dict)
             }
             
             if dictionary["type"] as? String == Constants.Monetization.initNativeAd
             {
-                print("||>>>> Payload: \(String(describing: dictionary))")
+                print("||>>>> Payload ADDDS -- > : \(String(describing: dictionary))")
                 APEAdProviderLoader.setupAdProvider(for: self, basedOn: dictionary)
             }
             

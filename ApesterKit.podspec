@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
     }
     s.source           = { :git => 'https://github.com/apester-dev/ios-sdk.git', :tag => "v"+s.version.to_s }
     
-    ios_deployment_target   = '11.0'
+    ios_deployment_target   = '12.0'
     s.platform              = :ios
     s.ios.deployment_target = ios_deployment_target
     
