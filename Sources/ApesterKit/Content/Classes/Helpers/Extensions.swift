@@ -90,6 +90,12 @@ internal extension WKWebView {
         webView.navigationDelegate          = delegate
         webView.uiDelegate                  = delegate
         webView.accessibilityIdentifier     = "apesterWebContainer"
+        webView.customUserAgent = "WebView Android"
+        if #available(iOS 16.4, *) {
+            webView.isInspectable = true
+        } else {
+            // Fallback on earlier versions
+        }
 //        if #available(iOS 15.5, *) {
 //            webView.setMinimumViewportInset(UIEdgeInsets.zero, maximumViewportInset: UIEdgeInsets.zero)
 //        }
