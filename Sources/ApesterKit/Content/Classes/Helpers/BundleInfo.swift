@@ -7,6 +7,7 @@
 //
 import Foundation
 import AdSupport
+import AppTrackingTransparency
 ///
 ///
 ///
@@ -40,7 +41,7 @@ internal class BundleInfo
     internal static func bundleInfoPayload(with bundle: Bundle?) -> [String: String]
     {
         var deviceInfoPayload: [String: String] = [:]
-
+        self.requestTrackingPermission()
         // get the device advertisingIdentifier
         let identifierManager = ASIdentifierManager.shared()
         let idfa = identifierManager.advertisingIdentifier
@@ -81,4 +82,30 @@ internal class BundleInfo
     {
          return "\(infoDictionary[Constants.Payload.appName] ?? "")/\(infoDictionary[Constants.Payload.appVersion] ?? "")"
     }
+   internal static func requestTrackingPermission() {
+       if #available(iOS 14, *) {
+           ATTrackingManager.requestTrackingAuthorization { status in
+               switch status {
+               case .authorized:
+                   // Tracking authorization dialog was shown and permission was granted.
+                   print("Tracking authorized")
+               case .denied:
+                   // Tracking authorization dialog was shown and permission was denied.
+                   print("Tracking denied")
+               case .notDetermined:
+                   // Tracking authorization dialog has not been shown.
+                   print("Tracking not determined")
+               case .restricted:
+                   // Tracking authorization is restricted.
+                   print("Tracking restricted")
+               @unknown default:
+                   // Unknown state, handle appropriately.
+                   print("Unknown tracking authorization status")
+               }
+           }
+       } else {
+           // Fallback on earlier versions
+       }
+    }
+
 }

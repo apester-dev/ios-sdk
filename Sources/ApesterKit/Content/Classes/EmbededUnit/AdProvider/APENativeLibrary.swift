@@ -45,10 +45,12 @@ internal class APENativeLibraryDelegate : NSObject , APEBiddingManagerDelegate
     @objc func didReceiveResponse(_ response: [String : Any]?)
     {
         // NO OP - override location
+        APELoggerService.shared.info()
     }
     
     @objc func didFail(toReceiveResponse error: Error?)
     {
         // NO OP - override location
+        APELoggerService.shared.info()
     }
 }

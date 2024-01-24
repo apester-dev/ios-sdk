@@ -1,5 +1,5 @@
 PODS:
-  - AmazonPublisherServicesSDK (4.4.3)
+  - AmazonPublisherServicesSDK (4.7.7)
   - ApesterKit (3.3.14):
     - ApesterKit/Content (= 3.3.14)
   - ApesterKit/Content (3.3.14):
@@ -13,7 +13,7 @@ PODS:
     - ApesterKit/Content_Core
     - Google-Mobile-Ads-SDK (~> 10.0)
   - ApesterKit/ContentAmazon (3.3.14):
-    - AmazonPublisherServicesSDK (~> 4.4.0)
+    - AmazonPublisherServicesSDK (~> 4.7.7)
     - ApesterKit/Content_Core
     - OpenWrapHandlerDFP (~> 3.1.0)
   - ApesterKit/ContentPubmatic (3.3.14):
@@ -97,7 +97,7 @@ PODS:
     - ObjcExceptionBridging
 
 DEPENDENCIES:
-  - AmazonPublisherServicesSDK (~> 4.4.0)
+  - AmazonPublisherServicesSDK (~> 4.7.7)
   - ApesterKit (from `../`)
   - ApesterKit/zHostApp (from `../`)
   - ApesterKit/zUITests (from `../`)
@@ -127,8 +127,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  AmazonPublisherServicesSDK: cd88ef55d5afaa6483bcb04b977e1585a95f9211
-  ApesterKit: e0362b3b3620551a7562cb0e5a7637689dea8530
+  AmazonPublisherServicesSDK: 539059263689d2d14c25017f2ef89ac5db4787a8
+  ApesterKit: dfca2bf7b57cfd0d2bee4b696693715c5705364c
   ApesterObjcBridging: 4e2955f819b68f1fef26cd06285df50c9eaec8ad
   EzHTTP: d8f7e50a69bbcd6ae4f9853692d6bc5cf92e598b
   EzImageLoader: a930cbd57aaca0dbc3515ad3ff4639843d8658d9
@@ -143,6 +143,6 @@ SPEC CHECKSUMS:
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   XCGLogger: 1943831ef907df55108b0b18657953f868de973b
 
-PODFILE CHECKSUM: f175de7fecdf4e352f4b15d52409a8ee3bc27016
+PODFILE CHECKSUM: d429c32403304ead6a94e54b0fb9620f28221f08
 
 COCOAPODS: 1.14.3

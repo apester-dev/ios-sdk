@@ -265,7 +265,12 @@ extension APEUnitController
            let bodyString = message.body as? String ,
            let dictionary = bodyString.ape_dictionary
         {
-            print(">>>>>> dictionary ape => \(dictionary)")
+            let type = dictionary["type"] as? String
+            
+            if let provider = dictionary["provider"] as? String {
+                print(provider)
+            }
+            print(">>>>>> dictionary ape type => \(type) ")
             if !loadingState.isLoaded {
                 loadingState.isLoaded = true
             }

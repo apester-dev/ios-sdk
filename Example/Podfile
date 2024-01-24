@@ -13,6 +13,6 @@ use_frameworks!
 target 'ApesterKit_Example' do
   pod 'ApesterObjcBridging', :path => '../' ;
   pod 'ApesterKit'         , :path => '../' , :appspecs => ['zHostApp'] , :testspecs => ['zUnitTests','zUITests'];
-  pod 'AmazonPublisherServicesSDK', '~> 4.4.0'
+  pod 'AmazonPublisherServicesSDK', '~> 4.7.7'
 
 end
