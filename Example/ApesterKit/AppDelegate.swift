@@ -10,6 +10,8 @@ import UIKit
 ///
 ///
 import ApesterKit
+import FirebaseCore
+import FirebaseAuth
 ///
 ///
 ///
@@ -23,6 +25,8 @@ extension AppDelegate : UIApplicationDelegate
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool
     {
         // Override point for customization after application launch.
+        FirebaseApp.configure()
+        
         APELoggerService.shared.enabled = true
         APELoggerService.shared.formatter = APELogger.Formatters.Concatenating([
             APELogger.Formatters.standard,
@@ -39,6 +43,23 @@ extension AppDelegate : UIApplicationDelegate
         
         // preloadUnitViews
         APEViewService.shared.preloadUnitViews(with: configurations)
+        
+        let auth = Auth.auth()
+        if auth.currentUser != nil {
+                   // User is signed in. Show the main app interface.
+            UserInfo.shared.userEmail = auth.currentUser?.email
+            UserInfo.shared.favoriteId = loadFavoriteItem(userName: UserInfo.shared.userEmail ?? "default@mail.com")
+            
+                  logInUser()
+               } else {
+                   // No user is signed in. Show login interface.
+                   let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                   let loginViewController = mainStoryboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+                   window?.rootViewController = loginViewController
+               }
+        
+    
+        
         return true
     }
 
@@ -68,4 +89,20 @@ extension AppDelegate : UIApplicationDelegate
     {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+    func logOutUser() {
+        do {
+            try Auth.auth().signOut()
+            let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let loginViewController = mainStoryboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+            window?.rootViewController = loginViewController
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
+        }
+    }
+    func logInUser() {
+        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = mainStoryboard.instantiateViewController(withIdentifier: "mainViewController") as! mainViewController
+        window?.rootViewController = viewController
+    }
+
 }

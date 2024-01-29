@@ -8,7 +8,7 @@
 
 #import "APESingleStripViewController.h"
 #import <ApesterKit/ApesterKit-umbrella.h>
-#import <ApesterKit_Example-Swift.h>
+#import <Apester-Swift.h>
 
 @interface APESingleStripViewController() <APEStripViewDelegate>
 @property (weak, nonatomic) IBOutlet UIView *containerView;

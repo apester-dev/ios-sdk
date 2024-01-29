@@ -17,7 +17,7 @@ class APEUnitViewController: UIViewController {
     
     private var apesterUnitView: APEUnitView!
 
-    private var unitParams: APEUnitParams? = UnitConfigurationsFactory.unitsParams.first
+    private var unitParams: APEUnitParams? = UnitConfigurationsFactory.unitsParams.first?.unitParam
     
     @IBOutlet weak var unitContainerView: UIView!
 
@@ -38,7 +38,7 @@ class APEUnitViewController: UIViewController {
         
         if let unit = unitParams {
             // preLoad implementation
-            apesterUnitView = APEViewService.shared.unitView(for: unit.id)
+            apesterUnitView = APEViewService.shared.unitView(for: UserInfo.shared.favoriteId ?? unit.id)
         }
         
         if apesterUnitView == nil {

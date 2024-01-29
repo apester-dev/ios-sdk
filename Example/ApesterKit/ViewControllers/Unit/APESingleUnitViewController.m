@@ -8,7 +8,7 @@
 
 #import "APESingleUnitViewController.h"
 #import <ApesterKit/ApesterKit-umbrella.h>
-#import <ApesterKit_Example-Swift.h>
+#import <Apester-Swift.h>
 
 @interface APESingleUnitViewController ()<APEUnitViewDelegate>
 
