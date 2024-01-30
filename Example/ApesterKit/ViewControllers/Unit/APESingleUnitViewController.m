@@ -27,7 +27,7 @@
                                                                                            gdprString:nil
                                                                                               baseUrl: nil
                                            ].firstObject;
-    NSString *unitId = [[UnitConfigurationsFactory unitsIds] lastObject];
+    NSString *unitId = UserInfo.shared.favoriteId ? UserInfo.shared.favoriteId : [[UnitConfigurationsFactory unitsIds] lastObject];
 
     if (unitId != nil) {
         // preLoad implementation

@@ -26,7 +26,7 @@ import ApesterKit
         switch environment {
         case .production:
             unitsParams = [
-                (.Quiz,.unit(mediaId: "65941b08a7dea3751aad1574")),
+                (.Quiz,.unit(mediaId: "61eeae1e7e9704002b359b22")),
                 (.Story,.unit(mediaId: "6593f8b05a52477af6253ba9")),
                 (.Poll,.unit(mediaId: "65941922dea143ab835f10eb")),
                 (.Quiz,.unit(mediaId: "6592bc1c3e05b25017d45081")),

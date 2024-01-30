@@ -43,6 +43,11 @@
 		051B6DDA2B6683B40067120E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 051B6DD92B6683B40067120E /* GoogleService-Info.plist */; };
 		051B6DDC2B66AF1F0067120E /* database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051B6DDB2B66AF1F0067120E /* database.swift */; };
 		051B6DDF2B66AFF50067120E /* userSingletone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051B6DDE2B66AFF50067120E /* userSingletone.swift */; };
+		052076672B69398A008EA5E0 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 052076662B69398A008EA5E0 /* FirebaseAnalytics */; };
+		052076692B69398A008EA5E0 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 052076682B69398A008EA5E0 /* FirebaseAnalyticsOnDeviceConversion */; };
+		0520766B2B69398A008EA5E0 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0520766A2B69398A008EA5E0 /* FirebaseAnalyticsSwift */; };
+		0520766D2B69398A008EA5E0 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 0520766C2B69398A008EA5E0 /* FirebaseAnalyticsWithoutAdIdSupport */; };
+		0520766F2B69398A008EA5E0 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 0520766E2B69398A008EA5E0 /* FirebaseAppCheck */; };
 		33501521D0158F958C420DB0 /* Pods_Apester.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5621325BCD694EA3DAD1A6FC /* Pods_Apester.framework */; };
 		5D4C7A95299E38EE00C1FC01 /* DemoThreadMutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4C7A93299E38EE00C1FC01 /* DemoThreadMutex.swift */; };
 		5D4C7A96299E38EE00C1FC01 /* DemoLogWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4C7A94299E38EE00C1FC01 /* DemoLogWriter.swift */; };
@@ -111,7 +116,11 @@
 				051B6DCE2B667CEC0067120E /* FirebaseMessaging in Frameworks */,
 				051B6DAE2B667CEC0067120E /* FirebaseAppDistribution-Beta in Frameworks */,
 				051B6DB22B667CEC0067120E /* FirebaseAuthCombine-Community in Frameworks */,
+				0520766B2B69398A008EA5E0 /* FirebaseAnalyticsSwift in Frameworks */,
+				0520766D2B69398A008EA5E0 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				051B6DBE2B667CEC0067120E /* FirebaseFirestoreCombine-Community in Frameworks */,
+				052076692B69398A008EA5E0 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
+				0520766F2B69398A008EA5E0 /* FirebaseAppCheck in Frameworks */,
 				051B6DA82B667CEC0067120E /* FirebaseAnalyticsSwift in Frameworks */,
 				051B6DCC2B667CEC0067120E /* FirebaseMLModelDownloader in Frameworks */,
 				051B6DAA2B667CEC0067120E /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
@@ -132,6 +141,7 @@
 				051B6DBA2B667CEC0067120E /* FirebaseDynamicLinks in Frameworks */,
 				051B6DBC2B667CEC0067120E /* FirebaseFirestore in Frameworks */,
 				051B6DD42B667CEC0067120E /* FirebaseRemoteConfigSwift in Frameworks */,
+				052076672B69398A008EA5E0 /* FirebaseAnalytics in Frameworks */,
 				33501521D0158F958C420DB0 /* Pods_Apester.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -334,6 +344,11 @@
 				051B6DD32B667CEC0067120E /* FirebaseRemoteConfigSwift */,
 				051B6DD52B667CEC0067120E /* FirebaseStorage */,
 				051B6DD72B667CEC0067120E /* FirebaseStorageCombine-Community */,
+				052076662B69398A008EA5E0 /* FirebaseAnalytics */,
+				052076682B69398A008EA5E0 /* FirebaseAnalyticsOnDeviceConversion */,
+				0520766A2B69398A008EA5E0 /* FirebaseAnalyticsSwift */,
+				0520766C2B69398A008EA5E0 /* FirebaseAnalyticsWithoutAdIdSupport */,
+				0520766E2B69398A008EA5E0 /* FirebaseAppCheck */,
 			);
 			productName = ApesterKit;
 			productReference = 607FACD01AFB9204008FA782 /* Apester.app */;
@@ -619,7 +634,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = ApesterIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1007;
+				CURRENT_PROJECT_VERSION = 1008;
 				DEVELOPMENT_TEAM = N52D8D8TG4;
 				INFOPLIST_FILE = ApesterKit/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Apester;
@@ -628,7 +643,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.3.87;
+				MARKETING_VERSION = 3.3.88;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = Apester.ApesterTestApp;
 				PRODUCT_NAME = Apester;
@@ -648,7 +663,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = ApesterIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1007;
+				CURRENT_PROJECT_VERSION = 1008;
 				DEVELOPMENT_TEAM = N52D8D8TG4;
 				INFOPLIST_FILE = ApesterKit/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Apester;
@@ -657,7 +672,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.3.87;
+				MARKETING_VERSION = 3.3.88;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = Apester.ApesterTestApp;
 				PRODUCT_NAME = Apester;
@@ -838,6 +853,31 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 051B6DA22B667CEC0067120E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseStorageCombine-Community";
+		};
+		052076662B69398A008EA5E0 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 051B6DA22B667CEC0067120E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		052076682B69398A008EA5E0 /* FirebaseAnalyticsOnDeviceConversion */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 051B6DA22B667CEC0067120E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsOnDeviceConversion;
+		};
+		0520766A2B69398A008EA5E0 /* FirebaseAnalyticsSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 051B6DA22B667CEC0067120E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsSwift;
+		};
+		0520766C2B69398A008EA5E0 /* FirebaseAnalyticsWithoutAdIdSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 051B6DA22B667CEC0067120E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsWithoutAdIdSupport;
+		};
+		0520766E2B69398A008EA5E0 /* FirebaseAppCheck */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 051B6DA22B667CEC0067120E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAppCheck;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

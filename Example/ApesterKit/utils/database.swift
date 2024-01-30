@@ -11,12 +11,15 @@ import Firebase
 func saveFavorite(userName: String, favorite: String){
     let key = "\(userName)_favorite"
      UserDefaults.standard.set(favorite,forKey: key)
+    UserInfo.shared.setUserFavorite(favoriteId: favorite)
     
 }
 
 func removeFavorite(userName: String) {
     let key = "\(userName)_favorite"
     UserDefaults.standard.removeObject(forKey: key)
+    UserInfo.shared.setUserFavorite(favoriteId: nil)
+
 }
 
 func loadFavoriteItem(userName: String) -> String? {

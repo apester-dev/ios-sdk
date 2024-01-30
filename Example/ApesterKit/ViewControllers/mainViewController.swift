@@ -59,14 +59,14 @@ class mainViewController: UIViewController {
     }
     
     @objc func likeAction() {
-        isLiked.toggle()
-            if isLiked {
+            if !isLiked {
                 // Logic to handle when the unit is liked (e.g., save to favorites)
                 saveFavorite(userName: UserInfo.shared.userEmail ?? "default@mail.com", favorite: currentUnit?.mediaId ?? "")
             } else {
                 // Logic to handle when the unit is unliked (e.g., remove from favorites)
                 removeFavorite(userName: UserInfo.shared.userEmail ?? "default@mail.com")
             }
+        self.updateLikeImage()
     }
     
     
@@ -123,6 +123,7 @@ class mainViewController: UIViewController {
         self.unitView?.reload()
         view.layoutIfNeeded()
         self.scrollView.scrollToTop(animated: false)
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -204,17 +205,10 @@ class mainViewController: UIViewController {
     }
     
     func updateLikeImage() {
-        let imageName = isLiked ? "heart.fill" : "heart"
+        let usersFavId = UserInfo.shared.favoriteId
+        let imageName = usersFavId == self.currentUnit?.mediaId ? "heart.fill" : "heart"
         likeButtonOutlet.image = UIImage(systemName: imageName)
     }
-    private func setupCustomBackButton() {
-          let backButton = UIBarButtonItem(title: "LogOut", style: .plain, target: self, action: #selector(backButtonTapped))
-          self.navigationItem.leftBarButtonItem = backButton
-      }
-
-      @objc private func backButtonTapped() {
-       
-      }
 
 
 }
