@@ -634,7 +634,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = ApesterIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1008;
+				CURRENT_PROJECT_VERSION = 1009;
 				DEVELOPMENT_TEAM = N52D8D8TG4;
 				INFOPLIST_FILE = ApesterKit/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Apester;
@@ -643,7 +643,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.3.88;
+				MARKETING_VERSION = 3.3.89;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = Apester.ApesterTestApp;
 				PRODUCT_NAME = Apester;
@@ -663,7 +663,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = ApesterIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1008;
+				CURRENT_PROJECT_VERSION = 1009;
 				DEVELOPMENT_TEAM = N52D8D8TG4;
 				INFOPLIST_FILE = ApesterKit/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Apester;
@@ -672,7 +672,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.3.88;
+				MARKETING_VERSION = 3.3.89;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = Apester.ApesterTestApp;
 				PRODUCT_NAME = Apester;
