@@ -48,6 +48,9 @@
 		0520766B2B69398A008EA5E0 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0520766A2B69398A008EA5E0 /* FirebaseAnalyticsSwift */; };
 		0520766D2B69398A008EA5E0 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 0520766C2B69398A008EA5E0 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		0520766F2B69398A008EA5E0 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 0520766E2B69398A008EA5E0 /* FirebaseAppCheck */; };
+		057632352B7BABBF006FEF54 /* CustomApeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 057632332B7BABBF006FEF54 /* CustomApeScreenViewController.swift */; };
+		057632362B7BABBF006FEF54 /* CustomApeScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 057632342B7BABBF006FEF54 /* CustomApeScreenViewController.xib */; };
+		057632382B7BCB86006FEF54 /* mainViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 057632372B7BCB86006FEF54 /* mainViewControllerExtension.swift */; };
 		05BBFAB22B6BAEDA00B50D2E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 05BBFAB12B6BAEDA00B50D2E /* FirebaseAnalytics */; };
 		05BBFAB42B6BAEDA00B50D2E /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 05BBFAB32B6BAEDA00B50D2E /* FirebaseAnalyticsOnDeviceConversion */; };
 		05BBFAB62B6BAEDA00B50D2E /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 05BBFAB52B6BAEDA00B50D2E /* FirebaseAnalyticsSwift */; };
@@ -129,6 +132,9 @@
 		051B6DD92B6683B40067120E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		051B6DDB2B66AF1F0067120E /* database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = database.swift; sourceTree = "<group>"; };
 		051B6DDE2B66AFF50067120E /* userSingletone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userSingletone.swift; sourceTree = "<group>"; };
+		057632332B7BABBF006FEF54 /* CustomApeScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomApeScreenViewController.swift; sourceTree = "<group>"; };
+		057632342B7BABBF006FEF54 /* CustomApeScreenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomApeScreenViewController.xib; sourceTree = "<group>"; };
+		057632372B7BCB86006FEF54 /* mainViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mainViewControllerExtension.swift; sourceTree = "<group>"; };
 		2FBBC54C9A6D32198A51174B /* Pods-Apester.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Apester.debug.xcconfig"; path = "Target Support Files/Pods-Apester/Pods-Apester.debug.xcconfig"; sourceTree = "<group>"; };
 		5621325BCD694EA3DAD1A6FC /* Pods_Apester.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Apester.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		58DDA11B4BFC64BBED2F19AC /* Pods-ApesterKit_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ApesterKit_Example.release.xcconfig"; path = "Target Support Files/Pods-ApesterKit_Example/Pods-ApesterKit_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -280,8 +286,18 @@
 			isa = PBXGroup;
 			children = (
 				051B6D9E2B6674840067120E /* ScrollViewExtension.swift */,
+				057632372B7BCB86006FEF54 /* mainViewControllerExtension.swift */,
 			);
 			path = extensions;
+			sourceTree = "<group>";
+		};
+		057632322B7BAA65006FEF54 /* custom-components */ = {
+			isa = PBXGroup;
+			children = (
+				057632332B7BABBF006FEF54 /* CustomApeScreenViewController.swift */,
+				057632342B7BABBF006FEF54 /* CustomApeScreenViewController.xib */,
+			);
+			path = "custom-components";
 			sourceTree = "<group>";
 		};
 		5D4C7A97299E38F700C1FC01 /* View */ = {
@@ -348,6 +364,7 @@
 		607FACD21AFB9204008FA782 /* Example for ApesterKit */ = {
 			isa = PBXGroup;
 			children = (
+				057632322B7BAA65006FEF54 /* custom-components */,
 				051B6D9D2B6674690067120E /* extensions */,
 				051B6D992B6673F10067120E /* utils */,
 				051B6D902B66733D0067120E /* structs */,
@@ -563,6 +580,7 @@
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				051B6DDA2B6683B40067120E /* GoogleService-Info.plist in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
+				057632362B7BABBF006FEF54 /* CustomApeScreenViewController.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -658,9 +676,11 @@
 				5D4C7AAD299E396200C1FC01 /* APECollectionViewCell.swift in Sources */,
 				051B6D9F2B6674840067120E /* ScrollViewExtension.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				057632382B7BCB86006FEF54 /* mainViewControllerExtension.swift in Sources */,
 				051B6DDC2B66AF1F0067120E /* database.swift in Sources */,
 				5D4C7AA8299E395A00C1FC01 /* APESingleUnitViewController.m in Sources */,
 				5D4C7AA1299E394600C1FC01 /* APEMultipleStripsViewController.swift in Sources */,
+				057632352B7BABBF006FEF54 /* CustomApeScreenViewController.swift in Sources */,
 				051B6D872B6555E00067120E /* mainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

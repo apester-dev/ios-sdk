@@ -34,11 +34,11 @@ public enum APEEnvironment: Int
     {
         switch self {
         case .production:
-            return "https://renderer.apester.com"
+            return "https://www.sport1.de/apester-in-app-unit-detached?__APESTER_DEBUG__=true"
         case .stage:
-            return "renderer.apester.com/v2/static/in-app-unit-detached-v2.html"
+            return "https://renderer.stg.apester.dev"
         case .dev:
-            return "https://renderer.dayagi.apester.dev"
+            return "https://renderer.georgi.apester.dev"
         }
     }
 }

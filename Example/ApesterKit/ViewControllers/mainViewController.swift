@@ -16,6 +16,7 @@ class mainViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var story_container: UIView!
     
+    
     @IBAction func openLinkToApesterWeb(_ sender: Any) {
         if let url = URL(string: "https://content.apester.com") {
                     if UIApplication.shared.canOpenURL(url) {
@@ -74,6 +75,10 @@ class mainViewController: UIViewController {
     @IBOutlet weak var titleOutlet: UILabel!
     @IBOutlet weak var articleOutlet: UILabel!
     @IBOutlet weak var bottomArticleOutlet: UILabel!
+    
+    var textField: UITextField!
+    var submitButton: UIButton!
+    var baseUrl:String? = nil
     
     private var unitView: APEUnitView?
     private var mediaId: String?
@@ -136,7 +141,17 @@ class mainViewController: UIViewController {
 //        setupCustomBackButton()
         updateLikeImage()
         setupGestures()
-        
+        setCategoriesActionSheet()
+
+        self.setUnitView( unitTypesOutlet.selectedSegmentIndex)
+
+    }
+    
+    override class func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    
+    func setCategoriesActionSheet(){
         // Add actions to the alertController
         self.alertController = UIAlertController(title: "Choose category", message: nil, preferredStyle: .actionSheet)
 
@@ -155,15 +170,8 @@ class mainViewController: UIViewController {
             // Handle Gaming action
             setCategory(category: Category(rawValue: title ?? Category.sports.rawValue)!, type: unitTypeBySelctedIndex(unitTypesOutlet.selectedSegmentIndex))
         }))
-
-        self.setUnitView( unitTypesOutlet.selectedSegmentIndex)
-
-    
     }
     
-    override class func awakeFromNib() {
-        super.awakeFromNib()
-    }
     func setupGestures(){
         settingsImage.isUserInteractionEnabled = true
         favoritesImage.isUserInteractionEnabled = true
@@ -177,20 +185,67 @@ class mainViewController: UIViewController {
         favoritesImage.addGestureRecognizer(tapGestureRecognizerFavorites)
         likeButtonOutlet.addGestureRecognizer(tapGestureRecognizerlike)
     }
+    @objc func submitAction(){
+        
+        let unitParams = APEUnitParams.unit(mediaId: textField.text ?? "")
+        var configuration = APEUnitConfiguration(unitParams: unitParams, bundle: .main, hideApesterAds: false, gdprString: UnitConfigurationsFactory.gdprString,baseUrl: baseUrl, environment: .production)
+        configuration.setFullscreen(false)
+        self.unitView = APEUnitView(configuration: configuration)
+        self.unitView?.display(in: self.containerView, containerViewController: self)
+    }
     
     func setUnitView(_ segmentIndex: Int, currentId: String? = nil){
-        self.currentUnit = self.unitTypes[getIndexFofrCategoryAndType(category: selectedCategory, unitType: unitTypeBySelctedIndex(unitTypesOutlet.selectedSegmentIndex))][selectedCategory]
-        if let mediaId = currentId {
-            self.unitView = APEViewService.shared.unitView(for: currentUnit!.mediaId)
-        } else {
-            self.unitView = APEViewService.shared.unitView(for: currentUnit!.mediaId)
+        if(segmentIndex % 3 == 0 && segmentIndex > 0 ){
+            articleOutlet.text = ""
+            titleOutlet.text = ""
+            bottomArticleOutlet.text = ""
+            textField = UITextField()
+              textField.borderStyle = .roundedRect
+              textField.placeholder = "Enter unitId here"
+            textField.text = "6593f8b05a52477af6253ba9"
+              
+              // Initialize the button
+              submitButton = UIButton(type: .system)
+              submitButton.setTitle("Submit", for: .normal)
+              submitButton.addTarget(self, action: #selector(submitAction), for: .touchUpInside)
+              
+              // Add the text field and button to the containerView
+              textField.translatesAutoresizingMaskIntoConstraints = false
+              submitButton.translatesAutoresizingMaskIntoConstraints = false
+              containerView.addSubview(textField)
+              containerView.addSubview(submitButton)
+              
+              // Set Auto Layout constraints
+              NSLayoutConstraint.activate([
+                  // Position the text field at the top of the containerView
+                  textField.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 8),
+                  textField.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 8),
+                  textField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -8),
+                  
+                  // Position the button below the text field
+                  submitButton.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 8),
+                  submitButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 8),
+                  submitButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -8)
+              ])
+              
+              // Adjust the remaining views in the containerView if necessary
+//              adjustRemainingViews()
+          
         }
-        self.unitView?.display(in:
-//                                unitTypeBySelctedIndex(unitTypesOutlet.selectedSegmentIndex) == UnitType.Story ? self.story_container :
-                                self.containerView, containerViewController: self)
-        self.titleOutlet.text = currentUnit!.article.title
-        self.articleOutlet.text = currentUnit!.article.topArticle
-        self.bottomArticleOutlet.text = currentUnit!.article.bottomArticle
+        else {
+            self.currentUnit = self.unitTypes[getIndexFofrCategoryAndType(category: selectedCategory, unitType: unitTypeBySelctedIndex(unitTypesOutlet.selectedSegmentIndex))][selectedCategory]
+            if let mediaId = currentId {
+                self.unitView = APEViewService.shared.unitView(for: currentUnit!.mediaId)
+            } else {
+                self.unitView = APEViewService.shared.unitView(for: currentUnit!.mediaId)
+            }
+            self.unitView?.display(in:
+    //                                unitTypeBySelctedIndex(unitTypesOutlet.selectedSegmentIndex) == UnitType.Story ? self.story_container :
+                                    self.containerView, containerViewController: self)
+            self.titleOutlet.text = currentUnit!.article.title
+            self.articleOutlet.text = currentUnit!.article.topArticle
+            self.bottomArticleOutlet.text = currentUnit!.article.bottomArticle
+        }
         
     }
     
@@ -209,6 +264,7 @@ class mainViewController: UIViewController {
         let imageName = usersFavId == self.currentUnit?.mediaId ? "heart.fill" : "heart"
         likeButtonOutlet.image = UIImage(systemName: imageName)
     }
+    
 
 
 }
