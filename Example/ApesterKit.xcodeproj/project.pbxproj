@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		025E1F0CBAFEEA6D69C5B137 /* Pods_ApesterKit_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFA1CB87F82ABFE9D18059A8 /* Pods_ApesterKit_Tests.framework */; };
 		5D4C7A95299E38EE00C1FC01 /* DemoThreadMutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4C7A93299E38EE00C1FC01 /* DemoThreadMutex.swift */; };
 		5D4C7A96299E38EE00C1FC01 /* DemoLogWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4C7A94299E38EE00C1FC01 /* DemoLogWriter.swift */; };
 		5D4C7AA0299E394600C1FC01 /* StripConfigurationsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4C7A9C299E394600C1FC01 /* StripConfigurationsFactory.swift */; };
@@ -22,24 +21,12 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
-		F4CE8995AD1CC1908FBE5116 /* Pods_ApesterKit_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54126D9FCC312B3D88048B4D /* Pods_ApesterKit_Example.framework */; };
+		B4A4145E852D079728DBB148 /* Pods_ApesterKit_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EBCECD5AFAF31E1A592ADB0 /* Pods_ApesterKit_Example.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		607FACE61AFB9204008FA782 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 607FACCF1AFB9204008FA782;
-			remoteInfo = ApesterKit;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		32388D7401E88B99FBEF34A8 /* Pods-ApesterKit_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ApesterKit_Example.release.xcconfig"; path = "Target Support Files/Pods-ApesterKit_Example/Pods-ApesterKit_Example.release.xcconfig"; sourceTree = "<group>"; };
-		3C5397857DB657FFD1898FC8 /* Pods-ApesterKit_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ApesterKit_Tests.release.xcconfig"; path = "Target Support Files/Pods-ApesterKit_Tests/Pods-ApesterKit_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		54126D9FCC312B3D88048B4D /* Pods_ApesterKit_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ApesterKit_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FF4327B3499C362CECF5D65 /* Pods-ApesterKit_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ApesterKit_Example.release.xcconfig"; path = "Target Support Files/Pods-ApesterKit_Example/Pods-ApesterKit_Example.release.xcconfig"; sourceTree = "<group>"; };
+		29F0EBBD4C5AA8D4E0AF1A69 /* Pods-ApesterKit_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ApesterKit_Example.debug.xcconfig"; path = "Target Support Files/Pods-ApesterKit_Example/Pods-ApesterKit_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		5D4C7A93299E38EE00C1FC01 /* DemoThreadMutex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoThreadMutex.swift; sourceTree = "<group>"; };
 		5D4C7A94299E38EE00C1FC01 /* DemoLogWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoLogWriter.swift; sourceTree = "<group>"; };
 		5D4C7A9B299E394500C1FC01 /* ApesterKit_Example-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ApesterKit_Example-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -53,20 +40,16 @@
 		5D4C7AA6299E395A00C1FC01 /* APESingleUnitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APESingleUnitViewController.h; sourceTree = "<group>"; };
 		5D4C7AA7299E395A00C1FC01 /* UnitConfigurationFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitConfigurationFactory.swift; sourceTree = "<group>"; };
 		5D4C7AAC299E396200C1FC01 /* APECollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APECollectionViewCell.swift; sourceTree = "<group>"; };
+		5DBE88D529D32BAD009B2369 /* ApesterObjcBridging.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; name = ApesterObjcBridging.podspec; path = ../ApesterObjcBridging.podspec; sourceTree = "<group>"; };
+		5EBCECD5AFAF31E1A592ADB0 /* Pods_ApesterKit_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ApesterKit_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD01AFB9204008FA782 /* ApesterKit_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApesterKit_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		607FACE51AFB9204008FA782 /* ApesterKit_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ApesterKit_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		60C7ECC25F81007A08831296 /* ApesterKit.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = ApesterKit.podspec; path = ../ApesterKit.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		8CE5FD2F402F203FBA490B3C /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		9532F5B012F19698457B3604 /* Pods-ApesterKit_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ApesterKit_Tests.debug.xcconfig"; path = "Target Support Files/Pods-ApesterKit_Tests/Pods-ApesterKit_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		BFA1CB87F82ABFE9D18059A8 /* Pods_ApesterKit_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ApesterKit_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EE997734D01E0FE5ECD22D1A /* Pods-ApesterKit_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ApesterKit_Example.debug.xcconfig"; path = "Target Support Files/Pods-ApesterKit_Example/Pods-ApesterKit_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		F629917179A80DF506AA2AB2 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -75,26 +58,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4CE8995AD1CC1908FBE5116 /* Pods_ApesterKit_Example.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		607FACE21AFB9204008FA782 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				025E1F0CBAFEEA6D69C5B137 /* Pods_ApesterKit_Tests.framework in Frameworks */,
+				B4A4145E852D079728DBB148 /* Pods_ApesterKit_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		42378E350F8485E5152788D8 /* Frameworks */ = {
+		4CE61618C11CB0289D9F2C18 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				54126D9FCC312B3D88048B4D /* Pods_ApesterKit_Example.framework */,
-				BFA1CB87F82ABFE9D18059A8 /* Pods_ApesterKit_Tests.framework */,
+				5EBCECD5AFAF31E1A592ADB0 /* Pods_ApesterKit_Example.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -144,10 +118,9 @@
 			children = (
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for ApesterKit */,
-				607FACE81AFB9204008FA782 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
 				8AB1F7CFFCF59128A4CE8D13 /* Pods */,
-				42378E350F8485E5152788D8 /* Frameworks */,
+				4CE61618C11CB0289D9F2C18 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -155,7 +128,6 @@
 			isa = PBXGroup;
 			children = (
 				607FACD01AFB9204008FA782 /* ApesterKit_Example.app */,
-				607FACE51AFB9204008FA782 /* ApesterKit_Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -186,27 +158,11 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		607FACE81AFB9204008FA782 /* Tests */ = {
-			isa = PBXGroup;
-			children = (
-				607FACEB1AFB9204008FA782 /* Tests.swift */,
-				607FACE91AFB9204008FA782 /* Supporting Files */,
-			);
-			path = Tests;
-			sourceTree = "<group>";
-		};
-		607FACE91AFB9204008FA782 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				607FACEA1AFB9204008FA782 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		607FACF51AFB993E008FA782 /* Podspec Metadata */ = {
 			isa = PBXGroup;
 			children = (
 				60C7ECC25F81007A08831296 /* ApesterKit.podspec */,
+				5DBE88D529D32BAD009B2369 /* ApesterObjcBridging.podspec */,
 				8CE5FD2F402F203FBA490B3C /* README.md */,
 				F629917179A80DF506AA2AB2 /* LICENSE */,
 			);
@@ -216,10 +172,8 @@
 		8AB1F7CFFCF59128A4CE8D13 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				EE997734D01E0FE5ECD22D1A /* Pods-ApesterKit_Example.debug.xcconfig */,
-				32388D7401E88B99FBEF34A8 /* Pods-ApesterKit_Example.release.xcconfig */,
-				9532F5B012F19698457B3604 /* Pods-ApesterKit_Tests.debug.xcconfig */,
-				3C5397857DB657FFD1898FC8 /* Pods-ApesterKit_Tests.release.xcconfig */,
+				29F0EBBD4C5AA8D4E0AF1A69 /* Pods-ApesterKit_Example.debug.xcconfig */,
+				1FF4327B3499C362CECF5D65 /* Pods-ApesterKit_Example.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -231,12 +185,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "ApesterKit_Example" */;
 			buildPhases = (
-				B0EFEC6310BFE3EFE0B156C1 /* [CP] Check Pods Manifest.lock */,
+				5D1CDD71DE93CE3CA2D1ACB1 /* [CP] Check Pods Manifest.lock */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
-				7353AF1BE56BFB2C33AF09C8 /* [CP] Embed Pods Frameworks */,
-				E3A7549CFABBDA1112CD3FCA /* [CP] Copy Pods Resources */,
+				5F4F3B486D1CD4F5116080CC /* [CP] Embed Pods Frameworks */,
+				E591AEFA090586BB6F410905 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -246,25 +200,6 @@
 			productName = ApesterKit;
 			productReference = 607FACD01AFB9204008FA782 /* ApesterKit_Example.app */;
 			productType = "com.apple.product-type.application";
-		};
-		607FACE41AFB9204008FA782 /* ApesterKit_Tests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "ApesterKit_Tests" */;
-			buildPhases = (
-				C188E75A9E851840FF36C69C /* [CP] Check Pods Manifest.lock */,
-				607FACE11AFB9204008FA782 /* Sources */,
-				607FACE21AFB9204008FA782 /* Frameworks */,
-				607FACE31AFB9204008FA782 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				607FACE71AFB9204008FA782 /* PBXTargetDependency */,
-			);
-			name = ApesterKit_Tests;
-			productName = Tests;
-			productReference = 607FACE51AFB9204008FA782 /* ApesterKit_Tests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -279,11 +214,6 @@
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
 						LastSwiftMigration = 1340;
-					};
-					607FACE41AFB9204008FA782 = {
-						CreatedOnToolsVersion = 6.3.1;
-						LastSwiftMigration = 0900;
-						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
 				};
 			};
@@ -302,7 +232,6 @@
 			projectRoot = "";
 			targets = (
 				607FACCF1AFB9204008FA782 /* ApesterKit_Example */,
-				607FACE41AFB9204008FA782 /* ApesterKit_Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -318,41 +247,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		607FACE31AFB9204008FA782 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		7353AF1BE56BFB2C33AF09C8 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ApesterKit_Example/Pods-ApesterKit_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
-				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenWrapSDK/OpenWrap/OMSDK_Pubmatic.framework/OMSDK_Pubmatic",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OMSDK_Pubmatic.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ApesterKit_Example/Pods-ApesterKit_Example-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B0EFEC6310BFE3EFE0B156C1 /* [CP] Check Pods Manifest.lock */ = {
+		5D1CDD71DE93CE3CA2D1ACB1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -374,29 +272,33 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C188E75A9E851840FF36C69C /* [CP] Check Pods Manifest.lock */ = {
+		5F4F3B486D1CD4F5116080CC /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
+				"${PODS_ROOT}/Target Support Files/Pods-ApesterKit_Example/Pods-ApesterKit_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AmazonPublisherServicesSDK/DTBiOSSDK.framework/DTBiOSSDK",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenWrapSDK/OpenWrap/OMSDK_Pubmatic.framework/OMSDK_Pubmatic",
 			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ApesterKit_Tests-checkManifestLockResult.txt",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBLPromises.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DTBiOSSDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OMSDK_Pubmatic.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ApesterKit_Example/Pods-ApesterKit_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E3A7549CFABBDA1112CD3FCA /* [CP] Copy Pods Resources */ = {
+		E591AEFA090586BB6F410905 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -435,23 +337,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		607FACE11AFB9204008FA782 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		607FACE71AFB9204008FA782 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 607FACCF1AFB9204008FA782 /* ApesterKit_Example */;
-			targetProxy = 607FACE61AFB9204008FA782 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		607FACD91AFB9204008FA782 /* Main.storyboard */ = {
@@ -576,7 +462,7 @@
 		};
 		607FACF01AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EE997734D01E0FE5ECD22D1A /* Pods-ApesterKit_Example.debug.xcconfig */;
+			baseConfigurationReference = 29F0EBBD4C5AA8D4E0AF1A69 /* Pods-ApesterKit_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -597,7 +483,7 @@
 		};
 		607FACF11AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 32388D7401E88B99FBEF34A8 /* Pods-ApesterKit_Example.release.xcconfig */;
+			baseConfigurationReference = 1FF4327B3499C362CECF5D65 /* Pods-ApesterKit_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -612,44 +498,6 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "ApesterKit/ApesterKit_Example-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		607FACF31AFB9204008FA782 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9532F5B012F19698457B3604 /* Pods-ApesterKit_Tests.debug.xcconfig */;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ApesterKit_Example.app/ApesterKit_Example";
-			};
-			name = Debug;
-		};
-		607FACF41AFB9204008FA782 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3C5397857DB657FFD1898FC8 /* Pods-ApesterKit_Tests.release.xcconfig */;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ApesterKit_Example.app/ApesterKit_Example";
 			};
 			name = Release;
 		};
@@ -670,15 +518,6 @@
 			buildConfigurations = (
 				607FACF01AFB9204008FA782 /* Debug */,
 				607FACF11AFB9204008FA782 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "ApesterKit_Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				607FACF31AFB9204008FA782 /* Debug */,
-				607FACF41AFB9204008FA782 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

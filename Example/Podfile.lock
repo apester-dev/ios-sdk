@@ -1,19 +1,40 @@
 PODS:
-  - ApesterKit (3.3.10):
-    - ApesterKit/Content (= 3.3.10)
+  - AmazonPublisherServicesSDK (4.4.3)
+  - ApesterKit (3.3.14):
+    - ApesterKit/Content (= 3.3.14)
+  - ApesterKit/Content (3.3.14):
+    - ApesterKit/Content_Core
+    - ApesterKit/ContentAdmob
+    - ApesterKit/ContentAmazon
+    - ApesterKit/ContentPubmatic
+  - ApesterKit/Content_Core (3.3.14):
+    - ApesterObjcBridging
+  - ApesterKit/ContentAdmob (3.3.14):
+    - ApesterKit/Content_Core
     - Google-Mobile-Ads-SDK (~> 10.0)
+  - ApesterKit/ContentAmazon (3.3.14):
+    - AmazonPublisherServicesSDK (~> 4.4.0)
+    - ApesterKit/Content_Core
+    - OpenWrapHandlerDFP (~> 3.1.0)
+  - ApesterKit/ContentPubmatic (3.3.14):
+    - ApesterKit/Content_Core
     - OpenWrapSDK (~> 2.7.0)
-  - ApesterKit/Content (3.3.10):
-    - Google-Mobile-Ads-SDK (~> 10.0)
-    - OpenWrapSDK (~> 2.7.0)
-  - ApesterKit/HostApp (3.3.10):
+  - ApesterKit/zHostApp (3.3.14):
     - ApesterKit/Content
+    - EzImageLoader
+    - XCGLogger (~> 7.0.1)
+  - ApesterKit/zUITests (3.3.14):
+    - ApesterKit/zHostApp
+  - ApesterKit/zUnitTests (3.3.14):
+    - ApesterKit/zHostApp
     - Google-Mobile-Ads-SDK (~> 10.0)
     - OpenWrapSDK (~> 2.7.0)
-  - ApesterKit/UnitTests (3.3.10):
-    - ApesterKit/HostApp
-    - Google-Mobile-Ads-SDK (~> 10.0)
-    - OpenWrapSDK (~> 2.7.0)
+  - ApesterObjcBridging (3.3.14):
+    - ApesterObjcBridging/Content (= 3.3.14)
+  - ApesterObjcBridging/Content (3.3.14)
+  - EzHTTP (3.6.1)
+  - EzImageLoader (3.5.1):
+    - EzHTTP
   - Google-Mobile-Ads-SDK (10.1.0):
     - GoogleAppMeasurement (< 11.0, >= 7.0)
     - GoogleUserMessagingPlatform (>= 1.1)
@@ -60,40 +81,67 @@ PODS:
     - nanopb/encode (= 2.30909.0)
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
+  - ObjcExceptionBridging (1.0.1):
+    - ObjcExceptionBridging/ObjcExceptionBridging (= 1.0.1)
+  - ObjcExceptionBridging/ObjcExceptionBridging (1.0.1)
+  - OpenWrapHandlerDFP (3.1.0):
+    - Google-Mobile-Ads-SDK (>= 8.12.0)
+    - OpenWrapSDK
   - OpenWrapSDK (2.7.0):
     - OpenWrapSDK/OpenWrap (= 2.7.0)
   - OpenWrapSDK/OpenWrap (2.7.0)
   - PromisesObjC (2.2.0)
+  - XCGLogger (7.0.1):
+    - XCGLogger/Core (= 7.0.1)
+  - XCGLogger/Core (7.0.1):
+    - ObjcExceptionBridging
 
 DEPENDENCIES:
   - ApesterKit (from `../`)
-  - ApesterKit/HostApp (from `../`)
-  - ApesterKit/UnitTests (from `../`)
+  - ApesterKit/zHostApp (from `../`)
+  - ApesterKit/zUITests (from `../`)
+  - ApesterKit/zUnitTests (from `../`)
+  - ApesterObjcBridging (from `../`)
 
 SPEC REPOS:
   trunk:
+    - AmazonPublisherServicesSDK
+    - EzHTTP
+    - EzImageLoader
     - Google-Mobile-Ads-SDK
     - GoogleAppMeasurement
     - GoogleUserMessagingPlatform
     - GoogleUtilities
     - nanopb
+    - ObjcExceptionBridging
+    - OpenWrapHandlerDFP
     - OpenWrapSDK
     - PromisesObjC
+    - XCGLogger
 
 EXTERNAL SOURCES:
   ApesterKit:
     :path: "../"
+  ApesterObjcBridging:
+    :path: "../"
 
 SPEC CHECKSUMS:
-  ApesterKit: 3c870e6855622d64018625fbe9be23213130ca1d
+  AmazonPublisherServicesSDK: cd88ef55d5afaa6483bcb04b977e1585a95f9211
+  ApesterKit: 463d71707a992f36fcb18b24eb7f28eabeac73cd
+  ApesterObjcBridging: f3227971a1a25c04fc3200662b3ca417b40a50e2
+  EzHTTP: d8f7e50a69bbcd6ae4f9853692d6bc5cf92e598b
+  EzImageLoader: a930cbd57aaca0dbc3515ad3ff4639843d8658d9
   Google-Mobile-Ads-SDK: 894be2e3e3e8281004bda14381f9af7ad73eeffd
   GoogleAppMeasurement: 40c70a7d89013f0eca72006c4b9732163ea4cdae
   GoogleUserMessagingPlatform: 5f8b30daf181805317b6b985bb51c1ff3beca054
   GoogleUtilities: c2bdc4cf2ce786c4d2e6b3bcfd599a25ca78f06f
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
+  ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
+  OpenWrapHandlerDFP: b184b1d7686f615e0a19c51c99f4d4526c6a9a93
   OpenWrapSDK: 2c7784a19a258ca841ff25c1a04c7c6ecbd7ba1c
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
+  XCGLogger: 1943831ef907df55108b0b18657953f868de973b
 
-PODFILE CHECKSUM: 92eec895a1a3efe69ca28975a30f2cc1ac8d00b0
+PODFILE CHECKSUM: fa556fa17283ff23e70dd957477aba2833a23755
 
 COCOAPODS: 1.11.3

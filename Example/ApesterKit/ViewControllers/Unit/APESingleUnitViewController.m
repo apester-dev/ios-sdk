@@ -15,7 +15,7 @@
 @property (nonatomic, strong) APEUnitView* apesterUnitView;
 
 @property (weak, nonatomic) IBOutlet UIView *containerView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightConstraint;
+//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightConstraint;
 
 @end
 
@@ -58,6 +58,15 @@
     [_apesterUnitView reload];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if ([[_apesterUnitView displayView] superview] == nil) {
+        [_apesterUnitView displayIn:_containerView containerViewController:self];
+    }
+}
+
+#pragma mark - APEUnitViewDelegate
 - (void)unitView:(APEUnitView * _Nonnull)unitView didCompleteAdsForUnit:(NSString * _Nonnull)unitId {
 
 }
@@ -71,7 +80,7 @@
 }
 
 - (void)unitView:(APEUnitView * _Nonnull)unitView didUpdateHeight:(CGFloat)height {
-    [[self heightConstraint] setConstant:height];
+    // [[self heightConstraint] setConstant:height];
     NSLog(@"## unitView.didUpdateHeight: %f", height);
 }
 @end

@@ -31,8 +31,6 @@ import ApesterKit
             tokens = ["5e03500a2fd560e0220ff327", "5ad092c7e16efe4e5c4fb821", "58ce70315eeaf50e00de3da7", "5aa15c4f85b36c0001b1023c"]
             case .stage:
             tokens = ["58c551f76a67357e3b4aa943"]
-        case .local:
-            tokens = ["5d6fc15d07d512002b67ecc6"]
         case .dev:
             tokens = []
         }
