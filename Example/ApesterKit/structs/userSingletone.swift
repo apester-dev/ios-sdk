@@ -8,8 +8,6 @@
 
 import Foundation
 
-import Foundation
-
 @objcMembers class UserInfo: NSObject {
     static let shared = UserInfo()
 
