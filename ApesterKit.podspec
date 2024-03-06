@@ -35,7 +35,7 @@ Pod::Spec.new do |s|
     s.frameworks = 'Foundation','UIKit', 'WebKit', 'SafariServices' , 'OSLog', 'AdSupport'
     
     s.static_framework = true
-    s.swift_version = '5.9'
+    s.swift_version = '5.0'
     
     s.default_subspecs      = 'Content'
     s.scheme                = { :code_coverage => true }
