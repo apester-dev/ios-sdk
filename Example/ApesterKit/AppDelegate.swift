@@ -34,12 +34,12 @@ extension AppDelegate : UIApplicationDelegate
         ])
         
         // initiate StripConfigurationsFactory environment
-        StripConfigurationsFactory.environment = .production
+        StripConfigurationsFactory.environment = .stage
         // preloadStripViews
         // APEViewService.shared.preloadStripViews(with: StripConfigurationsFactory.configurations(hideApesterAds: false))
         
         // initiate UnitConfigurationsFactory environment
-        UnitConfigurationsFactory.environment = .production
+        UnitConfigurationsFactory.environment = .dev
         
         let configurations = UnitConfigurationsFactory.configurations(hideApesterAds: false, gdprString: UnitConfigurationsFactory.gdprString)
         
