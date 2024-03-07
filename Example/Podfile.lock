@@ -8,7 +8,7 @@ PODS:
     - ApesterKit/ContentAmazon
     - ApesterKit/ContentPubmatic
   - ApesterKit/Content_Core (3.3.14):
-    - ApesterObjcBridging (~> 0.0.1)
+    - ApesterObjcBridging (~> 0.0.2)
     - DTBiOSSDK (~> 0.0.1)
     - OpenWrapSDK (~> 2.7.0)
   - ApesterKit/ContentAdmob (3.3.14):
@@ -39,7 +39,7 @@ PODS:
   - EzHTTP (3.6.1)
   - EzImageLoader (3.5.1):
     - EzHTTP
-  - Google-Mobile-Ads-SDK (11.0.1):
+  - Google-Mobile-Ads-SDK (11.1.0):
     - GoogleUserMessagingPlatform (>= 1.1)
   - GoogleUserMessagingPlatform (2.2.0)
   - ObjcExceptionBridging (1.0.1):
@@ -84,12 +84,12 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AmazonPublisherServicesSDK: 41b3adbf8bcf2f43ff909965c16bf1d8646c5508
-  ApesterKit: 90016f60bb1d51cfea33d7d503b44dcd9e9abb83
+  ApesterKit: 2029c4cfed1dd43ff53296c6c19dcc0e16ec3c09
   ApesterObjcBridging: 22a444d3cd45d44d51378d0f8f87bcf637024b38
   DTBiOSSDK: 97af375f056bc5c3202b5a797f8390258deaac17
   EzHTTP: d8f7e50a69bbcd6ae4f9853692d6bc5cf92e598b
   EzImageLoader: a930cbd57aaca0dbc3515ad3ff4639843d8658d9
-  Google-Mobile-Ads-SDK: 7a466427864972f5229f1f89d004b998a28ddcae
+  Google-Mobile-Ads-SDK: 4a1f2ccef63660f9a74efc6a6ea979483d421aaa
   GoogleUserMessagingPlatform: d31dbfb40ec02c5d9683029815c5d5a7f46389ee
   ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
   OpenWrapHandlerDFP: b184b1d7686f615e0a19c51c99f4d4526c6a9a93
@@ -98,4 +98,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: cd5b64846bc11648fc64c91d13f9cd46fbcb9d1c
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.15.2

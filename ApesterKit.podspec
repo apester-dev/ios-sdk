@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
     s.name             = 'ApesterKit'
-    s.version          = '3.3.14'
+    s.version          = '3.3.15'
     s.summary          = 'ApesterKit provides a light-weight framework that loads Apester Unit in a webView'
     
     # This description is used to generate tags and improve search results.
@@ -57,7 +57,7 @@ Pod::Spec.new do |s|
         'Sources/ApesterKit/Content/Classes/EmbededUnit/AdProvider/Loader/*.{h,m,swift}',
         'Sources/ApesterKit/Content/Classes/EmbededUnit/AdProvider/Bidding/*.{h,m,swift}',
         'Sources/ApesterKit/Content/Classes/Deprecated/*.{h,m,swift}'
-        content.dependency 'ApesterObjcBridging', '~> 0.0.1'
+        content.dependency 'ApesterObjcBridging', '~> 0.0.2'
         content.dependency 'OpenWrapSDK' , '~> 2.7.0'
         content.dependency 'DTBiOSSDK', '~> 0.0.1'
     end

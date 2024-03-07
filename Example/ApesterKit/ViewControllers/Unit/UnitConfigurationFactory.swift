@@ -27,14 +27,14 @@ import ApesterKit
         switch environment {
         case .production:
             unitsParams = [
-                // // .unit(mediaId: "6231aab6b6a111002a435a45"), // ADMob Test
+                  .unit(mediaId: "65c8d68c496c77815471c8a5"), // ADMob Test
                 // .unit(mediaId: "61ee7ff6a5e14a002b6c044a"), //.unit(mediaId: "60eeda29b54b6f002448ba79"),
                 // .playlist(tags: [], channelToken: "5f85919d44959d32decd9d31", context: false, fallback: false),
-                .playlist(tags: [], channelToken: "61ee7fd7a33874001368f396", context: false, fallback: false)
+//                .playlist(tags: [], channelToken: "61ee7fd7a33874001368f396", context: false, fallback: false)
             ]
         case .stage:
             unitsParams = [
-                .unit(mediaId: "613d0754e9d41e0024816a38"),
+                .unit(mediaId: "65c8d68c496c77815471c8a5"),
                 .unit(mediaId: "5e6fa2351d18fd8580776612"),
                 .playlist(tags: ["news", "sport", "yoga"],
                           channelToken: "5dcbc10016698427404a0f57",
@@ -52,7 +52,8 @@ import ApesterKit
             ]
         }
         self.unitsParams = unitsParams
-        return makeUnitConfigurations(with: unitsParams, environment: environment, hideApesterAds: hideApesterAds, gdprString: gdprString, baseUrl: baseUrl)
+        return makeUnitConfigurations(with: unitsParams, environment: environment, hideApesterAds: hideApesterAds, gdprString: gdprString, baseUrl:      "https://www.sport1.de/apester-in-app-unit-detached?__APESTER_DEBUG__=true"
+)
     }
     
     static private func getUnitParam(isPlaylist: Bool, mediaId: String?, channelToken: String?, tags: [String]?, context: Bool?, fallback: Bool?, noApesterAds: Bool) -> [APEUnitParams] {
