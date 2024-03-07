@@ -1,34 +1,34 @@
 PODS:
   - AmazonPublisherServicesSDK (4.6.0)
-  - ApesterKit (3.3.14):
-    - ApesterKit/Content (= 3.3.14)
-  - ApesterKit/Content (3.3.14):
+  - ApesterKit (3.3.15):
+    - ApesterKit/Content (= 3.3.15)
+  - ApesterKit/Content (3.3.15):
     - ApesterKit/Content_Core
     - ApesterKit/ContentAdmob
     - ApesterKit/ContentAmazon
     - ApesterKit/ContentPubmatic
-  - ApesterKit/Content_Core (3.3.14):
+  - ApesterKit/Content_Core (3.3.15):
     - ApesterObjcBridging (~> 0.0.2)
     - DTBiOSSDK (~> 0.0.1)
     - OpenWrapSDK (~> 2.7.0)
-  - ApesterKit/ContentAdmob (3.3.14):
+  - ApesterKit/ContentAdmob (3.3.15):
     - ApesterKit/Content_Core
     - Google-Mobile-Ads-SDK (~> 11.0)
-  - ApesterKit/ContentAmazon (3.3.14):
+  - ApesterKit/ContentAmazon (3.3.15):
     - AmazonPublisherServicesSDK (~> 4.6.0)
     - ApesterKit/Content_Core
     - ApesterKit/ContentPubmatic
     - OpenWrapHandlerDFP (~> 3.1.0)
-  - ApesterKit/ContentPubmatic (3.3.14):
+  - ApesterKit/ContentPubmatic (3.3.15):
     - ApesterKit/Content_Core
     - OpenWrapSDK (~> 2.7.0)
-  - ApesterKit/zHostApp (3.3.14):
+  - ApesterKit/zHostApp (3.3.15):
     - ApesterKit/Content
     - EzImageLoader (~> 3.5.1)
     - XCGLogger (~> 7.0.1)
-  - ApesterKit/zUITests (3.3.14):
+  - ApesterKit/zUITests (3.3.15):
     - ApesterKit/zHostApp
-  - ApesterKit/zUnitTests (3.3.14):
+  - ApesterKit/zUnitTests (3.3.15):
     - ApesterKit/zHostApp
     - Google-Mobile-Ads-SDK (~> 11.0)
     - OpenWrapSDK (~> 2.7.0)
@@ -84,7 +84,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AmazonPublisherServicesSDK: 41b3adbf8bcf2f43ff909965c16bf1d8646c5508
-  ApesterKit: 2029c4cfed1dd43ff53296c6c19dcc0e16ec3c09
+  ApesterKit: 934841eaaba668ae27915524d30705488336dac7
   ApesterObjcBridging: 22a444d3cd45d44d51378d0f8f87bcf637024b38
   DTBiOSSDK: 97af375f056bc5c3202b5a797f8390258deaac17
   EzHTTP: d8f7e50a69bbcd6ae4f9853692d6bc5cf92e598b
@@ -96,6 +96,6 @@ SPEC CHECKSUMS:
   OpenWrapSDK: 57e0adeb0cc542769e7cf1eec0d2c89c9e010593
   XCGLogger: 1943831ef907df55108b0b18657953f868de973b
 
-PODFILE CHECKSUM: cd5b64846bc11648fc64c91d13f9cd46fbcb9d1c
+PODFILE CHECKSUM: db956fc6ad68da4c77164d7ce936cdc645b47090
 
 COCOAPODS: 1.15.2
