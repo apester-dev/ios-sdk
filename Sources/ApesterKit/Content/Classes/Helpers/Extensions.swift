@@ -124,10 +124,11 @@ internal extension UIApplication
     {
         if #available(iOS 13.0, *)
         {
-            guard let windowScene = openSessions.first?.scene as? UIWindowScene else { return keyWindow }
-            guard let  sceneDelegate = windowScene.delegate                     else { return keyWindow }
-            guard let windowDelegate = sceneDelegate as? UIWindowSceneDelegate  else { return keyWindow }
-            return windowDelegate.window ?? keyWindow
+            return connectedScenes
+                        .filter { $0.activationState == .foregroundActive }
+                        .compactMap { $0 as? UIWindowScene }
+                        .flatMap { $0.windows }
+                        .first(where: { $0.isKeyWindow })
         }
         else
         {

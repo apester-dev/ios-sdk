@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
     s.name             = 'ApesterObjcBridging'
-    s.version          = '3.3.14'
+    s.version          = '0.0.2'
     s.summary          = 'ApesterKit Objective-C utilities'
     
     # This description is used to generate tags and improve search results.
@@ -26,9 +26,9 @@ Pod::Spec.new do |s|
         'Hasan Sa'        => 'hasansa007@gmail.com'  ,
         'ArkadiYoskovitz' => 'arkadiy@gini-apps.com'
     }
-    s.source           = { :git => 'https://github.com/apester-dev/ios-sdk.git', :tag => "v"+s.version.to_s }
+    s.source           = { :git => 'https://github.com/apester-dev/ios-sdk.git', :tag => "ApesterObjcBridging-"+s.version.to_s }
     
-    ios_deployment_target   = '11.0'
+    ios_deployment_target   = '13.0'
     s.platform              = :ios
     s.ios.deployment_target = ios_deployment_target
     
