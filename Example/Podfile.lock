@@ -1,40 +1,40 @@
 PODS:
   - AmazonPublisherServicesSDK (4.6.0)
-  - ApesterKit (3.3.15):
-    - ApesterKit/Content (= 3.3.15)
-  - ApesterKit/Content (3.3.15):
+  - ApesterKit (3.3.16):
+    - ApesterKit/Content (= 3.3.16)
+  - ApesterKit/Content (3.3.16):
     - ApesterKit/Content_Core
     - ApesterKit/ContentAdmob
     - ApesterKit/ContentAmazon
     - ApesterKit/ContentPubmatic
-  - ApesterKit/Content_Core (3.3.15):
-    - ApesterObjcBridging (~> 0.0.2)
+  - ApesterKit/Content_Core (3.3.16):
+    - ApesterObjcBridging (= 3.3.16)
     - DTBiOSSDK (~> 0.0.1)
     - OpenWrapSDK (~> 2.7.0)
-  - ApesterKit/ContentAdmob (3.3.15):
+  - ApesterKit/ContentAdmob (3.3.16):
     - ApesterKit/Content_Core
     - Google-Mobile-Ads-SDK (~> 11.0)
-  - ApesterKit/ContentAmazon (3.3.15):
+  - ApesterKit/ContentAmazon (3.3.16):
     - AmazonPublisherServicesSDK (~> 4.6.0)
     - ApesterKit/Content_Core
     - ApesterKit/ContentPubmatic
     - OpenWrapHandlerDFP (~> 3.1.0)
-  - ApesterKit/ContentPubmatic (3.3.15):
+  - ApesterKit/ContentPubmatic (3.3.16):
     - ApesterKit/Content_Core
     - OpenWrapSDK (~> 2.7.0)
-  - ApesterKit/zHostApp (3.3.15):
+  - ApesterKit/zHostApp (3.3.16):
     - ApesterKit/Content
     - EzImageLoader (~> 3.5.1)
     - XCGLogger (~> 7.0.1)
-  - ApesterKit/zUITests (3.3.15):
+  - ApesterKit/zUITests (3.3.16):
     - ApesterKit/zHostApp
-  - ApesterKit/zUnitTests (3.3.15):
+  - ApesterKit/zUnitTests (3.3.16):
     - ApesterKit/zHostApp
     - Google-Mobile-Ads-SDK (~> 11.0)
     - OpenWrapSDK (~> 2.7.0)
-  - ApesterObjcBridging (0.0.2):
-    - ApesterObjcBridging/Content (= 0.0.2)
-  - ApesterObjcBridging/Content (0.0.2)
+  - ApesterObjcBridging (3.3.16):
+    - ApesterObjcBridging/Content (= 3.3.16)
+  - ApesterObjcBridging/Content (3.3.16)
   - DTBiOSSDK (0.0.1)
   - EzHTTP (3.6.1)
   - EzImageLoader (3.5.1):
@@ -84,8 +84,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AmazonPublisherServicesSDK: 41b3adbf8bcf2f43ff909965c16bf1d8646c5508
-  ApesterKit: 934841eaaba668ae27915524d30705488336dac7
-  ApesterObjcBridging: 22a444d3cd45d44d51378d0f8f87bcf637024b38
+  ApesterKit: d597d61f41f3d654bd0efbfe7134151d63d25e1d
+  ApesterObjcBridging: eb6b235f51965366c0963c818a49b82a2d16fc3a
   DTBiOSSDK: 97af375f056bc5c3202b5a797f8390258deaac17
   EzHTTP: d8f7e50a69bbcd6ae4f9853692d6bc5cf92e598b
   EzImageLoader: a930cbd57aaca0dbc3515ad3ff4639843d8658d9

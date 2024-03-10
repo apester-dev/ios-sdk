@@ -57,7 +57,7 @@ Pod::Spec.new do |s|
         'Sources/ApesterKit/Content/Classes/EmbededUnit/AdProvider/Loader/*.{h,m,swift}',
         'Sources/ApesterKit/Content/Classes/EmbededUnit/AdProvider/Bidding/*.{h,m,swift}',
         'Sources/ApesterKit/Content/Classes/Deprecated/*.{h,m,swift}'
-        content.dependency 'ApesterObjcBridging', '~> 0.0.2'
+        content.dependency 'ApesterObjcBridging', '3.3.16'
         content.dependency 'OpenWrapSDK' , '~> 2.7.0'
         content.dependency 'DTBiOSSDK', '~> 0.0.1'
     end
