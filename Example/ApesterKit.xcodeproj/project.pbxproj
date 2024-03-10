@@ -48,6 +48,7 @@
 		0520766F2B69398A008EA5E0 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 0520766E2B69398A008EA5E0 /* FirebaseAppCheck */; };
 		05311BF42B989524003FF5DF /* enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05311BF32B989524003FF5DF /* enums.swift */; };
 		05311BF62B98962B003FF5DF /* UnitStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05311BF52B98962B003FF5DF /* UnitStructs.swift */; };
+		0533D27A2B9DD28B0012D609 /* AppTrackingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0533D2792B9DD28B0012D609 /* AppTrackingHelper.swift */; };
 		33501521D0158F958C420DB0 /* Pods_Apester.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5621325BCD694EA3DAD1A6FC /* Pods_Apester.framework */; };
 		5D4C7A95299E38EE00C1FC01 /* DemoThreadMutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4C7A93299E38EE00C1FC01 /* DemoThreadMutex.swift */; };
 		5D4C7A96299E38EE00C1FC01 /* DemoLogWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4C7A94299E38EE00C1FC01 /* DemoLogWriter.swift */; };
@@ -75,6 +76,7 @@
 		051B6DDE2B66AFF50067120E /* userSingletone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userSingletone.swift; sourceTree = "<group>"; };
 		05311BF32B989524003FF5DF /* enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = enums.swift; sourceTree = "<group>"; };
 		05311BF52B98962B003FF5DF /* UnitStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitStructs.swift; sourceTree = "<group>"; };
+		0533D2792B9DD28B0012D609 /* AppTrackingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTrackingHelper.swift; sourceTree = "<group>"; };
 		2FBBC54C9A6D32198A51174B /* Pods-Apester.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Apester.debug.xcconfig"; path = "Target Support Files/Pods-Apester/Pods-Apester.debug.xcconfig"; sourceTree = "<group>"; };
 		5621325BCD694EA3DAD1A6FC /* Pods_Apester.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Apester.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		58DDA11B4BFC64BBED2F19AC /* Pods-ApesterKit_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ApesterKit_Example.release.xcconfig"; path = "Target Support Files/Pods-ApesterKit_Example/Pods-ApesterKit_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 			children = (
 				051B6D9A2B66741D0067120E /* ScreenArticles.swift */,
 				051B6DDB2B66AF1F0067120E /* database.swift */,
+				0533D2792B9DD28B0012D609 /* AppTrackingHelper.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -490,6 +493,7 @@
 				5D4C7AA2299E394600C1FC01 /* APESingleStripViewController.m in Sources */,
 				5D4C7AA9299E395A00C1FC01 /* APEMultipleUnitsViewController.swift in Sources */,
 				051B6D9B2B66741D0067120E /* ScreenArticles.swift in Sources */,
+				0533D27A2B9DD28B0012D609 /* AppTrackingHelper.swift in Sources */,
 				5D4C7AAB299E395A00C1FC01 /* UnitConfigurationFactory.swift in Sources */,
 				5D4C7A96299E38EE00C1FC01 /* DemoLogWriter.swift in Sources */,
 				5D4C7AAD299E396200C1FC01 /* APECollectionViewCell.swift in Sources */,
@@ -633,7 +637,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = ApesterIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1009;
+				CURRENT_PROJECT_VERSION = 1002;
 				DEVELOPMENT_TEAM = 6DFYD52F9N;
 				INFOPLIST_FILE = ApesterKit/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Apester;
@@ -642,7 +646,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.3.89;
+				MARKETING_VERSION = 0.0.2;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = Apester.ApesterApp;
 				PRODUCT_NAME = Apester;
@@ -662,7 +666,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = ApesterIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1009;
+				CURRENT_PROJECT_VERSION = 1002;
 				DEVELOPMENT_TEAM = 6DFYD52F9N;
 				INFOPLIST_FILE = ApesterKit/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Apester;
@@ -671,7 +675,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.3.89;
+				MARKETING_VERSION = 0.0.2;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = Apester.ApesterApp;
 				PRODUCT_NAME = Apester;

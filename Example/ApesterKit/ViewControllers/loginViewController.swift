@@ -41,17 +41,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func LoginButtonAction(_ sender: Any) {
-     loginAction()
+        loginAction()
     }
     func updateTextFieldFrames(isError:Bool){
         let color = isError ? UIColor.red : UIColor.clear // Red color on error, clear otherwise
-           userNameTextField.layer.borderColor = color.cgColor
-           userNameTextField.layer.borderWidth = isError ? 1.0 : 0.0
-           passwordTextField.layer.borderColor = color.cgColor
-           passwordTextField.layer.borderWidth = isError ? 1.0 : 0.0
+        userNameTextField.layer.borderColor = color.cgColor
+        userNameTextField.layer.borderWidth = isError ? 1.0 : 0.0
+        passwordTextField.layer.borderColor = color.cgColor
+        passwordTextField.layer.borderWidth = isError ? 1.0 : 0.0
         errorLabel.isHidden = !isError
         loginView.layer.shadowColor = isError ? UIColor.red.cgColor:  UIColor.black.cgColor
-
+        
     }
     func loginAction(){
         guard let userName = userNameTextField.text, !userName.isEmpty,
@@ -59,42 +59,46 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         Auth.auth().signIn(withEmail: userName, password: password) { [weak self] authResult, error in
             if let error = error as NSError? {
                 self?.updateTextFieldFrames(isError: true)
-//                if error.code == AuthErrorCode.userNotFound.rawValue {
-//                    self?.registerNewUser(userName: userName, password: password)
-//                } else {
-//                    print("login error")
-//                }
+                // uncomment and run to add new users
+                //                if error.code == AuthErrorCode.userNotFound.rawValue {
+                //                    self?.registerNewUser(userName: userName, password: password)
+                //                } else {
+                //                    print("login error")
+                //                }
                 return
             }
-         //navigate to next screen
+            //navigate to next screen
             self?.navigateToMain()
         }
     }
     func navigateToMain(){
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let navigationController = storyboard.instantiateViewController(withIdentifier: "LoginNavigationController") as? UINavigationController
-//        if let nextViewController = storyboard.instantiateViewController(withIdentifier: "mainViewController") as? mainViewController {
-//            if navigationController == nil {
-//                       print("NavigationController is nil")
-//                   } else {
-//                       navigationController?.pushViewController(nextViewController, animated: true)
-//                   }
-//        }
-        (UIApplication.shared.delegate as! AppDelegate).logInUser()
+        //        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        //        let navigationController = storyboard.instantiateViewController(withIdentifier: "LoginNavigationController") as? UINavigationController
+        //        if let nextViewController = storyboard.instantiateViewController(withIdentifier: "mainViewController") as? mainViewController {
+        //            if navigationController == nil {
+        //                       print("NavigationController is nil")
+        //                   } else {
+        //                       navigationController?.pushViewController(nextViewController, animated: true)
+        //                   }
+        //        }
+        AppTrackingHelper.requestTrackingPermission(permissionSuccess: {
+            (UIApplication.shared.delegate as! AppDelegate).logInUser()
+        }, viewController: self)
+        //        (UIApplication.shared.delegate as! AppDelegate).logInUser()
     }
     
     func registerNewUser(userName: String, password: String) {
-            Auth.auth().createUser(withEmail: userName, password: password) { authResult, error in
-                if let error = error {
-                    print("Registration error: \(error.localizedDescription)")
-                    // Handle registration error
-                    return
-                }
-                // New user created successfully
-                self.navigateToMain()
-
-                // Navigate to next screen or update UI
+        Auth.auth().createUser(withEmail: userName, password: password) { authResult, error in
+            if let error = error {
+                print("Registration error: \(error.localizedDescription)")
+                // Handle registration error
+                return
             }
+            // New user created successfully
+            self.navigateToMain()
+            
+            // Navigate to next screen or update UI
         }
+    }
     
 }
