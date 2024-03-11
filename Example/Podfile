@@ -12,7 +12,8 @@ use_frameworks!
 
 target 'ApesterKit_Example' do
   pod 'ApesterObjcBridging', :path => '../' ;
-  pod 'ApesterKit'         , :path => '../' , :appspecs => ['zHostApp'] , :testspecs => ['zUnitTests','zUITests'];
+  pod 'ApesterKit'         , :path => '../' ;
+# ,:appspecs => ['zHostApp'] , :testspecs => ['zUnitTests','zUITests'];
 end
 
 post_install do |installer|

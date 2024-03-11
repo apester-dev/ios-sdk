@@ -22,59 +22,32 @@ PODS:
   - ApesterKit/ContentPubmatic (3.3.16):
     - ApesterKit/Content_Core
     - OpenWrapSDK (~> 2.7.0)
-  - ApesterKit/zHostApp (3.3.16):
-    - ApesterKit/Content
-    - EzImageLoader (~> 3.5.1)
-    - XCGLogger (~> 7.0.1)
-  - ApesterKit/zUITests (3.3.16):
-    - ApesterKit/zHostApp
-  - ApesterKit/zUnitTests (3.3.16):
-    - ApesterKit/zHostApp
-    - Google-Mobile-Ads-SDK (~> 11.0)
-    - OpenWrapSDK (~> 2.7.0)
   - ApesterObjcBridging (3.3.16):
     - ApesterObjcBridging/Content (= 3.3.16)
   - ApesterObjcBridging/Content (3.3.16)
   - DTBiOSSDK (0.0.1)
-  - EzHTTP (3.6.1)
-  - EzImageLoader (3.5.1):
-    - EzHTTP
   - Google-Mobile-Ads-SDK (11.1.0):
     - GoogleUserMessagingPlatform (>= 1.1)
   - GoogleUserMessagingPlatform (2.2.0)
-  - ObjcExceptionBridging (1.0.1):
-    - ObjcExceptionBridging/ObjcExceptionBridging (= 1.0.1)
-  - ObjcExceptionBridging/ObjcExceptionBridging (1.0.1)
   - OpenWrapHandlerDFP (3.1.0):
     - Google-Mobile-Ads-SDK (>= 8.12.0)
     - OpenWrapSDK
   - OpenWrapSDK (2.7.1):
     - OpenWrapSDK/OpenWrap (= 2.7.1)
   - OpenWrapSDK/OpenWrap (2.7.1)
-  - XCGLogger (7.0.1):
-    - XCGLogger/Core (= 7.0.1)
-  - XCGLogger/Core (7.0.1):
-    - ObjcExceptionBridging
 
 DEPENDENCIES:
   - ApesterKit (from `../`)
-  - ApesterKit/zHostApp (from `../`)
-  - ApesterKit/zUITests (from `../`)
-  - ApesterKit/zUnitTests (from `../`)
   - ApesterObjcBridging (from `../`)
 
 SPEC REPOS:
   trunk:
     - AmazonPublisherServicesSDK
     - DTBiOSSDK
-    - EzHTTP
-    - EzImageLoader
     - Google-Mobile-Ads-SDK
     - GoogleUserMessagingPlatform
-    - ObjcExceptionBridging
     - OpenWrapHandlerDFP
     - OpenWrapSDK
-    - XCGLogger
 
 EXTERNAL SOURCES:
   ApesterKit:
@@ -84,18 +57,14 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AmazonPublisherServicesSDK: 41b3adbf8bcf2f43ff909965c16bf1d8646c5508
-  ApesterKit: d597d61f41f3d654bd0efbfe7134151d63d25e1d
+  ApesterKit: ddbf0181b863df44fda4729535c757e6a0d0143c
   ApesterObjcBridging: eb6b235f51965366c0963c818a49b82a2d16fc3a
   DTBiOSSDK: 97af375f056bc5c3202b5a797f8390258deaac17
-  EzHTTP: d8f7e50a69bbcd6ae4f9853692d6bc5cf92e598b
-  EzImageLoader: a930cbd57aaca0dbc3515ad3ff4639843d8658d9
   Google-Mobile-Ads-SDK: 4a1f2ccef63660f9a74efc6a6ea979483d421aaa
   GoogleUserMessagingPlatform: d31dbfb40ec02c5d9683029815c5d5a7f46389ee
-  ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
   OpenWrapHandlerDFP: b184b1d7686f615e0a19c51c99f4d4526c6a9a93
   OpenWrapSDK: 57e0adeb0cc542769e7cf1eec0d2c89c9e010593
-  XCGLogger: 1943831ef907df55108b0b18657953f868de973b
 
-PODFILE CHECKSUM: 5699c34a9a8b88aabff652996461f03d0cb26e6a
+PODFILE CHECKSUM: ba6a773c35571d251273f1d7d16bf31d4b474687
 
 COCOAPODS: 1.15.2
