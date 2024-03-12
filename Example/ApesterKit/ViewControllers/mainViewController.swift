@@ -26,18 +26,6 @@ class mainViewController: UIViewController {
     @IBOutlet weak var settingsImage: UIImageView!
     @IBOutlet weak var favoritesImage: UIImageView!
     @IBOutlet weak var likeButtonOutlet: UIImageView!
-
-    @IBAction func logOutAction(_ sender: Any) {
-        // Handle logout
-        do {
-            try Auth.auth().signOut()
-            // Navigate back or to another view controller as needed
-            (UIApplication.shared.delegate as! AppDelegate).logOutUser()
-        } catch let signOutError as NSError {
-            print("Error signing out: %@", signOutError)
-            // Handle error here
-        }
-    }
     
     var alertController: UIAlertController?
     
@@ -133,6 +121,9 @@ class mainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = false
+        AppTrackingHelper.requestTrackingPermission(permissionCallback: {
+            
+        }, viewController: self)
 //        setupCustomBackButton()
         updateLikeImage()
         setupGestures()

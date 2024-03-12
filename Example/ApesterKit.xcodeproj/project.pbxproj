@@ -10,7 +10,6 @@
 		051B6D872B6555E00067120E /* mainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051B6D862B6555E00067120E /* mainViewController.swift */; };
 		051B6D9B2B66741D0067120E /* ScreenArticles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051B6D9A2B66741D0067120E /* ScreenArticles.swift */; };
 		051B6D9F2B6674840067120E /* ScrollViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051B6D9E2B6674840067120E /* ScrollViewExtension.swift */; };
-		051B6DA12B667B6A0067120E /* loginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051B6DA02B667B6A0067120E /* loginViewController.swift */; };
 		051B6DA42B667CEC0067120E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 051B6DA32B667CEC0067120E /* FirebaseAnalytics */; };
 		051B6DA62B667CEC0067120E /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 051B6DA52B667CEC0067120E /* FirebaseAnalyticsOnDeviceConversion */; };
 		051B6DA82B667CEC0067120E /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 051B6DA72B667CEC0067120E /* FirebaseAnalyticsSwift */; };
@@ -70,7 +69,6 @@
 		051B6D862B6555E00067120E /* mainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mainViewController.swift; sourceTree = "<group>"; };
 		051B6D9A2B66741D0067120E /* ScreenArticles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenArticles.swift; sourceTree = "<group>"; };
 		051B6D9E2B6674840067120E /* ScrollViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollViewExtension.swift; sourceTree = "<group>"; };
-		051B6DA02B667B6A0067120E /* loginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginViewController.swift; sourceTree = "<group>"; };
 		051B6DD92B6683B40067120E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		051B6DDB2B66AF1F0067120E /* database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = database.swift; sourceTree = "<group>"; };
 		051B6DDE2B66AFF50067120E /* userSingletone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userSingletone.swift; sourceTree = "<group>"; };
@@ -193,7 +191,6 @@
 				5D4C7A9A299E392F00C1FC01 /* Strip */,
 				5D4C7A99299E392100C1FC01 /* Unit */,
 				051B6D862B6555E00067120E /* mainViewController.swift */,
-				051B6DA02B667B6A0067120E /* loginViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -487,7 +484,6 @@
 				5D4C7AAA299E395A00C1FC01 /* APEUnitViewController.swift in Sources */,
 				051B6DDF2B66AFF50067120E /* userSingletone.swift in Sources */,
 				5D4C7AA0299E394600C1FC01 /* StripConfigurationsFactory.swift in Sources */,
-				051B6DA12B667B6A0067120E /* loginViewController.swift in Sources */,
 				5D4C7A95299E38EE00C1FC01 /* DemoThreadMutex.swift in Sources */,
 				05311BF42B989524003FF5DF /* enums.swift in Sources */,
 				5D4C7AA2299E394600C1FC01 /* APESingleStripViewController.m in Sources */,
@@ -637,7 +633,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = ApesterIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1002;
+				CURRENT_PROJECT_VERSION = 1004;
 				DEVELOPMENT_TEAM = 6DFYD52F9N;
 				INFOPLIST_FILE = ApesterKit/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Apester;
@@ -646,7 +642,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.2;
+				MARKETING_VERSION = 0.0.4;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = Apester.ApesterApp;
 				PRODUCT_NAME = Apester;
@@ -666,7 +662,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = ApesterIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1002;
+				CURRENT_PROJECT_VERSION = 1004;
 				DEVELOPMENT_TEAM = 6DFYD52F9N;
 				INFOPLIST_FILE = ApesterKit/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Apester;
@@ -675,7 +671,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.2;
+				MARKETING_VERSION = 0.0.4;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = Apester.ApesterApp;
 				PRODUCT_NAME = Apester;
