@@ -17,3 +17,10 @@ enum Category: String {
     case news = "News"
     case sports = "Sports"
 }
+
+enum Environment: String {
+    case PROD = "Production"
+    case STAGE = "Staging"
+    case DEV = "Dev"
+}
+

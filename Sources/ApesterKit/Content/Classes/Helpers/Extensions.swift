@@ -90,7 +90,6 @@ internal extension WKWebView {
         webView.navigationDelegate          = delegate
         webView.uiDelegate                  = delegate
         webView.accessibilityIdentifier     = "apesterWebContainer"
-        webView.customUserAgent = "WebView Android"
         if #available(iOS 16.4, *) {
             webView.isInspectable = true
         } else {
