@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
     s.name             = 'ApesterObjcBridging'
-    s.version          = '3.3.16'
+    s.version          = '3.3.17'
     s.summary          = 'ApesterKit Objective-C utilities'
     
     # This description is used to generate tags and improve search results.

@@ -52,8 +52,7 @@ import ApesterKit
             ]
         }
         self.unitsParams = unitsParams
-        return makeUnitConfigurations(with: unitsParams, environment: environment, hideApesterAds: hideApesterAds, gdprString: gdprString, baseUrl:      "https://www.sport1.de/apester-in-app-unit-detached?__APESTER_DEBUG__=true"
-)
+        return makeUnitConfigurations(with: unitsParams, environment: environment, hideApesterAds: hideApesterAds, gdprString: gdprString, baseUrl: baseUrl)
     }
     
     static private func getUnitParam(isPlaylist: Bool, mediaId: String?, channelToken: String?, tags: [String]?, context: Bool?, fallback: Bool?, noApesterAds: Bool) -> [APEUnitParams] {
