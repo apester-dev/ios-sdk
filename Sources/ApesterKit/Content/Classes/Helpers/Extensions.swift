@@ -92,6 +92,11 @@ internal extension WKWebView {
 //        if #available(iOS 15.5, *) {
 //            webView.setMinimumViewportInset(UIEdgeInsets.zero, maximumViewportInset: UIEdgeInsets.zero)
 //        }
+        if #available(iOS 16.4, *) {
+            webView.isInspectable = true
+        } else {
+            // Fallback on earlier versions
+        }
         return webView
     }
 }
