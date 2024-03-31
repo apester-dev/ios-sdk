@@ -68,6 +68,7 @@ Pod::Spec.new do |s|
         content.source_files = 'Sources/ApesterKit/Content/Classes/EmbededUnit/AdProvider/PubMatic/*.{h,m,swift}'
         content.dependency 'ApesterKit/Content_Core'
         content.dependency 'OpenWrapSDK' , '~> 2.7.0'
+        content.dependency 'DTBiOSSDK', '~> 0.0.1'
     end
     s.subspec   'ContentAmazon'   do |content|
         content.source_files = 'Sources/ApesterKit/Content/Classes/EmbededUnit/AdProvider/Amazon/*.{h,m,swift}'

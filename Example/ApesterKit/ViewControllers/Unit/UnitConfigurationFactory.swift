@@ -14,7 +14,7 @@ import ApesterKit
     static var environment: APEEnvironment = .production
     static var gdprString = "CPlrcMAPlrcMACnABIDECzCkAP_AAAAAAAYgI8pd9D7dbXFDefx_SPt0OYwW0NBTKuQCChSAA2AFVAOQcLQA02EaMATAhiACEQIAolIBAAEEHAFUAECQQIAEAAHsIgSEhAAKIABEEBEQAAIQAAoKAAAAEAAIgAABIgSAmBiQS5LmRUCAGIAQBgBYgogBCIABAgMBBEAIABgIAIIIwygAAQAAAIIAAAAAARAAAgAAAJCQAYAAgjyGgAwABBHkRABgACCPIqADAAEEeRkAGAAII8joAMAAQR5IQAYAAgjySgAwABBHkpABgACCPIAA.f_gAAAAABcgAAAAA"
 //
-    static var baseUrl = "https://www.kicker.de/apester-in-app-unit-detached"
+    static var baseUrl = "https://www.kicker.de/apester-in-app-unit-detached/?__APESTER_DEBUG__=true"
 
     static private(set) var unitsParams: [(type: UnitType, unitParam:APEUnitParams)] = []
     
@@ -26,16 +26,21 @@ import ApesterKit
         switch environment {
         case .production:
             unitsParams = [
-                (.Quiz,.unit(mediaId: "65bb5a8567da18d2012eed05")),
-                (.Story,.unit(mediaId: "6593f8b05a52477af6253ba9")),
-                (.Poll,.unit(mediaId: "65941922dea143ab835f10eb")),
-                (.Quiz,.unit(mediaId: "6592bc1c3e05b25017d45081")),
-                (.Story,.unit(mediaId: "6592baff8d2f93812c57566c")),
-                (.Poll,.unit(mediaId: "6592bb800115251940120dc0")),
+//                (.Quiz,.unit(mediaId: "65bb5a8567da18d2012eed05")),
+//                (.Story,.unit(mediaId: "6593f8b05a52477af6253ba9")),
+//                (.Poll,.unit(mediaId: "65941922dea143ab835f10eb")),
+//                (.Quiz,.unit(mediaId: "6592bc1c3e05b25017d45081")),
+//                (.Story,.unit(mediaId: "6592baff8d2f93812c57566c")),
+//                (.Poll,.unit(mediaId: "6592bb800115251940120dc0")),
                 (.Quiz,.unit(mediaId: "6592bf983021cfab8b0b5d61")),
-                (.Story,.unit(mediaId: "6592be633021cfab8b0ac676")),
-                (.Poll,.unit(mediaId: "5f045f3db203aadd7a2e8e08"))
-           
+                (.Story,.unit(mediaId: "6592bf983021cfab8b0b5d61")),
+                (.Poll,.unit(mediaId: "6592bf983021cfab8b0b5d61")),
+                (.Quiz,.unit(mediaId: "6592bf983021cfab8b0b5d61")),
+                (.Story,.unit(mediaId: "6592bf983021cfab8b0b5d61")),
+                (.Poll,.unit(mediaId: "6592bf983021cfab8b0b5d61")),
+                (.Quiz,.unit(mediaId: "6592bf983021cfab8b0b5d61")),
+                (.Story,.unit(mediaId: "6592bf983021cfab8b0b5d61")),
+                (.Poll,.unit(mediaId: "6592bf983021cfab8b0b5d61"))
                 // .unit(mediaId: "61ee7ff6a5e14a002b6c044a"), //.unit(mediaId: "60eeda29b54b6f002448ba79"),
 //                (.Playlist,.playlist(tags: [], channelToken: "6411d62f2044dc001228e095", context: false, fallback: false)),
 //                .playlist(tags: [], channelToken: "61ee7fd7a33874001368f396", context: false, fallback: false)

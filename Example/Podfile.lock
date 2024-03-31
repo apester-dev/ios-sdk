@@ -18,6 +18,7 @@ PODS:
     - OpenWrapHandlerDFP (~> 3.1.0)
   - ApesterKit/ContentPubmatic (3.3.14):
     - ApesterKit/Content_Core
+    - DTBiOSSDK (~> 0.0.1)
     - OpenWrapSDK (~> 2.7.0)
   - ApesterKit/zHostApp (3.3.14):
     - ApesterKit/Content
@@ -32,33 +33,34 @@ PODS:
   - ApesterObjcBridging (3.3.14):
     - ApesterObjcBridging/Content (= 3.3.14)
   - ApesterObjcBridging/Content (3.3.14)
+  - DTBiOSSDK (0.0.1)
   - EzHTTP (3.6.1)
   - EzImageLoader (3.5.1):
     - EzHTTP
   - Google-Mobile-Ads-SDK (10.14.0):
     - GoogleAppMeasurement (< 11.0, >= 7.0)
     - GoogleUserMessagingPlatform (>= 1.1)
-  - GoogleAppMeasurement (10.22.0):
-    - GoogleAppMeasurement/AdIdSupport (= 10.22.0)
+  - GoogleAppMeasurement (10.23.0):
+    - GoogleAppMeasurement/AdIdSupport (= 10.23.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
     - GoogleUtilities/MethodSwizzler (~> 7.11)
     - GoogleUtilities/Network (~> 7.11)
     - "GoogleUtilities/NSData+zlib (~> 7.11)"
     - nanopb (< 2.30911.0, >= 2.30908.0)
-  - GoogleAppMeasurement/AdIdSupport (10.22.0):
-    - GoogleAppMeasurement/WithoutAdIdSupport (= 10.22.0)
+  - GoogleAppMeasurement/AdIdSupport (10.23.0):
+    - GoogleAppMeasurement/WithoutAdIdSupport (= 10.23.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
     - GoogleUtilities/MethodSwizzler (~> 7.11)
     - GoogleUtilities/Network (~> 7.11)
     - "GoogleUtilities/NSData+zlib (~> 7.11)"
     - nanopb (< 2.30911.0, >= 2.30908.0)
-  - GoogleAppMeasurement/WithoutAdIdSupport (10.22.0):
+  - GoogleAppMeasurement/WithoutAdIdSupport (10.23.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
     - GoogleUtilities/MethodSwizzler (~> 7.11)
     - GoogleUtilities/Network (~> 7.11)
     - "GoogleUtilities/NSData+zlib (~> 7.11)"
     - nanopb (< 2.30911.0, >= 2.30908.0)
-  - GoogleUserMessagingPlatform (2.2.0)
+  - GoogleUserMessagingPlatform (2.3.0)
   - GoogleUtilities/AppDelegateSwizzler (7.13.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -115,6 +117,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - AmazonPublisherServicesSDK
+    - DTBiOSSDK
     - EzHTTP
     - EzImageLoader
     - Google-Mobile-Ads-SDK
@@ -136,13 +139,14 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AmazonPublisherServicesSDK: 4898281a30079a6a0d0c94f656222fa6f7597c6f
-  ApesterKit: dfca2bf7b57cfd0d2bee4b696693715c5705364c
+  ApesterKit: ef893248e12b41a73a4c1765ffb8bfad88a55075
   ApesterObjcBridging: 4e2955f819b68f1fef26cd06285df50c9eaec8ad
+  DTBiOSSDK: 97af375f056bc5c3202b5a797f8390258deaac17
   EzHTTP: d8f7e50a69bbcd6ae4f9853692d6bc5cf92e598b
   EzImageLoader: a930cbd57aaca0dbc3515ad3ff4639843d8658d9
   Google-Mobile-Ads-SDK: 8f67a72f88d057335b1ac3f501e2b68ad054116e
-  GoogleAppMeasurement: ccefe3eac9b0aa27f96066809fb1a7fe4b462626
-  GoogleUserMessagingPlatform: d31dbfb40ec02c5d9683029815c5d5a7f46389ee
+  GoogleAppMeasurement: 453eb0de99fcf2bdec9403e9ac5d7871fdba3e3f
+  GoogleUserMessagingPlatform: b1ad7bb1ee3ce64749d4fec24f667b36e45c396c
   GoogleUtilities: d053d902a8edaa9904e1bd00c37535385b8ed152
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
