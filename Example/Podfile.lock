@@ -40,21 +40,21 @@ PODS:
   - Google-Mobile-Ads-SDK (10.14.0):
     - GoogleAppMeasurement (< 11.0, >= 7.0)
     - GoogleUserMessagingPlatform (>= 1.1)
-  - GoogleAppMeasurement (10.23.0):
-    - GoogleAppMeasurement/AdIdSupport (= 10.23.0)
+  - GoogleAppMeasurement (10.23.1):
+    - GoogleAppMeasurement/AdIdSupport (= 10.23.1)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
     - GoogleUtilities/MethodSwizzler (~> 7.11)
     - GoogleUtilities/Network (~> 7.11)
     - "GoogleUtilities/NSData+zlib (~> 7.11)"
     - nanopb (< 2.30911.0, >= 2.30908.0)
-  - GoogleAppMeasurement/AdIdSupport (10.23.0):
-    - GoogleAppMeasurement/WithoutAdIdSupport (= 10.23.0)
+  - GoogleAppMeasurement/AdIdSupport (10.23.1):
+    - GoogleAppMeasurement/WithoutAdIdSupport (= 10.23.1)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
     - GoogleUtilities/MethodSwizzler (~> 7.11)
     - GoogleUtilities/Network (~> 7.11)
     - "GoogleUtilities/NSData+zlib (~> 7.11)"
     - nanopb (< 2.30911.0, >= 2.30908.0)
-  - GoogleAppMeasurement/WithoutAdIdSupport (10.23.0):
+  - GoogleAppMeasurement/WithoutAdIdSupport (10.23.1):
     - GoogleUtilities/AppDelegateSwizzler (~> 7.11)
     - GoogleUtilities/MethodSwizzler (~> 7.11)
     - GoogleUtilities/Network (~> 7.11)
@@ -145,7 +145,7 @@ SPEC CHECKSUMS:
   EzHTTP: d8f7e50a69bbcd6ae4f9853692d6bc5cf92e598b
   EzImageLoader: a930cbd57aaca0dbc3515ad3ff4639843d8658d9
   Google-Mobile-Ads-SDK: 8f67a72f88d057335b1ac3f501e2b68ad054116e
-  GoogleAppMeasurement: 453eb0de99fcf2bdec9403e9ac5d7871fdba3e3f
+  GoogleAppMeasurement: 794d1d2f71fdf77a077a3986258a5c2dac0f9d48
   GoogleUserMessagingPlatform: b1ad7bb1ee3ce64749d4fec24f667b36e45c396c
   GoogleUtilities: d053d902a8edaa9904e1bd00c37535385b8ed152
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
