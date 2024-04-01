@@ -14,7 +14,7 @@ import ApesterKit
     static var environment: APEEnvironment = .production
     static var gdprString = "CPlrcMAPlrcMACnABIDECzCkAP_AAAAAAAYgI8pd9D7dbXFDefx_SPt0OYwW0NBTKuQCChSAA2AFVAOQcLQA02EaMATAhiACEQIAolIBAAEEHAFUAECQQIAEAAHsIgSEhAAKIABEEBEQAAIQAAoKAAAAEAAIgAABIgSAmBiQS5LmRUCAGIAQBgBYgogBCIABAgMBBEAIABgIAIIIwygAAQAAAIIAAAAAARAAAgAAAJCQAYAAgjyGgAwABBHkRABgACCPIqADAAEEeRkAGAAII8joAMAAQR5IQAYAAgjySgAwABBHkpABgACCPIAA.f_gAAAAABcgAAAAA"
 //
-    static var baseUrl = "https://www.kicker.de/apester-in-app-unit-detached/?__APESTER_DEBUG__=true"
+    static var baseUrl = "https://www.sport1.de/apester-in-app-unit-detached/?__APESTER_DEBUG__=true"
 
     static private(set) var unitsParams: [(type: UnitType, unitParam:APEUnitParams)] = []
     
