@@ -80,7 +80,7 @@ public class APEUnitConfiguration : APEConfiguration
     }
     
     var unitURL: URL? {
-        let baseUrl = self.baseUrl ?? self.environment.unitBaseUrl + Constants.Unit.unitPath
+        let baseUrl = self.baseUrl ?? self.environment.unitBaseUrl + Constants.Unit.unitPath + Constants.Unit.debugQuery
         let components = URLComponents(string: baseUrl)
         return components?.url
     }

@@ -73,6 +73,7 @@ internal struct Constants
         internal static let isReady = "apester_interaction_loaded"
         internal static let inAppUnitDetached = "in-app-unit-detached"
         internal static let unitPath = "/v2/static/\(inAppUnitDetached).html"
+        internal static let debugQuery = "?__APESTER_DEBUG__=true"
         internal static let proxy = "apesterUnitProxy"
         internal static let resize = "apester_resize_unit"
         internal static let height = "height"
