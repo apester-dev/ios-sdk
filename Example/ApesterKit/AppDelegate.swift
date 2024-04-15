@@ -12,6 +12,7 @@ import UIKit
 import ApesterKit
 import FirebaseCore
 import FirebaseAuth
+import AppTrackingTransparency
 ///
 ///
 ///
@@ -25,7 +26,28 @@ extension AppDelegate : UIApplicationDelegate
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool
     {
         // Override point for customization after application launch.
-        
+        if #available(iOS 14, *) {
+            ATTrackingManager.requestTrackingAuthorization { status in
+                    switch status {
+                        case .authorized:
+                            // Tracking authorized, proceed with ad SDKs
+                            print("Tracking authorized")
+                        case .denied:
+                            // User denied tracking, handle appropriately
+                            print("Tracking denied")
+                        case .notDetermined:
+                            // Request permission again if needed
+                            print("Tracking not determined yet")
+                    case .restricted:
+                        print(" tracking was restricted")
+                    @unknown default:
+                        print("unknown")
+                    }
+                }
+        } else {
+            // Fallback on earlier versions
+        }
+
         APELoggerService.shared.enabled = true
         APELoggerService.shared.formatter = APELogger.Formatters.Concatenating([
             APELogger.Formatters.standard,
@@ -35,6 +57,14 @@ extension AppDelegate : UIApplicationDelegate
             APELogger.Writers.standard,
             DemoLogWriter()
         ])
+        DispatchQueue.main.async {
+              if #available(iOS 14, *) {
+                  ATTrackingManager.requestTrackingAuthorization { status in
+                      // Handle the authorization status
+                  }
+              }
+          }
+        
         // initiate UnitConfigurationsFactory environment
         UnitConfigurationsFactory.environment = .production
     

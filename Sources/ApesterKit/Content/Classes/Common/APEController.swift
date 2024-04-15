@@ -290,7 +290,11 @@ extension APEController : WKNavigationDelegate
         }
         decisionHandler(.allow)
     }
+    public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        print("error with loading \(error)")
+    }
 }
+
 
 // MARK: - WKUIDelegate
 @available(iOS 11.0, *)

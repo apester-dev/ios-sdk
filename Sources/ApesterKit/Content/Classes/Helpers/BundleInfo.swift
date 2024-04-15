@@ -40,9 +40,15 @@ internal class BundleInfo
     // the deviceInfoParamsDictionary settings data
     internal static func bundleInfoPayload(with bundle: Bundle?) -> [String: String]
     {
+       
         var deviceInfoPayload: [String: String] = [:]
         // get the device advertisingIdentifier
         let identifierManager = ASIdentifierManager.shared()
+        if identifierManager.isAdvertisingTrackingEnabled {
+            print("advertising tracking is enabled ")
+        } else {
+            print("advertising tracking is disabled")
+        }
         let idfa = identifierManager.advertisingIdentifier
         deviceInfoPayload[Constants.Payload.advertisingId] = idfa.uuidString
         deviceInfoPayload[Constants.Payload.trackingEnabled] = "\(identifierManager.isAdvertisingTrackingEnabled)"
@@ -74,6 +80,7 @@ internal class BundleInfo
                 deviceInfoPayload[Constants.Payload.sdkVersion] = sdkVersion
             }
         }
+        print(deviceInfoPayload)
         return deviceInfoPayload
     }
 

@@ -56,7 +56,7 @@ final public class APEAmazonStrategy : APEAdProviderStrategy
         
         let nativeDelegate = APEAmazonDelegate.init(
             adProvider      : provider,
-            container       : nil,
+            container       : delegate.adPresentingViewController,
             receiveAdSuccess: { [provider] in
                 provider.statusSuccess()
                 provider.bannerView.onReceiveAdSuccess()
@@ -70,9 +70,11 @@ final public class APEAmazonStrategy : APEAdProviderStrategy
         )
         provider.nativeDelegate = nativeDelegate
         
+        Banner_loadGAMAd(withAdUnitID: parameters.dfp_au_banner, in: UIApplication.shared.ape_keyWindow!.rootViewController!)
         applyAmazonConfiguration(basedOn: parameters)
-        applyPubMaticConfiguration(basedOn: parameters)
-        applyPubMaticGDPRConsent(gdprString)
+//        applyPubMaticConfiguration(basedOn: parameters)
+//        applyPubMaticGDPRConsent(gdprString)
+        
         
         let banner = APEAdView(
             adTitleText          : adTitleLabelText,
@@ -81,7 +83,17 @@ final public class APEAmazonStrategy : APEAdProviderStrategy
             timeInView           : nil,
             onAdRemovalCompletion: onAdRemovalCompletion
         )
+        guard let gamParams = params as? APEAmazonAdParameters else {
+                  fatalError("Expected APEAmazonAdParameters")
+              }
+        let adSize = GADAdSizeFromCGSize(CGSize(width: 320, height: 50)) // Adjust size as needed
+                let bannerView = GADBannerView(adSize: adSize)
+                bannerView.adUnitID = gamParams.dfp_au_banner // Use the GAM ad unit ID
+                bannerView.rootViewController = delegate.adPresentingViewController
+                bannerView.delegate = self // APEAmazonStrategy must conform to GADBannerViewDelegate
+                let GADRequest = GADRequest()
         
+        bannerView.load(GADRequest)
         let apesterAdSize = (parameters.type == .bottom) ? APEAdSize.adSize320x50 : APEAdSize.adSize300x250
         
         let adSizes = adSizeValue(basedOn: apesterAdSize)
@@ -98,7 +110,6 @@ final public class APEAmazonStrategy : APEAdProviderStrategy
                 print("eventHandler.configBlock")
                 
                 guard let delegate = provider.nativeDelegate as? APEAmazonDelegate else { return }
-                    
                 let partnerTargeting = delegate.biddingManager.retrivePartnerTargeting()
                 let  customTargeting = request?.customTargeting as? NSMutableDictionary ?? NSMutableDictionary()
                 
@@ -146,6 +157,7 @@ final public class APEAmazonStrategy : APEAdProviderStrategy
             guard let adBanner = banner else { return }
             
             if let nativeDelegate = provider.nativeDelegate {
+                self.Banner_loadGAMAd(withAdUnitID: parameters.dfp_au_banner, in: UIApplication.shared.ape_keyWindow!.rootViewController! )
                 nativeDelegate.containerViewController = delegate.adPresentingViewController
                 nativeDelegate.biddingManager.loadBids()
             }
@@ -241,4 +253,42 @@ final public class APEAmazonStrategy : APEAdProviderStrategy
             )
         }
     }
+}
+
+extension APEAmazonStrategy: GADBannerViewDelegate {
+    //MARK: Banner
+    // Function to initiate GAM ad loading
+    func Banner_loadGAMAd(withAdUnitID adUnitID: String, in viewController: UIViewController?)  {
+        guard let viewController = viewController else { return  }
+        let bannerView = GADBannerView(adSize: GADAdSizeBanner)
+        bannerView.adUnitID = adUnitID
+//        bannerView.adUnitID = "/6499/example/banner"
+        bannerView.rootViewController = viewController
+        bannerView.delegate = self
+        viewController.view.addSubview(bannerView)
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        // Constraints for bannerView can be adjusted as needed
+        NSLayoutConstraint.activate([
+            bannerView.bottomAnchor.constraint(equalTo: viewController.view.safeAreaLayoutGuide.bottomAnchor),
+            bannerView.centerXAnchor.constraint(equalTo: viewController.view.centerXAnchor)
+        ])
+        let gadRequest = GADRequest()
+        bannerView.load(gadRequest)
+            
+    }
+
+    // MARK: GADBannerViewDelegate Methods
+    public func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
+        print("GAM Banner loaded successfully")
+        // Implement any additional logic needed upon successful ad loading
+    }
+
+    public func bannerView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: Error) {
+        print("GAM Banner failed to load with error: \(error.localizedDescription)")
+        // Implement your fallback strategy here
+    }
+    // MARK: Banner
+
+    // Implement any other delegate methods as necessary
+    
 }

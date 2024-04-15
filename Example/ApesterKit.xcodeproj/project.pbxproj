@@ -91,7 +91,7 @@
 		5D4C7AA6299E395A00C1FC01 /* APESingleUnitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APESingleUnitViewController.h; sourceTree = "<group>"; };
 		5D4C7AA7299E395A00C1FC01 /* UnitConfigurationFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitConfigurationFactory.swift; sourceTree = "<group>"; };
 		5D4C7AAC299E396200C1FC01 /* APECollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APECollectionViewCell.swift; sourceTree = "<group>"; };
-		5DBE88D529D32BAD009B2369 /* ApesterObjcBridging.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; name = ApesterObjcBridging.podspec; path = ../ApesterObjcBridging.podspec; sourceTree = "<group>"; };
+		5DBE88D529D32BAD009B2369 /* ApesterObjcBridging.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; name = ApesterObjcBridging.podspec; path = ../ApesterObjcBridging.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		607FACD01AFB9204008FA782 /* Apester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Apester.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -189,7 +189,6 @@
 			isa = PBXGroup;
 			children = (
 				5D4C7A9A299E392F00C1FC01 /* Strip */,
-				5D4C7A99299E392100C1FC01 /* Unit */,
 				051B6D862B6555E00067120E /* mainViewController.swift */,
 			);
 			path = ViewControllers;
@@ -274,6 +273,7 @@
 				5DBE88D529D32BAD009B2369 /* ApesterObjcBridging.podspec */,
 				8CE5FD2F402F203FBA490B3C /* README.md */,
 				F629917179A80DF506AA2AB2 /* LICENSE */,
+				5D4C7A99299E392100C1FC01 /* Unit */,
 			);
 			name = "Podspec Metadata";
 			sourceTree = "<group>";

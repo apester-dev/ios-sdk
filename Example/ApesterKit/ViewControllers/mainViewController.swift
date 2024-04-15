@@ -121,9 +121,6 @@ class mainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = false
-        AppTrackingHelper.requestTrackingPermission(permissionCallback: {
-            
-        }, viewController: self)
 //        setupCustomBackButton()
         updateLikeImage()
         setupGestures()
