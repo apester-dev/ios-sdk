@@ -53,6 +53,9 @@ public class APEAdProviderStrategy : NSObject , APEAdProviderStrategyProtocol
                 return p.identifier == parameters.identifier && p.isVariant == parameters.isVariant && p.type == parameters.type
             case .adMob   (let p):
                 return p.identifier == parameters.identifier && p.isVariant == parameters.isVariant && p.type == parameters.type
+            case .aniview(params: let p):
+                return p.identifier == parameters.identifier && p.isVariant == parameters.isVariant && p.type == parameters.type
+
             }
         })
 

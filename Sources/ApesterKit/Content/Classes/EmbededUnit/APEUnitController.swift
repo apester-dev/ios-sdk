@@ -373,6 +373,7 @@ extension APEUnitController
             case .inUnit: return "da"
             case .bottom: return "da_bottom"
             case .companion: return "co"
+            case .inUnitVideo: return "invid"
             }
         }
         
@@ -483,6 +484,7 @@ internal extension APEUnitController
         case (.bottom   , false) : return displayView.adUnit.adContentBanner
         case (.bottom   , true ) : return displayView.adBottom
         case (.companion, _    ) : return displayView.adCompanion
+        case (.inUnitVideo, _): return displayView.adUnit.adContentMain
         }
     }
     
@@ -502,6 +504,7 @@ internal extension APEUnitController
         case (.bottom   , true ) : provider.show(container) // return false;
         case (.bottom   , false) : provider.show(container) // return false;
         case (.companion, _    ) : provider.show(container) // return false;
+        case (.inUnitVideo, _): provider.show(container)
         }
         return true
     }
@@ -512,6 +515,7 @@ internal extension APEUnitController
             case .amazon  (let p): return p.type == adType
             case .adMob   (let p): return p.type == adType
             case .pubMatic(let p): return p.type == adType
+            case .aniview(let p): return p.type == adType
             }
         }) else { return }
         

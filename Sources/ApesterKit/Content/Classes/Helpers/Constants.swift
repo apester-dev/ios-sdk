@@ -86,6 +86,7 @@ internal struct Constants
         internal static let adMob            = "adMob"
         internal static let pubMatic         = "pubMatic"
         internal static let amazon           = "amazon"
+        internal static let aniview          = "aniview_native"
         internal static let profileId        = "iosProfileId"
         internal static let adProvider       = "provider"
         internal static let publisherId      = "publisherId"

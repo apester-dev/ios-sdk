@@ -32,7 +32,8 @@ private extension APEAdProviderLoader
         return [
             amazonStrategy  (for: controller),
             pubmaticStrategy(for: controller),
-            adMobStrategy   (for: controller)
+            adMobStrategy   (for: controller),
+            aniviewStrategy (for: controller)
         ].compactMap { $0 }
     }
     
@@ -56,6 +57,14 @@ private extension APEAdProviderLoader
     {
         let strategy = APEApesterObjcBridging.instantiateClassNamed(
             withObject: "APEPubMaticStrategy",
+            selectorName: "initWithUnitController:",
+            with: controller) as? APEAdProviderStrategyProtocol
+        return strategy
+    }
+    private static func aniviewStrategy(for controller: APEUnitController) -> APEAdProviderStrategyProtocol?
+    {
+        let strategy = APEApesterObjcBridging.instantiateClassNamed(
+            withObject: "APEAniViewStrategy",
             selectorName: "initWithUnitController:",
             with: controller) as? APEAdProviderStrategyProtocol
         return strategy

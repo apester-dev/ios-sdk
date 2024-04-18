@@ -143,7 +143,7 @@ internal class APEAdView : UIView
 
         applyConstraintsToDisplay(with: adView)
 
-        if monetization.adType == .inUnit {
+        if monetization.adType == .inUnit || monetization.adType == .inUnitVideo {
 
             let offset = CGFloat(12.0)
             ape_addSubview(closeButton, with: [])
@@ -292,6 +292,14 @@ internal class APEAdView : UIView
             nativeAdConstraintHeight = adView.ape_anchorSelf(with: heightTemplate, priority: .required)
             nativeAdConstraintWidth  = adView.ape_anchorSelf(with:  widthTemplate, priority: .required)
             break
+        case (.aniview(params: let params), _):
+            
+            nativeAdConstraintHeight = adView.ape_anchorSelf(with: heightTemplate, priority: .required)
+            nativeAdConstraintWidth  = adView.ape_anchorSelf(with:  widthTemplate, priority: .required)
+            break
+        case (.amazon(params: _), .inUnitVideo): break
+        case (.pubMatic(params: _), .inUnitVideo): break
+        case (.adMob(params: let params), .inUnitVideo): break
         }
     }
     

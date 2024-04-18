@@ -14,12 +14,14 @@ internal enum APEMonetization : Equatable
     case adMob   (params: APEAdParameters)
     case pubMatic(params: APEAdParameters)
     case amazon  (params: APEAdParameters)
+    case aniview (params: APEAdParameters)
     
     internal var identifier : String {
         switch self {
         case .adMob   (let p): return p.identifier
         case .pubMatic(let p): return p.identifier
         case .amazon  (let p): return p.identifier
+        case .aniview (let p): return p.identifier
         }
     }
     internal var isCompanionVariant : Bool {
@@ -27,6 +29,7 @@ internal enum APEMonetization : Equatable
         case .adMob   (let p): return p.isVariant
         case .pubMatic(let p): return p.isVariant
         case .amazon  (let p): return p.isVariant
+        case .aniview (let p): return p.isVariant
         }
     }
     internal var adType : APEAdType {
@@ -34,6 +37,7 @@ internal enum APEMonetization : Equatable
         case .adMob   (let p): return p.type
         case .pubMatic(let p): return p.type
         case .amazon  (let p): return p.type
+        case .aniview (let p): return p.type
         }
     }
 }
@@ -43,6 +47,7 @@ func == (lhs: APEMonetization, rhs: APEMonetization) -> Bool {
     case (.adMob   (let l), .adMob   (let r)): return l.identifier == r.identifier && l.type == r.type
     case (.pubMatic(let l), .pubMatic(let r)): return l.identifier == r.identifier && l.type == r.type
     case (.amazon  (let l), .amazon  (let r)): return l.identifier == r.identifier && l.type == r.type
+    case (.aniview (let l), .aniview (let r)): return l.identifier == r.identifier && l.type == r.type
     default: return false
     }
 }

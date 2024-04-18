@@ -40,7 +40,7 @@
 		5D4C7AA6299E395A00C1FC01 /* APESingleUnitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APESingleUnitViewController.h; sourceTree = "<group>"; };
 		5D4C7AA7299E395A00C1FC01 /* UnitConfigurationFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitConfigurationFactory.swift; sourceTree = "<group>"; };
 		5D4C7AAC299E396200C1FC01 /* APECollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APECollectionViewCell.swift; sourceTree = "<group>"; };
-		    5DBE88D529D32BAD009B2369 /* ApesterObjcBridging.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; name = ApesterObjcBridging.podspec; path = ../ApesterObjcBridging.podspec; sourceTree = "<group>"; };
+		5DBE88D529D32BAD009B2369 /* ApesterObjcBridging.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; name = ApesterObjcBridging.podspec; path = ../ApesterObjcBridging.podspec; sourceTree = "<group>"; };
 		5EBCECD5AFAF31E1A592ADB0 /* Pods_ApesterKit_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ApesterKit_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD01AFB9204008FA782 /* ApesterKit_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApesterKit_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -279,12 +279,18 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ApesterKit_Example/Pods-ApesterKit_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Sentry/Sentry.framework",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/AmazonPublisherServicesSDK/DTBiOSSDK.framework/DTBiOSSDK",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/GoogleAds-IMA-iOS-SDK/GoogleInteractiveMediaAds.framework/GoogleInteractiveMediaAds",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenWrapSDK/OpenWrap/OMSDK_Pubmatic.framework/OMSDK_Pubmatic",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sentry.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DTBiOSSDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleInteractiveMediaAds.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OMSDK_Pubmatic.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -299,10 +305,16 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-ApesterKit_Example/Pods-ApesterKit_Example-resources.sh",
+				"${PODS_ROOT}/AdPlayerSDK/AdPlayerResources.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/Google-Mobile-Ads-SDK/GoogleMobileAdsResources.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/GoogleUserMessagingPlatform/UserMessagingPlatformResources.bundle",
 				"${PODS_ROOT}/OpenWrapSDK/OpenWrapSDK/POBResources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AdPlayerResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMobileAdsResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/UserMessagingPlatformResources.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/POBResources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;

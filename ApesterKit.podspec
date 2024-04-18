@@ -60,6 +60,7 @@ Pod::Spec.new do |s|
         content.dependency 'ApesterObjcBridging', '3.3.17'
         content.dependency 'OpenWrapSDK' , '~> 2.7.0'
         content.dependency 'DTBiOSSDK', '~> 0.0.1'
+        content.dependency 'AdPlayerSDK', '~> 1.8.2'
     end
     s.subspec   'ContentAdmob'    do |content|
         content.source_files = 'Sources/ApesterKit/Content/Classes/EmbededUnit/AdProvider/AdMob/*.{h,m,swift}'
