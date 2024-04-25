@@ -76,13 +76,16 @@ final public class APEAniViewStrategy : APEAdProviderStrategy
         AdPlayer.initSdk(storeURL: URL(string: "https://apps.apple.com/us/app/apester-app/id6478967119")!)
         
         let tag = AdPlayerTagConfiguration(tagId: parameters.identifier)
-        
+        tag.eventsObserver = provider.nativeDelegate as? AdPlayerTagEventsObserver
         let publisher = AdPlayerPublisherConfiguration(publisherId: parameters.channelId, tagConfiguration: tag, nil)
         
         AdPlayer.initializePublisher(publisher)
         let placement: AdPlayerPlacementViewController = AdPlayerPlacementViewController(tagId: parameters.identifier)
-        
+       
         let nativeAdView = AdPlayerPlacementViewWrapper(viewController: placement )
+        
+        
+        
         
         banner.adContent       = nativeAdView
         provider.bannerView    = banner
@@ -102,40 +105,17 @@ final public class APEAniViewStrategy : APEAdProviderStrategy
                     adBanner.translatesAutoresizingMaskIntoConstraints = false
                     adBanner.isUserInteractionEnabled = true
                     vc.view.addSubview(adBanner)
-                    NSLayoutConstraint.activate([
-                        adBanner.leadingAnchor.constraint(equalTo: vc.view.leadingAnchor),
-                        adBanner.trailingAnchor.constraint(equalTo: vc.view.trailingAnchor),
-                        adBanner.centerYAnchor.constraint(equalTo: vc.view.centerYAnchor)
-                    ])
-                    
-                    //                let closeButton = UIButton(type: .system)
-                    //                closeButton.translatesAutoresizingMaskIntoConstraints = false
-                    //                closeButton.setTitle("✖️", for: .normal)
-                    //                closeButton.addTarget(vc, action: #selector(self.closeButtonTapped(_:)), for: .touchUpInside)
-                    //                closeButton.isHidden = true
-                    //                adBanner.addSubview(closeButton)
-                    
                     placement.view.translatesAutoresizingMaskIntoConstraints = false
                     vc.addChild(placement)
                     adBanner.addSubview(placement.view)
                     NSLayoutConstraint.activate([
                         placement.view.leadingAnchor.constraint(equalTo: adBanner.leadingAnchor),
                         placement.view.trailingAnchor.constraint(equalTo: adBanner.trailingAnchor),
-                        placement.view.topAnchor.constraint(equalTo: adBanner.topAnchor),
-                        placement.view.bottomAnchor.constraint(equalTo: adBanner.bottomAnchor, constant: -1)
+                        placement.view.centerYAnchor.constraint(equalTo: adBanner.centerYAnchor)
                     ])
-                    //                NSLayoutConstraint.activate([
-                    //                    closeButton.topAnchor.constraint(equalTo: adBanner.topAnchor, constant: 0),
-                    //                    closeButton.leadingAnchor.constraint(equalTo: adBanner.leadingAnchor, constant: 0),
-                    //                    closeButton.widthAnchor.constraint(equalToConstant: 30),
-                    //                    closeButton.heightAnchor.constraint(equalToConstant: 30)
-                    //                ])
-                    
+     
                     placement.didMove(toParent: vc)
-                    //                closeButton.isHidden = false
-                    //                adBanner.bringSubviewToFront(closeButton)
-                    //                closeButton.alpha = 1.0
-                    //                closeButton.isEnabled = true
+      
                     adBanner.showAd(in: containerDisplay)
                 }
                 

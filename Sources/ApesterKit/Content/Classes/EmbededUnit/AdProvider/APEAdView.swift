@@ -28,7 +28,7 @@ internal class APEAdView : UIView
 
         var b = UIButton(type: .custom)
         b.setTitle("🅧", for: .normal)
-        b.setTitleColor(.white, for: .normal)
+        b.setTitleColor(.red, for: .normal)
         b.translatesAutoresizingMaskIntoConstraints = false
         b.widthAnchor.constraint(equalToConstant: 30).isActive = true
         b.heightAnchor.constraint(equalToConstant: 30).isActive = true
@@ -122,7 +122,7 @@ internal class APEAdView : UIView
         
         // take action only if the `APEAdView` is not embeded in a container, and the `APEBannerView` contains an ad object
         guard !containerView.ape_isExist else { return }
-        guard !superview.ape_isExist     else { return }
+//        guard !superview.ape_isExist     else { return }
         guard let adView = adContent     else { return }
         
         containerView = container
@@ -138,18 +138,28 @@ internal class APEAdView : UIView
 
         titleLabel.ape_anchor(view: adView, with: [
             equal(\.leadingAnchor) ,
-            equal(\.topAnchor, \.bottomAnchor)
+            equal(\.topAnchor)
         ])
 
         applyConstraintsToDisplay(with: adView)
 
-        if monetization.adType == .inUnit || monetization.adType == .inUnitVideo {
+        if monetization.adType == .inUnit {
 
             let offset = CGFloat(12.0)
             ape_addSubview(closeButton, with: [])
             closeButton.ape_anchor(view: adView, with: [
                 equal(\.trailingAnchor, \.leadingAnchor, constant:  offset),
                 equal(\.topAnchor     , \.bottomAnchor , constant: -offset)
+            ])
+        }
+        if  monetization.adType == .inUnitVideo {
+            let offset = CGFloat(2.0)
+            let topOffset = CGFloat(10.0)
+            
+            ape_addSubview(closeButton, with: [])
+            adView.ape_anchor(view: closeButton, with: [
+                equal(\.leadingAnchor, constant:  offset),
+                equal(\.topAnchor , constant: -topOffset)
             ])
         }
     }
