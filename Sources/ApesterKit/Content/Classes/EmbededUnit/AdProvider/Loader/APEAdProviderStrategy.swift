@@ -90,7 +90,11 @@ public class APEAdProviderStrategy : NSObject , APEAdProviderStrategyProtocol
                 let name = Constants.Analytics.playerMonLoadingImpressionFailed
                 controller.dispatchNativeAdEvent(named: name, for: parameters, ofType: strategy, widget: true)
                 controller.manualPostActionResize()
-            })
+            },
+            onVideoAdCompleted: {
+                
+            }
+        )
         
         /// Step 04. if viewProvider is not in cache, add it
         if !controller.adBannerProviders.contains(viewProvider) {
@@ -133,6 +137,21 @@ public class APEAdProviderStrategy : NSObject , APEAdProviderStrategyProtocol
         onAdRequestedCompletion     : @escaping APEAdProvider.HandlerVoidType,
         receiveAdSuccessCompletion  : @escaping APEAdProvider.HandlerVoidType,
         receiveAdErrorCompletion    : @escaping APEAdProvider.HandlerErrorType
+    ) -> APEAdProvider {
+        fatalError("OVERRIDE ME")
+    }
+    
+    internal func createAdProvider(
+        params                      : APEAdParameters,
+        delegate                    : APEAdProviderDelegate,
+        adTitleLabelText            : String,
+        inUnitBackgroundColor       : UIColor,
+        GDPRConsent gdprString      : String?,
+        onAdRemovalCompletion       : @escaping APEAdProvider.HandlerAdType,
+        onAdRequestedCompletion     : @escaping APEAdProvider.HandlerVoidType,
+        receiveAdSuccessCompletion  : @escaping APEAdProvider.HandlerVoidType,
+        receiveAdErrorCompletion    : @escaping APEAdProvider.HandlerErrorType,
+        onVideoAdCompleted          : @escaping APEAdProvider.HandlerVoidType
     ) -> APEAdProvider {
         fatalError("OVERRIDE ME")
     }

@@ -38,8 +38,10 @@ final public class APEAniViewStrategy : APEAdProviderStrategy
         onAdRemovalCompletion       : @escaping APEAdProvider.HandlerAdType,
         onAdRequestedCompletion     : @escaping APEAdProvider.HandlerVoidType,
         receiveAdSuccessCompletion  : @escaping APEAdProvider.HandlerVoidType,
-        receiveAdErrorCompletion    : @escaping APEAdProvider.HandlerErrorType
+        receiveAdErrorCompletion    : @escaping APEAdProvider.HandlerErrorType,
+        onVideoAdCompleted          : @escaping APEAdProvider.HandlerVoidType
     ) -> APEAdProvider {
+        
         
         let parameters = params as! APEAniViewParameters
         
@@ -49,8 +51,12 @@ final public class APEAniViewStrategy : APEAdProviderStrategy
         )
         
         provider.nativeDelegate = ApeAniViewDelegate.init(
+            videoComplete: {
+                provider.bannerView.onVideoComplete!()
+                
+            },
+            containerVC       : nil,
             adProvider      : provider,
-            container       : nil,
             receiveAdSuccess: { [provider] in
                 provider.statusSuccess()
                 provider.bannerView.onReceiveAdSuccess()
@@ -62,6 +68,7 @@ final public class APEAniViewStrategy : APEAdProviderStrategy
                 provider.bannerView.onReceiveAdError(mistake)
                 receiveAdErrorCompletion(mistake)
             }
+           
         )
         
         let banner = APEAdView(
@@ -83,8 +90,6 @@ final public class APEAniViewStrategy : APEAdProviderStrategy
         let placement: AdPlayerPlacementViewController = AdPlayerPlacementViewController(tagId: parameters.identifier)
        
         let nativeAdView = AdPlayerPlacementViewWrapper(viewController: placement )
-        
-        
         
         
         banner.adContent       = nativeAdView
@@ -124,11 +129,7 @@ final public class APEAniViewStrategy : APEAdProviderStrategy
         }
         return provider
     }
-    
-//    @objc func closeButtonTapped(_ sender: UIButton){
-//        print("close button tapped ")
-//        sender.superview?.removeFromSuperview()
-//    }
+
     
     
 }

@@ -8,9 +8,13 @@
 import Foundation
 import AdPlayerSDK
 
+internal protocol APEAniViewPlayerDelegate {
+    func onContentVideoComplete()
+}
 
-class ApeAniViewDelegate: APENativeLibraryDelegate
+class ApeAniViewDelegate: APENativeVideoLibraryDelegate
 {
+
     
 }
 extension ApeAniViewDelegate: AdPlayerTagEventsObserver {
@@ -23,6 +27,7 @@ extension ApeAniViewDelegate: AdPlayerTagEventsObserver {
         case .adLoaded:
             print("Ad loaded")
         case .adImpression:
+            print("ad appeared")
             APELoggerService.shared.info()
             receiveAdSuccess()
         case .adVideoFirstQuartile:
@@ -32,6 +37,7 @@ extension ApeAniViewDelegate: AdPlayerTagEventsObserver {
         case .adVideoThirdQuartile:
             print("Reached third quartile of the ad video")
         case .adVideoCompleted:
+            videoComplete()
             print("Ad video completed")
         case .adClickThrough:
             print("Ad clicked on")
@@ -58,6 +64,7 @@ extension ApeAniViewDelegate: AdPlayerTagEventsObserver {
         case .contentVideoThirdQuartile:
             print("Content reached third quartile")
         case .contentVideoComplete:
+            videoComplete()
             print("Content video completed")
         case .adError, .adErrorLimit, .error:
             if let errorEvent = event as? AdPlayerEventError {

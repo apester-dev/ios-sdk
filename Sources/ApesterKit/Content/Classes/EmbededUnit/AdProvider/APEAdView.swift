@@ -18,6 +18,9 @@ internal class APEAdView : UIView
     // MARK: - display
     internal var containerView : APEContainerView?
     
+    private var adContentSizeObservation: NSKeyValueObservation?
+
+    
     private  var nativeAdConstraintHeight: NSLayoutConstraint?
     private  var nativeAdConstraintWidth : NSLayoutConstraint?
     
@@ -28,7 +31,7 @@ internal class APEAdView : UIView
 
         var b = UIButton(type: .custom)
         b.setTitle("🅧", for: .normal)
-        b.setTitleColor(.red, for: .normal)
+        b.setTitleColor(.white, for: .normal)
         b.translatesAutoresizingMaskIntoConstraints = false
         b.widthAnchor.constraint(equalToConstant: 30).isActive = true
         b.heightAnchor.constraint(equalToConstant: 30).isActive = true
@@ -39,7 +42,13 @@ internal class APEAdView : UIView
     }()
 
     // MARK: - AdContent - elements
-    internal var adContent : (UIView & APENativeLibraryAdView)?
+    internal var adContent : (UIView & APENativeLibraryAdView)? {
+        didSet {
+            if let adContent = adContent as? AdPlayerPlacementViewWrapper {
+                setupVideoAdContentSizeObservation(adContent)
+            }
+        }
+    }
     private  var refreshTimer : Timer?
     
     // MARK: - special case
@@ -49,6 +58,9 @@ internal class APEAdView : UIView
     internal private(set) var onReceiveAdSuccess    : APEAdProvider.HandlerVoidType!
     internal private(set) var onReceiveAdError      : APEAdProvider.HandlerErrorType!
     internal private(set) var onAdRemovalCompletion : APEAdProvider.HandlerAdType
+    internal private(set) var onVideoComplete      : APEAdProvider.HandlerVoidType!
+    
+    
 
     // MARK: - Helper
     private var makeTitleLabel : (String) -> UILabel = {
@@ -101,12 +113,24 @@ internal class APEAdView : UIView
             
             guard let strongSelf = self else { return }
             strongSelf.onAdSuccessAction()
+            if let vidView = strongSelf.adContent as? AdPlayerPlacementViewWrapper {
+                print(vidView.frame)
+            }
+            strongSelf.closeButton.isHidden = false
         }
         self.onReceiveAdError   = { [weak self] mistake in
             
             guard let strongSelf = self else { return }
             strongSelf.onAdErrorAction(mistake)
         }
+        self.onVideoComplete = { [weak self] in
+            guard let strongSelf = self else { return }
+            guard let _ = strongSelf.adContent as? AdPlayerPlacementViewWrapper else { return }
+            
+            strongSelf.closeButton.isHidden = true
+            strongSelf.titleLabel.isHidden = true
+        }
+        
     }
 
     // MARK: - lifecycle
@@ -135,11 +159,11 @@ internal class APEAdView : UIView
         [adView,titleLabel,closeButton].forEach {
             $0.isHidden = true
         }
-
+        if monetization.adType != .inUnitVideo {
         titleLabel.ape_anchor(view: adView, with: [
             equal(\.leadingAnchor) ,
             equal(\.topAnchor)
-        ])
+        ])}
 
         applyConstraintsToDisplay(with: adView)
 
@@ -153,14 +177,18 @@ internal class APEAdView : UIView
             ])
         }
         if  monetization.adType == .inUnitVideo {
+            if let vidView = adView as? AdPlayerPlacementViewWrapper {
+                print(vidView.childView?.bounds)
+            }
             let offset = CGFloat(2.0)
-            let topOffset = CGFloat(10.0)
+            let topOffset = CGFloat(110.0)
             
             ape_addSubview(closeButton, with: [])
-            adView.ape_anchor(view: closeButton, with: [
+            closeButton.ape_anchor(view: adView, with: [
                 equal(\.leadingAnchor, constant:  offset),
                 equal(\.topAnchor , constant: -topOffset)
             ])
+            adView.bringSubviewToFront(closeButton)
         }
     }
     
@@ -319,5 +347,37 @@ internal class APEAdView : UIView
         c.isActive = false
         c.constant = const
         c.isActive = true
+    }
+    
+    private func setupVideoAdContentSizeObservation(_ adContent: AdPlayerPlacementViewWrapper) {
+        
+         adContentSizeObservation = adContent.observe(\.frame, options: [.old, .new], changeHandler: { [weak self] (adContent, change) in
+             guard let newSize = change.newValue else { return }
+             if newSize.height > 0 {
+                 self?.adContentHeightChanged(to: newSize)
+             }
+         })
+     }
+    
+    func adContentHeightChanged(to newSize: CGRect){
+        if let vidView = self.adContent as? AdPlayerPlacementViewWrapper, let aniview = vidView.childView {
+            print(self.containerView?.frame)
+            print(vidView.childView?.bounds)
+            let offset = CGFloat(2.0)
+            let topOffset = CGFloat(1.0)
+            
+            ape_addSubview(closeButton, with: [])
+            ape_addSubview(titleLabel, with: [])
+            NSLayoutConstraint.activate([
+                        titleLabel.bottomAnchor.constraint(equalTo: aniview.topAnchor),
+                        titleLabel.leadingAnchor.constraint(equalTo: aniview.leadingAnchor),
+                    ])
+            titleLabel.sizeToFit()
+            closeButton.ape_anchor(view: aniview, with: [
+                equal(\.leadingAnchor, constant:  offset),
+                equal(\.topAnchor)
+            ])
+            vidView.bringSubviewToFront(closeButton)
+        }
     }
 }

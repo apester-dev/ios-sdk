@@ -25,6 +25,7 @@ internal class APENativeLibraryDelegate : NSObject , APEBiddingManagerDelegate
     internal private(set) var receiveAdSuccess: APEAdProvider.HandlerVoidType
     internal private(set) var receiveAdError  : APEAdProvider.HandlerErrorType
     internal private(set) var biddingManager  : APEBiddingManager
+    
     init(
         adProvider provider     : APEAdProvider,
         container viewController: UIViewController?,
@@ -51,4 +52,24 @@ internal class APENativeLibraryDelegate : NSObject , APEBiddingManagerDelegate
     {
         // NO OP - override location
     }
+}
+@objc
+@objcMembers
+internal class APENativeVideoLibraryDelegate : APENativeLibraryDelegate {
+    
+    internal private(set) var videoComplete  : APEAdProvider.HandlerVoidType
+    internal weak  var container: UIViewController?
+    internal weak private(set) var vidProvider : APEAdProvider?
+    internal private(set) var onReceiveAdSuccess: APEAdProvider.HandlerVoidType
+    internal private(set) var onReceiveAdError  : APEAdProvider.HandlerErrorType
+
+    init(videoComplete: @escaping APEAdProvider.HandlerVoidType, containerVC: UIViewController?, adProvider: APEAdProvider, receiveAdSuccess: @escaping APEAdProvider.HandlerVoidType, receiveAdError: @escaping APEAdProvider.HandlerErrorType) {
+        self.videoComplete = videoComplete
+        self.container = containerVC
+        self.vidProvider = adProvider
+        self.onReceiveAdSuccess = receiveAdSuccess
+        self.onReceiveAdError = receiveAdError
+        super.init(adProvider: adProvider, container: containerVC, receiveAdSuccess: receiveAdSuccess, receiveAdError: receiveAdError)
+    }
+    
 }
