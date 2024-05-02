@@ -34,8 +34,9 @@ internal struct APEAniViewParameters : Hashable , APEAdParameters
     {
         typealias Keys = CodingKeys
         
-         let appstoreUrl   = "https://apps.apple.com/us/app/apester-app/id6478967119"
-//        dictionary[Keys.appStoreUrl   .description] as? String else { return nil }
+        guard let appstoreUrl   =   dictionary[Keys.appStoreUrl   .description] as? String else { return nil }
+//        "https://apps.apple.com/us/app/apester-app/id6478967119"
+      
         guard let channelId     = dictionary[Keys.channel       .description] as? String else { return nil }
         guard let provider      = dictionary[Keys.adProvider    .description] as? String else { return nil }
         guard let playerId      = dictionary[Keys.playerId      .description] as? String else { return nil }
