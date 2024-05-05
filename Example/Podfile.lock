@@ -10,9 +10,9 @@ PODS:
     - ApesterKit/Content_Core
     - ApesterKit/ContentAdmob
     - ApesterKit/ContentAmazon
+    - ApesterKit/ContentAniview
     - ApesterKit/ContentPubmatic
   - ApesterKit/Content_Core (3.3.17):
-    - AdPlayerSDK (~> 1.8.2)
     - ApesterObjcBridging (= 3.3.17)
     - DTBiOSSDK (~> 0.0.1)
     - OpenWrapSDK (~> 2.7.0)
@@ -24,6 +24,9 @@ PODS:
     - ApesterKit/Content_Core
     - ApesterKit/ContentPubmatic
     - OpenWrapHandlerDFP (~> 3.1.0)
+  - ApesterKit/ContentAniview (3.3.17):
+    - AdPlayerSDK (~> 1.8.2)
+    - ApesterKit/Content_Core
   - ApesterKit/ContentPubmatic (3.3.17):
     - ApesterKit/Content_Core
     - OpenWrapSDK (~> 2.7.0)
@@ -33,18 +36,18 @@ PODS:
   - DTBiOSSDK (0.0.1)
   - Google-Mobile-Ads-SDK (11.3.0):
     - GoogleUserMessagingPlatform (>= 1.1)
-  - GoogleAds-IMA-iOS-SDK (3.22.0)
-  - GoogleUserMessagingPlatform (2.3.0)
+  - GoogleAds-IMA-iOS-SDK (3.22.1)
+  - GoogleUserMessagingPlatform (2.4.0)
   - OpenWrapHandlerDFP (3.1.0):
     - Google-Mobile-Ads-SDK (>= 8.12.0)
     - OpenWrapSDK
   - OpenWrapSDK (2.7.1):
     - OpenWrapSDK/OpenWrap (= 2.7.1)
   - OpenWrapSDK/OpenWrap (2.7.1)
-  - RxSwift (6.6.0)
-  - Sentry (8.24.0):
-    - Sentry/Core (= 8.24.0)
-  - Sentry/Core (8.24.0)
+  - RxSwift (6.7.1)
+  - Sentry (8.25.0):
+    - Sentry/Core (= 8.25.0)
+  - Sentry/Core (8.25.0)
 
 DEPENDENCIES:
   - ApesterKit (from `../`)
@@ -72,16 +75,16 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AdPlayerSDK: 42d2058a259e535e879a962d8f8ccdabed4c5a5e
   AmazonPublisherServicesSDK: 41b3adbf8bcf2f43ff909965c16bf1d8646c5508
-  ApesterKit: 50e8e024ab5b75d82b156bfbd378028463db8a52
+  ApesterKit: 440ae6c6b573207c7d0388c924b808b34c86c116
   ApesterObjcBridging: e3457dd2c207de1805c6867ce1c57f308ccc5cb2
   DTBiOSSDK: 97af375f056bc5c3202b5a797f8390258deaac17
   Google-Mobile-Ads-SDK: 301a16c461c331ba34ff4dab40a22ab7c147af61
-  GoogleAds-IMA-iOS-SDK: e594350077f2838a335b40de079a12f0a16e1f6d
-  GoogleUserMessagingPlatform: b1ad7bb1ee3ce64749d4fec24f667b36e45c396c
+  GoogleAds-IMA-iOS-SDK: 160c3616b8371b58016e30aaf441e71d6d9e8f7d
+  GoogleUserMessagingPlatform: f131fa7978d2ba88d7426702b057c2cc318e6595
   OpenWrapHandlerDFP: b184b1d7686f615e0a19c51c99f4d4526c6a9a93
   OpenWrapSDK: 57e0adeb0cc542769e7cf1eec0d2c89c9e010593
-  RxSwift: a4b44f7d24599f674deebd1818eab82e58410632
-  Sentry: 2f6baed15a3f8056b875fc903dc3dcb2903117f4
+  RxSwift: b9a93a26031785159e11abd40d1a55bcb8057e52
+  Sentry: cd86fc55628f5b7c572cabe66cc8f95a9d2f165a
 
 PODFILE CHECKSUM: 423e005b431cbc77cdd40b08df4403a773cfaac5
 

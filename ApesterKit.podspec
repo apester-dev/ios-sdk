@@ -60,6 +60,11 @@ Pod::Spec.new do |s|
         content.dependency 'ApesterObjcBridging', '3.3.17'
         content.dependency 'OpenWrapSDK' , '~> 2.7.0'
         content.dependency 'DTBiOSSDK', '~> 0.0.1'
+        
+    end
+    s.subspec   'ContentAniview'    do |content|
+        content.source_files = 'Sources/ApesterKit/Content/Classes/EmbededUnit/AdProvider/Aniview/*.{h,m,swift}'
+        content.dependency 'ApesterKit/Content_Core'
         content.dependency 'AdPlayerSDK', '~> 1.8.2'
     end
     s.subspec   'ContentAdmob'    do |content|
@@ -82,6 +87,7 @@ Pod::Spec.new do |s|
     s.subspec   'Content'         do |content|
         content.dependency 'ApesterKit/Content_Core'
         content.dependency 'ApesterKit/ContentAdmob'
+        content.dependency 'ApesterKit/ContentAniview'
         content.dependency 'ApesterKit/ContentPubmatic'
         content.dependency 'ApesterKit/ContentAmazon'
     end
