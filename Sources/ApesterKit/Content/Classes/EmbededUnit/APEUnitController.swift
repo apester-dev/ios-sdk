@@ -370,10 +370,11 @@ extension APEUnitController
         func monProvider(for adParamaters: APEAdType) -> String
         {
             switch adParamaters {
-            case .inUnit: return "da"
-            case .bottom: return "da_bottom"
-            case .companion: return "co"
-            case .inUnitVideo: return "invid"
+            case .inUnit:           return "da"
+            case .bottom:           return "da_bottom"
+            case .companion:        return "co"
+            case .inUnitVideo:      return "invid"
+            case .interstitial:     return "intst"
             }
         }
         
@@ -480,11 +481,12 @@ internal extension APEUnitController
         guard let paramaters = adParamaters else { return nil }
         
         switch (paramaters.adType, paramaters.isCompanionVariant) {
-        case (.inUnit   , _    ) : return displayView.adUnit.adContentMain
-        case (.bottom   , false) : return displayView.adUnit.adContentBanner
-        case (.bottom   , true ) : return displayView.adBottom
-        case (.companion, _    ) : return displayView.adCompanion
-        case (.inUnitVideo, _): return displayView.adUnit.adContentMain
+        case (.inUnit   , _    ) :  return displayView.adUnit.adContentMain
+        case (.bottom   , false) :  return displayView.adUnit.adContentBanner
+        case (.bottom   , true ) :  return displayView.adBottom
+        case (.companion, _    ) :  return displayView.adCompanion
+        case (.inUnitVideo, _):     return displayView.adUnit.adContentMain
+        case (.interstitial, _):    return displayView.adUnit.adContentMain
         }
     }
     
@@ -505,6 +507,8 @@ internal extension APEUnitController
         case (.bottom   , false) : provider.show(container) // return false;
         case (.companion, _    ) : provider.show(container) // return false;
         case (.inUnitVideo, _): provider.show(container)
+        case (.interstitial, _):
+            provider.show(container)
         }
         return true
     }

@@ -176,19 +176,28 @@ internal class APEAdView : UIView
                 equal(\.topAnchor     , \.bottomAnchor , constant: -offset)
             ])
         }
-        if  monetization.adType == .inUnitVideo {
+        if  monetization.adType == .inUnitVideo || monetization.adType == .interstitial {
             if let vidView = adView as? AdPlayerPlacementViewWrapper {
                 print(vidView.childView?.bounds)
+                let offset = CGFloat(2.0)
+                let topOffset = CGFloat(110.0)
+                
+                ape_addSubview(closeButton, with: [])
+                closeButton.ape_anchor(view: adView, with: [
+                    equal(\.leadingAnchor, constant:  offset),
+                    equal(\.topAnchor , constant: -topOffset)
+                ])
+                vidView.bringSubviewToFront(closeButton)
             }
-            let offset = CGFloat(2.0)
-            let topOffset = CGFloat(110.0)
-            
-            ape_addSubview(closeButton, with: [])
-            closeButton.ape_anchor(view: adView, with: [
-                equal(\.leadingAnchor, constant:  offset),
-                equal(\.topAnchor , constant: -topOffset)
-            ])
-            adView.bringSubviewToFront(closeButton)
+//            let offset = CGFloat(2.0)
+//            let topOffset = CGFloat(110.0)
+//            
+//            ape_addSubview(closeButton, with: [])
+//            closeButton.ape_anchor(view: adView, with: [
+//                equal(\.leadingAnchor, constant:  offset),
+//                equal(\.topAnchor , constant: -topOffset)
+//            ])
+//            vidView.bringSubviewToFront(closeButton)
         }
     }
     
@@ -222,7 +231,7 @@ internal class APEAdView : UIView
         // Display a background is ad is pubMatic
         var timeInDisplay : Int? = timeInView
         
-        if monetization.adType == .inUnit {
+        if monetization.adType == .inUnit, monetization.adType == .inUnitVideo {
             timeInDisplay        = timeInDisplay ?? 7
             backgroundColor      = inUnitBackgroundColor
             closeButton.isHidden = false
@@ -330,7 +339,12 @@ internal class APEAdView : UIView
             nativeAdConstraintHeight = adView.ape_anchorSelf(with: heightTemplate, priority: .required)
             nativeAdConstraintWidth  = adView.ape_anchorSelf(with:  widthTemplate, priority: .required)
             break
-        case (.aniview(params: let params), _):
+        case (.aniview, .inUnitVideo):
+            
+            nativeAdConstraintHeight = adView.ape_anchorSelf(with: heightTemplate, priority: .required)
+            nativeAdConstraintWidth  = adView.ape_anchorSelf(with:  widthTemplate, priority: .required)
+            break
+        case (.aniview, .interstitial):
             
             nativeAdConstraintHeight = adView.ape_anchorSelf(with: heightTemplate, priority: .required)
             nativeAdConstraintWidth  = adView.ape_anchorSelf(with:  widthTemplate, priority: .required)
@@ -338,6 +352,22 @@ internal class APEAdView : UIView
         case (.amazon(params: _), .inUnitVideo): break
         case (.pubMatic(params: _), .inUnitVideo): break
         case (.adMob(params: let params), .inUnitVideo): break
+        case (.amazon(params: let params), .interstitial):
+            // TODO: implememt interstitial
+            break
+        case (.pubMatic(params: let params), .interstitial):
+            // TODO: implememt interstitial
+            break
+        case (.adMob(params: let params), .interstitial):
+            // TODO: implememt interstitial
+            break
+        case (.aniview(params: let params), .inUnit):
+            // NOT in use:
+            break
+        case (.aniview(params: let params), .bottom):
+            break
+        case (.aniview(params: let params), .companion):
+            break
         }
     }
     

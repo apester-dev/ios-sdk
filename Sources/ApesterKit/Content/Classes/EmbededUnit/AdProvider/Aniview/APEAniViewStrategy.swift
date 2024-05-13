@@ -18,6 +18,7 @@ import AdPlayerSDK
 @objcMembers
 final public class APEAniViewStrategy : APEAdProviderStrategy
 {
+    private var playerTag: AdPlayerTag?
     // MARK: - Properties - Computed
     internal override var strategyType : APEAdProviderType
     {
@@ -38,8 +39,7 @@ final public class APEAniViewStrategy : APEAdProviderStrategy
         onAdRemovalCompletion       : @escaping APEAdProvider.HandlerAdType,
         onAdRequestedCompletion     : @escaping APEAdProvider.HandlerVoidType,
         receiveAdSuccessCompletion  : @escaping APEAdProvider.HandlerVoidType,
-        receiveAdErrorCompletion    : @escaping APEAdProvider.HandlerErrorType,
-        onVideoAdCompleted          : @escaping APEAdProvider.HandlerVoidType
+        receiveAdErrorCompletion    : @escaping APEAdProvider.HandlerErrorType
     ) -> APEAdProvider {
         
         
@@ -53,7 +53,6 @@ final public class APEAniViewStrategy : APEAdProviderStrategy
         provider.nativeDelegate = ApeAniViewDelegate.init(
             videoComplete: {
                 provider.bannerView.onVideoComplete!()
-                
             },
             containerVC       : nil,
             adProvider      : provider,
@@ -84,12 +83,24 @@ final public class APEAniViewStrategy : APEAdProviderStrategy
         
         let tag = AdPlayerTagConfiguration(tagId: parameters.identifier)
         tag.eventsObserver = provider.nativeDelegate as? AdPlayerTagEventsObserver
-        let publisher = AdPlayerPublisherConfiguration(publisherId: parameters.channelId, tagConfiguration: tag, nil)
         
-        AdPlayer.initializePublisher(publisher)
+        AdPlayer.initializePublisher(publisherId: parameters.channelId , tagId: parameters.identifier ){ [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let playerTag):
+                playerTag.eventsObserver = provider.nativeDelegate as? AdPlayerTagEventsObserver
+                self.playerTag = playerTag
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
         let placement: AdPlayerPlacementViewController = AdPlayerPlacementViewController(tagId: parameters.identifier)
+        
        
         let nativeAdView = AdPlayerPlacementViewWrapper(viewController: placement )
+        
+        
         
         
         banner.adContent       = nativeAdView
@@ -99,32 +110,38 @@ final public class APEAniViewStrategy : APEAdProviderStrategy
         provider.hide          = { [weak banner] in banner?.hideAd()  }
         provider.show          = { [weak banner] containerDisplay in
             
-            guard let adBanner = banner else { return }
-            
-            if let nativeDelegate = provider.nativeDelegate {
-                nativeDelegate.containerViewController = delegate.adPresentingViewController
-                
-                if let vc  = nativeDelegate.containerViewController {
-                    //                let container = UIView()
-                    adBanner.clipsToBounds = true
-                    adBanner.translatesAutoresizingMaskIntoConstraints = false
-                    adBanner.isUserInteractionEnabled = true
-                    vc.view.addSubview(adBanner)
-                    placement.view.translatesAutoresizingMaskIntoConstraints = false
-                    vc.addChild(placement)
-                    adBanner.addSubview(placement.view)
-                    NSLayoutConstraint.activate([
-                        placement.view.leadingAnchor.constraint(equalTo: adBanner.leadingAnchor),
-                        placement.view.trailingAnchor.constraint(equalTo: adBanner.trailingAnchor),
-                        placement.view.centerYAnchor.constraint(equalTo: adBanner.centerYAnchor)
-                    ])
-     
-                    placement.didMove(toParent: vc)
-      
-                    adBanner.showAd(in: containerDisplay)
-                }
-                
+            if parameters.type == .interstitial {
+                self.preloadInterstitialAd(provider: provider)
                 onAdRequestedCompletion()
+            }
+            else {
+                guard let adBanner = banner else { return }
+                
+                if let nativeDelegate = provider.nativeDelegate {
+                    nativeDelegate.containerViewController = delegate.adPresentingViewController
+                    
+                    if let vc  = nativeDelegate.containerViewController {
+                        //                let container = UIView()
+                        adBanner.clipsToBounds = true
+                        adBanner.translatesAutoresizingMaskIntoConstraints = false
+                        adBanner.isUserInteractionEnabled = true
+                        vc.view.addSubview(adBanner)
+                        placement.view.translatesAutoresizingMaskIntoConstraints = false
+                        vc.addChild(placement)
+                        adBanner.addSubview(placement.view)
+                        NSLayoutConstraint.activate([
+                            placement.view.leadingAnchor.constraint(equalTo: adBanner.leadingAnchor),
+                            placement.view.trailingAnchor.constraint(equalTo: adBanner.trailingAnchor),
+                            placement.view.centerYAnchor.constraint(equalTo: adBanner.centerYAnchor)
+                        ])
+         
+                        placement.didMove(toParent: vc)
+          
+                        adBanner.showAd(in: containerDisplay)
+                    }
+                    
+                    onAdRequestedCompletion()
+                }
             }
         }
         return provider
@@ -132,4 +149,42 @@ final public class APEAniViewStrategy : APEAdProviderStrategy
 
     
     
+}
+// Aniview interstitial
+extension APEAniViewStrategy {
+    
+    private func preloadInterstitialAd(provider: APEAdProvider) {
+            guard let playerTag = self.playerTag else { return }
+        playerTag.invalidatePreloadCache() // needed when it's interstitial
+        playerTag.eventsObserver = provider.nativeDelegate as? AdPlayerTagEventsObserver
+        playerTag.preload { [weak self] error in
+            guard let self = self else { return }
+            onStartLoadingAds(attempt: 0)
+        }
+    }
+
+    private func onStartLoadingAds(attempt: Int) {
+        guard let playerTag = self.playerTag else { return }
+        guard attempt < 1000 else {
+            return
+        }
+
+        playerTag.getReadyAdsCount { [weak self] count in
+            guard let self = self else { return }
+            if count > 0 {
+                onAdsReady()
+            } else {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    self.onStartLoadingAds(attempt: attempt + 1)
+                }
+            }
+        }
+    }
+
+    private func onAdsReady() {
+        guard let playerTag = self.playerTag else { return }
+        let interstitialBuilder = playerTag.asInterstitial()
+        interstitialBuilder.launch()
+    }
+
 }

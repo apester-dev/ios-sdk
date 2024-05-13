@@ -211,6 +211,7 @@ final public class APEAmazonStrategy : APEAdProviderStrategy
             switch $0 {
             case .adSize320x50:  return NSValueFromGADAdSize(GADAdSizeBanner)
             case .adSize300x250: return NSValueFromGADAdSize(GADAdSizeMediumRectangle)
+            case .adSize320x480: return NSValueFromGADAdSize(GADAdSizeMediumRectangle)
             }
         }
     }

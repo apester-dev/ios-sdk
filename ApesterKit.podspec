@@ -65,7 +65,7 @@ Pod::Spec.new do |s|
     s.subspec   'ContentAniview'    do |content|
         content.source_files = 'Sources/ApesterKit/Content/Classes/EmbededUnit/AdProvider/Aniview/*.{h,m,swift}'
         content.dependency 'ApesterKit/Content_Core'
-        content.dependency 'AdPlayerSDK', '~> 1.8.2'
+        content.dependency 'AdPlayerSDK', '~> 1.10.6'
     end
     s.subspec   'ContentAdmob'    do |content|
         content.source_files = 'Sources/ApesterKit/Content/Classes/EmbededUnit/AdProvider/AdMob/*.{h,m,swift}'
