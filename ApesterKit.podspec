@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
     s.name             = 'ApesterKit'
-    s.version          = '3.3.17'
+    s.version          = '3.3.18'
     s.summary          = 'ApesterKit provides a light-weight framework that loads Apester Unit in a webView'
     
     # This description is used to generate tags and improve search results.
@@ -24,7 +24,8 @@ Pod::Spec.new do |s|
     s.license          = { :type => 'MIT', :file => 'LICENSE' }
     s.author           = {
         'Hasan Sa'        => 'hasansa007@gmail.com'  ,
-        'ArkadiYoskovitz' => 'arkadiy@gini-apps.com'
+        'ArkadiYoskovitz' => 'arkadiy@gini-apps.com',
+        'Michael Kroitoro' => 'michael.kroitoro@apester.com'
     }
     s.source           = { :git => 'https://github.com/apester-dev/ios-sdk.git', :tag => "v"+s.version.to_s }
     
@@ -64,7 +65,7 @@ Pod::Spec.new do |s|
     s.subspec   'ContentAdmob'    do |content|
         content.source_files = 'Sources/ApesterKit/Content/Classes/EmbededUnit/AdProvider/AdMob/*.{h,m,swift}'
         content.dependency 'ApesterKit/Content_Core'
-        content.dependency 'Google-Mobile-Ads-SDK', '~> 11.0'
+        content.dependency 'Google-Mobile-Ads-SDK', '9.7.0'
     end
     s.subspec   'ContentPubmatic' do |content|
         content.source_files = 'Sources/ApesterKit/Content/Classes/EmbededUnit/AdProvider/PubMatic/*.{h,m,swift}'
