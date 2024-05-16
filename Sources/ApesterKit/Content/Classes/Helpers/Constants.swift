@@ -37,6 +37,7 @@ internal struct Constants
         internal static func setViewVisibilityStatus(_ isVisible: Bool) -> String {
             "window.__setApesterViewabiity(\(isVisible))"
         }
+        
         //
         internal static let getHeight = "window.__getHeight()"
         internal static let refreshContent = "window.__refreshApesterContent()"
@@ -71,7 +72,7 @@ internal struct Constants
     internal struct Unit
     {
         internal static let isReady = "apester_interaction_loaded"
-        internal static let inAppUnitDetached = "in-app-unit-detached"
+        internal static let inAppUnitDetached = "in-app-unit-detached-v2"
         internal static let unitPath = "/v2/static/\(inAppUnitDetached).html"
         internal static let proxy = "apesterUnitProxy"
         internal static let resize = "apester_resize_unit"

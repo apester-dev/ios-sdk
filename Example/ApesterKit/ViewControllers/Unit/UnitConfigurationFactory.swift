@@ -27,23 +27,24 @@ import ApesterKit
         switch environment {
         case .production:
             unitsParams = [
-                  .unit(mediaId: "65c8d68c496c77815471c8a5"), // ADMob Test
+//                  .unit(mediaId: "65c8d68c496c77815471c8a5"), // ADMob Test
                 // .unit(mediaId: "61ee7ff6a5e14a002b6c044a"), //.unit(mediaId: "60eeda29b54b6f002448ba79"),
                 // .playlist(tags: [], channelToken: "5f85919d44959d32decd9d31", context: false, fallback: false),
-//                .playlist(tags: [], channelToken: "61ee7fd7a33874001368f396", context: false, fallback: false)
+                .playlist(tags: [], channelToken: "6592b4331d381c0012eae2cd", context: false, fallback: false)
             ]
         case .stage:
             unitsParams = [
-                .unit(mediaId: "65c8d68c496c77815471c8a5"),
-                .unit(mediaId: "5e6fa2351d18fd8580776612"),
-                .playlist(tags: ["news", "sport", "yoga"],
-                          channelToken: "5dcbc10016698427404a0f57",
-                          context: false,
-                          fallback: false),
-                .playlist(tags: ["yo", "bo", "ho"],
-                          channelToken: "5dde8f05694a5dc20a16f3c8",
-                          context: false,
-                          fallback: false),
+                .playlist(tags: [], channelToken: "6645f07f6fe3ca4bdfe9848a", context: false, fallback: false)
+//                .unit(mediaId: "65c8d68c496c77815471c8a5"),
+//                .unit(mediaId: "5e6fa2351d18fd8580776612"),
+//                .playlist(tags: ["news", "sport", "yoga"],
+//                          channelToken: "5dcbc10016698427404a0f57",
+//                          context: false,
+//                          fallback: false),
+//                .playlist(tags: ["yo", "bo", "ho"],
+//                          channelToken: "5dde8f05694a5dc20a16f3c8",
+//                          context: false,
+//                          fallback: false),
             ]
         case .dev:
             unitsParams = [
