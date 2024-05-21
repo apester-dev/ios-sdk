@@ -20,6 +20,7 @@ import DTBiOSSDK
 @objcMembers
 final public class APEAmazonStrategy : APEAdProviderStrategy
 {
+    internal var interstitialAd: POBInterstitial?
     // MARK: - Properties - Computed
     internal override var strategyType : APEAdProviderType
     {
@@ -66,13 +67,18 @@ final public class APEAmazonStrategy : APEAdProviderStrategy
                 provider.statusFailure()
                 provider.bannerView.onReceiveAdError(mistake)
                 receiveAdErrorCompletion(mistake)
+            },
+        adLoaded: {[provider]
+            if let containerVC = provider.nativeDelegate?.containerViewController  {
+                self.displayInterstitial(containerViewController: containerVC )
             }
-        )
+        })
         provider.nativeDelegate = nativeDelegate
         
         applyAmazonConfiguration(basedOn: parameters)
         applyPubMaticConfiguration(basedOn: parameters)
-        applyPubMaticGDPRConsent(gdprString)
+        
+//        applyPubMaticGDPRConsent(gdprString)
         
         let banner = APEAdView(
             adTitleText          : adTitleLabelText,
@@ -81,59 +87,83 @@ final public class APEAmazonStrategy : APEAdProviderStrategy
             timeInView           : nil,
             onAdRemovalCompletion: onAdRemovalCompletion
         )
-        
-        let apesterAdSize = (parameters.type == .bottom) ? APEAdSize.adSize320x50 : APEAdSize.adSize300x250
+        let apesterAdSize: APEAdSize = switch (parameters.type){
+        case .bottom        :  APEAdSize.adSize320x50
+        case .inUnit        :  APEAdSize.adSize300x250
+        case .interstitial  :  APEAdSize.adSize320x480
+        case .companion     :  APEAdSize.adSize300x250
+        }
+//        let apesterAdSize = (parameters.type == .bottom) ? APEAdSize.adSize320x50 : APEAdSize.adSize300x250
         
         let adSizes = adSizeValue(basedOn: apesterAdSize)
         
-        let nativeAdLibView : POBBannerView?
-        if let eventHandler = DFPBannerEventHandler(adUnitId: parameters.dfp_au_banner, andSizes: adSizes) {
-            
-            nativeDelegate.biddingManager.register(Bidder: APEAmazonAdLoader(
-                SlotUUID: parameters.amazon_slotID,
-                apesterSize: apesterAdSize)
-            )
-            
-            eventHandler.configBlock = { view , request, bid in
-                print("eventHandler.configBlock")
-                
-                guard let delegate = provider.nativeDelegate as? APEAmazonDelegate else { return }
-                    
-                let partnerTargeting = delegate.biddingManager.retrivePartnerTargeting()
-                let  customTargeting = request?.customTargeting as? NSMutableDictionary ?? NSMutableDictionary()
-                
-                for pair in partnerTargeting
-                {
-                    guard let information = pair.value as?  [String: String] else { continue }
-                    customTargeting.addEntries(from: information)
-                }
-                request?.customTargeting = customTargeting as? [String: String]
-                
-                print("Successfully added targeting from all bidders")
-            }
-            
-            nativeAdLibView = POBBannerView(
-                publisherId: parameters.publisherId,
-                profileId: .init(value: parameters.profileId),
-                adUnitId: parameters.identifier,
-                eventHandler: eventHandler
-            )
-            
+        let nativeAdLibView : (UIView & APENativeLibraryAdView)?
+
+        if parameters.type == .interstitial {
+            let interstitial = configureInterstitialAd(withParams: parameters, provider: provider)
+            nativeAdLibView = APEInterstitialAdWrapper.init(interstitial: interstitial ?? POBInterstitial())
+            self.interstitialAd = (nativeAdLibView as! APEInterstitialAdWrapper).interstitial
         } else {
-            nativeAdLibView = POBBannerView(
-                publisherId: parameters.publisherId,
-                profileId: .init(value: parameters.profileId),
-                adUnitId: parameters.identifier,
-                adSizes: [apesterAdSize].compactMap { POBAdSizeMakeFromCGSize($0.size) }
-            )
+            if let eventHandler = DFPBannerEventHandler(adUnitId: parameters.dfp_au_banner, andSizes: adSizes) {
+                
+                nativeDelegate.biddingManager.register(Bidder: APEAmazonAdLoader(
+                    SlotUUID: parameters.amazon_slotID,
+                    apesterSize: apesterAdSize)
+                )
+                
+                eventHandler.configBlock = { view , request, bid in
+                    print("eventHandler.configBlock")
+                    
+                    guard let delegate = provider.nativeDelegate as? APEAmazonDelegate else { return }
+                        
+                    let partnerTargeting = delegate.biddingManager.retrivePartnerTargeting()
+                    let  customTargeting = request?.customTargeting as? NSMutableDictionary ?? NSMutableDictionary()
+                    
+                    for pair in partnerTargeting
+                    {
+                        guard let information = pair.value as?  [String: String] else { continue }
+                        customTargeting.addEntries(from: information)
+                    }
+                    request?.customTargeting = customTargeting as? [String: String]
+                    
+                    print("Successfully added targeting from all bidders")
+                }
+                
+                nativeAdLibView = POBBannerView(
+                    publisherId: parameters.publisherId,
+                    profileId: .init(value: parameters.profileId),
+                    adUnitId: parameters.identifier,
+                    eventHandler: eventHandler
+                )
+                
+            } else {
+                nativeAdLibView = POBBannerView(
+                    publisherId: parameters.publisherId,
+                    profileId: .init(value: parameters.profileId),
+                    adUnitId: parameters.identifier,
+                    adSizes: [apesterAdSize].compactMap { POBAdSizeMakeFromCGSize($0.size) }
+                )
+            }
         }
         
-        if let nativeAdView = nativeAdLibView {
+        if let nativeAdView = nativeAdLibView as? POBBannerView {
             nativeAdView.request.debug             = parameters.debugLogs
             nativeAdView.request.testModeEnabled   = parameters.testMode
             nativeAdView.request.bidSummaryEnabled = parameters.bidSummaryLogs
-            nativeAdView.delegate = provider.nativeDelegate as? POBBannerViewDelegate
+            nativeAdView.delegate =  provider.nativeDelegate as? POBBannerViewDelegate
+
             nativeAdView.bidEventDelegate = provider.nativeDelegate as? POBBidEventDelegate
+        }
+        
+        if let nativeAdViewWrapper = nativeAdLibView as? APEInterstitialAdWrapper {
+          if let nativeAdView = nativeAdViewWrapper.interstitial as? POBInterstitial {
+                nativeAdView.request.debug             = parameters.debugLogs
+                nativeAdView.request.testModeEnabled   = parameters.testMode
+                nativeAdView.request.bidSummaryEnabled = parameters.bidSummaryLogs
+                nativeAdView.delegate =  provider.nativeDelegate as? POBInterstitialDelegate
+
+                nativeAdView.bidEventDelegate = provider.nativeDelegate as? POBBidEventDelegate
+            }
         }
         
         banner.adContent       = nativeAdLibView
@@ -149,13 +179,31 @@ final public class APEAmazonStrategy : APEAdProviderStrategy
                 nativeDelegate.containerViewController = delegate.adPresentingViewController
                 nativeDelegate.biddingManager.loadBids()
             }
-            
-            if let nativeAdLibView {
-                nativeAdLibView.loadAd()
-                onAdRequestedCompletion()
+            if let nativeWrapper = nativeAdLibView as? APEInterstitialAdWrapper {
+                if nativeWrapper.interstitial.isReady {
+                    print("ad is ready ")
+                    let interstitialAd = nativeWrapper.interstitial
+                    if let containerVC = nativeDelegate.containerViewController {
+                        interstitialAd.show(from: containerVC)
+                    }
+                }
+                
+                
+            } else {
+                if let nativeAdLibView = nativeAdLibView as? POBBannerView {
+                    nativeAdLibView.loadAd()
+                }
+                
+                adBanner.showAd(in: containerDisplay)
             }
-            
-            adBanner.showAd(in: containerDisplay)
+            onAdRequestedCompletion()
+
+        
+        }
+        provider.loaded = { [provider] in
+            if let containerVC = provider.nativeDelegate?.containerViewController {
+                self.displayInterstitial(containerViewController: containerVC)
+            }
         }
         return provider
     }
@@ -172,6 +220,9 @@ final public class APEAmazonStrategy : APEAdProviderStrategy
     private func applyPubMaticConfiguration(
         basedOn parameters: APEAmazonAdParameters
     ) {
+        let locationManager = CLLocationManager()
+        locationManager.requestWhenInUseAuthorization()
+        OpenWrapSDK.setSSLEnabled(false)
         let appInfo = POBApplicationInfo()
         appInfo.domain = parameters.appDomain
         if let appStoreUrl = URL(string: parameters.appStoreUrl) {
@@ -182,16 +233,16 @@ final public class APEAmazonStrategy : APEAdProviderStrategy
         OpenWrapSDK.setLogLevel(parameters.debugLogs ? POBSDKLogLevel.all : POBSDKLogLevel.off)
     }
     
-    private func applyPubMaticGDPRConsent(
-        _ gdprString: String?
-    ) {
-        guard let gdpr = gdprString else {
-            OpenWrapSDK.setGDPREnabled(false); return
-        }
-        
-        OpenWrapSDK.setGDPREnabled(true)
-        OpenWrapSDK.setGDPRConsent(gdpr)
-    }
+//    private func applyPubMaticGDPRConsent(
+//        _ gdprString: String?
+//    ) {
+//        guard let gdpr = gdprString else {
+//            OpenWrapSDK.setGDPREnabled(false); return
+//        }
+//        
+//        OpenWrapSDK.setGDPREnabled(true)
+//        OpenWrapSDK.setGDPRConsent(gdpr)
+//    }
     private func publishGDPR(
         basedOn parameters    : APEAmazonAdParameters,
         GDPRConsent gdprString: String?,
@@ -205,12 +256,13 @@ final public class APEAmazonStrategy : APEAdProviderStrategy
         delegate.sendNativeGDPREvent(with: gdpr)
     }
     
-    private func adSizeValue(basedOn adSize: APEAdSize) -> [NSValue]
+    private func adSizeValue(basedOn adSize: APEAdSize) -> [NSValue?]
     {
         return [adSize].compactMap {
             switch $0 {
-            case .adSize320x50:  return NSValueFromGADAdSize(GADAdSizeBanner)
-            case .adSize300x250: return NSValueFromGADAdSize(GADAdSizeMediumRectangle)
+            case .adSize320x50  : return NSValueFromGADAdSize(GADAdSizeBanner)
+            case .adSize300x250 : return NSValueFromGADAdSize(GADAdSizeMediumRectangle)
+            case .adSize320x480 : return nil
             }
         }
     }
@@ -239,4 +291,49 @@ final public class APEAmazonStrategy : APEAdProviderStrategy
             )
         }
     }
+}
+extension APEAmazonStrategy  {
+    func configureInterstitialAd(withParams parameters: APEAmazonAdParameters, provider: APEAdProvider ) -> POBInterstitial? {
+        var nativeAdLibView : POBInterstitial?
+        if let eventHandler =  DFPInterstitialEventHandler(adUnitId: parameters.dfp_au_banner) {
+   
+                eventHandler.configBlock = { request,bid in
+                    print("eventHandler.configBlock")
+                    
+                    guard let gamRequest = request as? GAMRequest else { return }
+                    
+                    guard let delegate = provider.nativeDelegate as? APEAmazonDelegate else { return }
+                    
+                    let partnerTargeting = delegate.biddingManager.retrivePartnerTargeting()
+                    let customTargeting = gamRequest.customTargeting as? NSMutableDictionary ?? NSMutableDictionary()
+                    
+                    for pair in partnerTargeting
+                    {
+                        guard let information = pair.value as?  [String: String] else { continue }
+                        customTargeting.addEntries(from: information)
+                    }
+                    gamRequest.customTargeting = customTargeting as? [String: String]
+                    
+                    print("Successfully added targeting from all bidders")
+                    
+               
+                    
+            }
+            nativeAdLibView = POBInterstitial(publisherId: parameters.publisherId,
+                                              profileId: parameters.profileId as NSNumber,
+                                              adUnitId: parameters.identifier,
+                                              eventHandler: eventHandler)
+            
+            nativeAdLibView?.loadAd()
+        }
+        
+        return nativeAdLibView
+        
+    }
+    func displayInterstitial(containerViewController: UIViewController){
+        guard let interstitial = self.interstitialAd else { return }
+                    interstitial.show(from: containerViewController)
+                
+    }
+
 }

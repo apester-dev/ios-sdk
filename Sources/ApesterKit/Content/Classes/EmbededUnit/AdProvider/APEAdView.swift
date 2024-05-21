@@ -292,6 +292,9 @@ internal class APEAdView : UIView
             nativeAdConstraintHeight = adView.ape_anchorSelf(with: heightTemplate, priority: .required)
             nativeAdConstraintWidth  = adView.ape_anchorSelf(with:  widthTemplate, priority: .required)
             break
+        case (_, .interstitial):
+            nativeAdConstraintHeight = adView.ape_anchorSelf(with: heightTemplate, priority: .required)
+            nativeAdConstraintWidth  = adView.ape_anchorSelf(with:  widthTemplate, priority: .required)
         }
     }
     

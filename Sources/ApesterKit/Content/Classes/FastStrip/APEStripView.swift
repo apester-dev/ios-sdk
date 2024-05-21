@@ -15,7 +15,7 @@ import SafariServices
 
 public typealias APEStripView = APEStripController
 
-@available(iOS 11.0, *)
+@available(iOS 12.0, *)
 /// A Proxy Messaging Handler
 ///
 /// Between The Apester Units Carousel component (The `StripWebView`)
@@ -142,7 +142,7 @@ public class APEStripController : APEController
 }
 
 // MARK: - Override internal APIs
-@available(iOS 11.0, *)
+@available(iOS 12.0, *)
 extension APEStripController {
 
     // MARK:- Handle Device orientationDidChangeNotification
@@ -204,7 +204,7 @@ extension APEStripController {
 }
 
 // MARK:- Private
-@available(iOS 11.0, *)
+@available(iOS 12.0, *)
 private extension APEStripController {
     
     private var channelToken: String { self.configuration.channelToken }
@@ -356,7 +356,7 @@ private extension APEStripController {
 }
 
 // MARK:- Handle WebView Presentation
-@available(iOS 11.0, * )
+@available(iOS 12.0, * )
 extension APEStripController {
     
     func displayStoryComponent() {

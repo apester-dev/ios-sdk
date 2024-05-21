@@ -17,6 +17,8 @@ import OpenWrapHandlerDFP
 ///
 class APEAmazonDelegate : APENativeLibraryDelegate
 {
+    private var isActiveAd = false
+
     // MARK: - APEBiddingManagerDelegate
     override func didReceiveResponse(_ response: [String : Any]?)
     {
@@ -112,7 +114,10 @@ extension APEAmazonDelegate : POBBidEventDelegate
         
         // No need to pass OW's targeting info to bidding manager, as it will be passed to DFP internally.
         // Notify bidding manager that OpenWrap's success response is received.
-        biddingManager.notifyAdsLibraryBidEvent()
+        if !isActiveAd {
+            bidEventObject.proceedToLoadAd()
+            biddingManager.notifyAdsLibraryBidEvent()
+        }
     }
     func bidEvent(_ bidEventObject: POBBidEvent!, didFailToReceiveBidWithError error: Error!)
     {
@@ -122,3 +127,36 @@ extension APEAmazonDelegate : POBBidEventDelegate
         biddingManager.notifyAdsLibraryBidEvent()
     }
 }
+
+// MARK: POBInterstitialDelegate
+extension APEAmazonDelegate: POBInterstitialDelegate {
+    func interstitialDidReceiveAd(_ interstitial: POBInterstitial) {
+        print("||| intersittial ad received: \(interstitial)")
+        APELoggerService.shared.info()
+        receiveAdSuccess()
+        if let adLoadedCall = adLoaded {
+            adLoadedCall()
+        }
+        // OpenWrap SDK will start refresh loop internally as soon as ad rendering succeeds/fails.
+        // To include other ad servers' bids in next refresh cycle, call loadBids on bidding manager.
+        biddingManager.loadBids()
+    }
+    
+    func interstitial(_ interstitial: POBInterstitial, didFailToReceiveAdWithError error: NSError) {
+        print("Failed to receive ad: \(error.localizedDescription)")
+    }
+    
+    func interstitialDidDismissAd(_ interstitial: POBInterstitial) {
+        
+        print("Ad dismissed")
+    }
+    func interstitialWillPresentAd(_ interstitial: POBInterstitial) {
+        print("interstitial will present ad")
+        isActiveAd = true
+    }
+    func interstitial(_ interstitial: POBInterstitial, didFailToShowAdWithError error: Error) {
+        print("failed to show ad error: \(error)")
+    }
+    
+}
+

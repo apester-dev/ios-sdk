@@ -12,7 +12,7 @@ import SafariServices
 ///
 ///
 #if os(iOS)
-@available(iOS 11.0, *)
+@available(iOS 12.0, *)
 ///
 ///
 ///
@@ -140,7 +140,7 @@ public class APEController : NSObject
 }
 
 // MARK: - Internal API's to override
-@available(iOS 11.0, *)
+@available(iOS 12.0, *)
 extension APEController
 {
     internal func orientationDidChangeNotification()
@@ -175,7 +175,7 @@ extension APEController
 }
 
 // MARK: - Handle WebView Presentation
-@available(iOS 11.0, * )
+@available(iOS 12.0, * )
 private extension APEController
 {
     func decisionHandler(navigationAction: WKNavigationAction, webView: WKWebView, completion: (WKNavigationActionPolicy) -> Void)
@@ -222,7 +222,7 @@ private extension APEController
 }
 
 // MARK: - UIAdaptivePresentationControllerDelegate
-@available(iOS 11.0, *)
+@available(iOS 12.0, *)
 extension APEController : UIAdaptivePresentationControllerDelegate
 {
     public func presentationControllerDidDismiss(_ presentationController: UIPresentationController)
@@ -232,7 +232,7 @@ extension APEController : UIAdaptivePresentationControllerDelegate
 }
 
 // MARK: - WKScriptMessageHandler
-@available(iOS 11.0, *)
+@available(iOS 12.0, *)
 extension APEController : WKScriptMessageHandler
 {
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage)
@@ -244,7 +244,7 @@ extension APEController : WKScriptMessageHandler
 }
 
 // MARK: - WKNavigationDelegate
-@available(iOS 11.0, *)
+@available(iOS 12.0, *)
 extension APEController : WKNavigationDelegate
 {
     public func webView(_ webView: WKWebView,
@@ -293,7 +293,7 @@ extension APEController : WKNavigationDelegate
 }
 
 // MARK: - WKUIDelegate
-@available(iOS 11.0, *)
+@available(iOS 12.0, *)
 extension APEController : WKUIDelegate
 {
     public func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
@@ -306,7 +306,7 @@ extension APEController : WKUIDelegate
 }
 
 // MARK: - UIScrollViewDelegate
-@available(iOS 11.0, *)
+@available(iOS 12.0, *)
 extension APEController : UIScrollViewDelegate
 {
     public func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {

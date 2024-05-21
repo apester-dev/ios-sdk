@@ -366,7 +366,7 @@ extension APEApplicationDelegateDispatcher : UIApplicationDelegate {
         }
     }
     
-    // @available(iOS 11.0, *)
+    // @available(iOS 12.0, *)
     // open func application(_ application: UIApplication, handle intent: INIntent, completionHandler: @escaping (INIntentResponse) -> Void)
     // {
     //     for service in applicationServices {

@@ -18,7 +18,7 @@ import WebKit
 public typealias APEUnitViewDelegate = APEUnitControllerDelegate
 
 /// A ChannelToken Loading state update
-@available(iOS 11.0, *)
+@available(iOS 12.0, *)
 @objc(APEUnitViewDelegate)
 public protocol APEUnitControllerDelegate: NSObjectProtocol {
     

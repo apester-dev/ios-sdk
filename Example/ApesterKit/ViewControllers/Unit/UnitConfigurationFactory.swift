@@ -30,7 +30,7 @@ import ApesterKit
                 // // .unit(mediaId: "6231aab6b6a111002a435a45"), // ADMob Test
                 // .unit(mediaId: "61ee7ff6a5e14a002b6c044a"), //.unit(mediaId: "60eeda29b54b6f002448ba79"),
                 // .playlist(tags: [], channelToken: "5f85919d44959d32decd9d31", context: false, fallback: false),
-                .playlist(tags: [], channelToken: "61ee7fd7a33874001368f396", context: false, fallback: false)
+                .playlist(tags: [], channelToken: "6592b4331d381c0012eae2cd", context: false, fallback: false)
             ]
         case .stage:
             unitsParams = [

@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
     }
     s.source           = { :git => 'https://github.com/apester-dev/ios-sdk.git', :tag => "v"+s.version.to_s }
     
-    ios_deployment_target   = '11.0'
+    ios_deployment_target   = '12.0'
     s.platform              = :ios
     s.ios.deployment_target = ios_deployment_target
     
@@ -62,18 +62,18 @@ Pod::Spec.new do |s|
     s.subspec   'ContentAdmob'    do |content|
         content.source_files = 'Sources/ApesterKit/Content/Classes/EmbededUnit/AdProvider/AdMob/*.{h,m,swift}'
         content.dependency 'ApesterKit/Content_Core'
-        content.dependency 'Google-Mobile-Ads-SDK', '~> 10.0'
+        content.dependency 'Google-Mobile-Ads-SDK', '~> 11.5'
     end
     s.subspec   'ContentPubmatic' do |content|
         content.source_files = 'Sources/ApesterKit/Content/Classes/EmbededUnit/AdProvider/PubMatic/*.{h,m,swift}'
         content.dependency 'ApesterKit/Content_Core'
-        content.dependency 'OpenWrapSDK' , '~> 2.7.0'
+        content.dependency 'OpenWrapSDK' , '~> 3.5.0'
     end
     s.subspec   'ContentAmazon'   do |content|
         content.source_files = 'Sources/ApesterKit/Content/Classes/EmbededUnit/AdProvider/Amazon/*.{h,m,swift}'
         content.dependency 'ApesterKit/Content_Core'
-        content.dependency 'OpenWrapHandlerDFP'        , '~> 3.1.0'
-        content.dependency 'AmazonPublisherServicesSDK', '~> 4.4.0'
+        content.dependency 'OpenWrapHandlerDFP'        , '5.0.0'
+        content.dependency 'AmazonPublisherServicesSDK', '~> 4.9.3'
     end
     s.subspec   'Content'         do |content|
         content.dependency 'ApesterKit/Content_Core'
@@ -184,8 +184,8 @@ Pod::Spec.new do |s|
         unit_tests.dependency          'ApesterKit/zHostApp'
 
         # Dependencies
-        unit_tests.dependency 'Google-Mobile-Ads-SDK', '~> 10.0'
-        unit_tests.dependency 'OpenWrapSDK'          , '~>  2.7.0'
+        unit_tests.dependency 'Google-Mobile-Ads-SDK', '~> 11.5'
+        unit_tests.dependency 'OpenWrapSDK'          , '~>  3.5.0'
     end
     s.test_spec 'zUITests'        do |ui_tests|
 

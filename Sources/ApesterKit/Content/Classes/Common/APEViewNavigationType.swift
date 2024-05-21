@@ -10,7 +10,7 @@ import Foundation
 ///
 ///
 #if os(iOS)
-@available(iOS 11.0, *)
+@available(iOS 12.0, *)
 /// This enum describes the link type was activated.
 @objc(APEViewNavigationType)
 public enum APEViewNavigationType: Int {

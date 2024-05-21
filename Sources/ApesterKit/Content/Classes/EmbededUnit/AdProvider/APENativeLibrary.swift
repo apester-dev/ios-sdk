@@ -24,6 +24,7 @@ internal class APENativeLibraryDelegate : NSObject , APEBiddingManagerDelegate
     internal weak private(set) var adProvider : APEAdProvider?
     internal private(set) var receiveAdSuccess: APEAdProvider.HandlerVoidType
     internal private(set) var receiveAdError  : APEAdProvider.HandlerErrorType
+    internal private(set) var adLoaded        : APEAdProvider.HandlerVoidType?
     internal private(set) var biddingManager  : APEBiddingManager
     init(
         adProvider provider     : APEAdProvider,
@@ -35,6 +36,23 @@ internal class APENativeLibraryDelegate : NSObject , APEBiddingManagerDelegate
         self.containerViewController = viewController
         self.receiveAdSuccess = success
         self.receiveAdError = error
+        self.biddingManager = APEBiddingManager()
+        super.init()
+        self.biddingManager.delegate = self
+    }
+    
+    init(
+        adProvider provider     : APEAdProvider,
+        container viewController: UIViewController?,
+        receiveAdSuccess success: @escaping APEAdProvider.HandlerVoidType,
+        receiveAdError     error: @escaping APEAdProvider.HandlerErrorType,
+        adLoaded          onLoad: @escaping APEAdProvider.HandlerVoidType
+    ) {
+        self.adProvider              = provider
+        self.containerViewController = viewController
+        self.receiveAdSuccess = success
+        self.receiveAdError = error
+        self.adLoaded = onLoad
         self.biddingManager = APEBiddingManager()
         super.init()
         self.biddingManager.delegate = self

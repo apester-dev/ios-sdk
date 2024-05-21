@@ -66,7 +66,7 @@ final public class APEPubMaticStrategy : APEAdProviderStrategy
         )
         
         uniqePubMaticConfiguration(basedOn: parameters)
-        uniqePubMaticGDPRConsent(gdprString)
+//        uniqePubMaticGDPRConsent(gdprString)
         
         let banner = APEAdView(
             adTitleText          : adTitleLabelText,
@@ -144,14 +144,14 @@ final public class APEPubMaticStrategy : APEAdProviderStrategy
         OpenWrapSDK.setLogLevel(parameters.debugLogs ? POBSDKLogLevel.all : POBSDKLogLevel.off)
     }
     
-    private func uniqePubMaticGDPRConsent(
-        _ gdprString: String?
-    ) {
-        guard let gdpr = gdprString else {
-            OpenWrapSDK.setGDPREnabled(false); return
-        }
-        
-        OpenWrapSDK.setGDPREnabled(true)
-        OpenWrapSDK.setGDPRConsent(gdpr)
-    }
+//    private func uniqePubMaticGDPRConsent(
+//        _ gdprString: String?
+//    ) {
+//        guard let gdpr = gdprString else {
+//            OpenWrapSDK.setGDPREnabled(false); return
+//        }
+//        
+//        OpenWrapSDK.setGDPREnabled(true)
+//        OpenWrapSDK.setGDPRConsent(gdpr)
+//    }
 }

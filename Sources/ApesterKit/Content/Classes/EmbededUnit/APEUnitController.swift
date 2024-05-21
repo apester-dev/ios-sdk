@@ -194,7 +194,7 @@ public class APEUnitController : APEController
 }
 
 // MARK: - Override internal APIs
-@available(iOS 11.0, *)
+@available(iOS 12.0, *)
 extension APEUnitController
 {
     override func orientationDidChangeNotification()
@@ -370,9 +370,10 @@ extension APEUnitController
         func monProvider(for adParamaters: APEAdType) -> String
         {
             switch adParamaters {
-            case .inUnit: return "da"
-            case .bottom: return "da_bottom"
-            case .companion: return "co"
+            case .inUnit        : return "da"
+            case .bottom        : return "da_bottom"
+            case .companion     : return "co"
+            case .interstitial  : return "intst"
             }
         }
         
@@ -483,6 +484,7 @@ internal extension APEUnitController
         case (.bottom   , false) : return displayView.adUnit.adContentBanner
         case (.bottom   , true ) : return displayView.adBottom
         case (.companion, _    ) : return displayView.adCompanion
+        case (.interstitial, _ ) : return displayView.adUnit.adContentMain
         }
     }
     
@@ -497,12 +499,8 @@ internal extension APEUnitController
         
         provider.refresh()
         
-        switch (provider.monetization.adType, monetization.isCompanionVariant) {
-        case (.inUnit   , _    ) : provider.show(container) // return false;
-        case (.bottom   , true ) : provider.show(container) // return false;
-        case (.bottom   , false) : provider.show(container) // return false;
-        case (.companion, _    ) : provider.show(container) // return false;
-        }
+       provider.show(container) // return false;
+      
         return true
     }
     func removeAdView(of adType: APEAdType) {

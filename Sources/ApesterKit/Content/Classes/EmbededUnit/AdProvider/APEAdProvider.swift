@@ -49,6 +49,7 @@ internal class APEAdProvider : Equatable
     internal var refresh        : HandlerVoidType
     internal var show           : HandlerContainerType
     internal var hide           : HandlerVoidType
+    internal var loaded         : HandlerVoidType?
     internal weak var delegate  : APEAdProviderDelegate?
     
     internal init(

@@ -16,7 +16,7 @@ final internal class APEAmazonAdLoader : NSObject
     ///  (success/failure) from TAM SDK to bidding manager
     internal weak var delegate: APEBidderDelegate?
     
-    var adSizes  : [DTBAdSize]
+    var adSizes  : [DTBAdSize]?
     var adLoader : DTBAdLoader?
     
     init(SlotUUID identifier: String, apesterSize : APEAdSize)
@@ -30,6 +30,9 @@ final internal class APEAmazonAdLoader : NSObject
         ]
         super.init()
     }
+    override init() {
+        super.init()
+    }
 }
 extension APEAmazonAdLoader : APEBidding
 {
@@ -37,7 +40,10 @@ extension APEAmazonAdLoader : APEBidding
     {
         APELoggerService.shared.debug("TAM: Loading ad from A9 TAM SDK")
         let loader = DTBAdLoader()
-        loader.setAdSizes(adSizes)
+        if let sizes = adSizes {
+            loader.setAdSizes(sizes)
+        }
+
         loader.loadAd(self)
         adLoader = loader
     }

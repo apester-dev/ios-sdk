@@ -39,7 +39,7 @@ extension AppDelegate : UIApplicationDelegate
         // APEViewService.shared.preloadStripViews(with: StripConfigurationsFactory.configurations(hideApesterAds: false))
         
         // initiate UnitConfigurationsFactory environment
-        UnitConfigurationsFactory.environment = .dev
+        UnitConfigurationsFactory.environment = .production
         
         let configurations = UnitConfigurationsFactory.configurations(hideApesterAds: false, gdprString: UnitConfigurationsFactory.gdprString)
         

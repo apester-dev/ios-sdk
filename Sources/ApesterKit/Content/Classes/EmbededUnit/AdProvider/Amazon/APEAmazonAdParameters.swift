@@ -61,7 +61,9 @@ internal struct APEAmazonAdParameters : Hashable , APEAdParameters
         
         guard let provider      = dictionary[Keys.adProvider    .description] as? String else { return nil }
         guard let adUnitId      = dictionary[Keys.adUnitId      .description] as? String else { return nil }
-        guard let typeStr       = dictionary[Keys.adType        .description] as? String else { return nil }
+//        guard
+        let typeStr       = APEAdType.interstitial.description
+//                dictionary[Keys.adType        .description] as? String else { return nil }
         guard let isVariant     = dictionary[Keys.isVariant     .description] as? Bool   else { return nil }
         guard let profileIdStr  = dictionary[Keys.profileId     .description] as? String else { return nil }
         guard let appStoreUrl   = dictionary[Keys.appStoreUrl   .description] as? String else { return nil }
@@ -82,7 +84,8 @@ internal struct APEAmazonAdParameters : Hashable , APEAdParameters
         self.appStoreUrl    = appStoreUrl
         self.publisherId    = publisherId
         self.appDomain      = dictionary[Keys.appDomain     .description] as? String ?? ""
-        self.testMode       = dictionary[Keys.testMode      .description] as? Bool ?? false
+        self.testMode       = true
+//        dictionary[Keys.testMode      .description] as? Bool ?? false
         self.debugLogs      = dictionary[Keys.debugLogs     .description] as? Bool ?? false
         self.bidSummaryLogs = dictionary[Keys.bidSummaryLogs.description] as? Bool ?? false
         self.timeInView     = dictionary[Keys.timeInView    .description] as? Int

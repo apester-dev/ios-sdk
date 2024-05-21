@@ -17,7 +17,7 @@ ApesterKit provides a light-weight framework that loads Apester Unit in a webVie
 #
 ## Requirements
 
-- iOS 11.0+
+- iOS 12.0+
 - Xcode 10.2+
  
 ## Integration
@@ -411,7 +411,7 @@ To integrate ApesterKit into your Xcode project using CocoaPods, specify it in y
 
 ```ruby
 
-platform :ios, '11.0'
+platform :ios, '12.0'
 
 use_frameworks!
 pod 'ApesterKit'
