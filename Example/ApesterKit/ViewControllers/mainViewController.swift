@@ -79,10 +79,14 @@ class mainViewController: UIViewController, APEUnitViewDelegate {
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = false
         setupGestures()
-    
+        setPlaceholderColor()
     }
+    private func setPlaceholderColor() {
+           let placeholderText = "enter unitId or channelToken/playlist"
+           input.attributedPlaceholder = NSAttributedString(string: placeholderText, attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+       }
     
-    override class func awakeFromNib() {
+    override class func awakeFromNib() { 
         super.awakeFromNib()
     }
     func setupGestures(){
