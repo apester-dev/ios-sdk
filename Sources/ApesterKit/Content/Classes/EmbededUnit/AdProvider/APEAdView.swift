@@ -130,7 +130,8 @@ internal class APEAdView : UIView
             strongSelf.closeButton.isHidden = true
             strongSelf.titleLabel.isHidden = true
         }
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleOrientation), name: UIDevice.orientationDidChangeNotification, object: nil)
+       
     }
 
     // MARK: - lifecycle
@@ -138,6 +139,8 @@ internal class APEAdView : UIView
         self.refreshTimer?.invalidate()
         self.refreshTimer = nil
         self.adContent = nil
+        NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
+
     }
     
     // MARK: - public API
@@ -177,9 +180,6 @@ internal class APEAdView : UIView
             ])
         }
         if  monetization.adType == .inUnitVideo {
-            if let vidView = adView as? AdPlayerPlacementViewWrapper {
-                print(vidView.childView?.bounds)
-            }
             let offset = CGFloat(2.0)
             let topOffset = CGFloat(110.0)
             
@@ -379,5 +379,11 @@ internal class APEAdView : UIView
             ])
             vidView.bringSubviewToFront(closeButton)
         }
+    }
+}
+extension APEAdView {
+    // MARK: - Orientation Handling
+    @objc private func handleOrientation() {
+        layoutIfNeeded()
     }
 }
