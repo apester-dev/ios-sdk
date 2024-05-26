@@ -119,7 +119,7 @@ public class APEUnitController : APEController
             
             NSLayoutConstraint.activate(containerConstraints)
         }
-        
+        viewAbilityAssignment()
         // show AD Views
         showAdViews()
     }
