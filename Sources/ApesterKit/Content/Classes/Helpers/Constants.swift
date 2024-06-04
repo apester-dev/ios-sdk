@@ -94,6 +94,7 @@ internal struct Constants
         internal static let appStoreUrl      = "iosAppStoreUrl"
         internal static let initNativeAd     = "apester_init_native_ad"
         internal static let initInUnit       = "apester_init_inunit"
+        internal static let initInterstitial = "apester_init_interstitial"
         internal static let killInUnit       = "apester_kill_native_ad"
         internal static let adUnitId         = "iosAdUnitId"
         internal static let isVariant        = "isCompanionVariant"

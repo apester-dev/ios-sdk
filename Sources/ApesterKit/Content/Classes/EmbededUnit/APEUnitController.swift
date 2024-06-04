@@ -309,6 +309,11 @@ extension APEUnitController
                 print("||>>>> Payload: \(String(describing: dictionary))")
                 APEAdProviderLoader.setupAdProvider(for: self, basedOn: dictionary)
             }
+            if dictionary["type"] as? String == Constants.Monetization.initInterstitial
+            {
+                print("||>>>> Payload: \(String(describing: dictionary))")
+                APEAdProviderLoader.setupAdProvider(for: self, basedOn: dictionary)
+            }
             
             if dictionary["type"] as? String == Constants.Monetization.killInUnit
             {

@@ -18,7 +18,18 @@ import AdPlayerSDK
 @objcMembers
 final public class APEAniViewStrategy : APEAdProviderStrategy
 {
-    private var playerTag: AdPlayerTag?
+    private var playerTag: AdPlayerTag? {
+        didSet {
+            if let _ = self.containerDispaly {
+                onAdsReady()
+            }
+        }
+    }
+    deinit {
+        self.playerTag = nil
+    }
+    private var containerDispaly: APEContainerView?
+    
     // MARK: - Properties - Computed
     internal override var strategyType : APEAdProviderType
     {
@@ -111,6 +122,7 @@ final public class APEAniViewStrategy : APEAdProviderStrategy
         provider.show          = { [weak banner] containerDisplay in
             
             if parameters.type == .interstitial {
+                self.containerDispaly = containerDisplay
                 self.preloadInterstitialAd(provider: provider)
                 onAdRequestedCompletion()
             }
@@ -155,6 +167,7 @@ extension APEAniViewStrategy {
     
     private func preloadInterstitialAd(provider: APEAdProvider) {
             guard let playerTag = self.playerTag else { return }
+        guard let _ = self.containerDispaly else { return }
         playerTag.invalidatePreloadCache() // needed when it's interstitial
         playerTag.eventsObserver = provider.nativeDelegate as? AdPlayerTagEventsObserver
         playerTag.preload { [weak self] error in
@@ -186,5 +199,7 @@ extension APEAniViewStrategy {
         let interstitialBuilder = playerTag.asInterstitial()
         interstitialBuilder.launch()
     }
+    
+
 
 }
