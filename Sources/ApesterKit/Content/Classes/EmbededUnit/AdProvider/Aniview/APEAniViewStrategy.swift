@@ -20,11 +20,13 @@ final public class APEAniViewStrategy : APEAdProviderStrategy
 {
     private var playerTag: AdPlayerTag? {
         didSet {
-            if let _ = self.containerDispaly {
-                onAdsReady()
+            if let _ = self.containerDispaly, let provider = self.currentProvier{
+                preloadInterstitialAd(provider: provider )
             }
         }
     }
+    private var currentProvier: APEAdProvider?
+    
     deinit {
         self.playerTag = nil
     }
@@ -156,6 +158,7 @@ final public class APEAniViewStrategy : APEAdProviderStrategy
                 }
             }
         }
+        self.currentProvier = provider
         return provider
     }
 
